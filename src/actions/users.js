@@ -1,0 +1,7 @@
+
+
+export const EXPECT_USER_REG = "EXPECT_USER_REG";
+export const USER_REG_FAIL="USER_REG_FAIL";
+export const USER_REG_SUCCESS="USER_REG_SUCCESS";
+export const OPEN_USER_REG_WIN="OPEN_USER_REG_WIN";
+
