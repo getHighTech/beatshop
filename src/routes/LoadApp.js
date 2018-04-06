@@ -1,0 +1,32 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import { LinearProgress } from 'material-ui/Progress';
+
+const styles = {
+  root: {
+    flexGrow: 1,
+    position: "relative",
+    top: "58px",
+    textAlign: "center"
+    
+  },
+};
+
+function LoadApp(props) {
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
+      <h4>载入中，请稍后</h4>
+      <LinearProgress />
+      <br />
+      <LinearProgress color="secondary" />
+    </div>
+  );
+}
+
+LoadApp.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(LoadApp);

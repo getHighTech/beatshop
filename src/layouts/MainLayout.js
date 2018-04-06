@@ -4,7 +4,10 @@ import React from 'react'
 import { withStyles } from 'material-ui/styles';
 import withRoot from '../withRoot';
 import MenuAppBar from './MenuAppBar';
+import BottemMav from './BottemNav';
+import Hidden from 'material-ui/Hidden';
 
+import AppInfo from '../config/app.json';
 const styles = theme => ({
 
   child: {
@@ -13,23 +16,32 @@ const styles = theme => ({
   },
   root: {
     display: "flex",
+    flexDirection: "column",
+    backgroundColor: "black"
+    
   }
 });
 
 class MainLayout extends React.Component{
-   
-  constructor(props){
-    super(props);
-  
+    
+
+  componentDidMount(){
+    document.title =AppInfo.name_zh;
   }
   render(){
     const { classes } = this.props;
       return(
         <div className={classes.root}> 
-            <MenuAppBar />
-            <div>
+            <MenuAppBar history={this.props.history} appInfo={AppInfo} />
+            <div style={{
+              position: "relative",
+              top: "50px"
+            }}>
                 {this.props.children}
             </div>
+            <Hidden mdUp>
+            <BottemMav history={this.props.history} />
+            </Hidden>
         </div>
   
       )

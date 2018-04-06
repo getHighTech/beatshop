@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import compose from 'recompose/compose';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -8,22 +7,16 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
-import AccountCircle from 'material-ui-icons/AccountCircle';
-import { MenuItem, MenuList } from 'material-ui/Menu';
 import Hidden from 'material-ui/Hidden';
 import withWidth from 'material-ui/utils/withWidth';
 import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
+import { connect } from 'react-redux';
+import CitySelector from '../components/public/CitySelector';
+import CartTop from './CartTop';
+import NavigateBefore from 'material-ui-icons/NavigateBefore';
 import Button from 'material-ui/Button';
-import Grow from 'material-ui/transitions/Grow';
-import Paper from 'material-ui/Paper';
-import { Manager, Target, Popper } from 'react-popper';
-import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
-
-import AppInfo from '../config/app.json';
-
-
+import ModeEdit from "material-ui-icons/ModeEdit";
 
 
 const styles = theme => ({
@@ -37,9 +30,6 @@ const styles = theme => ({
   appbar: {
     backgroundColor: "rgba(4, 4, 4, 0.1)",
     borderBottom: "white 1px outset",
-    // Match [0, md + 1[
-    //       [0, lg[
-    //       [0, 1280px[
     [theme.breakpoints.down('md')]: {
       backgroundColor: "rgba(4, 4, 4, 0.3)",
     },
@@ -63,7 +53,7 @@ const styles = theme => ({
       color: "white",
       fontWeight: 'bolder',
       height: "54px",
-      fontSize: "28px",
+      fontSize: "22px",
       textAlign: "center",
       display: "flex",
       justifyContent: "center",
@@ -82,7 +72,6 @@ const styles = theme => ({
     }
   },
   button: {
-    margin: theme.spacing.unit*0.5,
     color: "white",
     fontWeight: 'bolder',
     fontSize: '20px',
@@ -90,7 +79,6 @@ const styles = theme => ({
         color: 'white',
     },
     [theme.breakpoints.down('sm')]: {
-      margin: theme.spacing.unit*0,
       color: "white",
       fontWeight: 'bolder',
       fontSize: '18px',
@@ -109,10 +97,7 @@ const styles = theme => ({
         color: 'white',
     },
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
+ 
   paper: {
       backgroundColor: 'rgba(0, 0, 0, 0.6)',
       color: "white",
@@ -134,6 +119,7 @@ class MenuAppBar extends React.Component {
             auth: true,
             drawer: false,
             open: false,
+            currentCity: "北京市",
         }
     }
     handleClick = () => {
@@ -169,16 +155,40 @@ class MenuAppBar extends React.Component {
     this.setState({ open: false });
     });
   };
-  componentDidMount(){
-     
-      clearTimeout(this.timeout);
+
+
+  componentWillReceiveProps(nextProps){
+    const { address } = nextProps;
+    this.setState({
+      currentCity: "定位中"
+    })
+    if(address.info === "SUCCESS"){
+      this.setState({
+        currentCity: address.addressComponent.city
+      })
+    }
+    if(address.info==="FAILED"){
+      this.setState({
+        currentCity: "定位失败"
+      })
+      setTimeout(() => {
+        this.setState({
+          currentCity: "北京市"
+        })
+      }, 1230);
+    }
+  }
+  handleEditorClick(type){
+    console.log("编辑模式", type);
+    
   }
 
   render() {
-    document.title = AppInfo.name_zh;
-    const { classes } = this.props;
-    const { auth } = this.state;
-    const { open } = this.state;
+    
+    const { classes, layout } = this.props;
+    const { currentCity,  } = this.state;
+    
+    
     const sideList = (
         <div>
                 <List component="nav">
@@ -235,7 +245,7 @@ class MenuAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" className={classes.appbar}>
           <Toolbar>
-                <Hidden mdDown>
+                <Hidden smDown>
                 <IconButton onClick={this.toggleDrawer(true)} className={classes.menuButton} color="inherit" aria-label="Menu">
                     <MenuIcon />
                 </IconButton>
@@ -247,12 +257,32 @@ class MenuAppBar extends React.Component {
                     {sideList}
                 </Drawer>
                 </Hidden>
+                {
+                  layout.hasGeoLoc && <CitySelector currentCity={currentCity} color="white"/>
+                }
+                {
+                  layout.isBack && 
+                  <Button onClick={()=>this.props.history.push(layout.backTo)} className={classes.button}>
+                    <NavigateBefore style={{ fontSize: 36 }}/>
+                    返回
+                  </Button>
+                }
+                
+               
             <Typography variant="title" color="inherit" className={classes.flex}>
                  
               <div>
-                  <span>{document.title} </span>
+                  <span>{layout.title} </span>
               </div>
             </Typography>
+            {
+              layout.hasCart && <CartTop  history={this.props.history}/>
+            }
+            { layout.hasEditor &&
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.button}>
+                <ModeEdit />
+              </Button>
+            }
           </Toolbar>
         </AppBar>
       </div>
@@ -265,4 +295,11 @@ MenuAppBar.propTypes = {
   width: PropTypes.string.isRequired,
 };
 
-export default compose(withStyles(styles), withWidth())(MenuAppBar);
+function mapToState(state){
+  return {
+    address: state.AppInfo.amap,
+    layout: state.AppInfo.layout
+  }
+}
+
+export default connect(mapToState)(compose(withStyles(styles), withWidth())(MenuAppBar))

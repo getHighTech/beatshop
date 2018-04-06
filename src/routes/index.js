@@ -13,8 +13,12 @@ import createHistory from 'history/createHashHistory';
 import MainLayout from '../layouts/MainLayout.js';
 import Home from './home/index.js'
 import {connect} from 'react-redux';
-import { loadHomeSiteData } from '../actions/site';
-
+import LoadApp from './LoadApp.js';
+import { loadApp, loadGeoAddress } from '../actions/process/load_app';
+import InvalidApp from './InvalidApp';
+import NoMatchPage from './not_match_page'
+import ProductShow from './products/id.js'
+import AppCart from './cart'
 const history = createHistory();
 
 const styles = theme => ({
@@ -23,6 +27,10 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 20,
   },
 });
+
+const HomeWithPath = () => (
+    <Home history={history}/>
+)
 
 class App extends React.Component {
    
@@ -39,16 +47,34 @@ class App extends React.Component {
     };
     componentDidMount(){
         const { dispatch, store} = this.props;
-        dispatch(loadHomeSiteData());
+        if(!store.AppInfo.init){
+            dispatch(loadGeoAddress());
+            dispatch(loadApp());
+        }
     }
 
     render(){
         const { classes } = this.props;
+        const { store} = this.props;
+        
+        if (!store.AppInfo.init) {
+            return (
+                <LoadApp />
+            )
+        }
+        if(store.AppInfo.fail){
+            return (
+                <InvalidApp />
+            )
+        }
         return (
             <Router  className={classes.root} >
                 <MainLayout history={history}>
                     <Switch>
-                        <Route exact path="/" component={Home} />
+                        <Route exact path="/" component={HomeWithPath} />
+                        <Route path="/products/:id" component={ProductShow} />
+                        <Route path="/cart" component={AppCart} />
+                        <Route component={NoMatchPage}/>
                     </Switch>
                 </MainLayout>
             </Router>

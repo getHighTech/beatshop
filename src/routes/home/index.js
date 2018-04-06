@@ -1,16 +1,16 @@
 import React from 'react';
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 
-import Typography from 'material-ui/Typography';
 import AppBanner from '../../components/home/banner.js';
 
 import { withStyles } from 'material-ui/styles';
 import {connect} from 'react-redux';
 
-
 import ProductGridList from '../../components/public/ProductGridList';
+import { loadHomeIndexProducts } from '../../actions/process/home_index.js';
+import LoadingItem from '../../components/public/LoadingItem.js';
+
+import { setAppLayout } from '../../actions/app';
 
 const styles = theme => ({
     root: {
@@ -19,7 +19,10 @@ const styles = theme => ({
         alignItems: "center",
         height: "100%",
         backgroundColor: "black",
-        paddingBottom: "400px"
+        paddingBottom: "400px",
+        position: "relative",
+        top: "-50px",
+        width: "100%"
       
     },
    
@@ -46,25 +49,41 @@ class Home extends React.Component {
         });
     };
     componentDidMount(){
-       
-        
-        
+        const { dispatch } = this.props
+        dispatch(loadHomeIndexProducts());
+        dispatch(setAppLayout(
+            {
+                isBack: false, 
+                backTo: "/", 
+                title: "万人车汇", 
+                hasCart: true, 
+                hasBottomNav: true, 
+                hasGeoLoc: true,
+                hasEditor: false, 
+                hasSearch: false,
+            }
+        ));
+    }
+    componentWillReceiveProps(nextProps){
+        const {dispatch, currentCity} = nextProps;
+        if(currentCity !== this.props.currentCity){
+            dispatch(loadHomeIndexProducts());
+        }
     }
     render(){
         
-        const { classes, dispatch } = this.props;
-        const { open } = this.state;
+        const { classes, productsList } = this.props;
         return (
             <div className={classes.root}>
               <AppBanner />
-                <ProductGridList />
-           
+              { productsList.loading? <LoadingItem/> : 
+              <div className={classes.root}>
+                <ProductGridList history={this.props.history} products={productsList.products} label="热门"/>
+                <h1 style={{color: "white"}}>优选商家</h1>
+              </div>
+              }
                
-               {window.scrollTo(0,0)}
-               
- 
-             
-          </div>
+              </div>
         )
     }
 }
@@ -73,7 +92,9 @@ Home.propTypes = {
   };
   function mapUserState(state){
       return {
-          user: state.AppUser
+          user: state.AppUser,
+          productsList: state.ProductsList,
+          currentCity: state.AppInfo.currentCity,
       }
   }
   

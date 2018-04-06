@@ -6,7 +6,6 @@ import Button from 'material-ui/Button';
 import {connect} from 'react-redux';
 import Image from '../imgs/background3.jpg';
 import Hidden from 'material-ui/Hidden';
-import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
@@ -44,12 +43,13 @@ const styles = theme => ({
     flexDirection: "column",
     marginTop: "5px",        
     marginBottom: "5px", 
+    paddingBottom: "30px",
    alignItems: "center",
    display: "flex",
   
     [theme.breakpoints.down('md')]: {
       display: "flex",
-      top: '53px',
+      top: '90px',
       flexDirection: "column",
       alignItems: "center",
      justifyContent: "center",       
@@ -73,16 +73,31 @@ class AppBanner extends React.Component {
 
 
   render() {
-    const { classes, dispatch } = this.props;
+    const { classes } = this.props;
    
     return (
       <div className={classes.root}>
             <div className={classes.slogan}>
                 <Hidden mdDown>
-                <h2>万人车汇</h2>
+                <Typography
+                      variant="display1"
+                      color="inherit"
+                    
+                    >
+                     万人车汇
+                    
+                    </Typography>
+                    <br/>
                 </Hidden>
-                <h4>注重服务车主生活</h4>
-               
+                <Typography
+                      variant="title"
+                      color="inherit"
+                    
+                    >
+                     享受精彩汽车生活
+                    
+                    </Typography>
+                    <br/>
                 <Button variant="raised" size="large" color="secondary"  component={Link} to="/open-collective" className={classes.mainButton}>
                   
                     <Hidden mdUp>
