@@ -4,6 +4,7 @@ import AppUser from '../reducers/AppUser';
 import AppInfo from '../reducers/AppInfo';
 import ProductsList from '../reducers/ProductsList';
 import ProductShow from '../reducers/ProductShow';
+import OrderShow from '../reducers/OrderShow';
 import AppCart from '../reducers/AppCart';
 export default function configureStore() {
   const enhancer = compose(
@@ -17,6 +18,7 @@ export default function configureStore() {
       AppUser,
       ProductShow,
       AppCart,
+      OrderShow
     }),
     enhancer);
 }

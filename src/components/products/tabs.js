@@ -63,7 +63,11 @@ class ProductTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-          <div style={{textAlign: "center"}}>
+          <div style={
+            {textAlign: "center", 
+            marginBottom: "15%",
+             display: "flex", 
+             flexDirection: "column"}}>
           { htmlToReactParser.parse(this.props.des)}
           </div>
           

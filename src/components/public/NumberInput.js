@@ -40,7 +40,7 @@ class NumberInput extends React.Component {
       const {classes} = this.props;
     return (
       <div className={classes.root}>
-          <Add/>
+          <Remove onClick={this.onRemoveClick.bind(this)}/>
           <Input
             id="number"
             
@@ -48,11 +48,12 @@ class NumberInput extends React.Component {
             type="number"
             classes = {{input:classes.input}}
             style={{
-                textAlign: "center"
+                textAlign: "center",
+                flex: 1
             }}
           
         />
-          <Remove onClick={this.onRemoveClick.bind(this)}/>
+        <Add/>
       </div>
     );
   }

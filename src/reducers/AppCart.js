@@ -1,4 +1,4 @@
-import { ADD_PRODUCTS_TO_APP_CART } from "../actions/app_cart";
+import { ADD_PRODUCTS_TO_APP_CART, CHANGE_PRODUCT_FROM_CART_CHECKED } from "../actions/app_cart";
 
 // EDIT BY SIMON
 export default function AppCart
@@ -97,6 +97,13 @@ export default function AppCart
                 shopChecks,
                 status: "all-unselected",
                 totalAmount: 0,
+            })
+        case CHANGE_PRODUCT_FROM_CART_CHECKED: 
+            productChecks = state.productChecks;
+            let checked = productChecks[action.productId];
+            productChecks[action.productId] = !checked;
+            return Object.assign({}, state, {   
+                productChecks
             })
 
         default:

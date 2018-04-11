@@ -17,7 +17,7 @@ function LoadApp(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <h4>载入中，请稍后</h4>
+      <h4>{props.title}</h4>
       <LinearProgress />
       <br />
       <LinearProgress color="secondary" />

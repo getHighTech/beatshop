@@ -14,8 +14,13 @@ class CitySelector extends React.Component {
   };
 
   handleClose = (event, city) => {
+      
       const { dispatch } = this.props;
-      dispatch(setAppCity(city));
+      if(!city){
+        dispatch(setAppCity("北京市"));
+      }else{
+        dispatch(setAppCity(city));
+      }
     this.setState({ anchorEl: null });
   };
 
@@ -23,13 +28,17 @@ class CitySelector extends React.Component {
     const { anchorEl } = this.state;
 
     return (
-      <div>
+      <div style={{
+        position: "relative",
+        left: -22
+      }}>
         <Button
+          
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
           onClick={this.handleClick}
 
-          style={{color: this.props.color}}
+          style={{color: this.props.color, fontSize: "20px"}}
         >
             {this.props.currentCity}
         </Button>
@@ -37,10 +46,15 @@ class CitySelector extends React.Component {
           id="simple-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
-          onClose={this.handleClose}
+          onClose={(event)=>this.handleClose(event, null)}
+          style={{
+            fontSize: "28px"
+          }}
         >
-          <MenuItem onClick={(event)=>this.handleClose(event, "成都市")}>成都市</MenuItem>
-          <MenuItem onClick={(event)=>this.handleClose(event, "北京市")}>北京市</MenuItem>
+          <MenuItem 
+           onClick={(event)=>this.handleClose(event, "成都市")}>成都市</MenuItem>
+          <MenuItem 
+           onClick={(event)=>this.handleClose(event, "北京市")}>北京市</MenuItem>
         </Menu>
       </div>
     );

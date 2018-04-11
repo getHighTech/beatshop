@@ -6,11 +6,13 @@ import {connect} from 'react-redux';
 import ProductCarousel from '../../components/products/carousel';
 import ProductTabs from '../../components/products/tabs';
 import Grid from 'material-ui/Grid';
-import { loadOneProduct } from '../../actions/products';
+import { loadOneProduct, loadOneProductByRolename } from '../../actions/products';
 import LoadingItem from '../../components/public/LoadingItem'
 import Paper from 'material-ui/Paper';
 import { setAppLayout } from '../../actions/app';
+import Snackbar from 'material-ui/Snackbar';
 
+import ProductBottomBar from '../../components/products/ProductBottomBar';
 const styles = theme => ({
     root: {
       margin: theme.spacing.unit * 2,
@@ -34,11 +36,59 @@ const styles = theme => ({
     }
   });
  class ProductShow extends Component {
+    constructor(props){
+        super(props);
+        this.state ={
+            snackOpen: false,
+            snackContent: ""
+        }
+    }
+    handleSnackClose = () => {
+        this.setState({ snackOpen: false });
+      };
+    componentWillReceiveProps(nextProps){
+        const { dispatch, match } = nextProps;
+        if(nextProps.match.params.id && !match.params.rolename){
+            if(this.props.match.params.id !== match.params.id){
+                dispatch(loadOneProduct(match.params.id));
+            }
+        }
 
+        if(nextProps.match.params.rolename && !match.params.id){
+            if(this.props.match.params.rolename !== match.params.rolename){
+                dispatch(loadOneProductByRolename(match.params.rolename));
+                if(match.params.productname){
+                    this.setState({
+                        snackOpen: true,
+                        snackContent: "欲购买"+match.params.productname+"，请先购买此商品"
+                    })
+                }
+                
+            }
+        }
+        
+        
+    }
     componentDidMount(){
-        console.log(this.props.match);
-        const { dispatch, match } = this.props;
-        dispatch(loadOneProduct(match.params.id));
+        
+        const { dispatch, match, history } = this.props;
+        
+        if(match.params.id && !match.params.rolename){
+            dispatch(loadOneProduct(match.params.id));
+            
+        }
+        if(match.params.rolename && !match.params.id){
+            dispatch(loadOneProductByRolename(match.params.rolename));
+            if(match.params.productname){
+                this.setState({
+                    snackOpen: true,
+                    snackContent: "欲购买"+match.params.productname+"，请先购买此商品"
+                })
+            }
+            
+        }
+        
+
         dispatch(setAppLayout(
             {
                 isBack: true, 
@@ -55,8 +105,8 @@ const styles = theme => ({
     }
 
     render() {
-        const {classes, appInfo, productShow} = this.props;
-        
+        const { snackOpen, snackContent} =this.state;
+        const {classes, appInfo, productShow, match, history} = this.props;
         if(appInfo.error){
             if(appInfo.reason===404 || appInfo.reason===500){
                 return (
@@ -129,8 +179,26 @@ const styles = theme => ({
                        <ProductTabs des={productShow.product.description}/>
                     </div>
                     <br/>
+                    
+                    <br/>
+                    <br/><br/>
+                    <br/>
+                    <br/><br/>
                     <br/>
                     <br/>
+                    <Snackbar
+                            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                            open={snackOpen}
+                            onClose={this.handleSnackClose}
+                            SnackbarContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
+                            
+                        />
+                        <div style={{width: "100%"}}>
+                    <ProductBottomBar product={productShow.product} history={history} url={match.url}/>
+                    </div>
         </Grid>
 
         );

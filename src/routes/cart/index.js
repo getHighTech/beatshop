@@ -8,6 +8,7 @@ import Avatar from 'material-ui/Avatar';
 import NumberInput from '../../components/public/NumberInput';
 import { connect } from 'react-redux';
 import Checkbox from 'material-ui/Checkbox';
+import { changeProductFromCartChecked } from '../../actions/app_cart';
 
 const styles = theme => ({
     root: {
@@ -33,9 +34,12 @@ class AppCart extends React.Component {
       }
   ));
   }
+  handleProductShow(id){
+    
+    this.props.history.push("/products/"+id)
+  }
   render(){
-    const { classes, cart} = this.props;
-    console.log(cart);
+    const { classes, cart, dispatch } = this.props;
     
     return (
       <div className={classes.root}>
@@ -44,15 +48,16 @@ class AppCart extends React.Component {
                    cart.products.map((product, index)=>{
                     return <ListItem key={index}>
                         <Checkbox
-                            checked={false}
+                            checked={cart.productChecks[product._id]}
+                            onClick={()=>dispatch(changeProductFromCartChecked(product._id))}
                             color="primary"
                             />
-                        <Avatar>
+                        <Avatar onClick={this.handleProductShow.bind(this, product._id)}>
                             <img style={{width: "100%"}} src={product.cover} alt={product.name_zh} />
                         </Avatar>
-                        <ListItemText primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
-                        <NumberInput/>
-                        <div style={{width: "20%", textAlign: "center"}}>delte</div>
+                        <ListItemText style={{width: "auto", flex: 0.4}} onClick={this.handleProductShow.bind(this, product._id)} primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
+                        <NumberInput initNumber={cart.productCounts[product._id]}/>
+                        <div style={{width: "auto", textAlign: "center", flex: 0.25}}>delte</div>
                
                     </ListItem>
                    })

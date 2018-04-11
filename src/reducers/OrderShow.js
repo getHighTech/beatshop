@@ -1,0 +1,52 @@
+import { EXPECT_CREATE_ONE_ORDER, CREAT_ONE_ORDER_FAIL, CREAT_ONE_ORDER_SUCCESS, EXPECT_LOAD_ONE_ORDER, LOAD_ONE_ORDER_FAIL, LOAD_ONE_ORDER_SUCCESS } from "../actions/orders";
+
+export default function  OrderShow(
+    state={
+        orderId: null,
+        id: null,
+        loading: false,
+        loadFailReason: "",
+        order: null,
+        createStatus: "untrigger",//创建过程，
+        loadUserFailReason: "",
+        updated: false,
+    }, action
+){
+    switch (action.type) {
+        case EXPECT_CREATE_ONE_ORDER:
+            return Object.assign({}, state, {
+                loading: true,
+            });
+        case CREAT_ONE_ORDER_FAIL:
+            return Object.assign({}, state, {
+                loadFailReason: action.reason,
+            })
+        case CREAT_ONE_ORDER_SUCCESS:
+            return Object.assign({}, state, {
+                id: action.msg,
+                loading: false,
+                createStatus: "success",
+                updated: false,
+            })
+        case EXPECT_LOAD_ONE_ORDER:
+            return Object.assign({}, state, {
+                createStatus: "untrigger",
+                loading: false,
+                updated: false,
+            });
+        case LOAD_ONE_ORDER_FAIL:
+            return Object.assign({}, state, {
+                createStatus: "untrigger",
+                loadUserFailReason: action.reason,
+                updated: false,
+            });
+        case LOAD_ONE_ORDER_SUCCESS:
+            return Object.assign({}, state, {
+                createStatus: "untrigger",
+                order: action.msg,
+                updated: true,
+            });
+        default:
+            return state;
+    }
+}

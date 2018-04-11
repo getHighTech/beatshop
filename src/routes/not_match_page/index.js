@@ -16,11 +16,13 @@ const styles = theme => ({
 class NotMatchPage extends React.Component {
   componentDidMount(){
     const { dispatch } = this.props;
+    console.log(this.props);
+    
     dispatch(setAppLayout(
       {
           isBack: true, 
           backTo: "/", 
-          title: "产品介绍", 
+          title: "404", 
           hasCart: false, 
           hasBottomNav: false, 
           hasGeoLoc: false,

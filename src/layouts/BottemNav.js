@@ -7,13 +7,12 @@ import AccountBalance from 'material-ui-icons/AccountBalance';
 import Person from 'material-ui-icons/Person';
 import brown from 'material-ui/colors/brown';
 import { connect } from 'react-redux'
-
 const styles = {
   root: {
     width: "100%",
     position: "fixed",
-    bottom: 0,
-    backgroundColor: "#000000ba"
+    backgroundColor: "rgba(0, 0, 0, 0.78)",
+    bottom: 0
 
   }
 };
@@ -21,8 +20,42 @@ const styles = {
 class BottemNav extends React.Component {
   state = {
     value: 0,
+    bottom: 0
    
   };
+
+  componentDidMount(){
+    this.setState({
+      bottom: 0
+    })
+    console.log(window.innerHeight);
+    console.log(window.innerHeight -  document.body.clientHeight);
+      //兼容非正常浏览器，比如微信
+    
+    if(window.innerHeight -  document.body.clientHeight < 0){
+      this.setState({
+        bottom: 0
+      })
+    }
+    if(window.innerHeight -  document.body.clientHeight > 300){
+      this.setState({
+        bottom: 0
+      })
+    }
+    if(window.innerHeight>1000){
+      this.setState({
+        bottom: (window.innerHeight -  document.body.clientHeight)*1.23
+      })
+    }
+    if(window.innerHeight<400){
+      this.setState({
+        bottom: 0
+      })
+    }
+
+        
+   
+  }
 
   handleChange = (event, value) => {
     
@@ -76,7 +109,8 @@ class BottemNav extends React.Component {
         className={classes.root}
 
         style={{
-          display: layout.hasBottomNav ? "inherit": "none"
+          display: layout.hasBottomNav ? "inherit": "none",
+          bottom: this.state.bottom,
         }}
       >
         <BottomNavigationAction  style={{color: this.state.value === 0 ? "white" :  brown[300]  }} label="首页"  icon={<Home />} />

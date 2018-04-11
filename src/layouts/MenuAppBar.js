@@ -14,10 +14,10 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import { connect } from 'react-redux';
 import CitySelector from '../components/public/CitySelector';
 import CartTop from './CartTop';
-import NavigateBefore from 'material-ui-icons/NavigateBefore';
+import ChevronLeft from 'material-ui-icons/ChevronLeft';
 import Button from 'material-ui/Button';
 import ModeEdit from "material-ui-icons/ModeEdit";
-
+import OpenInNew from "material-ui-icons/OpenInNew"
 
 const styles = theme => ({
   root: {
@@ -47,29 +47,20 @@ const styles = theme => ({
     height: "60px",
     justifyContent: "center",
     justifyItems: "center",
-    alignItems: "center",
+    alignItems: "left",
+    position: "relative",
+    left: -35,
     [theme.breakpoints.down('sm')]: {
       margin: theme.spacing.unit*0,
       color: "white",
       fontWeight: 'bolder',
       height: "54px",
       fontSize: "22px",
-      textAlign: "center",
       display: "flex",
       justifyContent: "center",
       justifyItems: "center",
       alignItems: "center",
-      ListItemText: {
-          color: 'white',
-      },
     },
-  },
-  logoImage: {
-    width: "80px",
-    [theme.breakpoints.down('sm')]: {
-      width: "20px",
-      height: "15px",
-    }
   },
   button: {
     color: "white",
@@ -262,8 +253,11 @@ class MenuAppBar extends React.Component {
                 }
                 {
                   layout.isBack && 
-                  <Button onClick={()=>this.props.history.push(layout.backTo)} className={classes.button}>
-                    <NavigateBefore style={{ fontSize: 36 }}/>
+                  <Button style={{
+                    position: "relative",
+                    left: -35
+                  }} onClick={()=>this.props.history.push(layout.backTo)} className={classes.button}>
+                    <ChevronLeft style={{ fontSize: 36 }}/>
                     返回
                   </Button>
                 }
@@ -280,7 +274,14 @@ class MenuAppBar extends React.Component {
             }
             { layout.hasEditor &&
               <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.button}>
+                编辑
                 <ModeEdit />
+              </Button>
+            }
+            { layout.hasNewCreate &&
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.button}>
+                新建
+                <OpenInNew />
               </Button>
             }
           </Toolbar>

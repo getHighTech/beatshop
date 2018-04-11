@@ -17,7 +17,9 @@ const styles = theme => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "black"
+    backgroundColor: "black",
+    WebkitOverflowScrolling: "touch",
+    height: "100%",
     
   }
 });
@@ -39,9 +41,7 @@ class MainLayout extends React.Component{
             }}>
                 {this.props.children}
             </div>
-            <Hidden mdUp>
             <BottemMav history={this.props.history} />
-            </Hidden>
         </div>
   
       )

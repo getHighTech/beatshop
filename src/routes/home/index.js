@@ -22,9 +22,17 @@ const styles = theme => ({
         paddingBottom: "400px",
         position: "relative",
         top: "-50px",
-        width: "100%"
+        width: "100%",
+        justifyContent: "space-between"
       
     },
+    shopsContainer: {
+        
+        width: "100%",
+        position: "relative",
+        top: "50%",
+        textAlign: "center"
+    }
    
   });
 
@@ -65,23 +73,46 @@ class Home extends React.Component {
         ));
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch, currentCity} = nextProps;
+        const {dispatch, currentCity, layout, orderShow, history} = nextProps;
+        if(orderShow.createStatus === "success"){
+            return history.push("/orders/"+orderShow.id);
+          }
         if(currentCity !== this.props.currentCity){
             dispatch(loadHomeIndexProducts());
+        }
+        if(!layout.hasBottomNav){
+            dispatch(setAppLayout(
+                {
+                    isBack: false, 
+                    backTo: "/", 
+                    title: "万人车汇", 
+                    hasCart: true, 
+                    hasBottomNav: true, 
+                    hasGeoLoc: true,
+                    hasEditor: false, 
+                    hasSearch: false,
+                }
+            ));
         }
     }
     render(){
         
-        const { classes, productsList } = this.props;
+        
+        const { classes, productsList, layout , dispatch} = this.props;
+        
         return (
             <div className={classes.root}>
               <AppBanner />
               { productsList.loading? <LoadingItem/> : 
-              <div className={classes.root}>
+              <div className={classes.root} style={{height: "auto"}}>
                 <ProductGridList history={this.props.history} products={productsList.products} label="热门"/>
-                <h1 style={{color: "white"}}>优选商家</h1>
+                <div className={classes.shopsContainer}>
+                    <h1 style={{color: "white"}}>优选商家</h1>
+                </div>
+                
               </div>
               }
+             
                
               </div>
         )
@@ -95,6 +126,8 @@ Home.propTypes = {
           user: state.AppUser,
           productsList: state.ProductsList,
           currentCity: state.AppInfo.currentCity,
+          layout: state.AppInfo.layout,
+          orderShow: state.OrderShow
       }
   }
   

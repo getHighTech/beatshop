@@ -58,7 +58,7 @@ function ProductGridList(props) {
           <Subheader component="header" style={{  color: "white", textDecoration: "underline", fontSize: "25px",backgroundColor: "rgba(4, 4, 4, 0.69)" }}>主打商品</Subheader>
         </GridListTile>
         {products.map((product,index) => (
-          <ProductCard key={index} product={product} history={history} />
+          <ProductCard key={product._id} product={product} history={history} />
         ))}
       </GridList>
    </Grid>

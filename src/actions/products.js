@@ -23,3 +23,9 @@ export function loadOneProduct(id){
         return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.id", [id, app.name], loadOneProductSuccess, dealWithError);
     }
 }
+export function loadOneProductByRolename(rolename){
+    return (dispatch, getState) => {
+        dispatch(expectOneProduct(rolename))
+        return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.rolename", [rolename, app.name], loadOneProductSuccess, dealWithError);
+    }
+}
