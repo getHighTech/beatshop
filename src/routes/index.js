@@ -86,7 +86,7 @@ class App extends React.Component {
         }
         return (
             <Router  className={classes.root} >
-                <MainLayout history={history}>
+                <MainLayout history={history} store={this.props.store}>
                     <Switch>
                         <Route exact path="/" component={HomeWithPath} />
                         <Route  path="/products_by_rolename/:rolename/:productname" component={ProductShowWithPath} />

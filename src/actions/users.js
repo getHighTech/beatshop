@@ -88,6 +88,17 @@ export function loadDefaultContactSuccess(msg){
 }
 
 
+export const USE_ONE_CONTACT = "USE_ONE_CONTACT";
+
+
+export function useOneContact(contact){
+    return {
+        type: USE_ONE_CONTACT,
+        contact
+    }
+}
+
+
 
 
 

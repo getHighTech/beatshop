@@ -1,6 +1,5 @@
 import getRemoteMeteor from "../../services/meteor/methods";
-import app from '../../config/app.json';
-import { setStore } from "../../tools/localStorage";
+import { setStore, removeStore } from "../../tools/localStorage";
 export const EXPECT_USER_LOGIN = "EXPECT_USER_LOGIN";
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
@@ -40,7 +39,33 @@ export function userLogin(type, loginParams){
         dispatch(expectUserLogin());
         return getRemoteMeteor(
             dispatch, getState,"users", "app.user.login",
-            [type, loginParams, app.name], userLoginSuccess, userLoginFail
+            [type, loginParams], userLoginSuccess, userLoginFail
         );
+    }
+}
+
+
+export const EXPECT_USER_LOGOUT = "USER_LOGOUT";
+export const USER_LOGOUT = "USER_LOGOUT";
+export const USER_LOGOUT_SUCCESS = "USER_LOGOUT_SUCCESS";
+
+export function expectUserLogout(){
+    return {
+        type: EXPECT_USER_LOGOUT
+    }
+}
+
+export function userLogoutSuccess(){
+    return {
+        type: USER_LOGOUT_SUCCESS
+    }
+}
+export function userLogout(){
+    return (dispatch, getState) => {
+        dispatch(expectUserLogout());
+        removeStore("stampedToken");
+        removeStore("userId");
+        removeStore("expiredTime");
+        return dispatch(userLogoutSuccess);
     }
 }

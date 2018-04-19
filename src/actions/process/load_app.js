@@ -1,5 +1,4 @@
 import getRemoteMeteor from "../../services/meteor/methods";
-import app from '../../config/app.json';
 import { dealWithError } from "../error_fail";
 import { getAddress } from "../../services/http/amap";
 import { getStore, removeStore } from "../../tools/localStorage";
@@ -32,7 +31,7 @@ export function loadApp(){
             getState,
             'app',
             'app.load.app.info',
-            [app.name],
+            [],
             loadAppSuccess,
             dealWithError,
 
@@ -58,7 +57,6 @@ export function syncRemoteUserSuccess(msg){
     }
 }
 export function expectSyncRemoteUser(){
-    console.log("expectSyncRemoteUser");
     
     return {
         type: EXPECT_SYNC_REMOTE_USER
@@ -87,7 +85,7 @@ export function syncRemoteUser(){
             return dispatch(syncRemoteCartFail("TOKEN EXPIRED"));
         }
         dispatch(expectSyncRemoteUser());
-        return getRemoteMeteor(dispatch, getState, "users", "app.syncRemote.user",[userId, stampedToken, app.name], syncRemoteUserSuccess, syncRemoteUserFail)
+        return getRemoteMeteor(dispatch, getState, "users", "app.syncRemote.user",[userId], syncRemoteUserSuccess, syncRemoteUserFail)
     }
 }
 
@@ -111,7 +109,7 @@ export function syncRemoteCart(){
         if(!cartId){
             return false;
         }
-        getRemoteMeteor(dispatch, getState, "users", "app.syncRemote.cart",[cartId, app.name], syncRemoteCartSuccess, syncRemoteCartFail)
+        getRemoteMeteor(dispatch, getState, "users", "app.syncRemote.cart",[cartId], syncRemoteCartSuccess, syncRemoteCartFail)
     }
 }
 

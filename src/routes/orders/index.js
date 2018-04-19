@@ -90,7 +90,7 @@ class Order extends React.Component {
            {custDivider()}
           
             
-            {!user.contactIsLoaded?  
+            {!user.contactIsLoaded? 
             <div style={{display: "flex", padding: 7}}>
                 <Typography variant="title" gutterBottom>
                 无联系方式
@@ -103,16 +103,10 @@ class Order extends React.Component {
                 : 
              <List component="nav">
                 <ListItem button>
-                <ListItemText primary={orderShow.order.contact.mobile.toString()}  />
-                <ListItemText primary={"×"+orderShow.order.productCounts[orderShow.order.products[0]._id]}  />
+                <ListItemText primary={user.currentContact.mobile.toString()}  />
                 </ListItem>
                 <ListItem button>
-                <ListItemText primary={orderShow.order.products[0].name_zh}  />
-                <ListItemText primary={"×"+orderShow.order.productCounts[orderShow.order.products[0]._id]}  />
-                </ListItem>
-                <ListItem button>
-                <ListItemText primary={orderShow.order.products[0].name_zh}  />
-                <ListItemText primary={"×"+orderShow.order.productCounts[orderShow.order.products[0]._id]}  />
+                <ListItemText primary={user.currentContact.address}  />
                 </ListItem>
              </List>
             }

@@ -1,7 +1,18 @@
 import { MClient } from '../../config/ddp.js';
+import { getStore } from '../../tools/localStorage.js';
+import App from '../../config/app.json'
 
 export default function getRemoteMeteor(dispatch, getState, collectionType, remoteMethodName, params, successAction, failAction){
-    MClient.method(remoteMethodName, params);
+    let loginToken = getStore("stampedToken");
+    let endParams = [loginToken, App.name];
+    params.forEach(element => {
+        if(element){
+            endParams.push(element);
+        }
+    });
+    console.log(endParams);
+    
+    MClient.method(remoteMethodName, endParams);
         return MClient.on("result", message => {
             if (!message.error) {
                 

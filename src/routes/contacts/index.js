@@ -10,6 +10,7 @@ import Divider from 'material-ui/Divider';
 import LoadingItem from '../../components/public/LoadingItem';
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
+import { useOneContact } from '../../actions/users';
 const styles = theme => ({
     row: {
         display: 'flex',
@@ -38,9 +39,13 @@ class Contacts extends React.Component {
   componentDidMount(){
     const { dispatch, match, orderShow } = this.props;
     let backPath = "/"
+    let title = "我的联系方式";
     if(match.params.backaction === "orderuse"){
+        title = "选择联系方式";
         if(orderShow.id){
             backPath="/orders/"+orderShow.id;
+        }else{
+          //若是不存在，获取最新的未确认的订单
         }
     }
     
@@ -48,7 +53,7 @@ class Contacts extends React.Component {
       {
           isBack: true, 
           backTo: backPath, 
-          title: "我的联系方式", 
+          title, 
           hasCart: false, 
           hasBottomNav: false, 
           hasGeoLoc: false,
@@ -76,6 +81,19 @@ class Contacts extends React.Component {
       checked: newChecked,
     });
   };
+  handleItemClick(e, value){
+    console.log(this.props);
+    const { dispatch, orderShow } = this.props;
+    dispatch(useOneContact({
+      mobile: "18820965455",
+      address: "黄泉路44号",
+      carNumber: "川A212312",
+      name: "徐三岛"
+
+    }));
+    this.props.history.push("/orders/"+orderShow.id);
+    
+  }
   render(){
     const { classes, orderShow, user } = this.props;
     const custDivider = () => {
@@ -96,7 +114,7 @@ class Contacts extends React.Component {
         <List component="nav"  style={{width: "90%"}}>
           {[0, 1, 2, 3].map(value => (
               <div>
-            <ListItem key={value} dense button>
+            <ListItem key={value} dense button onClick={(e) => this.handleItemClick(e, value)}>
               <ListItemText primary={`徐事情 ${value + 1}`} secondary="(正在使用)" />
               <ListItemText primary={`Line item ${value + 1}`} />
               <ListItemText primary={`Line item ${value + 1}`} />

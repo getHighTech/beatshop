@@ -50,7 +50,7 @@ export function createOneOrder(cart, count){
              getState, 
              "orders", 
              "app.create.order", 
-             [loginToken, app.name, orderParams], 
+             [orderParams], 
              createOneOrderSuccess, createOneOrderFail)
     }
 }
@@ -68,6 +68,7 @@ export function createOneOrderByProduct(product, count){
         let orderParams = {
             products: [product],
             productIds: [product._id],
+            userId: getState().AppUser.userId,
             area: getState().AppInfo.currentCity,//兼容1.0
             productCounts,
             name: getState().AppUser.user.username,//兼容1.0
@@ -80,7 +81,7 @@ export function createOneOrderByProduct(product, count){
              getState, 
              "orders", 
              "app.create.order", 
-             [loginToken, app.name, orderParams], 
+             [orderParams], 
              createOneOrderSuccess, createOneOrderFail)
     }
 }
@@ -119,7 +120,7 @@ export function loadOneOrder(orderId){
         let loginToken = getStore("stampedToken");
         return getRemoteMeteor(
             dispatch, getState, "orders", "app.load.one.order",
-            [loginToken, app.name, orderId],
+            [orderId],
             loadOneOrderSuccess,
             loadOneOrderFail
         )
@@ -137,5 +138,79 @@ export function loadOneOrderSuccess(msg){
     return {
         type: LOAD_ONE_ORDER_SUCCESS,
         msg
+    }
+}
+
+
+export const GET_NEWEST_USER_ORDER = "GET_NEWEST_USER_ORDER";
+export const GET_NEWEST_USER_ORDER_SUCCESS = "GET_NEWEST_USER_ORDER_SUCCESS";
+export const GET_NEWEST_USER_ORDER_FAIL = "GET_NEWEST_USER_ORDER_FAIL";
+export const EXPECT_GET_NEWEST_USER_ORDER = "EXPECT_GET_NEWEST_USER_ORDER";
+
+export function expectGetNewestUserOrder(){
+    return {
+        type: EXPECT_GET_NEWEST_USER_ORDER
+    }
+}
+
+export function getNewestUserOrderSuccess(msg){
+    return {
+        type: GET_NEWEST_USER_ORDER_SUCCESS,
+        msg
+    }
+}
+
+export function getNewestUserOrderFail(reason){
+    return {
+        type: GET_NEWEST_USER_ORDER_FAIL,
+        reason
+    }
+}
+
+export function getNewestUserOrder(status, userId){
+    return (dispatch, getState) => {
+        dispatch(expectGetNewestUserOrder());
+        return getRemoteMeteor(dispatch, getState,
+            "orders", "app.get.newest.user.order.status",
+            [status, userId], getNewestUserOrderSuccess,
+            getNewestUserOrderFail
+        )
+    }
+}
+
+
+export const USER_UPDATE_ORDER = "USER_UPDATE_ORDER";
+export const EXPECT_USER_UPDATE_ORDER = "EXPECT_USER_UPDATE_ORDER";
+export const USER_UPDATE_ORDER_FAIL = "USER_UPDATE_ORDER_FAIL";
+export const USER_UPDATE_ORDER_SUCCESS = "USER_UPDATE_ORDER_SUCCESS";
+
+
+export function expectUserUpdateOrder(){
+    return {
+        type: EXPECT_USER_UPDATE_ORDER,
+    }
+}
+
+export function userUpdateOrderFail(reason){
+    return {
+        type: USER_UPDATE_ORDER_FAIL,
+        reason
+    }
+}
+
+export function userUpdateOrderSuccess(msg){
+    return {
+        type: USER_UPDATE_ORDER_SUCCESS,
+        msg
+    }
+}
+
+export function userUpdateOrder(orderParams, orderId){
+    return (dispatch, getState) => {
+        dispatch(expectUserUpdateOrder());
+        return getRemoteMeteor(
+            dispatch, getState, "orders", "app.update.order",
+            [orderParams, orderId], userUpdateOrderSuccess, userUpdateOrderFail
+        );
     }
 }

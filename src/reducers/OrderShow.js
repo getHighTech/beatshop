@@ -1,4 +1,5 @@
 import { EXPECT_CREATE_ONE_ORDER, CREAT_ONE_ORDER_FAIL, CREAT_ONE_ORDER_SUCCESS, EXPECT_LOAD_ONE_ORDER, LOAD_ONE_ORDER_FAIL, LOAD_ONE_ORDER_SUCCESS } from "../actions/orders";
+import { USE_ONE_CONTACT } from "../actions/users";
 
 export default function  OrderShow(
     state={
@@ -46,6 +47,14 @@ export default function  OrderShow(
                 order: action.msg,
                 updated: true,
             });
+        case USE_ONE_CONTACT:
+            console.log(action);
+            
+            return Object.assign({}, state, {
+                order: Object.assign({}, state.order, {
+                    contact: action.contact,
+                })
+            })
         default:
             return state;
     }

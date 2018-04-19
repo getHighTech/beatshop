@@ -20,6 +20,6 @@ export function loadHomeIndexProductsSuccess(products){
 export function loadHomeIndexProducts(){
     return (dispatch, getState) => {
         dispatch(expectHomeIndexProducts());
-        return getRemoteMeteor(dispatch, getState, "products","wanrenchehui.temp.home", [app.name], loadHomeIndexProductsSuccess, dealWithError);
+        return getRemoteMeteor(dispatch, getState, "products","wanrenchehui.temp.home", [], loadHomeIndexProductsSuccess, dealWithError);
     }
 }
