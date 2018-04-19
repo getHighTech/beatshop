@@ -1,5 +1,5 @@
 import { EXPECT_CREATE_ONE_ORDER, CREAT_ONE_ORDER_FAIL, CREAT_ONE_ORDER_SUCCESS, EXPECT_LOAD_ONE_ORDER, LOAD_ONE_ORDER_FAIL, LOAD_ONE_ORDER_SUCCESS } from "../actions/orders";
-import { USE_ONE_CONTACT } from "../actions/users";
+import { USE_ONE_CONTACT } from "../actions/contacts";
 
 export default function  OrderShow(
     state={

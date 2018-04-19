@@ -10,7 +10,7 @@ import Divider from 'material-ui/Divider';
 import LoadingItem from '../../components/public/LoadingItem';
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
-import { useOneContact } from '../../actions/users';
+import { useOneContact } from '../../actions/contacts';
 const styles = theme => ({
     row: {
         display: 'flex',

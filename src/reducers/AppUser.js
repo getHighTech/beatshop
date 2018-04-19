@@ -1,5 +1,6 @@
 import { PASS_ACCESS, DENY_ACCESS, EXPECT_CHECK_ACCESS } from "../actions/check_access";
-import { MEMORY_PATH_BEFORE_LOGINED, EXPECT_SMS_CODE, GET_SMS_CODE_SUCCESS, GET_SMS_CODE_FAIL, USE_ONE_CONTACT } from "../actions/users";
+import { MEMORY_PATH_BEFORE_LOGINED, EXPECT_SMS_CODE, GET_SMS_CODE_SUCCESS, GET_SMS_CODE_FAIL} from "../actions/users";
+import { USE_ONE_CONTACT } from "../actions/contacts";
 import { REMOTE_METHOD_ERROR } from "../actions/error_fail";
 import { USER_LOGIN_FAIL, EXPECT_USER_LOGIN, USER_LOGIN_SUCCESS } from '../actions/process/login';
 import { ADD_PRODUCTS_TO_APP_CART } from "../actions/app_cart";
