@@ -1,246 +1,123 @@
 
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import { setAppLayout } from '../../actions/app';
 import TextField from 'material-ui/TextField';
+import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import { connect } from 'react-redux';
-import {testPhone} from '../../tools/regValid'
-import Snackbar from "material-ui/Snackbar";
-import { userLogin } from '../../actions/process/login';
-import { LinearProgress } from 'material-ui/Progress';
+import { createNewContact } from '../../actions/contacts';
+
 const styles = theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: "column",
-    alignItems: "center",
-    alignContent: "center",
+    padding: 6,
+    maxWidth: 450,
     backgroundColor: "white",
-    width: "100%",
-    maxWidth: "400px",
-    position: "relative",
-    top: "30px"
-  },  progress: {
-    margin: theme.spacing.unit * 2,
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: "90%",
-
-  },button: {
-    margin: 8,
-    color: "white",
-    height: "auto",
-    fontSize: "x-large"
-  },
+    flexDirection: "column"
+  },  
 });
-//倒计时
-let timers =[]
+
 
 class NewContact extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      validDisabled: false,
-      currentTime: 60,
-      username: "",
-      password: "",
-      usernameError: false,
-      passwordError: false,
-      usernameLabel: "用户名/手机号",
-      passwordLabel: "密码",
+     name: "",
+     mobile: "",
+     address: "",
+     carNumber: ""
     }
-    this.handleLoginBtnClick = this.handleLoginBtnClick.bind(this);
   }
 
-  
   componentDidMount(){
-    const { dispatch, user } = this.props;
+    const { dispatch } = this.props;
     dispatch(setAppLayout(
       {
           isBack: true, 
-          backTo: "/", 
-          title: "密码登录", 
+          backTo: "/my/contacts", 
+          title: "新建联系方式", 
           hasCart: false, 
           hasBottomNav: false, 
           hasGeoLoc: false,
-          hasEditor: false, 
           hasSearch: false,
+          hasNewCreate: false,
       }
-  ));
+    ));
   }
-  handleSnackClose = () => {
-    this.setState({ snackOpen: false });
-  };
-  
-  componentWillUnmount(){
-    timers.forEach(timer => {
-      clearTimeout(timer);
-    })
-  }
-  componentWillReceiveProps(nextProps){
-    const {user} = nextProps;
-    
-    
-  }
-  handleOnChange(e, item){
-    this.setState({
-      usernameError: false,
-      usernameLabel: "用户名/手机号",
-      PasswordError: false,
-      PasswordLabel: "密码" 
-    })
-    if(item === "username"){
-      this.setState({
-        username: e.target.value
-      })
-    }
-    if(item === "password"){
-      this.setState({
-        password: e.target.value
-      })
-    }
-    
-    
-  }
-  handleLoginBtnClick(){
-    const {location, currentCity} = this.props
-    this.setState({
-      usernameError: false,
-      usernameLabel: "用户名/手机号",
-      passwordError: false,
-      passwordLabel: "密码" 
-    })
-    if(this.state.username===""){
-      this.setState({
-        usernameError: true,
-        usernameLabel: "此项不得为空" 
-      })
 
-      return false;
-    }
-    if(this.state.password===""){
-      this.setState({
-        passwordError: true,
-        passwordLabel: "密码不得为空" 
-      })
-
-      return false;
-    }
-    let position = location.position;
-    let address = location.addressComponent;
-    let city = currentCity;
-    let loginParams = {
-      username: this.state.username,
-      password: this.state.password,
-      position,
-      address,
-      city,
-    }
-    
-    const { dispatch } = this.props;
-    console.log(loginParams);
-    
-    return dispatch(userLogin("password", loginParams));
-    
-  }
-  componentWillReceiveProps(nextProps){
-    const {user, history} = nextProps;
-    if(user.loginStatus === "untrigger"){
-      return this.setState({
-        buttonText: "登录",
-      })
-    }
-    if(user.loginStatus==="loading"){
-      return this.setState({
-        buttonText: "正在登录",
-      })
-    }
-    if(user.loginStatus==="success"){
-       this.setState({
-        buttonText: "登录成功, 开始跳转",
-      })
-      return setTimeout(()=>{
-        history.push(user.urlBeforeLogined);
-      },1000)
-
-    }
-
-    if(user.loginStatus==="failed"){
-      if(user.loginFailReason === "USER NOT FOUND"){
-        return this.setState({
-          usernameError: true,
-          usernameLabel: "用户不存在" 
-        })
+  handleSubmitBtn(){
+       let contact = this.state;
+       if(
+         !contact.name || !contact.address
+         || !contact.mobile || !contact.carNumber
+      ){
+        console.error("fields require", contact);
+        
+        return false;
       }
-      if(user.loginFailReason === "LOGIN PASS WRONG"){
-        return this.setState({
-          passwordError: true,
-          passwordLabel: "密码错误" 
-        })
-      }
-    }
+      const { dispatch } = this.props;
+      console.log("多次执行？");
+      
+      dispatch(createNewContact(contact));
+      this.setState({
+        name: "",
+        mobile: "",
+        address: "",
+        carNumber: ""
+       });
   }
+
+  handleInputChange(e, feild){
+    let inputObj = {};
+    inputObj[feild] = e.target.value;
+    this.setState(inputObj);
+
+  }
+
   render(){
-    const { classes, history, user } = this.props;
-    const { 
-      validDisabled, currentTime, usernameError,
-       passwordError, usernameLabel, passwordLabel, snackOpen, snackContent } = this.state;
+    const { classes } = this.props;
     return (
-      <div style={{
-            display: 'flex',
-          flexWrap: 'wrap',
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor: "white",
-          padding: "5px"
-          }}>
-          <form className={classes.container} noValidate autoComplete="off">
-          <TextField required={!usernameError} error={usernameError}
-            id="username-input"
-            label={usernameLabel}
-            className={classes.textField}
-            type="text"
-            autoComplete="current-password"
-            onChange={(e)=>this.handleOnChange.bind(this)(e, "username")}
-          /><br/>
-         <TextField required={!passwordError} error={passwordError}
-            id="password-input"
-            label={passwordLabel}
-            className={classes.textField}
-            type="password"
-            autoComplete="current-password"
-            onChange={(e)=>this.handleOnChange.bind(this)(e, "password")}
-          /><br/>
-         <div style={{ flexGrow: 1, width: "100%"}}>
-            {(user.loginStatus === "loading")&& <LinearProgress color="secondary" />}
-          </div>
-         <Button 
-         onClick={this.handleLoginBtnClick} 
-         disabled={(user.loginStatus === "loading" || user.loginStatus === "success")? true : false}
-         variant="raised" color="primary" 
-         style={{color: (user.loginStatus === "loading" || user.loginStatus === "success")? "black" : "white"}}
-         className={classes.button} 
-         fullWidth={true}>
-         {this.state.buttonText}
-         </Button>
+      <div>
+        <form className={classes.container} noValidate autoComplete="off">
+        <TextField
+          id="full-width"
+          label="您的姓名"
+          fullWidth required
+          margin="normal"
+          value={this.state.name}
+          onChange={(e)=>this.handleInputChange.bind(this)(e, "name")}
           
-          </form>
-          <Snackbar
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              open={snackOpen}
-              onClose={this.handleSnackClose}
-              SnackbarContentProps={{
-                'aria-describedby': 'message-id',
-              }}
-              message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
-             
-          />
+        />
+        <TextField
+          id="full-width"
+          label="电话号码"
+          fullWidth required
+          margin="normal"
+          value={this.state.mobile}
+          onChange={(e)=>this.handleInputChange.bind(this)(e, "mobile")}
+          
+        />
+        <TextField
+          id="full-width"
+          label="收获地址"
+          fullWidth required
+          margin="normal"
+          value={this.state.address}
+          onChange={(e)=>this.handleInputChange.bind(this)(e, "address")}
+        />
+        <TextField
+          id="full-width"
+          label="车牌号码"
+          fullWidth required
+          margin="normal"
+          value={this.state.carNumber}
+          onChange={(e)=>this.handleInputChange.bind(this)(e, "carNumber")}
+        /><br/>
+        <Button onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>        
+        </form>
       </div>
-    );
+    )
   }
   
 }
@@ -251,8 +128,7 @@ NewContact.propTypes = {
 function mapToState(state){
   return {
     user: state.AppUser,
-    location: state.AppInfo.amap,
-    currentCity: state.AppInfo.currentCity
+    userContacts: state.UserContacts
   }
 }
 

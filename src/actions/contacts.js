@@ -14,11 +14,12 @@ export function expectCreateNewContact(){
 
 export function createNewContact(contact){
     return (dispatch, getState) => {
-        dispatch(expectCreateNewContact);
+        
+        dispatch(expectCreateNewContact());
         return getRemoteMeteor(
             dispatch,
             getState, 
-            "orders", 
+            "user_contact", 
             "app.create.user.contact", 
             [getState().AppUser.userId, contact],
             createNewContactSuccess,
@@ -28,6 +29,7 @@ export function createNewContact(contact){
 }
 
 export function createNewContactFail(reason){
+    console.log(reason);
     return {
         type: CREATE_NEW_CONTACT_FAIL,
         reason
@@ -35,6 +37,8 @@ export function createNewContactFail(reason){
 }
 
 export function createNewContactSuccess(msg){
+    console.log(msg);
+    
     return {
         type: CREATE_NEW_CONTACT_SUCCESS,
         msg
@@ -90,6 +94,7 @@ export function expectSetDefaultContact(){
     }
 }
 export function setDefaultContactFail(reason){
+    
     return {
         type: SET_DEFAULT_CONTACT_FAIL,
         reason
@@ -124,12 +129,16 @@ export function expectGetUserContacts(){
     }
 }
 export function getUserContactsFail(reason){
+    
+    
     return {
         type: GET_USER_CONTACTS_FAIL,
         reason
     }
 }
 export function getUserContactsSuccess(msg){
+    console.log(msg);
+    
     return {
         type: GET_USER_CONTACTS_SUCCESS,
         msg

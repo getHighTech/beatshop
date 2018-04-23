@@ -11,15 +11,18 @@ export default function getRemoteMeteor(dispatch, getState, collectionType, remo
         }
     });
     console.log(endParams);
-    
+    let remoteMethodBackNumber=0;
     MClient.method(remoteMethodName, endParams);
         return MClient.on("result", message => {
+            if(remoteMethodBackNumber>0){
+                //防止同一个远程方法多次执行
+                return false;
+            }
             if (!message.error) {
                 
                 if (message.result.type === collectionType) {
                     if (message.result.fromMethod === remoteMethodName) {
-                        console.log(message.result);
-                        
+                        remoteMethodBackNumber++;
                         return dispatch(successAction(message.result.msg));
                     }
                 }

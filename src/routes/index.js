@@ -23,7 +23,9 @@ import AppLogin from './login/'
 import AppLoginPassword from './login/password'
 import MyIndex from './my'
 import Order from './orders'
-import Contacts from './contacts'
+import Contacts from './contacts';
+import NewContact from './contacts/new';
+
 const history = createHistory();
 
 const styles = theme => ({
@@ -63,6 +65,11 @@ class App extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        console.log("props新的更新", nextProps);
+        
+    }
+
 
 
     render(){
@@ -96,6 +103,7 @@ class App extends React.Component {
                         <Route exact path="/login" component={AppLogin} />
                         <Route exact path="/my" component={MyIndex} />
                         <Route exact path="/my/contacts/:backaction" component={Contacts} />
+                        <Route exact path="/my/new_contact" component={NewContact} />
                         <Route exact path="/login/password" component={AppLoginPassword} />
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>

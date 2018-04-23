@@ -6,6 +6,7 @@ import ProductsList from '../reducers/ProductsList';
 import ProductShow from '../reducers/ProductShow';
 import OrderShow from '../reducers/OrderShow';
 import AppCart from '../reducers/AppCart';
+import UserContacts from '../reducers/UserContacts';
 export default function configureStore() {
   const enhancer = compose(
     applyMiddleware(thunk),
@@ -18,7 +19,8 @@ export default function configureStore() {
       AppUser,
       ProductShow,
       AppCart,
-      OrderShow
+      OrderShow, 
+      UserContacts,
     }),
     enhancer);
 }

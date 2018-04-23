@@ -64,7 +64,13 @@ export default function AppInfo
             }
 
             if(action.amap.info==="SUCCESS"){
-                currentCity = action.amap.addressComponent.city
+                console.log(action.amap);
+                if(action.amap.addressComponent){
+                    currentCity = action.amap.addressComponent.city
+                }else{
+                    currentCity = "北京市";
+                    
+                }
             }
             return Object.assign({}, state, {
                 amap: action.amap,

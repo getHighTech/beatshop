@@ -154,9 +154,17 @@ class MenuAppBar extends React.Component {
       currentCity: "定位中"
     })
     if(address.info === "SUCCESS"){
-      this.setState({
-        currentCity: address.addressComponent.city
-      })
+      if(address.addressComponent){
+        this.setState({
+          currentCity: address.addressComponent.city
+        })
+      }else{
+        this.setState({
+          currentCity: "北京市"
+        })
+          
+      }
+      
     }
     if(address.info==="FAILED"){
       this.setState({

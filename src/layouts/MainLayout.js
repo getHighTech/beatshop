@@ -30,10 +30,7 @@ class MainLayout extends React.Component{
   componentDidMount(){
     document.title =AppInfo.name_zh;
   }
-  componentWillReceiveProps(nextProps){
-    console.log("所有的更新", nextProps);
-    
-  }
+ 
   render(){
     const { classes } = this.props;
       return(
