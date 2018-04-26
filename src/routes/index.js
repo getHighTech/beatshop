@@ -26,12 +26,19 @@ import Order from './orders'
 import Contacts from './contacts';
 import NewContact from './contacts/new';
 
+import Button from 'material-ui/Button';
+import { SnackbarContent } from 'material-ui/Snackbar';
+
+
 const history = createHistory();
 
 const styles = theme => ({
   root: {
     textAlign: 'center',
     paddingTop: theme.spacing.unit * 20,
+  },
+  snackbar: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -50,12 +57,19 @@ const ProductShowWithPath = ({ match }) => (
 class App extends React.Component {
     constructor(props){
         super(props)
+        this.state={
+            snackOpen: false,
+            snackContent: "",
+            snackAction: {
+                text: "",
+                href: "#/contact"
+            } 
+        }
         
     }
 
     componentDidMount(){
         const { dispatch, store} = this.props;
-        console.log("初始化app");
         
         dispatch(syncRemoteUser());
         if(!store.AppInfo.init){
@@ -108,7 +122,20 @@ class App extends React.Component {
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>
+                    <SnackbarContent
+                        className={classes.snackbar}
+                        message={
+                        'I love candy. I love cookies. I love cupcakes. \
+                        I love cheesecake. I love chocolate.'
+                        }
+                        action={
+                        <Button color="secondary" size="small" component="a" href="#/contact">
+                            lorem ipsum dolorem
+                        </Button>
+                        }
+                    />
                 </MainLayout>
+                
             </Router>
         )
     }

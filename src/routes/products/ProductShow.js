@@ -13,6 +13,9 @@ import { setAppLayout } from '../../actions/app';
 import Snackbar from 'material-ui/Snackbar';
 
 import ProductBottomBar from '../../components/products/ProductBottomBar';
+
+
+
 const styles = theme => ({
     root: {
       margin: theme.spacing.unit * 2,

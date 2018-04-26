@@ -26,7 +26,9 @@ class NewContact extends React.Component {
      name: "",
      mobile: "",
      address: "",
-     carNumber: ""
+     carNumber: "",
+     helperText: "",
+     allFeildError: false,
     }
   }
 
@@ -53,7 +55,10 @@ class NewContact extends React.Component {
          || !contact.mobile || !contact.carNumber
       ){
         console.error("fields require", contact);
-        
+        this.setState({
+          helperText: "此处为必须项",
+          allFeildError: true,
+         });
         return false;
       }
       const { dispatch } = this.props;
@@ -64,7 +69,8 @@ class NewContact extends React.Component {
         name: "",
         mobile: "",
         address: "",
-        carNumber: ""
+        carNumber: "",
+        helperText: ""
        });
   }
 
@@ -83,35 +89,39 @@ class NewContact extends React.Component {
         <TextField
           id="full-width"
           label="您的姓名"
-          fullWidth required
+          fullWidth required error={this.state.allFeildError}
           margin="normal"
           value={this.state.name}
+          helperText={this.state.helperText}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "name")}
           
         />
         <TextField
           id="full-width"
           label="电话号码"
-          fullWidth required
+          fullWidth required  error={this.state.allFeildError}
           margin="normal"
           value={this.state.mobile}
+          helperText={this.state.helperText}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "mobile")}
           
         />
         <TextField
           id="full-width"
           label="收获地址"
-          fullWidth required
+          fullWidth required  error={this.state.allFeildError}
           margin="normal"
           value={this.state.address}
+          helperText={this.state.helperText}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "address")}
         />
         <TextField
           id="full-width"
           label="车牌号码"
-          fullWidth required
+          fullWidth required  error={this.state.allFeildError}
           margin="normal"
           value={this.state.carNumber}
+          helperText={this.state.helperText}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "carNumber")}
         /><br/>
         <Button onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>        
