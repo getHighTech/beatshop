@@ -71,17 +71,12 @@ class ProductBottomBar extends React.Component{
       if(user.checkAccessStatus === "checking"){
         return this.setState({ snackOpen: true, snackContent: "正在检查权限" });
       }
-      if(user.checkAccessStatus === "untrigger"){
-        return false;
-      }
 
       if(user.checkAccessStatus === "checked"){
         
         if(user.accessable){
           console.log("已经检查通过", user.accessable);
-          if(user.checkAccessAction === "AddToCart"){
-            return dispatch(addProductsToAppCart(product, 1, product.shopId));
-          }
+          
         }else{
           console.log("已经检查拒绝", user.accessable);
           if(user.accessableReason === "login_user MISSING"){
@@ -113,7 +108,7 @@ class ProductBottomBar extends React.Component{
       
       return (
         <div className={classes.root}>
-        <Snackbar
+        {/* <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             open={snackOpen}
             onClose={this.handleSnackClose}
@@ -122,7 +117,7 @@ class ProductBottomBar extends React.Component{
             }}
             message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
             
-          /><br/>
+          /><br/> */}
         <AppBar position="static" className={classes.appbar} color="default">
           <Toolbar style={{backgroundColor: "rgba(4, 4, 4, 0.3)", color: "white"}}>
               <IconButton aria-label="加入购物车">

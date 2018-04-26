@@ -38,20 +38,21 @@ export default function AppUser(state={
           console.log(action.checkAccessAction);
             return Object.assign({}, state, {
               checkAccessStatus: "checking",
+              accessable: false,
               checkAccessAction: action.checkAccessAction
             })
           case PASS_ACCESS:
             return Object.assign({}, state, {
               accessable: true,
               accessableReason: action.reason,
-              checkAccessStatus: "checked",
+              checkAccessStatus: "untrigger",
               checkedProduct: action.checkedProduct,
             })
          
           case ADD_PRODUCTS_TO_APP_CART: 
             return Object.assign({}, state, {
               checkAccessStatus: "untrigger",
-              checkAccessAction: null
+              accessable: false,
             })
           case EXPECT_CREATE_ONE_ORDER: 
             return Object.assign({}, state, {
@@ -86,7 +87,7 @@ export default function AppUser(state={
               accessableReason: action.reason,
               denyCount,
               missingRole: action.missingRole,
-              checkAccessStatus: "checked",
+              checkAccessStatus: "untrigger",
               
             })
           case EXPECT_SMS_CODE:
@@ -135,6 +136,7 @@ export default function AppUser(state={
             return Object.assign({}, state, {
               syncRemote: "done",
               roles: action.msg.roles,
+              loginStatus: "success",
               user: action.msg.user,
               userId: action.msg.userId,
               contactIsLoaded: action.msg.userContact? true: false,

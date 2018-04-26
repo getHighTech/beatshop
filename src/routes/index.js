@@ -27,7 +27,8 @@ import Contacts from './contacts';
 import NewContact from './contacts/new';
 
 import Button from 'material-ui/Button';
-import { SnackbarContent } from 'material-ui/Snackbar';
+import Snackbar from 'material-ui/Snackbar';
+import reactives from '../reactives';
 
 
 const history = createHistory();
@@ -62,7 +63,7 @@ class App extends React.Component {
             snackContent: "",
             snackAction: {
                 text: "",
-                href: "#/contact"
+                href: "#"
             } 
         }
         
@@ -77,15 +78,34 @@ class App extends React.Component {
             dispatch(loadGeoAddress());
             dispatch(loadApp());
         }
+
+    }
+
+    showSnackBar
+    (
+        showTime=3000,
+        snackContent="",
+        snackAction={
+            text: "",
+            href: "#"
+        }
+    ){
+        this.setState({
+            snackOpen: true,
+            snackContent,
+            snackAction
+        })
+        setTimeout(() => {
+            this.setState({
+                snackOpen: false
+            })
+        }, 3000);
     }
 
     componentWillReceiveProps(nextProps){
-        console.log("props新的更新", nextProps);
         
+        reactives(this);
     }
-
-
-
     render(){
         const { classes } = this.props;
         const { store} = this.props;
@@ -122,15 +142,15 @@ class App extends React.Component {
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>
-                    <SnackbarContent
+                    <Snackbar
+                        anchorOrigin={{ vertical: "top", horizontal: "right" }}
                         className={classes.snackbar}
-                        message={
-                        'I love candy. I love cookies. I love cupcakes. \
-                        I love cheesecake. I love chocolate.'
-                        }
+
+                        open={this.state.snackOpen}
+                        message={this.state.snackContent}
                         action={
-                        <Button color="secondary" size="small" component="a" href="#/contact">
-                            lorem ipsum dolorem
+                        <Button color="secondary" size="small" component="a" href={this.state.snackAction.href}>
+                            {this.state.snackAction.text}
                         </Button>
                         }
                     />
