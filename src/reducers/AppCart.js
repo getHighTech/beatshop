@@ -1,5 +1,31 @@
 import { ADD_PRODUCTS_TO_APP_CART, CHANGE_PRODUCT_FROM_CART_CHECKED } from "../actions/app_cart";
 
+function checkCartChecked(productChecks){
+    let allUnselected = true;
+    let allSelected = true;
+    console.log(productChecks);
+    for (const key in productChecks) {
+        if (productChecks.hasOwnProperty(key)) {
+            const check = productChecks[key];
+            console.log(check);
+            allUnselected = allUnselected && !check;
+            allSelected = allSelected && check;
+        }
+    }
+   
+    console.log("allUnselected",allUnselected);
+    console.log("allSelected",allSelected);
+    
+    if(allSelected){
+        return "all-selected";
+    }
+    if(allUnselected){
+        return "all-unselected";
+    }
+    return "part-selected"
+}
+
+
 // EDIT BY SIMON
 export default function AppCart
 (
@@ -14,6 +40,7 @@ export default function AppCart
         productChecks: {},//"productId": "false",
         shopChecks: {},//"shopId": "false",
         status: "all-unselected",
+        allChecked: false,
         isCurrent: false,
         userId: null,
         newComing: "false",
@@ -102,8 +129,12 @@ export default function AppCart
             productChecks = state.productChecks;
             let checked = productChecks[action.productId];
             productChecks[action.productId] = !checked;
+            console.log(productChecks);
+            
+            let status = checkCartChecked(productChecks);
             return Object.assign({}, state, {   
-                productChecks
+                productChecks,
+                status
             })
 
         default:

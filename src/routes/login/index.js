@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getSMSCode } from '../../actions/users';
 import {testPhone} from '../../tools/regValid'
 import Snackbar from "material-ui/Snackbar";
+import { openAppMsg } from '../../actions/app_msg';
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -53,6 +54,11 @@ class AppLogin extends React.Component {
   
   componentDidMount(){
     const { dispatch, user } = this.props;
+    if (this.props.match.params.msg) {
+      dispatch(openAppMsg("NEED TO LOGIN", 1200))
+      
+      
+    }
     dispatch(setAppLayout(
       {
           isBack: true, 
@@ -218,7 +224,7 @@ class AppLogin extends React.Component {
              </Button><br/>
          </div><br/>
          <Button onClick={this.handleLoginBtnClick.bind(this)} variant="raised" color="primary" className={classes.button} fullWidth={true}>登录/注册</Button>
-         <div><br/>使用密码用户名方式登录?<Button onClick={()=>history.push("/login/password")}  color="secondary">前往</Button></div>
+         <div><br/>使用密码用户名方式登录?<Button onClick={()=>history.push("/password-login")}  color="secondary">前往</Button></div>
          <div><br/>使用密码用户名注册?<Button  color="secondary">立刻注册</Button></div>
          
           

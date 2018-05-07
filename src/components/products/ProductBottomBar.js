@@ -9,8 +9,9 @@ import AddShoppingCart from 'material-ui-icons/AddShoppingCart'
 import { addProductsToAppCart } from '../../actions/app_cart';
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
-import { checkAccessBuy } from '../../actions/check_access';
 import { memoryPathBeforeLogined } from '../../actions/users';
+import { checkAccess } from '../../actions/check_access';
+import { openAppMsg } from '../../actions/app_msg';
 
 const styles = theme => ({
     root: {
@@ -64,43 +65,8 @@ class ProductBottomBar extends React.Component{
     };
     handleAddToCart(product, count, shopId){
         const {dispatch, user, history, url } = this.props;
-        dispatch(checkAccessBuy(product, "AddToCart"));
+        dispatch(checkAccess("buy", product, addProductsToAppCart, openAppMsg))
       }
-    componentWillReceiveProps(nextProps){
-      const {dispatch, user, history, url, product } = nextProps;
-      if(user.checkAccessStatus === "checking"){
-        return this.setState({ snackOpen: true, snackContent: "正在检查权限" });
-      }
-
-      if(user.checkAccessStatus === "checked"){
-        
-        if(user.accessable){
-          console.log("已经检查通过", user.accessable);
-          
-        }else{
-          console.log("已经检查拒绝", user.accessable);
-          if(user.accessableReason === "login_user MISSING"){
-            this.setState({ snackOpen: true, snackContent: "需要先登录" });
-            return timer = setTimeout(() => {
-              dispatch(memoryPathBeforeLogined(url))
-              history.push("/login")
-            }, 1740);
-          }else{
-            if(user.missingRole){//去获得权限的商品
-              
-                return this.props.history.push("/products_by_rolename/"+user.missingRole.split('_')[0]+"/"+product.name);
-                
-            }
-            return false;
-          }
-          return false;
-        
-        }
-        return false;
-   
-        
-      }
-    }
     
     render(){
       const { classes, product } = this.props;

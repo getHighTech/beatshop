@@ -1,5 +1,6 @@
 import getRemoteMeteor from "../../services/meteor/methods";
 import { setStore, removeStore } from "../../tools/localStorage";
+import { syncRemoteUser } from "./load_app";
 export const EXPECT_USER_LOGIN = "EXPECT_USER_LOGIN";
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
@@ -66,6 +67,7 @@ export function userLogout(){
         removeStore("stampedToken");
         removeStore("userId");
         removeStore("expiredTime");
+        dispatch(syncRemoteUser());
         return dispatch(userLogoutSuccess);
     }
 }

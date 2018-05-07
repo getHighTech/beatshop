@@ -11,10 +11,11 @@ import AddShoppingCart from 'material-ui-icons/AddShoppingCart'
 import Button from 'material-ui/Button'
 import { connect } from 'react-redux';
 import { addProductsToAppCart } from '../../actions/app_cart';
-import { checkAccessBuy } from '../../actions/check_access';
+import { checkAccess } from '../../actions/check_access';
 import Snackbar from 'material-ui/Snackbar';
 import { memoryPathBeforeLogined } from '../../actions/users';
 import { createOneOrderByProduct } from '../../actions/orders';
+import { openAppMsg } from '../../actions/app_msg';
 
 const styles = theme => ({
   card: {
@@ -59,62 +60,18 @@ class ProductCard extends React.Component {
 
   handleAddToCart(product){
     const {dispatch} = this.props;
-    dispatch(checkAccessBuy(product,"AddToCart"));
+    dispatch(checkAccess("buy", product, "add_product_to_cart"))
+    
   }
   componentWillUnMount(){
     clearTimeout(timer);
   }
   componentWillReceiveProps(nextProps){
-    const {dispatch, user, product, history} = nextProps;
-    
-    if(product === user.checkedProduct){
-      if(user.checkAccessStatus === "checking"){
-        return this.setState({ snackOpen: true, snackContent: "正在检查权限" });
-      }
-      if(user.checkAccessStatus === "untrigger"){
-        return false;
-      }
-  
-      if(user.checkAccessStatus === "checked"){
-        if(user.accessable){
-          console.log(user.checkAccessAction);
-          
-          if(user.checkAccessAction === "AddToCart"){
-            return dispatch(addProductsToAppCart(product, 1, product.shopId));
-          }
-          if(user.checkAccessAction === "BuyOneProduct"){
-            return dispatch(createOneOrderByProduct(product, 1));
-          }
-          
-          
-        }else{
-          if(user.accessableReason === "login_user MISSING"){
-            this.setState({ snackOpen: true, snackContent: "需要先登录" });
-            return timer = setTimeout(() => {
-              dispatch(memoryPathBeforeLogined(history.location.pathname))
-              history.push("/login")
-            }, 1740);
-          }else{
-            if(user.missingRole){//去获得权限的商品
-             
-                  return history.push("/products_by_rolename/"+user.missingRole.split('_')[0]+"/"+product.name);
-            }
-            return false;
-          }
-          return false;
-         
-        }
-        return false;
-      }
-    }
-    
-    
     
   }
 
   handleBuyOneProductBtnClick(product){
     const {dispatch} = this.props;
-    dispatch(checkAccessBuy(product,"BuyOneProduct"));   
   }
 
 

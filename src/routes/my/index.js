@@ -6,6 +6,7 @@ import MyItems from '../../components/my/MyItems';
 import cyan from 'material-ui/colors/cyan';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
+import { userLogout } from '../../actions/users';
 
 const styles = {
   row: {
@@ -34,14 +35,18 @@ class MyIndex extends React.Component{
     
   }
   render(){
-    const { classes } = this.props;
+    const { classes, dispatch } = this.props;
     return (
       <div className={classes.row}>
 
         <br/>
         <MyItems /><br/>
         
-        <Button  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>
+        <Button onClick={()=>{
+          console.log("logout");
+          dispatch(userLogout());
+          
+        }}  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>
         
       </div>
     );

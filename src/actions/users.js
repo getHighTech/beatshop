@@ -89,8 +89,37 @@ export function loadDefaultContactSuccess(msg){
 
 
 
+export const EXPECT_USER_LOG_OUT = "EXPECT_USER_LOG_OUT";
+export const USER_LOG_OUT_FAIL = "USER_LOG_OUT_FAIL"
+export const USER_LOG_OUT_SUCCESS = "USER_LOG_OUT_SUCCESS";
+export const USER_LOG_OUT = "USER_LOG_OUT";
 
 
+
+export function expectUserLogout(){
+    return {
+        type: EXPECT_USER_LOG_OUT,
+    }
+}
+export function userLogoutFail(){
+    return {
+        type: USER_LOG_OUT_FAIL
+    }
+}
+export function userLogoutSuccess(){
+    return {
+        type: USER_LOG_OUT_SUCCESS
+    }
+}
+export function userLogout(){
+    return dispatch => {
+        dispatch(expectUserLogout());
+        removeStore("expiredTime");
+        removeStore("stampedToken");
+        removeStore("userId");
+        dispatch(userLogoutSuccess());
+    }
+}
 
 
 

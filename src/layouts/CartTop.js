@@ -25,14 +25,7 @@ class CartTop extends React.Component{
     handleSnackClose = () => {
       this.setState({ snackOpen: false });
     };
-    componentWillReceiveProps(nextProps){
-      if(this.props.cart.count < nextProps.cart.count){
-        this.setState({ snackOpen: true});
-        timerVal = setTimeout(() => {
-          this.setState({ snackOpen: false});
-        }, 1750);
-      }
-    }
+    
     componentWillUnmount(){
       clearTimeout(timerVal);
     }
@@ -48,27 +41,7 @@ class CartTop extends React.Component{
             </Badge>
             
         </IconButton>
-        <Snackbar
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
-              open={snackOpen}
-              onClose={this.handleSnackClose}
-              SnackbarContentProps={{
-                'aria-describedby': 'message-id',
-              }}
-              message={<span style={{width: "40%"}} id="message-id">加入购物车成功</span>} 
-              action={[
-                <Button key="undo" color="secondary" size="small" onClick={()=>{return this.props.history.push("/cart")}}>
-                  立刻查看
-                </Button>,
-                <IconButton
-                  key="close"
-                  aria-label="Close"
-                  color="inherit"
-                  className={classes.close}
-                  onClick={this.handleClose}
-                >
-                </IconButton>,]}
-          />
+        
         </div>
       )
        

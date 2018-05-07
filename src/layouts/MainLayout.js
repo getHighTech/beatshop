@@ -29,7 +29,10 @@ class MainLayout extends React.Component{
 
   componentDidMount(){
     document.title =AppInfo.name_zh;
+
   }
+  
+
  
   render(){
     const { classes } = this.props;

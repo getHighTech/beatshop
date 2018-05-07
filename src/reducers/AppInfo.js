@@ -8,6 +8,7 @@ export default function AppInfo
     {
         init: false,
         currentCity: "北京市",
+        currentPathname: "/",
         amap: {
 
         },

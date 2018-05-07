@@ -70,19 +70,19 @@ export function syncRemoteUser(){
     let expiredTime = getStore("expiredTime");
     return (dispatch, getState) => {
         if(!userId){
-            return dispatch(syncRemoteCartFail("LOCAL USERID NOT FOUND"));
+            return dispatch(syncRemoteUserFail("LOCAL USERID NOT FOUND"));
         }
         if(!stampedToken){
-            return dispatch(syncRemoteCartFail("LOCAL STAMPEDTOKEN NOT FOUND"));
+            return dispatch(syncRemoteUserFail("LOCAL STAMPEDTOKEN NOT FOUND"));
         }
         if(!expiredTime){
-            return dispatch(syncRemoteCartFail("LOCAL EXPIREDTIME NOT FOUND"));
+            return dispatch(syncRemoteUserFail("LOCAL EXPIREDTIME NOT FOUND"));
         }
         if(expiredTime < (new Date).getTime()){
             removeStore("userId");
             removeStore("stampedToken");
             removeStore("expiredTime");
-            return dispatch(syncRemoteCartFail("TOKEN EXPIRED"));
+            return dispatch(syncRemoteUserFail("TOKEN EXPIRED"));
         }
         dispatch(expectSyncRemoteUser());
         return getRemoteMeteor(dispatch, getState, "users", "app.syncRemote.user",[userId], syncRemoteUserSuccess, syncRemoteUserFail)

@@ -6,6 +6,8 @@ import ProductsList from '../reducers/ProductsList';
 import ProductShow from '../reducers/ProductShow';
 import OrderShow from '../reducers/OrderShow';
 import AppCart from '../reducers/AppCart';
+import AppMsg from '../reducers/AppMsg';
+import AppTrigger from '../reducers/AppTrigger';
 import UserContacts from '../reducers/UserContacts';
 export default function configureStore() {
   const enhancer = compose(
@@ -21,6 +23,9 @@ export default function configureStore() {
       AppCart,
       OrderShow, 
       UserContacts,
+      AppMsg,
+      AppTrigger
+      
     }),
     enhancer);
 }

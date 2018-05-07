@@ -150,9 +150,7 @@ class MenuAppBar extends React.Component {
 
   componentWillReceiveProps(nextProps){
     const { address } = nextProps;
-    this.setState({
-      currentCity: "定位中"
-    })
+    
     if(address.info === "SUCCESS"){
       if(address.addressComponent){
         this.setState({

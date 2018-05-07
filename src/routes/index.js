@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
     HashRouter as Router,
     Route,
-    Switch,
+    Switch,Redirect
   } from 'react-router-dom';
 
 import { withStyles } from 'material-ui/styles';
@@ -28,7 +28,7 @@ import NewContact from './contacts/new';
 
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
-import reactives from '../reactives';
+import { openAppMsg } from '../actions/app_msg';
 
 
 const history = createHistory();
@@ -58,22 +58,16 @@ const ProductShowWithPath = ({ match }) => (
 class App extends React.Component {
     constructor(props){
         super(props)
-        this.state={
-            snackOpen: false,
-            snackContent: "",
-            snackAction: {
-                text: "",
-                href: "#"
-            } 
-        }
+       
         
     }
 
     componentDidMount(){
-        const { dispatch, store} = this.props;
+        const { dispatch, appInfo} = this.props;
+        
         
         dispatch(syncRemoteUser());
-        if(!store.AppInfo.init){
+        if(!appInfo.init){
             
             dispatch(loadGeoAddress());
             dispatch(loadApp());
@@ -81,46 +75,52 @@ class App extends React.Component {
 
     }
 
-    showSnackBar
-    (
-        showTime=3000,
-        snackContent="",
-        snackAction={
-            text: "",
-            href: "#"
-        }
-    ){
-        this.setState({
-            snackOpen: true,
-            snackContent,
-            snackAction
-        })
-        setTimeout(() => {
-            this.setState({
-                snackOpen: false
-            })
-        }, 3000);
-    }
+    
 
-    componentWillReceiveProps(nextProps){
-        
-        reactives(this);
-    }
+   
     render(){
-        const { classes } = this.props;
-        const { store} = this.props;
-        
-        if (!store.AppInfo.init ) {
+        const {classes, appInfo, order, msg, user, dispatch} = this.props;
+        const PrivateRoute = ({ component: Component, ...rest }) => (
+            <Route
+              {...rest}
+              render={props => {
+                if(user.roles.includes("login_user")){
+                    return (
+                        <Component {...props} />
+                      )
+                }else{
+                    let msg = props.match.path;
+                    if(msg === '/my'){
+                        //在个人主页并不提醒需要先登录
+                        msg=""
+                    }
+                    return <Redirect
+                    to={{
+                      pathname: "/login"+msg,
+                      state: { from: props.location }
+                    }}
+                  />
+                }
+                }
+              }
+            />
+          );
+        if (!appInfo.init ) {
             return (
                 <LoadApp title="应用载入中" />
             )
         }
-        if(store.OrderShow.loading){
+        if(order.loading){
             return (
                 <LoadApp title="订单生成中" />
             )
         }
-        if(store.AppInfo.fail){
+        if(user.logOut === "loading"){
+            return (
+                <LoadApp title="正在退出" />
+            )
+        }
+        if(appInfo.fail){
             return (
                 <InvalidApp />
             )
@@ -129,16 +129,17 @@ class App extends React.Component {
             <Router  className={classes.root} >
                 <MainLayout history={history} store={this.props.store}>
                     <Switch>
+                        <PrivateRoute exact path="/my" component={MyIndex} />
+                        <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
+                        <PrivateRoute exact path="/my/new_contact" component={NewContact} />
+                        <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
+                        <PrivateRoute exact path="/cart" component={AppCart} />
                         <Route exact path="/" component={HomeWithPath} />
                         <Route  path="/products_by_rolename/:rolename/:productname" component={ProductShowWithPath} />
                         <Route  path="/products/:id" component={ProductShowWithPath} />
-                        <Route  path="/orders/:id" component={OrderWithPath} />
-                        <Route exact path="/cart" component={AppCart} />
-                        <Route exact path="/login" component={AppLogin} />
-                        <Route exact path="/my" component={MyIndex} />
-                        <Route exact path="/my/contacts/:backaction" component={Contacts} />
-                        <Route exact path="/my/new_contact" component={NewContact} />
-                        <Route exact path="/login/password" component={AppLoginPassword} />
+                        <Route path="/password-login" component={AppLoginPassword} />
+                        <Route path="/login/:msg" component={AppLogin} />
+                        <Route path="/login" component={AppLogin} />
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>
@@ -146,11 +147,11 @@ class App extends React.Component {
                         anchorOrigin={{ vertical: "top", horizontal: "right" }}
                         className={classes.snackbar}
 
-                        open={this.state.snackOpen}
-                        message={this.state.snackContent}
+                        open={msg.open}
+                        message={msg.content}
                         action={
-                        <Button color="secondary" size="small" component="a" href={this.state.snackAction.href}>
-                            {this.state.snackAction.text}
+                        <Button color="secondary" size="small" component="a" href={msg.href}>
+                            { msg.actionText }
                         </Button>
                         }
                     />
@@ -166,7 +167,10 @@ App.propTypes = {
 
   function mapUserState(state){
     return {
-        store: state
+        msg: state.AppMsg,
+        appInfo: state.AppInfo,
+        order: state.OrderShow,
+        user: state.AppUser
     }
 }
 export default connect(mapUserState)(withRoot(withStyles(styles)(App)));

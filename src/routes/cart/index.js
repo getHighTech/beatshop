@@ -9,6 +9,7 @@ import NumberInput from '../../components/public/NumberInput';
 import { connect } from 'react-redux';
 import Checkbox from 'material-ui/Checkbox';
 import { changeProductFromCartChecked } from '../../actions/app_cart';
+import Clear from "material-ui-icons/Clear"
 
 const styles = theme => ({
     root: {
@@ -19,20 +20,23 @@ const styles = theme => ({
 
 class AppCart extends React.Component {
   componentDidMount(){
-    const { dispatch } = this.props;
-    dispatch(setAppLayout(
-      {
-          isBack: true, 
-          backTo: "/", 
-          title: "购物车", 
-          hasCart: false, 
-          hasBottomNav: false, 
-          hasGeoLoc: false,
-          hasEditor: true,
-          editorType: "cart", 
-          hasSearch: false,
-      }
-  ));
+    const { dispatch, layout } = this.props;
+    if(layout.title !== "购物车"){
+      dispatch(setAppLayout(
+        {
+            isBack: true, 
+            backTo: "/", 
+            title: "购物车", 
+            hasCart: false, 
+            hasBottomNav: false, 
+            hasGeoLoc: false,
+            editorType: "cart", 
+            hasSearch: false,
+        }
+    ));
+    }
+   
+    
   }
   handleProductShow(id){
     
@@ -57,7 +61,9 @@ class AppCart extends React.Component {
                         </Avatar>
                         <ListItemText style={{width: "auto", flex: 0.4}} onClick={this.handleProductShow.bind(this, product._id)} primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
                         <NumberInput initNumber={cart.productCounts[product._id]}/>
-                        <div style={{width: "auto", textAlign: "center", flex: 0.25}}>delte</div>
+                        <div style={{width: "auto", textAlign: "center", flex: 0.25}}>
+                          <Clear/>
+                        </div>
                
                     </ListItem>
                    })
@@ -79,6 +85,7 @@ function mapToState(state){
   return {
     layout: state.AppInfo.layout,
     cart: state.AppCart,
+    user: state.AppUser
   }
 }
 
