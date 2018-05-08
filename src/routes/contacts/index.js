@@ -37,7 +37,7 @@ const styles = theme => ({
 
 class Contacts extends React.Component {
   componentDidMount(){
-    const { dispatch, match, orderShow } = this.props;
+    const { dispatch, match, orderShow, layout } = this.props;
     let backPath = "/"
     let title = "我的联系方式";
     if(match.params.backaction === "orderuse"){
@@ -49,18 +49,21 @@ class Contacts extends React.Component {
         }
     }
     
-    dispatch(setAppLayout(
-      {
-          isBack: true, 
-          backTo: backPath, 
-          title, 
-          hasCart: false, 
-          hasBottomNav: false, 
-          hasGeoLoc: false,
-          hasSearch: false,
-          hasNewCreate: true,
-      }
-  ));
+    if(layout.title !== title){
+      dispatch(setAppLayout(
+        {
+            isBack: true, 
+            backTo: backPath, 
+            title, 
+            hasCart: false, 
+            hasBottomNav: false, 
+            hasGeoLoc: false,
+            hasSearch: false,
+            hasNewCreate: true,
+        }
+      ));
+    }
+    
   }
   state = {
     checked: [1],
@@ -84,18 +87,23 @@ class Contacts extends React.Component {
   handleItemClick(e, value){
     console.log(this.props);
     const { dispatch, orderShow } = this.props;
-    dispatch(useOneContact({
-      mobile: "18820965455",
-      address: "黄泉路44号",
-      carNumber: "川A212312",
-      name: "徐三岛"
+    if(orderShow.order){
+      dispatch(useOneContact({
+        mobile: "18820965455",
+        address: "黄泉路44号",
+        carNumber: "川A212312",
+        name: "徐三岛"
+  
+      }));
+    }
 
-    }));
     this.props.history.push("/orders/"+orderShow.id);
     
   }
   render(){
     const { classes, orderShow, user } = this.props;
+    console.log(this.props);
+    
     const custDivider = () => {
         return (
             <div style={{
@@ -152,6 +160,7 @@ function mapToState(state){
   return {
     user: state.AppUser,
     orderShow: state.OrderShow,
+    layout: state.AppInfo.layout
   }
 }
 

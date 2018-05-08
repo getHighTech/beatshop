@@ -1,6 +1,7 @@
 import createHistory from 'history/createHashHistory';
 import { closeAppMsg, openAppMsg } from "./app_msg";
 import { addProductsToAppCart } from './app_cart';
+import { createOneOrderByProduct } from './orders';
 
 const history = createHistory();
 
@@ -24,33 +25,51 @@ export const APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH = "APP_SHOW_MSG_AND_IN
 
 
 export function switchActionNames(actionName){
-    //此处转换和注册每个方法和类型， 方法只能有一个参数
+    //此处转换和注册每个方法和类型
     switch (actionName) {
         case "add_product_to_cart":
             return {
                 action: addProductsToAppCart,
                 type: APP_SHOW_MSG_AND_INJECT_DATA_REACT
             };
+        case "create_one_order_by_product":
+            return {
+                action: createOneOrderByProduct,
+                type: APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH
+            }
         
         default:
             return;
     }
 }
 
-function msgSwitchByReason(reason){
+function msgSwitchByReason(reason, option={}){
     switch (reason) {
         case "login_user MISSING":
             
             return {
                 content: "需要先登录",
                 actionText: "立即登录",
-                href: "/login",
+                href: "#/login",
+            };
+        case "blackcard_holder MISSING":
+            return {
+                content: "需要黑卡会员权限，才能购买",
+                actionText: "立即成为会员",
+                href: "#/products_by_rolename/blackcard/"+option.name
             }
         case "add_cart_success":
             return {
                 content: "加入购物成功！",
                 actionText: "立刻查看",
-                href: "/cart"
+                href: "#/cart"
+            }
+
+        case "generate_order":
+            return {
+                content: "正在生成订单",
+                actionText: "",
+                href: "#/"
             }
     
         default:
@@ -83,12 +102,14 @@ export function appRedirectPath(path){
 }
 
 
-export function appShowMsgAndRedirectPath(path, reason, msgSurvive){
-    let msgParams = msgSwitchByReason(reason)
+export function appShowMsgAndRedirectPath(path, reason, msgSurvive, option){
+    let msgParams = msgSwitchByReason(reason, option)
+    console.log(msgParams);
+    
     return dispatch => {
         dispatch(closeAppMsg(msgSurvive));
         history.push(path);
-        dispatch({
+        return dispatch({
             type: APP_SHOW_MSG_AND_READIRECT_PATH,
             msgParams
         })
@@ -124,7 +145,7 @@ export function appShowMsgAndInjectDataReactWithPath(
     actionName, reason, msgSurvive=2350, actionParams, path="/"){
         let msgParams = msgSwitchByReason(reason)
     return dispatch => {
-        dispatch(switchActionNames(actionName).actionName(actionParams));        
+        dispatch(switchActionNames(actionName).action(actionParams));        
         dispatch(closeAppMsg(msgSurvive));
         history.push(path);
         //传入存活时间

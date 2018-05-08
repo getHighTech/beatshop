@@ -139,7 +139,7 @@ class App extends React.Component {
                         <Route  path="/products/:id" component={ProductShowWithPath} />
                         <Route path="/password-login" component={AppLoginPassword} />
                         <Route path="/login/:msg" component={AppLogin} />
-                        <Route path="/login" component={AppLogin} />
+                        <Route exact path="/login" component={AppLogin} />
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>

@@ -63,7 +63,7 @@ const styles = theme => ({
                 if(match.params.productname){
                     this.setState({
                         snackOpen: true,
-                        snackContent: "欲购买"+match.params.productname+"，请先购买此商品"
+                        snackContent: ""+match.params.productname+"，请先购买此商品"
                     })
                 }
                 
@@ -82,12 +82,6 @@ const styles = theme => ({
         }
         if(match.params.rolename && !match.params.id){
             dispatch(loadOneProductByRolename(match.params.rolename));
-            if(match.params.productname){
-                this.setState({
-                    snackOpen: true,
-                    snackContent: "欲购买"+match.params.productname+"，请先购买此商品"
-                })
-            }
             
         }
         

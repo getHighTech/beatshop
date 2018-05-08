@@ -65,7 +65,7 @@ class ProductBottomBar extends React.Component{
     };
     handleAddToCart(product, count, shopId){
         const {dispatch, user, history, url } = this.props;
-        dispatch(checkAccess("buy", product, addProductsToAppCart, openAppMsg))
+        dispatch(checkAccess("buy", product, "add_product_to_cart"))
       }
     
     render(){
@@ -74,16 +74,7 @@ class ProductBottomBar extends React.Component{
       
       return (
         <div className={classes.root}>
-        {/* <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={snackOpen}
-            onClose={this.handleSnackClose}
-            SnackbarContentProps={{
-                'aria-describedby': 'message-id',
-            }}
-            message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
-            
-          /><br/> */}
+        
         <AppBar position="static" className={classes.appbar} color="default">
           <Toolbar style={{backgroundColor: "rgba(4, 4, 4, 0.3)", color: "white"}}>
               <IconButton aria-label="加入购物车">

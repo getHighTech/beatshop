@@ -72,6 +72,8 @@ class ProductCard extends React.Component {
 
   handleBuyOneProductBtnClick(product){
     const {dispatch} = this.props;
+    dispatch(checkAccess("buy", product, "create_one_order_by_product"));
+    
   }
 
 

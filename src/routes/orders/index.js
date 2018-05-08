@@ -37,20 +37,25 @@ const styles = theme => ({
 
 class Order extends React.Component {
   componentDidMount(){
-    const { dispatch, match } = this.props;
-    dispatch(loadOneOrder(match.params.id))  
-    dispatch(setAppLayout(
-      {
-          isBack: true, 
-          backTo: "/", 
-          title: "确认订单", 
-          hasCart: false, 
-          hasBottomNav: false, 
-          hasGeoLoc: false,
-          hasEditor: false, 
-          hasSearch: false,
-      }
-  ));
+    const { dispatch, match, layout } = this.props;
+    console.log(this.props);
+    
+    if(layout.title!=='确认订单'){
+        dispatch(loadOneOrder(match.params.id));
+        dispatch(setAppLayout(
+            {
+                isBack: true, 
+                backTo: "/", 
+                title: "确认订单", 
+                hasCart: false, 
+                hasBottomNav: false, 
+                hasGeoLoc: false,
+                hasEditor: false, 
+                hasSearch: false,
+            }
+        ));
+    }
+
   }
   render(){
     const { classes, orderShow, user } = this.props;
@@ -65,11 +70,20 @@ class Order extends React.Component {
         )
     }
 
+    if(!orderShow.order){
+        return (
+            <div style={{display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "white",}}><LoadingItem /></div>
+        )
+    }
+
     
     return (
       <div className={classes.row}>
-      {
-          !orderShow.updated?    <LoadingItem/> :
+     
           <div className={classes.row}>
               <Typography variant="subheading" gutterBottom>
                 订单号:{orderShow.order.orderCode}
@@ -112,7 +126,7 @@ class Order extends React.Component {
             }
             {custDivider()}
             <Typography variant="title" gutterBottom>
-            总计: <span style={{fontWeight: "bolder"}}>¥{orderShow.order.totalAmount}</span>
+            总计: <span style={{fontWeight: "bolder"}}>¥{orderShow.order.totalAmount/100}</span>
             </Typography>
             {custDivider()}
             <Button 
@@ -121,8 +135,6 @@ class Order extends React.Component {
              fullWidth={true}>确认订单并且支付
              </Button>
           </div>
-
-      }
             
       </div>
     );
@@ -137,6 +149,7 @@ function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
+    layout: state.AppInfo.layout
   }
 }
 

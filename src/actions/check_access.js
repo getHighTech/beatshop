@@ -1,5 +1,5 @@
 import getRemoteMeteor from "../services/meteor/methods";
-import { appShowMsgAndInjectDataReact, switchActionNames, APP_SHOW_MSG_AND_INJECT_DATA_REACT, appShowMsg, appShowMsgAndRedirectPath } from "./app";
+import { appShowMsgAndInjectDataReact, switchActionNames, APP_SHOW_MSG_AND_INJECT_DATA_REACT, appShowMsg, appShowMsgAndRedirectPath, APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH, appShowMsgAndInjectDataReactWithPath } from "./app";
 
 export const CHECK_ACCESS_BUY = "CHECK_ACCESS_BUY";
 export const PASS_ACCESS = "PASS_ACCESS";
@@ -65,6 +65,10 @@ export function passAccess(reason, product, accessName){
         switch (action.type) {
             case APP_SHOW_MSG_AND_INJECT_DATA_REACT:
                return dispatch(appShowMsgAndInjectDataReact(accessName, "add_cart_success", 2360, product)); 
+            case APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH:
+                return dispatch(appShowMsgAndInjectDataReactWithPath(
+                    accessName, "generate_order", 2230, product
+                ));
             default:
                 return {
                     type: PASS_ACCESS,
@@ -79,16 +83,17 @@ export function passAccess(reason, product, accessName){
 
 
 export function denyAccess(reason, product){
-
+    console.log(reason);
+    
     return dispatch=> {
         switch(reason){
             case "login_user MISSING":
                 return dispatch(appShowMsgAndRedirectPath("/login", reason, 2560));
 
-            case "black_card MISSING":
+            case "blackcard_holder MISSING":
                 return dispatch(appShowMsgAndRedirectPath(
-                    "/products_by_rolename/black_card_holder/black_card", 
-                    reason, 2560));
+                    "/products_by_rolename/blackcard/"+product.name, 
+                    reason, 2560, product));
             
             default:
                 return {
