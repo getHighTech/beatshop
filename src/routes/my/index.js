@@ -7,6 +7,7 @@ import cyan from 'material-ui/colors/cyan';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
 import { userLogout } from '../../actions/users';
+import { appShowMsgAndInjectDataReact } from '../../actions/app';
 
 const styles = {
   row: {
@@ -44,7 +45,7 @@ class MyIndex extends React.Component{
         
         <Button onClick={()=>{
           console.log("logout");
-          dispatch(userLogout());
+          dispatch(appShowMsgAndInjectDataReact("logout", "logout_success", 2360))
           
         }}  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>
         

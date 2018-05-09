@@ -40,6 +40,7 @@ export default function AppCart
         productChecks: {},//"productId": "false",
         shopChecks: {},//"shopId": "false",
         status: "all-unselected",
+        orderStatus: "notFinish",
         allChecked: false,
         isCurrent: false,
         userId: null,
@@ -124,6 +125,7 @@ export default function AppCart
                 shopChecks,
                 status: "all-unselected",
                 totalAmount: 0,
+                userId: action.userId
             })
         case CHANGE_PRODUCT_FROM_CART_CHECKED: 
             productChecks = state.productChecks;

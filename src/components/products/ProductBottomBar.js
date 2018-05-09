@@ -26,8 +26,6 @@ const styles = theme => ({
             position: "fixed",
             width: "100%",
             zIndex: '1000',
-            // border: "red 5px outset",
-            
             bottom: 50,
           },
         
@@ -37,14 +35,11 @@ const styles = theme => ({
         width: "100%",
         [theme.breakpoints.down('md')]: {
           width: "100%",
-          // border: "red 5px outset",
           backgroundColor: "rgba(4, 4, 4, 0.76)",
         },
       },
         flex: {
             flex: 1,
-          // border: "red 5px outset",
-            
         },
     
 });
@@ -69,7 +64,7 @@ class ProductBottomBar extends React.Component{
       }
     
     render(){
-      const { classes, product } = this.props;
+      const { classes, product, dispatch } = this.props;
       const { snackOpen, snackContent} =this.state;
       
       return (
@@ -80,7 +75,7 @@ class ProductBottomBar extends React.Component{
               <IconButton aria-label="加入购物车">
                 <AddShoppingCart onClick={()=> this.handleAddToCart(product, 1, product.shopId)} color="secondary" />
               </IconButton>
-               <Button color="inherit" className={classes.flex}>立即购买</Button>
+               <Button onClick={()=> dispatch(checkAccess("buy", product, "create_one_order_by_product"))}  color="inherit" className={classes.flex}>立即购买</Button>
               <Button color="inherit">查看店铺</Button>
           </Toolbar>
         </AppBar>

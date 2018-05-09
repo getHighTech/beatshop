@@ -2,6 +2,7 @@ import getRemoteMeteor from "../../services/meteor/methods";
 import { dealWithError } from "../error_fail";
 import { getAddress } from "../../services/http/amap";
 import { getStore, removeStore } from "../../tools/localStorage";
+import { syncLocalCartRemote, syncRemoteCartlocal } from "../app_cart";
 
 export const  EXPECT_LOAD_APP = "EXPECT_LOAD_APP";
 export const LOAD_APP_SUCCESS = "LOAD_APP_SUCCESS";
@@ -63,12 +64,16 @@ export function expectSyncRemoteUser(){
     }
 }
 export function syncRemoteUser(){
-    console.log("开始同步");
     
     let userId = getStore("userId");
     let stampedToken = getStore("stampedToken")
     let expiredTime = getStore("expiredTime");
+    let cartId = getStore("cartId");
+    
     return (dispatch, getState) => {
+        if(cartId){
+            dispatch(syncRemoteCartlocal(cartId));
+        }
         if(!userId){
             return dispatch(syncRemoteUserFail("LOCAL USERID NOT FOUND"));
         }
@@ -85,6 +90,7 @@ export function syncRemoteUser(){
             return dispatch(syncRemoteUserFail("TOKEN EXPIRED"));
         }
         dispatch(expectSyncRemoteUser());
+       
         return getRemoteMeteor(dispatch, getState, "users", "app.syncRemote.user",[userId], syncRemoteUserSuccess, syncRemoteUserFail)
     }
 }

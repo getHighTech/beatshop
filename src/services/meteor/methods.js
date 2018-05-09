@@ -10,7 +10,6 @@ export default function getRemoteMeteor(dispatch, getState, collectionType, remo
             endParams.push(element);
         }
     });
-    console.log(endParams);
     let remoteMethodBackNumber=0;
     MClient.method(remoteMethodName, endParams);
         return MClient.on("result", message => {
@@ -21,13 +20,13 @@ export default function getRemoteMeteor(dispatch, getState, collectionType, remo
             if (!message.error) {
                 
                 if (message.result.type === collectionType) {
+                   
                     if (message.result.fromMethod === remoteMethodName) {
                         remoteMethodBackNumber++;
                         return dispatch(successAction(message.result.msg));
                     }
                 }
                 if(message.result.type === "error"){
-                     console.log(message.result);
                     
                     return dispatch(failAction(message.result.reason));
                 }

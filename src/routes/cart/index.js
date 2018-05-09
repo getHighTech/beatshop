@@ -33,7 +33,7 @@ class AppCart extends React.Component {
             editorType: "cart", 
             hasSearch: false,
         }
-    ));
+      ));
     }
    
     
@@ -44,11 +44,18 @@ class AppCart extends React.Component {
   }
   render(){
     const { classes, cart, dispatch } = this.props;
+
     
     return (
       <div className={classes.root}>
            <List>
                {
+                 cart.products.length === 0? <ListItem key="0" component="a" href="#/">
+                
+                      <ListItemText style={{width: "auto", flex: 0.4, textAlign: "center"}}  primary="空空如也,再去逛逛" />
+               
+        
+                  </ListItem> :
                    cart.products.map((product, index)=>{
                     return <ListItem key={index}>
                         <Checkbox

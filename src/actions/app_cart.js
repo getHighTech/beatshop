@@ -1,19 +1,34 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { closeAppMsg } from "./app_msg";
+import { getStore, setStore } from "../tools/localStorage";
 
 export const ADD_PRODUCTS_TO_APP_CART ="ADD_PRODUCTS_TO_APP_CART";
 export const CHANGE_PRODUCT_FROM_CART_CHECKED="CHANGE_PRODUCT_FROM_CART_CHECKED";
 
 
+let  intervalTimers = [];
+function clearAllInterval(){
+    intervalTimers.forEach(i=>{
+        clearInterval(i);
+    });
+}
 
 export function addProductsToAppCart(product, count=1, shopName=product.shopName){
-    return  dispatch => {
-        dispatch(closeAppMsg(2300));
+    return  (dispatch, getState) => {
+        let i = 0;
+        let cartId = getStore("cartId");
+        if(!cartId){cartId = "000";}
+        let intervalTimer = setInterval(()=>{
+            console.log(i++);
+            dispatch(syncLocalCartRemote(cartId, getState().AppCart));
+        }, 1500)      
+        intervalTimers.push(intervalTimer);
         return dispatch({
             type: ADD_PRODUCTS_TO_APP_CART,
             product,
             count,
-            shopName
+            shopName,
+            userId: getState().AppUser.userId
         });
     }
     
@@ -38,12 +53,14 @@ export function expectSyncRemoteCartlocal(){
     }
 }
 export function syncRemoteCartlocalFail(reason){
+    console.log(reason);
     return {
         type: SYNC_LOCAL_CART_REMOTE_FAIL,
         reason
     }
 }
 export function syncRemoteCartlocalSuccess(msg){
+    console.log(msg);
     return {
         type: SYNC_LOCAL_CART_REMOTE_SUCCESS,
         msg
@@ -53,7 +70,7 @@ export function syncRemoteCartlocal(cartId){
     return (dispatch, getState) => {
         dispatch(expectSyncRemoteCartlocal());
         return getRemoteMeteor(dispatch, getState, "app_carts",
-    "app.sync.local.cart.remote", [cartId], syncRemoteCartlocalSuccess,
+    "app.sync.remote.cart.local", [getState().AppUser.userId, cartId], syncRemoteCartlocalSuccess,
     syncRemoteCartlocalFail);
     }
 }
@@ -71,17 +88,24 @@ export function expectSyncLocalCartRemote(){
     }
 }
 export function syncLocalCartRemoteFail(reason){
+    clearAllInterval();
     return {
         type: SYNC_LOCAL_CART_REMOTE_FAIL,
         reason
     }
 }
 export function syncLocalCartRemoteSuccess(msg){
+    console.log(msg);
+    if(msg!==1){
+        setStore("cartId", msg);
+    }
+    clearAllInterval();
     return {
         type: SYNC_LOCAL_CART_REMOTE_SUCCESS,
         msg
     }
 }
+
 export function syncLocalCartRemote(cartId, cartParams){
     return (dispatch, getState) => {
         dispatch(expectSyncLocalCartRemote());

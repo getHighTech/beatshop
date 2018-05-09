@@ -44,7 +44,6 @@ export function createOneOrder(cart, count){
            ...cartToOrderParams(cart),
             contact: defaultContact,
         }
-        let loginToken = getStore("stampedToken");
         return getRemoteMeteor(
             dispatch,
              getState, 
@@ -214,4 +213,7 @@ export function userUpdateOrder(orderParams, orderId){
         );
     }
 }
+
+
+
 
