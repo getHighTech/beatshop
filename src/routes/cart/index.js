@@ -8,8 +8,9 @@ import Avatar from 'material-ui/Avatar';
 import NumberInput from '../../components/public/NumberInput';
 import { connect } from 'react-redux';
 import Checkbox from 'material-ui/Checkbox';
-import { changeProductFromCartChecked } from '../../actions/app_cart';
+import { changeProductFromCartChecked, deleteProductFromCart } from '../../actions/app_cart';
 import Clear from "material-ui-icons/Clear"
+import CartBottom from '../../components/cart/CartBottom';
 
 const styles = theme => ({
     root: {
@@ -21,6 +22,9 @@ const styles = theme => ({
 class AppCart extends React.Component {
   componentDidMount(){
     const { dispatch, layout } = this.props;
+    this.state = {
+      productChecks: []
+    }
     if(layout.title !== "购物车"){
       dispatch(setAppLayout(
         {
@@ -37,6 +41,12 @@ class AppCart extends React.Component {
     }
    
     
+  }
+  componentWillMount(){
+    const { cart, dispatch } = this.props;
+    this.setState({
+      productChecks: cart.productChecks
+    })
   }
   handleProductShow(id){
     
@@ -67,9 +77,9 @@ class AppCart extends React.Component {
                             <img style={{width: "100%"}} src={product.cover} alt={product.name_zh} />
                         </Avatar>
                         <ListItemText style={{width: "auto", flex: 0.4}} onClick={this.handleProductShow.bind(this, product._id)} primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
-                        <NumberInput initNumber={cart.productCounts[product._id]}/>
-                        <div style={{width: "auto", textAlign: "center", flex: 0.25}}>
-                          <Clear/>
+                        <NumberInput productId={product._id} initNumber={cart.productCounts[product._id]}/>
+                        <div  style={{width: "auto", textAlign: "center", flex: 0.25}}>
+                          <Clear onClick={()=>dispatch(deleteProductFromCart(index))} />
                         </div>
                
                     </ListItem>
@@ -79,6 +89,7 @@ class AppCart extends React.Component {
                
                 
             </List>
+            <CartBottom />
       </div>
     );
   }

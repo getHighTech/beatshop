@@ -117,6 +117,7 @@ export function userLogout(){
         removeStore("expiredTime");
         removeStore("stampedToken");
         removeStore("userId");
+        removeStore("cartId");
         dispatch(userLogoutSuccess());
     }
 }
