@@ -122,12 +122,95 @@ export function userLogout(){
 }
 
 
+export const EXPECT_ADD_BANKCARD = 'EXPECT_ADD_BANKCARD'
+export const ADD_BANKCARD_SUCCESS = 'ADD_BANKCARD_SUCCESS'
+export const ADD_BANKCARD_FAIL = 'ADD_BANKCARD_FAIL'
+
+export function expectAddBankcard(){
+    return {
+        type:EXPECT_ADD_BANKCARD
+    }
+}
+
+export function addBankcardSuccess(msg){
+    return {
+        type: ADD_BANKCARD_SUCCESS,
+        msg
+    }
+}
+export function addBankcardFail(reason){
+    return {
+        type: ADD_BANKCARD_SUCCESS,
+        reason
+    }
+}
+
+export function addBankcard(userId,realName,accountNumber,bankAddress){
+    return (dispatch,getState) => {
+        dispatch(expectAddBankcard())
+        return getRemoteMeteor(dispatch,getState,'bankcards','app.user.create.bankcard',[userId,realName,accountNumber,bankAddress],addBankcardSuccess,addBankcardFail)
+    }
+}
 
 
 
+export const EXPECT_GET_BANKCARD_LIST = 'EXPECT_GET_BANKCARD_LIST'
+export const GET_BANKCARD_LIST_SUCCESS = 'GET_BANKCARD_LIST_SUCCESS'
+export const GET_BANKCARD_LIST_FAIL = 'GET_BANKCARD_LIST_FAIL'
+
+export function expectGetBankcardList(){
+    return {
+        type:EXPECT_GET_BANKCARD_LIST
+    }
+}
+
+export function getBankcardListSuccess(msg){
+    return {
+        type: GET_BANKCARD_LIST_SUCCESS,
+        msg
+    }
+}
+export function getBankcardListFail(reason){
+    return {
+        type: GET_BANKCARD_LIST_FAIL,
+        reason
+    }
+}
+
+export function getBankcardList(userId){
+    return (dispatch,getState) => {
+        dispatch(expectGetBankcardList())
+        return getRemoteMeteor(dispatch,getState,'bankcards','app.get.user.bankcards',[userId],getBankcardListSuccess,getBankcardListFail)
+    }
+}
 
 
+export const EXPECT_REMOVE_BANKCARD = 'EXPECT_REMOVE_BANKCARD'
+export const REMOVE_BANKCARD_SUCCESS = 'REMOVE_BANKCARD_SUCCESS'
+export const REMOVE_BANKCARD_FAIL = 'REMOVE_BANKCARD_FAIL'
 
+export function expectRemoveBankcard(){
+    return {
+        type:EXPECT_REMOVE_BANKCARD
+    }
+}
 
+export function removeBankcardSuccess(msg){
+    return {
+        type: REMOVE_BANKCARD_SUCCESS,
+        msg
+    }
+}
+export function removeBankcardFail(reason){
+    return {
+        type: REMOVE_BANKCARD_FAIL,
+        reason
+    }
+}
 
-
+export function removeBankcard(bankcardId){
+    return (dispatch,getState) => {
+        dispatch(expectRemoveBankcard())
+        return getRemoteMeteor(dispatch,getState,'bankcards','app.user.remove.bankcards',[bankcardId],removeBankcardSuccess,removeBankcardFail)
+    }
+}
