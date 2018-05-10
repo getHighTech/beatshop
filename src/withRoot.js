@@ -3,19 +3,26 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
 import teal from 'material-ui/colors/teal';
 import red from 'material-ui/colors/red';
+import grey from 'material-ui/colors/grey'
+import deepOrange from 'material-ui/colors/deepOrange'
+import amber from 'material-ui/colors/amber'
+
+amber
 // A theme with custom primary and secondary color.
 // It's optional.
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: red[300],
-      main: red[500],
-      dark: red[700],
+      light: deepOrange[300],
+      main: deepOrange[500],
+      dark: deepOrange[700],
+      contrastText: grey[100],
     },
     secondary: {
-      light: teal[100],
-      main: teal[500],
-      dark: teal[700],
+      light: amber[100],
+      main: '#FFD740',
+      dark: amber[700],
+      contrastText: grey[800],
     },
   },
 });

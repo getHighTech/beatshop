@@ -29,6 +29,7 @@ import NewContact from './contacts/new';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 import { openAppMsg } from '../actions/app_msg';
+import BankcardsList from './my/BankcardsList';
 
 
 const history = createHistory();
@@ -134,6 +135,7 @@ class App extends React.Component {
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
                         <PrivateRoute exact path="/cart" component={AppCart} />
+                        <PrivateRoute exact path="/my/bankcards_list" component={BankcardsList} />
                         <Route exact path="/" component={HomeWithPath} />
                         <Route  path="/products_by_rolename/:rolename/:productname" component={ProductShowWithPath} />
                         <Route  path="/products/:id" component={ProductShowWithPath} />

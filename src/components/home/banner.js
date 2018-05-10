@@ -12,7 +12,6 @@ const styles = theme => ({
   root: {
     background: 'url('+Image+')',
     backgroundSize: '100%',
-    backgroundColor: "black",
     width: '100%',
     height: '1200px',
     top: '10px',
@@ -37,12 +36,14 @@ const styles = theme => ({
   slogan: {
     color: "white",
     backgroundColor: "rgba(77, 77, 78, 0.38)",
+    // backgroundColor: "red",
     top: '180px',
     width: '60%',
     position: 'relative',
     flexDirection: "column",
     marginTop: "5px",        
     marginBottom: "5px", 
+    paddingTop:23,
     paddingBottom: "30px",
    alignItems: "center",
    display: "flex",
@@ -76,8 +77,8 @@ class AppBanner extends React.Component {
     const { classes } = this.props;
    
     return (
-      <div className={classes.root}>
-            <div className={classes.slogan}>
+      <div className={classes.root}  >
+            <div className={classes.slogan} color="red">
                 <Hidden mdDown>
                 <Typography
                       variant="display1"
@@ -94,15 +95,15 @@ class AppBanner extends React.Component {
                       color="inherit"
                     
                     >
-                     享受精彩汽车生活
+                     享受精彩汽车生活享受精
                     
                     </Typography>
                     <br/>
-                <Button variant="raised" size="large" color="secondary"  component={Link} to="/login" className={classes.mainButton}>
+                <Button variant="raised" size="large" color="secondary"  component={Link} to="/login" >
                   
                     <Hidden mdUp>
                     <Typography
-                      variant="title"
+                      variant="subheading"
                       color="inherit"
                     
                     >
@@ -111,8 +112,10 @@ class AppBanner extends React.Component {
                     </Typography>
                     </Hidden>
                     <Hidden mdDown>
+
+
                     <Typography
-                      variant="display1"
+                      variant="title"
                       color="inherit"
                     
                     >
