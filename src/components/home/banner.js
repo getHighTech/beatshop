@@ -99,7 +99,7 @@ class AppBanner extends React.Component {
                     
                     </Typography>
                     <br/>
-                <Button variant="raised" size="large" color="secondary"  component={Link} to="/login" >
+                <Button variant="raised" size="small" color="secondary"  component={Link} to="/login" >
                   
                     <Hidden mdUp>
                     <Typography

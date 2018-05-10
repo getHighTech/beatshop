@@ -28,21 +28,54 @@ const styles = theme => ({
     color:grey[800]
   },
   productImg:{
-    maxWidth:'100%'
+    maxWidth:'100%',
+    marginTop:-9
   },
   productName:{
     textAlign:'left',
     fontSize:15,
-    margin:10
+    margin:10,
+    fontWeight:900
   },
   productBrief:{
     textAlign:'left',
-    margin:10
+    marginLeft:10,
+    fontSize:10,
+    marginTop:-10,
+    fontWeight:300
   },
   productPrice:{
     textAlign:'left',
     margin:10
+  },
+  productPriceIcon:{
+    textAlign:'right',
+    paddingLeft:10
   }
+,
+productPriceNumber:{
+  fontWeight:900,
+  marginLeft:2,
+  marginTop:4,
+  fontSize:16,
+  color:'#FF5722'
+},
+hotIcon:{
+  textAlign:'right'
+},
+productPriceNumberContain:{
+  textAlign:'left'
+},
+ButtonContain:{
+  textAlign:'right',
+  paddingRight:10,
+  marginBottom:10
+},
+button:{
+  marginRight:5,
+  color:'#F5F5F5',
+  backgroundColor:grey[800]
+}
   // media: {
   //   height: 194,
   // },
@@ -106,34 +139,47 @@ class ProductCard extends React.Component {
     const { snackOpen, snackContent} =this.state;
     return (
         <Card className={classes.card} 
-          onClick={()=>this.handleExpandClick(product._id)}
           aria-expanded={this.state.expanded}
           aria-label="产品详情">
             <div className={classes.productHeader}>
               <Grid container spacing={12}>
-                <Grid item xs={6}>
+                <Grid item xs={10}>
                   <div className={classes.productName}>{product.name_zh}</div>
-                  
-                </Grid>
-                <Grid item xs={4}>
-                <div className={classes.productPrice}>{"¥"+product.endPrice/100}</div>
-                  {/* <div className={classes.productBrief}>{product.brief}</div> */}
+                  <div className={classes.productBrief}>{product.brief}</div>
                 </Grid>
                 <Grid item xs={2}>
-                <div className={classes.productPrice}>{"¥"+product.endPrice/100}</div>
+                  <div className={classes.hotIcon}><img style={{height:56}} alt="热门商品"  src={require('../imgs/hot.svg')} /> </div>
                 </Grid>
               </Grid>
             </div>
             <div>
               <div className={classes.productContain}>
-                <img className={classes.productImg} alt="产品图片" src={product.cover}/>
+                <img  onClick={()=>this.handleExpandClick(product._id)} className={classes.productImg} alt="产品图片" src={product.cover}/>
               </div>
             </div>
             <div>
-              <div className={classes.productBrief}>{product.brief}</div>
-              <div className={classes.productContain}>
-                立即购买
-              </div>
+              <Grid container spacing={12}>
+                <Grid item xs={4} style={{paddingTop:5}}>
+                  <Grid container spacing={12}>
+                        <Grid item xs={4} className={classes.productPriceIcon}>
+                          <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} /> 
+                        </Grid>
+                        <Grid item xs={8} className={classes.productPriceNumberContain}>
+                          <div  className={classes.productPriceNumber}>{product.endPrice/100}</div>
+                        </Grid>
+                      </Grid>
+                </Grid>
+                <Grid item xs={8}>
+                  <div className={classes.ButtonContain}>
+                    <Button variant="raised"  className={classes.button} onClick={()=> this.handleAddToCart(product, 1, product.shopId)}>
+                     加入购物车
+                    </Button>
+                    <Button variant="raised" color="secondary" onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
+                      立即购买
+                    </Button>
+                  </div>
+                </Grid>
+              </Grid>
             </div>
         </Card>
     );
