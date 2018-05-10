@@ -31,14 +31,10 @@ const styles = theme => ({
   appbar: {
     backgroundColor: grey[800],
     color:theme.secondary,
-    borderBottom: "white 1px outset",
+    borderBottom: "#FFD740 1px outset",
     [theme.breakpoints.down('md')]: {
       backgroundColor: grey[800],
     },
-  },
-  drawerPaper: {
-    position: 'relative',
-    width: "50px",
   },
   flex: {
     flex: 1,
@@ -64,23 +60,6 @@ const styles = theme => ({
       alignItems: "center",
     },
   },
-  // button: {
-  //   color: "white",
-  //   fontWeight: 'bolder',
-  //   fontSize: '20px',
-  //   ListItemText: {
-  //       color: 'white',
-  //   },
-  //   [theme.breakpoints.down('sm')]: {
-  //     color: "white",
-  //     fontWeight: 'bolder',
-  //     fontSize: '18px',
-     
-  //     ListItemText: {
-  //         color: 'white',
-  //     },
-  //   },
-  // },
 
  
 });
@@ -196,13 +175,13 @@ class MenuAppBar extends React.Component {
               layout.hasCart && <CartTop  history={this.props.history} color="secondary"/>
             }
             { layout.hasEditor &&
-              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.button}>
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
                 编辑
                 <ModeEdit />
               </Button>
             }
             { layout.hasNewCreate &&
-              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.button}>
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
                 新建
                 <OpenInNew />
               </Button>
