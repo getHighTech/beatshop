@@ -18,6 +18,7 @@ import ChevronLeft from 'material-ui-icons/ChevronLeft';
 import Button from 'material-ui/Button';
 import ModeEdit from "material-ui-icons/ModeEdit";
 import OpenInNew from "material-ui-icons/OpenInNew"
+import grey from 'material-ui/colors/grey'
 
 const styles = theme => ({
   root: {
@@ -28,10 +29,11 @@ const styles = theme => ({
     
   },
   appbar: {
-    backgroundColor: "rgba(4, 4, 4, 0.1)",
+    backgroundColor: grey[800],
+    color:theme.secondary,
     borderBottom: "white 1px outset",
     [theme.breakpoints.down('md')]: {
-      backgroundColor: "rgba(4, 4, 4, 0.3)",
+      backgroundColor: grey[800],
     },
   },
   drawerPaper: {
@@ -40,7 +42,7 @@ const styles = theme => ({
   },
   flex: {
     flex: 1,
-    color: "white",
+    color: theme.secondary,
     fontWeight: 'bolder',
     fontSize: '28px',
     display: "flex",
@@ -52,7 +54,7 @@ const styles = theme => ({
     left: -35,
     [theme.breakpoints.down('sm')]: {
       margin: theme.spacing.unit*0,
-      color: "white",
+      color: theme.secondary,
       fontWeight: 'bolder',
       height: "54px",
       fontSize: "22px",
@@ -62,45 +64,25 @@ const styles = theme => ({
       alignItems: "center",
     },
   },
-  button: {
-    color: "white",
-    fontWeight: 'bolder',
-    fontSize: '20px',
-    ListItemText: {
-        color: 'white',
-    },
-    [theme.breakpoints.down('sm')]: {
-      color: "white",
-      fontWeight: 'bolder',
-      fontSize: '18px',
+  // button: {
+  //   color: "white",
+  //   fontWeight: 'bolder',
+  //   fontSize: '20px',
+  //   ListItemText: {
+  //       color: 'white',
+  //   },
+  //   [theme.breakpoints.down('sm')]: {
+  //     color: "white",
+  //     fontWeight: 'bolder',
+  //     fontSize: '18px',
      
-      ListItemText: {
-          color: 'white',
-      },
-    },
-  },
-  listItem:{
-    margin: theme.spacing.unit*0.5,
-    color: "white",
-    fontWeight: 'bolder',
-    fontSize: '20px',
-    ListItemText: {
-        color: 'white',
-    },
-  },
+  //     ListItemText: {
+  //         color: 'white',
+  //     },
+  //   },
+  // },
+
  
-  paper: {
-      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-      color: "white",
-      opacity: 0.1,
-  },
-  menuList: {
-    color: "white"
-  },
-  list: {
-    color: "white",
-    backgroundColor: "rgba(0, 0, 0, 0.31)", height: '100%'
-  }
 });
 
 class MenuAppBar extends React.Component {
@@ -185,98 +167,33 @@ class MenuAppBar extends React.Component {
     const { classes, layout } = this.props;
     const { currentCity,  } = this.state;
     
-    
-    const sideList = (
-        <div>
-                <List component="nav">
-                <ListItem button tabIndex={0}
-                                role="button"
-                                onClick={this.toggleDrawer(false)}
-                                onKeyDown={this.toggleDrawer(false)}
-                                
-                                >
-
-                <ListItemText classes={{primary: classes.listItem}} primary="Home" />
-                </ListItem>
-                <ListItem button tabIndex={0}
-                                role="button"
-                                onClick={this.toggleDrawer(false)}
-                                onKeyDown={this.toggleDrawer(false)}
-                                
-                                >
-
-                <ListItemText classes={{primary: classes.listItem}} primary="Login" />
-                </ListItem>
-                <ListItem button tabIndex={0}
-                                role="button"
-                                onClick={this.toggleDrawer(false)}
-                                onKeyDown={this.toggleDrawer(false)}
-                                
-                                >
-
-                <ListItemText classes={{primary: classes.listItem}} primary="New User" />
-                </ListItem>
-                <ListItem button>
- 
-                <ListItemText  classes={{primary: classes.listItem}} primary="White Paper" />
-                </ListItem>
-                <ListItem button>
- 
-                <ListItemText  classes={{primary: classes.listItem}} primary="Tech" />
-                </ListItem>
-
-                <ListItem button>
-                
-                <ListItemText classes={{primary: classes.listItem}} primary="Team" />
-                </ListItem>
-                <ListItem button>
-                
-                <ListItemText classes={{primary: classes.listItem}} primary="Business" />
-                </ListItem>
-                
-            </List>
-            
-        </div>
-      );
     return (
       <div className={classes.root}>
-        <AppBar position="static" className={classes.appbar}>
+        <AppBar position="static" className={classes.appbar} color="secondary">
           <Toolbar>
-                <Hidden smDown>
-                <IconButton onClick={this.toggleDrawer(true)} className={classes.menuButton} color="inherit" aria-label="Menu">
-                    <MenuIcon />
-                </IconButton>
-               
-                <Drawer classes={{
-                    paper: classes.list,
-                    button: classes.button,
-                    }} open={this.state.drawer} onClose={this.toggleDrawer(false)}>
-                    {sideList}
-                </Drawer>
-                </Hidden>
                 {
-                  layout.hasGeoLoc && <CitySelector currentCity={currentCity} color="white"/>
+                  layout.hasGeoLoc && <CitySelector currentCity={currentCity} color="secondary" />
                 }
                 {
                   layout.isBack && 
                   <Button style={{
                     position: "relative",
                     left: -35
-                  }} onClick={()=>this.props.history.push(layout.backTo)} className={classes.button}>
+                  }} onClick={()=>this.props.history.push(layout.backTo)} color="secondary" >
                     <ChevronLeft style={{ fontSize: 36 }}/>
                     返回
                   </Button>
                 }
                 
                
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography variant="title" color="secondary" className={classes.flex}>
                  
               <div>
                   <span>{layout.title} </span>
               </div>
             </Typography>
             {
-              layout.hasCart && <CartTop  history={this.props.history}/>
+              layout.hasCart && <CartTop  history={this.props.history} color="secondary"/>
             }
             { layout.hasEditor &&
               <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.button}>
