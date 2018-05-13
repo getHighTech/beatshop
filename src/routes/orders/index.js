@@ -73,8 +73,8 @@ class Order extends React.Component {
                  version: {
                      id: 2,
                      deal_url: "http://p.10000cars.cn/api/v2/order/give",
-                     success_url: "http://test.10000cars.cn/#/pay/succcess",
-                     fail_url: "http://test.10000cars.cn/#/pay/fail"  
+                     success_url: "http://test.10000cars.cn/%23/pay/succcess",
+                     fail_url: "http://test.10000cars.cn/%23/pay/fail"  
                  }
                }
              }
