@@ -63,15 +63,15 @@ class Order extends React.Component {
   }
   handlePayClick(){
     const { orderShow, user } = this.props;  
-    console.log(orderShow);
-    console.log(user);
+    console.log(orderShow.order._id);
+    console.log(user.user._id);
     var urlencode = require('urlencode');
              let data = {
                "client": "web",
                "data": {
                  out_trade_no: orderShow.order._id,
                  user_id: user.user._id,
-                 super_agency_id: null,
+                 super_agency_id: "abcdef",
                }
              }
 
