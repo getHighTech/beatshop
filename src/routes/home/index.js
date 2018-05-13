@@ -106,7 +106,7 @@ class Home extends React.Component {
         
         return (
             <div className={classes.root}>
-              <AppBanner />
+              {/* <AppBanner /> */}
               { productsList.loading? <LoadingItem/> : 
               <div className={classes.root} style={{height: "auto"}}>
                 <ProductGridList history={this.props.history} products={productsList.products} label="热门"/>

@@ -70,12 +70,7 @@ class Order extends React.Component {
                  out_trade_no: orderShow.order._id,
                  user_id: user.user._id,
                  super_agency_id: "abcdef",
-                 version: {
-                     id: 2,
-                     deal_url: "http://p.10000cars.cn/api/v2/order/give",
-                     success_url: "http://test.10000cars.cn/%23/pay/succcess",
-                     fail_url: "http://test.10000cars.cn/%23/pay/fail"  
-                 }
+                 version: 1
                }
              }
 
