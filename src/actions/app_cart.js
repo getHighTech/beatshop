@@ -7,7 +7,7 @@ export const CHANGE_PRODUCT_FROM_CART_CHECKED="CHANGE_PRODUCT_FROM_CART_CHECKED"
 
 
 let  intervalTimers = [];
-function clearAllInterval(){
+export function clearAllInterval(){
     intervalTimers.forEach(i=>{
         clearInterval(i);
     });
@@ -20,7 +20,7 @@ export function repeatSyncLocalCartRemote(){
         let intervalTimer = setInterval(()=>{
             console.log(i++);
             dispatch(syncLocalCartRemote(cartId, getState().AppCart));
-        }, 1000)      
+        }, 2000)      
         intervalTimers.push(intervalTimer);
         dispatch({
             type: "REAPT_SYNC_LOCAL_CART_REMOTE"

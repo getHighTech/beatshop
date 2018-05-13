@@ -1,7 +1,7 @@
 import app from '../config/app.json';
-import { getStore } from '../tools/localStorage';
+import { getStore, removeStore } from '../tools/localStorage';
 import getRemoteMeteor from '../services/meteor/methods';
-import { repeatSyncLocalCartRemote } from './app_cart';
+import { repeatSyncLocalCartRemote, syncRemoteCartlocal, clearAllInterval } from './app_cart';
 import { history } from './app';
 
 export const EXPECT_CREATE_ONE_ORDER = "EXPECT_CREATE_ONE_ORDER";
@@ -41,7 +41,10 @@ export function createOneOrder(cart){
     //以购物车的结构，完成商品的下单
     return (dispatch, getState) => {
         dispatch(expectCreateOneOrder()); 
-        dispatch(repeatSyncLocalCartRemote());       
+        clearAllInterval();
+        let userId = getStore("userId");
+        let cartId = getStore("cartId");
+        dispatch(syncRemoteCartlocal(cartId, userId));       
         let defaultContact = getState().AppUser.currentContact
         if(!defaultContact){
             defaultContact={}
@@ -101,10 +104,19 @@ export function createOneOrderFail(reason){
 
 export function createOneOrderSuccess(msg){
     history.push("/orders/"+msg);
-    return {
-        type: CREATE_ONE_ORDER_SUCCESS,
-        msg
+    
+    return dispatch => {
+        let userId = getStore("userId");
+        let cartId = getStore("cartId");
+        clearAllInterval();        
+        dispatch(syncRemoteCartlocal(cartId, userId)); 
+        removeStore("cartId");
+        return dispatch({
+            type: CREATE_ONE_ORDER_SUCCESS,
+            msg
+        })
     }
+   
 }
 
 export const EXPECT_LOAD_ONE_ORDER = "EXPECT_LOAD_ONE_ORDER";

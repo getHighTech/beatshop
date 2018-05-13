@@ -63,8 +63,6 @@ class Order extends React.Component {
   }
   handlePayClick(){
     const { orderShow, user } = this.props;  
-    console.log(orderShow.order._id);
-    console.log(user.user._id);
     var urlencode = require('urlencode');
              let data = {
                "client": "web",
@@ -72,6 +70,12 @@ class Order extends React.Component {
                  out_trade_no: orderShow.order._id,
                  user_id: user.user._id,
                  super_agency_id: "abcdef",
+                 version: {
+                     id: 2,
+                     deal_url: "http://p.10000cars.cn/api/v2/order/give",
+                     success_url: "http://test.10000cars.cn/#/pay/succcess",
+                     fail_url: "http://test.10000cars.cn/#/pay/fail"  
+                 }
                }
              }
 
@@ -112,15 +116,16 @@ class Order extends React.Component {
             {custDivider()}
            
             <List component="nav">
-                <ListItem button>
-                    <Avatar
-                            alt="商品"
-                            src={orderShow.order.products[0].cover}
-                        />
-                <ListItemText primary={orderShow.order.products[0].name_zh}  />
-                <ListItemText primary={"×"+orderShow.order.productCounts[orderShow.order.products[0]._id]}  />
-                </ListItem>
-           
+                {orderShow.order.products.map(product=>{
+                    return <ListItem button>
+                        <Avatar
+                                alt="商品"
+                                src={product.cover}
+                            />
+                    <ListItemText primary={product.name_zh}  />
+                    <ListItemText primary={"×"+orderShow.order.productCounts[product._id]}  />
+                    </ListItem>
+                })}
             </List>
            {custDivider()}
           
