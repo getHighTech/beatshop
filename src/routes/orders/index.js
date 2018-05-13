@@ -70,7 +70,7 @@ class Order extends React.Component {
                "client": "web",
                "data": {
                  out_trade_no: orderShow.order._id,
-                 user_id: user.id,
+                 user_id: user.user._id,
                  super_agency_id: null,
                }
              }
