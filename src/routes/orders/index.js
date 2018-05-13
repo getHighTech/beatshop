@@ -42,6 +42,7 @@ class Order extends React.Component {
   componentDidMount(){
     const { dispatch, match, layout } = this.props;
     console.log(this.props);
+    this.handlePayClick = this.handlePayClick.bind(this);
     
     if(layout.title!=='确认订单'){
         dispatch(loadOneOrder(match.params.id));
@@ -59,6 +60,23 @@ class Order extends React.Component {
         ));
     }
 
+  }
+  handlePayClick(){
+    const { orderShow, user } = this.props;  
+    console.log(orderShow);
+    console.log(user);
+    var urlencode = require('urlencode');
+             let data = {
+               "client": "web",
+               "data": {
+                 out_trade_no: orderShow.order._id,
+                 user_id: user.id,
+                 super_agency_id: null,
+               }
+             }
+
+    let payUrl = "http://bills.10000cars.cn/order/s?pdata="+urlencode(JSON.stringify(data));
+    window.location.assign(payUrl);
   }
   render(){
     const { classes, orderShow, user } = this.props;
@@ -133,7 +151,7 @@ class Order extends React.Component {
             总计: <span style={{fontWeight: "bolder"}}>¥{orderShow.order.totalAmount/100}</span>
             </Typography>
             {custDivider()}
-            <Button 
+            <Button onClick={()=> this.handlePayClick()} 
             className={classes.button}
             variant="raised" color="primary" 
              fullWidth={true}>确认订单并且支付
