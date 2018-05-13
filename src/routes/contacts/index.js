@@ -42,11 +42,7 @@ class Contacts extends React.Component {
     let title = "我的联系方式";
     if(match.params.backaction === "orderuse"){
         title = "选择联系方式";
-        if(orderShow.id){
-            backPath="/orders/"+orderShow.id;
-        }else{
-          //若是不存在，获取最新的未确认的订单
-        }
+        backPath="/orders/"+orderShow.id;
     }
     
     if(layout.title !== title){

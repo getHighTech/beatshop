@@ -7,7 +7,7 @@ import { USER_LOGIN_FAIL, EXPECT_USER_LOGIN, USER_LOGIN_SUCCESS } from '../actio
 import { ADD_PRODUCTS_TO_APP_CART } from "../actions/app_cart";
 import { SET_APP_LAYOUT } from "../actions/app";
 import { EXPECT_SYNC_REMOTE_USER, SYNC_REMOTE_USER_FAIL, SYNC_REMOTE_USER_SUCCESS } from "../actions/process/load_app"
-import { CREAT_ONE_ORDER_SUCCESS, CREAT_ONE_ORDER_FAIL, EXPECT_CREATE_ONE_ORDER } from "../actions/orders";
+import { CREATE_ONE_ORDER_SUCCESS, CREATE_ONE_ORDER_FAIL, EXPECT_CREATE_ONE_ORDER } from "../actions/orders";
 
 export default function AppUser(state={
     roles: ["nobody"],
@@ -61,11 +61,11 @@ export default function AppUser(state={
             return Object.assign({}, state, {
               checkAccessAction: null
             })
-          case CREAT_ONE_ORDER_SUCCESS:
+          case CREATE_ONE_ORDER_SUCCESS:
             return Object.assign({}, state, {
               checkAccessAction: null
             })
-          case CREAT_ONE_ORDER_FAIL: 
+          case CREATE_ONE_ORDER_FAIL: 
             return Object.assign({}, state, {
               checkAccessAction: null
             })

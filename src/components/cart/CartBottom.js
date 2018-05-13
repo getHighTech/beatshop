@@ -14,6 +14,7 @@ import { checkAccess } from '../../actions/check_access';
 import { openAppMsg } from '../../actions/app_msg';
 import Checkbox from 'material-ui/Checkbox';
 import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import { createOneOrder } from '../../actions/orders';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -89,7 +90,7 @@ class CartBottom extends React.Component{
           }
         />
                <Button color="inherit" className={classes.flex}>合计: ￥{cart.totalAmount/100}</Button>
-              <Button disabled={cart.status==="all-unselected"? true : false} color="inherit">结算</Button>
+              <Button onClick={()=>dispatch(createOneOrder(cart))} disabled={cart.status==="all-unselected"? true : false} color="inherit">结算</Button>
           </Toolbar>
         </AppBar>
         

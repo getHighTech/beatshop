@@ -77,6 +77,8 @@ class Home extends React.Component {
     componentWillReceiveProps(nextProps){
         const {dispatch, currentCity, layout, orderShow, history} = nextProps;
         if(orderShow.createStatus === "success"){
+            console.log("可以跳转了");
+            
             return history.push("/orders/"+orderShow.id);
           }
         if(currentCity !== this.props.currentCity){

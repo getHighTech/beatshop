@@ -1,10 +1,10 @@
 import createHistory from 'history/createHashHistory';
 import { closeAppMsg, openAppMsg } from "./app_msg";
 import { addProductsToAppCart } from './app_cart';
-import { createOneOrderByProduct } from './orders';
+import { createOneOrderByProduct, createOneOrder } from './orders';
 import { userLogout } from './users';
 
-const history = createHistory();
+export const history = createHistory();
 
 
 export const SET_APP_CITY = "SET_APP_CITY";
@@ -42,6 +42,12 @@ export function switchActionNames(actionName){
             return {
                 action: userLogout,
                 type: APP_SHOW_MSG_AND_INJECT_DATA_REACT
+            }
+
+        case "create_order_from_cart":
+            return {
+                action: createOneOrder,
+                type: APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH
             }
         
         default:

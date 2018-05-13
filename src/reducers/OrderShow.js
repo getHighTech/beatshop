@@ -1,4 +1,4 @@
-import { EXPECT_CREATE_ONE_ORDER, CREAT_ONE_ORDER_FAIL, CREAT_ONE_ORDER_SUCCESS, EXPECT_LOAD_ONE_ORDER, LOAD_ONE_ORDER_FAIL, LOAD_ONE_ORDER_SUCCESS } from "../actions/orders";
+import { EXPECT_CREATE_ONE_ORDER, CREATE_ONE_ORDER_FAIL, CREATE_ONE_ORDER_SUCCESS, EXPECT_LOAD_ONE_ORDER, LOAD_ONE_ORDER_FAIL, LOAD_ONE_ORDER_SUCCESS } from "../actions/orders";
 import { USE_ONE_CONTACT } from "../actions/contacts";
 
 export default function  OrderShow(
@@ -18,11 +18,11 @@ export default function  OrderShow(
             return Object.assign({}, state, {
                 loading: true,
             });
-        case CREAT_ONE_ORDER_FAIL:
+        case CREATE_ONE_ORDER_FAIL:
             return Object.assign({}, state, {
                 loadFailReason: action.reason,
             })
-        case CREAT_ONE_ORDER_SUCCESS:
+        case CREATE_ONE_ORDER_SUCCESS:
             return Object.assign({}, state, {
                 id: action.msg,
                 loading: false,
@@ -48,7 +48,6 @@ export default function  OrderShow(
                 updated: true,
             });
         case USE_ONE_CONTACT:
-            console.log(action);
             
             return Object.assign({}, state, {
                 order: Object.assign({}, state.order, {

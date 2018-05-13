@@ -33,19 +33,22 @@ class NewContact extends React.Component {
   }
 
   componentDidMount(){
-    const { dispatch } = this.props;
-    dispatch(setAppLayout(
-      {
-          isBack: true, 
-          backTo: "/my/contacts", 
-          title: "新建联系方式", 
-          hasCart: false, 
-          hasBottomNav: false, 
-          hasGeoLoc: false,
-          hasSearch: false,
-          hasNewCreate: false,
-      }
-    ));
+    const { dispatch, layout } = this.props;
+    if(layout.title!="新建联系方式"){
+      dispatch(setAppLayout(
+        {
+            isBack: true, 
+            backTo: "/my/contacts", 
+            title: "新建联系方式", 
+            hasCart: false, 
+            hasBottomNav: false, 
+            hasGeoLoc: false,
+            hasSearch: false,
+            hasNewCreate: false,
+        }
+      ));
+    }
+   
   }
 
   handleSubmitBtn(){
@@ -138,7 +141,8 @@ NewContact.propTypes = {
 function mapToState(state){
   return {
     user: state.AppUser,
-    userContacts: state.UserContacts
+    userContacts: state.UserContacts,
+    layout: state.AppInfo.layout
   }
 }
 

@@ -1,11 +1,13 @@
 import app from '../config/app.json';
 import { getStore } from '../tools/localStorage';
 import getRemoteMeteor from '../services/meteor/methods';
+import { repeatSyncLocalCartRemote } from './app_cart';
+import { history } from './app';
 
 export const EXPECT_CREATE_ONE_ORDER = "EXPECT_CREATE_ONE_ORDER";
-export const CREAT_ONE_ORDER = "CREAT_ONE_ORDER";
-export const CREAT_ONE_ORDER_FAIL = "CREAT_ONE_ORDER_FAIL";
-export const CREAT_ONE_ORDER_SUCCESS = "CREAT_ONE_ORDER_SUCCESS";
+export const CREATE_ONE_ORDER = "CREATE_ONE_ORDER";
+export const CREATE_ONE_ORDER_FAIL = "CREATE_ONE_ORDER_FAIL";
+export const CREATE_ONE_ORDER_SUCCESS = "CREATE_ONE_ORDER_SUCCESS";
 
 export function expectCreateOneOrder(){
     return {
@@ -35,13 +37,18 @@ function cartToOrderParams(cart){
         totalAmount: cart.totalAmount,
      }
 }
-export function createOneOrder(cart, count){
+export function createOneOrder(cart){
     //以购物车的结构，完成商品的下单
     return (dispatch, getState) => {
-        dispatch(expectCreateOneOrder());        
+        dispatch(expectCreateOneOrder()); 
+        dispatch(repeatSyncLocalCartRemote());       
         let defaultContact = getState().AppUser.currentContact
+        if(!defaultContact){
+            defaultContact={}
+        }
         let orderParams = {
            ...cartToOrderParams(cart),
+           cartId: cart._id,
             contact: defaultContact,
         }
         return getRemoteMeteor(
@@ -74,7 +81,6 @@ export function createOneOrderByProduct(product, count){
             totalAmount: product.endPrice,
             contact: defaultContact,
         }
-        let loginToken = getStore("stampedToken");
         return getRemoteMeteor(
             dispatch,
              getState, 
@@ -88,16 +94,15 @@ export function createOneOrderByProduct(product, count){
 export function createOneOrderFail(reason){
     
     return {
-        type: CREAT_ONE_ORDER_FAIL,
+        type: CREATE_ONE_ORDER_FAIL,
         reason
     }
 }
 
 export function createOneOrderSuccess(msg){
-    console.log(msg);
-    
+    history.push("/orders/"+msg);
     return {
-        type: CREAT_ONE_ORDER_SUCCESS,
+        type: CREATE_ONE_ORDER_SUCCESS,
         msg
     }
 }

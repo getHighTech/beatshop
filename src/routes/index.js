@@ -108,7 +108,7 @@ class App extends React.Component {
           );
         if (!appInfo.init ) {
             return (
-                <LoadApp title="应用载入中" />
+                <LoadApp title="载入中" />
             )
         }
         if(order.loading){

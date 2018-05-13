@@ -14,6 +14,9 @@ import { loadOneOrder } from '../../actions/orders';
 import LoadingItem from '../../components/public/LoadingItem';
 import Button from 'material-ui/Button'
 const styles = theme => ({
+    flex: {
+        width: "100%"
+    }, 
     row: {
         display: 'flex',
         justifyContent: 'center',
@@ -105,13 +108,14 @@ class Order extends React.Component {
           
             
             {!user.contactIsLoaded? 
-            <div style={{display: "flex", padding: 7}}>
+            <div style={{display: "flex", padding: 7, width: "100%", justifyContent: "center"}}>
                 <Typography variant="title" gutterBottom>
-                无联系方式
-            </Typography><Button 
+                
+            </Typography>
+                <Button  
                     className={classes.button} component="a" href="#/my/contacts/orderuse"
                     variant="raised" color="secondary" 
-                    >立刻填写您的联系方式
+                    >请填写您的联系方式
                 </Button> 
             </div>
                 : 

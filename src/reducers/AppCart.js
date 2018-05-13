@@ -26,7 +26,6 @@ function checkCartChecked(productChecks){
     let allSelected = true;
     let empty = 0;
     //对全空选判断
-    console.log(productChecks);
     for (const key in productChecks) {
         
         if (productChecks.hasOwnProperty(key)) {
@@ -229,6 +228,7 @@ export default function AppCart
             //再判断一下check
 
             status = checkCartChecked(productChecks);
+            
             totalAmount = calNeedToPay(state);
             
             return Object.assign({}, state, {

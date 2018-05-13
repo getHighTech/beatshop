@@ -12,7 +12,7 @@ function clearAllInterval(){
         clearInterval(i);
     });
 }
-function repeatSyncLocalCartRemote(){
+export function repeatSyncLocalCartRemote(){
     return (dispatch, getState)=>{
         let i = 0;
         let cartId = getStore("cartId");
