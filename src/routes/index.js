@@ -31,6 +31,7 @@ import Snackbar from 'material-ui/Snackbar';
 import BankcardsList from './my/BankcardsList';
 import Money from './money/money'
 import MyOrders from './orders/my.js'
+import PayResult from './pay/index.js'
 
 const history = createHistory();
 
@@ -127,6 +128,7 @@ class App extends React.Component {
                     <Switch>
                         <PrivateRoute exact path="/my" component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
+                        <PrivateRoute exact path="/pay/:status" component={PayResult} />
                         <PrivateRoute exact path="/money" component={Money} />
                         <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
