@@ -17,7 +17,7 @@ const styles = theme => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "black",
+    // backgroundColor: "black",
     WebkitOverflowScrolling: "touch",
     height: "100%",
     
