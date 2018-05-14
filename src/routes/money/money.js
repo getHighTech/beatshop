@@ -6,9 +6,7 @@ import { setAppLayout } from '../../actions/app';
 import { withStyles } from 'material-ui/styles';
 import Bankcard from '../../components/bankcard/'
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
