@@ -4,8 +4,6 @@ import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import InboxIcon from 'material-ui-icons/Inbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
 import CreditCard from 'material-ui-icons/CreditCard';
 import CardMembership from 'material-ui-icons/CardMembership';
 import LocalOffer from 'material-ui-icons/LocalOffer';

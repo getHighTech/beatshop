@@ -1,4 +1,4 @@
-import { setStore, getStore, removeStore } from '../tools/localStorage';
+import {  getStore, removeStore } from '../tools/localStorage';
 import app from '../config/app.json'
 import getRemoteMeteor from '../services/meteor/methods';
 import { dealWithError } from "./error_fail";
@@ -48,9 +48,10 @@ export function getSMSCodeFail(reason){
 }
 
 export function getSMSCode(mobile){
+    
     return (dispatch, getState) => {
         dispatch(expectSMSCode());
-        return getRemoteMeteor(dispatch, getState, "SMS", 'app.get.phonesms',[mobile, app.name], getSMSCodeSuccess, dealWithError);        
+        return getRemoteMeteor(dispatch, getState, "SMS", 'app.get.phonesms',[mobile], getSMSCodeSuccess, dealWithError);        
     }
 }
 

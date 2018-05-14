@@ -245,7 +245,7 @@ export default function AppCart
         case CHANGE_PRODUCT_COUNT_FROM_CART:
             productCounts = state.productCounts;
             productChecks = state.productChecks;
-            productCounts[action.productId] = parseInt(action.number);
+            productCounts[action.productId] = parseInt(action.number,0);
             count = 0
             for (const key in productCounts) {
                 if (productCounts.hasOwnProperty(key)) {

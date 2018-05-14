@@ -6,7 +6,6 @@ import { setAppLayout } from '../../actions/app';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
-import {testPhone} from '../../tools/regValid'
 import Snackbar from "material-ui/Snackbar";
 import { userLogin } from '../../actions/process/login';
 import { LinearProgress } from 'material-ui/Progress';
@@ -58,7 +57,7 @@ class AppLoginPassword extends React.Component {
 
   
   componentDidMount(){
-    const { dispatch, user } = this.props;
+    const { dispatch } = this.props;
     dispatch(setAppLayout(
       {
           isBack: true, 
@@ -84,11 +83,7 @@ class AppLoginPassword extends React.Component {
       clearTimeout(timer);
     })
   }
-  componentWillReceiveProps(nextProps){
-    const {user} = nextProps;
-    
-    
-  }
+
   handleOnChange(e, item){
     this.setState({
       usernameError: false,
@@ -190,7 +185,7 @@ class AppLoginPassword extends React.Component {
   render(){
     const { classes, history, user } = this.props;
     const { 
-      validDisabled, currentTime, usernameError,
+       usernameError,
        passwordError, usernameLabel, passwordLabel, snackOpen, snackContent } = this.state;
     return (
       <div style={{

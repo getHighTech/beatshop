@@ -1,5 +1,4 @@
-import { ADD_PRODUCTS_TO_APP_CART } from "../actions/app_cart";
-import { CLOSE_APP_MSG_DONE, OPEN_APP_MSG, EXPECT_OPEN_APP_MSG, OPEN_APP_MSG_DONE } from "../actions/app_msg";
+import { CLOSE_APP_MSG_DONE, EXPECT_OPEN_APP_MSG, OPEN_APP_MSG_DONE } from "../actions/app_msg";
 import { APP_SHOW_MSG_AND_INJECT_DATA_REACT, APP_SHOW_MSG_AND_READIRECT_PATH } from "../actions/app";
 
 export default function AppMsg(state={

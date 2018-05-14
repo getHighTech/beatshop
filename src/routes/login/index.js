@@ -53,7 +53,7 @@ class AppLogin extends React.Component {
 
   
   componentDidMount(){
-    const { dispatch, user } = this.props;
+    const { dispatch } = this.props;
     if (this.props.match.params.msg) {
       dispatch(openAppMsg("NEED TO LOGIN", 1200))
       
@@ -91,24 +91,24 @@ class AppLogin extends React.Component {
       validDisabled: true,
     })
     dispatch(getSMSCode(this.state.mobile));
-    for(var i = 0; i < 60; i++ ){
-        
-        let timer = setTimeout(() => {
-          console.log(i--);
-          this.setState({
-            currentTime: i,
-          })
-          if(i===0){
-            this.setState({
-              currentTime: 60,
-              validDisabled: false,
-            })
-            
-          }
-        }, 1000*i);
-        timers.push(timer);
+    let timer = null;
+    let countBack = 0
+    let exeLoop = () => {
+      if(countBack === 60){
+        clearInterval(timer);
+        this.setState({
+          validDisabled: false,
+        })
+      }
+      this.setState({
+        currentTime: 60-countBack,
+      })
      
     }
+    timer = setInterval(()=>{
+      exeLoop();
+      countBack++;
+    }, 1000);
   }
 
   componentWillUnmount(){
@@ -233,9 +233,6 @@ class AppLogin extends React.Component {
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               open={snackOpen}
               onClose={this.handleSnackClose}
-              SnackbarContentProps={{
-                'aria-describedby': 'message-id',
-              }}
               message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
              
           />

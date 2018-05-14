@@ -1,4 +1,4 @@
-import { EXPECT_CREATE_ONE_ORDER, CREATE_ONE_ORDER_FAIL, CREATE_ONE_ORDER_SUCCESS, EXPECT_LOAD_ONE_ORDER, LOAD_ONE_ORDER_FAIL, LOAD_ONE_ORDER_SUCCESS } from "../actions/orders";
+import { EXPECT_CREATE_ONE_ORDER, CREATE_ONE_ORDER_FAIL, CREATE_ONE_ORDER_SUCCESS, EXPECT_LOAD_ONE_ORDER, LOAD_ONE_ORDER_FAIL, LOAD_ONE_ORDER_SUCCESS, JUDGE_CAR_NUMBER_NEED } from "../actions/orders";
 import { USE_ONE_CONTACT } from "../actions/contacts";
 
 export default function  OrderShow(
@@ -11,6 +11,7 @@ export default function  OrderShow(
         createStatus: "untrigger",//创建过程，
         loadUserFailReason: "",
         updated: false,
+        carNumberNeed: false,
     }, action
 ){
     switch (action.type) {
@@ -53,6 +54,11 @@ export default function  OrderShow(
                 order: Object.assign({}, state.order, {
                     contact: action.contact,
                 })
+            })
+
+        case JUDGE_CAR_NUMBER_NEED:
+            return Object.assign({}, state, {
+                carNumberNeed: action.need,
             })
         default:
             return state;

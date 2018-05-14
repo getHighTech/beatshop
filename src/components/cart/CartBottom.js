@@ -4,16 +4,11 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import AddShoppingCart from 'material-ui-icons/AddShoppingCart'
-import { addProductsToAppCart, unselectSelectAllItemsFromCart } from '../../actions/app_cart';
+import { unselectSelectAllItemsFromCart } from '../../actions/app_cart';
 import { connect } from 'react-redux';
-import Snackbar from 'material-ui/Snackbar';
-import { memoryPathBeforeLogined } from '../../actions/users';
 import { checkAccess } from '../../actions/check_access';
-import { openAppMsg } from '../../actions/app_msg';
 import Checkbox from 'material-ui/Checkbox';
-import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import {  FormControlLabel } from 'material-ui/Form';
 import { createOneOrder } from '../../actions/orders';
 const styles = theme => ({
     root: {
@@ -47,13 +42,7 @@ const styles = theme => ({
 });
 let timer = null;
 class CartBottom extends React.Component{
-  constructor(props){
-      super(props);
-      this.state = {
-        snackOpen: false,
-        snackContent: ""
-      }
-    }
+
     componentWillUnMount(){
       clearTimeout(timer);
     }
@@ -61,13 +50,12 @@ class CartBottom extends React.Component{
       this.setState({ snackOpen: false });
     };
     handleAddToCart(product, count, shopId){
-        const {dispatch, user, history, url } = this.props;
+        const {dispatch } = this.props;
         dispatch(checkAccess("buy", product, "add_product_to_cart"))
       }
     
     render(){
       const { classes, cart, dispatch } = this.props;
-      const { snackOpen, snackContent} =this.state;
       console.log(cart.status);
       
       return (

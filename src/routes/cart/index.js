@@ -22,9 +22,10 @@ const styles = theme => ({
 class AppCart extends React.Component {
   componentDidMount(){
     const { dispatch, layout } = this.props;
-    this.state = {
+    this.setState({
       productChecks: []
-    }
+    })
+   
     if(layout.title !== "购物车"){
       dispatch(setAppLayout(
         {

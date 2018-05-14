@@ -1,5 +1,4 @@
 import getRemoteMeteor from "../../services/meteor/methods";
-import app from '../../config/app.json';
 import { dealWithError } from "../error_fail";
 
 export const EXPECT_HOME_INDEX_PRODUCTS = "EXPECT_HOME_INDEX_PRODUCTS";

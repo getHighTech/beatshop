@@ -1,5 +1,5 @@
 import createHistory from 'history/createHashHistory';
-import { closeAppMsg, openAppMsg } from "./app_msg";
+import { closeAppMsg } from "./app_msg";
 import { addProductsToAppCart } from './app_cart';
 import { createOneOrderByProduct, createOneOrder } from './orders';
 import { userLogout } from './users';

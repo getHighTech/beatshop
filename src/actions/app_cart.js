@@ -1,5 +1,4 @@
 import getRemoteMeteor from "../services/meteor/methods";
-import { closeAppMsg } from "./app_msg";
 import { getStore, setStore } from "../tools/localStorage";
 
 export const ADD_PRODUCTS_TO_APP_CART ="ADD_PRODUCTS_TO_APP_CART";

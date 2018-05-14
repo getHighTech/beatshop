@@ -1,5 +1,4 @@
 import { EXPECT_CREATE_NEW_CONTACT, CREATE_NEW_CONTACT_FAIL, CREATE_NEW_CONTACT_SUCCESS } from "../actions/contacts";
-import { CREAT_ONE_ORDER_FAIL } from "../actions/orders";
 
 export default function UserContacts(state={
     userId: "",
@@ -8,6 +7,9 @@ export default function UserContacts(state={
     editStatus: "untrigger",
     createFail: "noReason",
     contacts:[],
+    contactChecks: {
+
+    }
 }, action){
     switch (action.type) {
         case EXPECT_CREATE_NEW_CONTACT:

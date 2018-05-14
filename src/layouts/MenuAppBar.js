@@ -5,12 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import Hidden from 'material-ui/Hidden';
 import withWidth from 'material-ui/utils/withWidth';
-import Drawer from 'material-ui/Drawer';
-import List, { ListItem, ListItemText } from 'material-ui/List';
 import { connect } from 'react-redux';
 import CitySelector from '../components/public/CitySelector';
 import CartTop from './CartTop';
@@ -138,6 +133,14 @@ class MenuAppBar extends React.Component {
   }
   handleEditorClick(type){
     console.log("编辑模式", type);
+    switch (type) {
+      case "new_contact":
+        this.props.history.push("/my/new_contact")
+        break;
+    
+      default:
+        break;
+    }
     
   }
 

@@ -1,13 +1,12 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
-import teal from 'material-ui/colors/teal';
-import red from 'material-ui/colors/red';
 import grey from 'material-ui/colors/grey'
 import deepOrange from 'material-ui/colors/deepOrange'
 import amber from 'material-ui/colors/amber'
 
-amber
+let amberFun = () => amber;
+amberFun();
 // A theme with custom primary and secondary color.
 // It's optional.
 const theme = createMuiTheme({

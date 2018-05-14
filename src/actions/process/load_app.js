@@ -2,7 +2,7 @@ import getRemoteMeteor from "../../services/meteor/methods";
 import { dealWithError } from "../error_fail";
 import { getAddress } from "../../services/http/amap";
 import { getStore, removeStore } from "../../tools/localStorage";
-import { syncLocalCartRemote, syncRemoteCartlocal } from "../app_cart";
+import { syncRemoteCartlocal } from "../app_cart";
 
 export const  EXPECT_LOAD_APP = "EXPECT_LOAD_APP";
 export const LOAD_APP_SUCCESS = "LOAD_APP_SUCCESS";
@@ -83,7 +83,8 @@ export function syncRemoteUser(){
         if(!expiredTime){
             return dispatch(syncRemoteUserFail("LOCAL EXPIREDTIME NOT FOUND"));
         }
-        if(expiredTime < (new Date).getTime()){
+        let newDate = new Date();
+        if(expiredTime < newDate.getTime()){
             removeStore("userId");
             removeStore("stampedToken");
             removeStore("expiredTime");

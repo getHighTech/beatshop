@@ -2,7 +2,6 @@ import { PASS_ACCESS, DENY_ACCESS, EXPECT_CHECK_ACCESS } from "../actions/check_
 import { MEMORY_PATH_BEFORE_LOGINED, EXPECT_SMS_CODE,
    GET_SMS_CODE_SUCCESS, GET_SMS_CODE_FAIL, EXPECT_USER_LOG_OUT, USER_LOG_OUT_SUCCESS, GET_BANKCARD_LIST_SUCCESS} from "../actions/users";
 import { USE_ONE_CONTACT } from "../actions/contacts";
-import { REMOTE_METHOD_ERROR } from "../actions/error_fail";
 import { USER_LOGIN_FAIL, EXPECT_USER_LOGIN, USER_LOGIN_SUCCESS } from '../actions/process/login';
 import { ADD_PRODUCTS_TO_APP_CART } from "../actions/app_cart";
 import { SET_APP_LAYOUT } from "../actions/app";
@@ -30,9 +29,7 @@ export default function AppUser(state={
     contactIsLoaded: false,
     loginOut: "untrigger",
     bankcardList:[],
-    user: {
-
-    },
+    user: null,
     currentContact: {},
    }, action){
       switch (action.type) {
@@ -68,12 +65,7 @@ export default function AppUser(state={
           case CREATE_ONE_ORDER_FAIL: 
             return Object.assign({}, state, {
               checkAccessAction: null
-            })
-          
-          case ADD_PRODUCTS_TO_APP_CART:
-            return Object.assign({}, state, {
-              checkAccessAction: null
-            })
+            });
 
           case SET_APP_LAYOUT:
             return Object.assign({}, state, {
@@ -170,7 +162,6 @@ export default function AppUser(state={
             })
           case EXPECT_USER_LOG_OUT:
             return Object.assign({}, state, {
-              logOut: "loading",
               roles: ["nobody"],
               logOut: "done",
               stampedToken: null, 

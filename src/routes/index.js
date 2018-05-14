@@ -28,7 +28,6 @@ import NewContact from './contacts/new';
 
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
-import { openAppMsg } from '../actions/app_msg';
 import BankcardsList from './my/BankcardsList';
 
 
@@ -57,12 +56,7 @@ const ProductShowWithPath = ({ match }) => (
 )
 
 class App extends React.Component {
-    constructor(props){
-        super(props)
-       
-        
-    }
-
+   
     componentDidMount(){
         const { dispatch, appInfo} = this.props;
         
@@ -80,7 +74,7 @@ class App extends React.Component {
 
    
     render(){
-        const {classes, appInfo, order, msg, user, dispatch} = this.props;
+        const {classes, appInfo, order, msg, user} = this.props;
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route
               {...rest}

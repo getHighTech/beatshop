@@ -11,6 +11,8 @@ export default function getRemoteMeteor(dispatch, getState, collectionType, remo
         }
     });
     let remoteMethodBackNumber=0;
+    console.log(endParams);
+    
     MClient.method(remoteMethodName, endParams);
         return MClient.on("result", message => {
             if(remoteMethodBackNumber>0){

@@ -74,7 +74,7 @@ const styles = theme => ({
     }
     componentDidMount(){
         
-        const { dispatch, match, history } = this.props;
+        const { dispatch, match } = this.props;
         
         if(match.params.id && !match.params.rolename){
             dispatch(loadOneProduct(match.params.id));

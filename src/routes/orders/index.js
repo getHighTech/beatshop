@@ -3,13 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { setAppLayout } from '../../actions/app';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 
 import grey from 'material-ui/colors/grey';
 import Typography from 'material-ui/Typography';
 import { connect } from 'react-redux';
-import Divider from 'material-ui/Divider';
 import { loadOneOrder } from '../../actions/orders';
 import LoadingItem from '../../components/public/LoadingItem';
 import Button from 'material-ui/Button'
@@ -137,14 +136,25 @@ class Order extends React.Component {
                 </Button> 
             </div>
                 : 
-             <List component="nav">
-                <ListItem button>
-                <ListItemText primary={user.currentContact.mobile.toString()}  />
-                </ListItem>
-                <ListItem button>
-                <ListItemText primary={user.currentContact.address}  />
-                </ListItem>
-             </List>
+                <div style={{display: "flex", alignItems: "center"}}>
+                     <List component="nav">
+                        <ListItem>
+                        <ListItemText primary={"联系电话："+user.currentContact.mobile.toString()}  />
+                        </ListItem>
+                        <ListItem >
+                        <ListItemText primary={"收货地址: "+user.currentContact.address}  />
+                        </ListItem>
+                        <ListItem >
+                        <ListItemText primary={"车牌号码: "+user.currentContact.carNumber}  />
+                        </ListItem>
+                    </List>
+                    <Button   style={{maxHeight: "80px", maxWidth: "100px"}}
+                        className={classes.button} component="a" href="#/my/contacts/orderuse"
+                        variant="raised" color="secondary" 
+                    >更改左边信息
+                    </Button> 
+                </div>
+            
             }
             {custDivider()}
             <Typography variant="title" gutterBottom>
@@ -152,7 +162,8 @@ class Order extends React.Component {
             </Typography>
             {custDivider()}
             <Button onClick={()=> this.handlePayClick()} 
-            className={classes.button}
+            className={classes.button} 
+            disabled={user.contactIsLoaded? false : true}
             variant="raised" color="primary" 
              fullWidth={true}>确认订单并且支付
              </Button>
