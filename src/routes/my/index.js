@@ -6,6 +6,8 @@ import cyan from 'material-ui/colors/cyan';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
 import { appShowMsgAndInjectDataReact } from '../../actions/app';
+import { loadOneOrder } from '../../actions/orders';
+import { setAppLayout } from '../../actions/app';
 
 const styles = {
   row: {
@@ -29,7 +31,27 @@ const styles = {
 
 
 class MyIndex extends React.Component{
+  componentDidMount(){
+    const { dispatch, match, layout } = this.props;
+    console.log(this.props);
+    
+    if(layout.title!=='个人中心'){
+        dispatch(loadOneOrder(match.params.id));
+        dispatch(setAppLayout(
+            {
+                isBack: true, 
+                backTo: "/", 
+                title: "个人中心", 
+                hasCart: false, 
+                hasBottomNav: true, 
+                hasGeoLoc: false,
+                hasEditor: false, 
+                hasSearch: false,
+            }
+        ));
+    }
 
+  }
   render(){
     const { classes, dispatch } = this.props;
     return (
@@ -54,7 +76,8 @@ MyIndex.propTypes = {
 };
 function mapUserToState(state){
   return {
-    user: state.AppUser
+    user: state.AppUser,
+    layout: state.AppInfo.layout
   }
 }
 
