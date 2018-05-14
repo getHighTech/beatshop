@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^1.0.0-rc.0",
     "async-series": "0.0.1",
     "axios": "^0.18.0",
     "crypto": "^1.0.1",

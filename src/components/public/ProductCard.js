@@ -112,7 +112,7 @@ class ProductCard extends React.Component {
           aria-expanded={this.state.expanded}
           aria-label="产品详情">
             <div className={classes.productHeader}>
-              <Grid container spacing={12}>
+              <Grid container >
                 <Grid item xs={10}>
                   <div className={classes.productName}>{product.name_zh}</div>
                   <div className={classes.productBrief}>{product.brief}</div>
@@ -128,9 +128,9 @@ class ProductCard extends React.Component {
               </div>
             </div>
             <div>
-              <Grid container spacing={12}>
+              <Grid container >
                 <Grid item xs={4} style={{paddingTop:5}}>
-                  <Grid container spacing={12}>
+                  <Grid container >
                         <Grid item xs={4} className={classes.productPriceIcon}>
                           <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} /> 
                         </Grid>
