@@ -69,7 +69,7 @@ class Order extends React.Component {
                  out_trade_no: orderShow.order._id,
                  user_id: user.user._id,
                  super_agency_id: "abcdef",
-                 version: 1
+                 version: 2
                }
              }
 
