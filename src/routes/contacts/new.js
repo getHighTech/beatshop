@@ -6,7 +6,6 @@ import { setAppLayout, appShowMsgAndInjectDataReactWithPath } from '../../action
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import { createNewContact } from '../../actions/contacts';
 
 const styles = theme => ({
   container: {

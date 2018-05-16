@@ -1,5 +1,4 @@
 import { EXPECT_CREATE_NEW_CONTACT, CREATE_NEW_CONTACT_FAIL, CREATE_NEW_CONTACT_SUCCESS, GET_USER_CONTACTS_SUCCESS } from "../actions/contacts";
-import { USER_UPDATE_ORDER_SUCCESS } from "../actions/orders";
 
 export default function UserContacts(state={
     userId: "",

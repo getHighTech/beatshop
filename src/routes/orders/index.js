@@ -77,7 +77,7 @@ class Order extends React.Component {
     window.location.assign(payUrl);
   }
   render(){
-    const { classes, orderShow, user } = this.props;
+    const { classes, orderShow } = this.props;
     const custDivider = () => {
         return (
             <div style={{
