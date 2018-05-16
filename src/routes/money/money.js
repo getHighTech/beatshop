@@ -65,6 +65,12 @@ const styles = theme => ({
   },
   tableHeader:{
     backgroundColor:'#2196f3',
+  },
+  time:{
+    color:'white'
+  },
+  incomeNumber:{
+    textAlign:'center'
   }
 
 })
@@ -168,16 +174,16 @@ class Money extends React.Component{
               <Table className={classes.table}>
                 <TableHead className={classes.tableHeader}>
                   <TableRow>
-                    <TableCell>今日</TableCell>
-                    <TableCell numeric>一周</TableCell>
-                    <TableCell numeric>30天</TableCell>
+                    <TableCell className={classes.time} >今日</TableCell>
+                    <TableCell className={classes.time} >一周</TableCell>
+                    <TableCell  className={classes.time} >30天</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow className={classes.row}>
-                    <TableCell numeric>100</TableCell>
-                    <TableCell numeric>100</TableCell>
-                    <TableCell numeric>1000</TableCell>
+                    <TableCell className={classes.incomeNumber} numeric>100</TableCell>
+                    <TableCell className={classes.incomeNumber} numeric>100</TableCell>
+                    <TableCell className={classes.incomeNumber} numeric>1000</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
