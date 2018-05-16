@@ -9,13 +9,7 @@ export default function AppMsg(state={
     href: "",
 }, action){
     switch (action.type) {
-        case ADD_PRODUCTS_TO_APP_CART:
-            return {
-                open: true,
-                content: "加入购物车成功！",
-                actionText: "立刻查看",
-                href: '#/cart'
-            }
+
         case CLOSE_APP_MSG_DONE:
             return Object.assign({}, state, {
                 open: false

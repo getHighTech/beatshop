@@ -5,6 +5,8 @@ import Grid from 'material-ui/Grid';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import ProductCard from './ProductCard';
+import deepOrange from 'material-ui/colors/deepOrange'
+
 const styles = theme => ({
   root: {
     color: "white",
@@ -14,25 +16,29 @@ const styles = theme => ({
     top: "-675px",
     
     [theme.breakpoints.down('md')]: {
-        top: "-20px",
-        backgroundColor: "black",
+        top: 17,
         width: "100%",
-        paddingLeft: "5px",
-        paddingRight: "5px"
+
         
       },
   },
   gridList: {
     width: "100%",
     height: "auto",
-    margin: "0px",
     justifyContent: "center",
+    marginTop:36
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+  },
+  subheader:{
+    color:deepOrange[500],
+    fontSize:20,
+    marginTop:-113,
+    height:165
   }
 });
 
@@ -55,7 +61,9 @@ function ProductGridList(props) {
       <GridList 
         cellHeight={180} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <Subheader component="header" style={{  color: "white", textDecoration: "underline", fontSize: "25px",backgroundColor: "rgba(4, 4, 4, 0.69)" }}>主打商品</Subheader>
+          <Subheader component="header" className={classes.subheader} >
+            <img alt="主 / 打 / 商 / 品" src={require("../imgs/recommend.svg")}/>
+          </Subheader>
         </GridListTile>
         {products.map((product,index) => (
           <ProductCard key={product._id} product={product} history={history} />

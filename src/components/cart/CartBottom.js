@@ -6,13 +6,14 @@ import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import AddShoppingCart from 'material-ui-icons/AddShoppingCart'
-import { addProductsToAppCart } from '../../actions/app_cart';
+import { addProductsToAppCart, unselectSelectAllItemsFromCart } from '../../actions/app_cart';
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
 import { memoryPathBeforeLogined } from '../../actions/users';
 import { checkAccess } from '../../actions/check_access';
 import { openAppMsg } from '../../actions/app_msg';
-
+import Checkbox from 'material-ui/Checkbox';
+import { FormGroup, FormControlLabel } from 'material-ui/Form';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -44,7 +45,7 @@ const styles = theme => ({
     
 });
 let timer = null;
-class ProductBottomBar extends React.Component{
+class CartBottom extends React.Component{
   constructor(props){
       super(props);
       this.state = {
@@ -64,19 +65,31 @@ class ProductBottomBar extends React.Component{
       }
     
     render(){
-      const { classes, product, dispatch } = this.props;
+      const { classes, cart, dispatch } = this.props;
       const { snackOpen, snackContent} =this.state;
+      console.log(cart.status);
       
       return (
         <div className={classes.root}>
         
         <AppBar position="static" className={classes.appbar} color="default">
           <Toolbar style={{backgroundColor: "rgba(4, 4, 4, 0.3)", color: "white"}}>
-              <IconButton aria-label="加入购物车">
-                <AddShoppingCart onClick={()=> this.handleAddToCart(product, 1, product.shopId)} color="secondary" />
-              </IconButton>
-               <Button onClick={()=> dispatch(checkAccess("buy", product, "create_one_order_by_product"))}  color="inherit" className={classes.flex}>立即购买</Button>
-              <Button color="inherit">查看店铺</Button>
+          <FormControlLabel style={{color: "white"}}
+          
+          control={ 
+            <Checkbox
+              checked={cart.status === "all-selected"?  true : false}
+              color="secondary"
+              onClick={()=>{dispatch(unselectSelectAllItemsFromCart())}}
+              style={{color: "white"}}
+            />
+          }
+          label={
+              <span  style={{color: "white"}}>全选</span>
+          }
+        />
+               <Button color="inherit" className={classes.flex}>合计: ￥{cart.totalAmount/100}</Button>
+              <Button disabled={cart.status==="all-unselected"? true : false} color="inherit">结算</Button>
           </Toolbar>
         </AppBar>
         
@@ -86,15 +99,14 @@ class ProductBottomBar extends React.Component{
   
 }
 
-ProductBottomBar.propTypes = {
+CartBottom.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 function mapToState(state){
     return {
       cart: state.AppCart,
-      user: state.AppUser,
     }
   }
 
-export default connect(mapToState)(withStyles(styles)(ProductBottomBar))
+export default connect(mapToState)(withStyles(styles)(CartBottom))
 

@@ -33,12 +33,10 @@ class CitySelector extends React.Component {
         left: -22
       }}>
         <Button
-          
+          color='secondary'
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
           onClick={this.handleClick}
-
-          style={{color: this.props.color, fontSize: "20px"}}
         >
             {this.props.currentCity}
         </Button>
@@ -51,7 +49,7 @@ class CitySelector extends React.Component {
             fontSize: "28px"
           }}
         >
-          <MenuItem 
+          <MenuItem color="secondary"
            onClick={(event)=>this.handleClose(event, "成都市")}>成都市</MenuItem>
           <MenuItem 
            onClick={(event)=>this.handleClose(event, "北京市")}>北京市</MenuItem>

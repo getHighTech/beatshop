@@ -5,6 +5,9 @@ import { withStyles } from 'material-ui/styles';
 import Add from "material-ui-icons/AddCircle";
 import Remove from "material-ui-icons/RemoveCircle"
 import Input from "material-ui/Input";
+import { connect } from 'react-redux';
+import { plusProductFromCart, minusProductFromCart, changeProductCountFromCart } from '../../actions/app_cart';
+
 const styles = theme => ({
   root: {
     flex: 0.3,
@@ -27,25 +30,72 @@ class NumberInput extends React.Component {
           min: this.props.minMumber,
           max: this.props.maxNumber,
       }
-      this.onChange = this.onChange.bind(this);
+      this.handleOnChange = this.handleOnChange.bind(this);
+      this.onRemoveClick = this.onRemoveClick.bind(this);
+      this.onAddClick = this.onAddClick.bind(this);
   }
-  onChange(){
 
+
+  handleOnChange(e){
+    const {dispatch, productId} = this.props;
+    
+    if(e.target.value < 1){
+      return this.setState({
+        number: 1
+      })
+    }else{
+      dispatch(changeProductCountFromCart(productId, e.target.value));
+    }
+    return this.setState({
+      number: e.target.value
+    })
+    
+    
+    
   }
+
   onRemoveClick(){
-      console.log(this.refs);
-      
+    const {dispatch, productId} = this.props;
+    let number =  this.state.number;
+    number--;
+    dispatch(minusProductFromCart(productId));
+    if(number<1){
+      return this.setState({
+        number: 1
+      })
+    }
+    return this.setState({
+      number
+    })
   }
+
+  onAddClick(){
+    const {dispatch, productId} = this.props;
+    let number =  this.state.number;
+    number++;
+    dispatch(plusProductFromCart(productId));
+    if(number<1){
+      return this.setState({
+        number: 1
+      })
+    }
+    return this.setState({
+      number
+    })
+  }
+
   render(){
       const {classes} = this.props;
     return (
       <div className={classes.root}>
-          <Remove onClick={this.onRemoveClick.bind(this)}/>
+          <Remove onClick={this.onRemoveClick}/>
           <Input
             id="number"
             
             value={this.state.number}
             type="number"
+            min="1"
+            onChange={(e)=>{this.handleOnChange(e)}}
             classes = {{input:classes.input}}
             style={{
                 textAlign: "center",
@@ -53,7 +103,7 @@ class NumberInput extends React.Component {
             }}
           
         />
-        <Add/>
+        <Add onClick={this.onAddClick}/>
       </div>
     );
   }
@@ -63,6 +113,10 @@ class NumberInput extends React.Component {
 NumberInput.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+function mapToState(state){
+  return {
+    cart: state.AppCart,
+  }
+}
 
-
-export default withStyles(styles)(NumberInput);
+export default connect(mapToState)(withStyles(styles)(NumberInput));

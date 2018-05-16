@@ -29,6 +29,8 @@ import NewContact from './contacts/new';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 import { openAppMsg } from '../actions/app_msg';
+import BankcardsList from './my/BankcardsList';
+import Money from './money/money'
 
 
 const history = createHistory();
@@ -130,10 +132,12 @@ class App extends React.Component {
                 <MainLayout history={history} store={this.props.store}>
                     <Switch>
                         <PrivateRoute exact path="/my" component={MyIndex} />
+                        <PrivateRoute exact path="/money" component={Money} />
                         <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
                         <PrivateRoute exact path="/cart" component={AppCart} />
+                        <PrivateRoute exact path="/my/bankcards_list" component={BankcardsList} />
                         <Route exact path="/" component={HomeWithPath} />
                         <Route  path="/products_by_rolename/:rolename/:productname" component={ProductShowWithPath} />
                         <Route  path="/products/:id" component={ProductShowWithPath} />

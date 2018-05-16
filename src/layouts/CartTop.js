@@ -35,7 +35,7 @@ class CartTop extends React.Component{
       const { classes } = this.props;
       return (
         <div>
-        <IconButton onClick={()=>this.props.history.push('/cart')}  color="inherit" aria-label="Menu">
+        <IconButton onClick={()=>this.props.history.push('/cart')}  color="secondary" aria-label="Menu">
           <Badge badgeContent={this.props.cart.count} color="primary">
             <ShoppingCart />
             </Badge>

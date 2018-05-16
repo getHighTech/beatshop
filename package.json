@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^1.0.0-rc.0",
     "async-series": "0.0.1",
     "axios": "^0.18.0",
     "crypto": "^1.0.1",
@@ -12,6 +13,7 @@
     "material-ui": "^1.0.0-beta.40",
     "material-ui-icons": "^1.0.0-beta.36",
     "prop-types": "latest",
+    "pull-pro": "^2.0.0",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^5.0.7",

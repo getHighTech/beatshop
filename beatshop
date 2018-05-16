@@ -27,7 +27,9 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
+current_page=1
+FILE_NAME_0=0;CSS;0;EUTF-8;1;1;0;%2Fhome%2Fsimon%2FSemantic-UI-CSS-master%2Fsemantic.css;0;4
+FILE_NAME_1=132652;Javascript;0;EUTF-8;1;1;0;%2Fhome%2Fsimon%2FSemantic-UI-CSS-master%2Fsemantic.js;0;4
 
 [VTE]
 last_dir=/home/simon

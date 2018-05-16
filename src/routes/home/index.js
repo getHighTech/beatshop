@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import ProductGridList from '../../components/public/ProductGridList';
 import { loadHomeIndexProducts } from '../../actions/process/home_index.js';
 import LoadingItem from '../../components/public/LoadingItem.js';
+import grey from 'material-ui/colors/grey'
 
 import { setAppLayout } from '../../actions/app';
 
@@ -23,7 +24,8 @@ const styles = theme => ({
         position: "relative",
         top: "-50px",
         width: "100%",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        backgroundColor:grey[100]
       
     },
     shopsContainer: {

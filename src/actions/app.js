@@ -2,6 +2,7 @@ import createHistory from 'history/createHashHistory';
 import { closeAppMsg, openAppMsg } from "./app_msg";
 import { addProductsToAppCart } from './app_cart';
 import { createOneOrderByProduct } from './orders';
+import { userLogout } from './users';
 
 const history = createHistory();
 
@@ -36,6 +37,11 @@ export function switchActionNames(actionName){
             return {
                 action: createOneOrderByProduct,
                 type: APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH
+            };
+        case "logout":
+            return {
+                action: userLogout,
+                type: APP_SHOW_MSG_AND_INJECT_DATA_REACT
             }
         
         default:
@@ -63,6 +69,13 @@ function msgSwitchByReason(reason, option={}){
                 content: "加入购物成功！",
                 actionText: "立刻查看",
                 href: "#/cart"
+            }
+
+        case "logout_success":
+            return {
+                content: "您已安全登出",
+                actionText: "",
+                href: ""
             }
 
         case "generate_order":
@@ -104,8 +117,6 @@ export function appRedirectPath(path){
 
 export function appShowMsgAndRedirectPath(path, reason, msgSurvive, option){
     let msgParams = msgSwitchByReason(reason, option)
-    console.log(msgParams);
-    
     return dispatch => {
         dispatch(closeAppMsg(msgSurvive));
         history.push(path);
@@ -118,7 +129,7 @@ export function appShowMsgAndRedirectPath(path, reason, msgSurvive, option){
 }
 
 
-export function appInjectDataReact(actionName, actionParams){
+export function appInjectDataReact(actionName, actionParams={}){
     return dispatch => {
         dispatch(switchActionNames(actionName).actionName);
         return dispatch({
