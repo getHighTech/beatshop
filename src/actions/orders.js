@@ -1,7 +1,7 @@
 import { getStore, removeStore } from '../tools/localStorage';
 import getRemoteMeteor from '../services/meteor/methods';
 import { syncRemoteCartlocal, clearAllInterval } from './app_cart';
-import { history } from './app';
+import { history, appShowMsgAndInjectDataReactWithPath } from './app';
 
 export const EXPECT_CREATE_ONE_ORDER = "EXPECT_CREATE_ONE_ORDER";
 export const CREATE_ONE_ORDER = "CREATE_ONE_ORDER";
@@ -199,6 +199,7 @@ export function getNewestUserOrderSuccess(msg){
 }
 
 export function getNewestUserOrderFail(reason){
+    
     return {
         type: GET_NEWEST_USER_ORDER_FAIL,
         reason
@@ -230,6 +231,7 @@ export function expectUserUpdateOrder(){
 }
 
 export function userUpdateOrderFail(reason){
+    
     return {
         type: USER_UPDATE_ORDER_FAIL,
         reason
@@ -237,9 +239,10 @@ export function userUpdateOrderFail(reason){
 }
 
 export function userUpdateOrderSuccess(msg){
-    return {
-        type: USER_UPDATE_ORDER_SUCCESS,
-        msg
+    return dispatch => {
+        return dispatch(appShowMsgAndInjectDataReactWithPath(
+            "load_one_order", "update_order_success", 1200, msg, "/orders/"+msg
+        ));
     }
 }
 

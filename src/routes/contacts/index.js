@@ -2,15 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import { setAppLayout } from '../../actions/app';
+import { setAppLayout, appShowMsg } from '../../actions/app';
 import grey from 'material-ui/colors/grey';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
 import Divider from 'material-ui/Divider';
 import List from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
-import { useOneContact } from '../../actions/contacts';
+import { useOneContact, getUserContacts } from '../../actions/contacts';
 import { judgeCarNumberNeed } from '../../actions/orders';
+import { getStore } from '../../tools/localStorage';
 const styles = theme => ({
     row: {
         display: 'flex',
@@ -35,8 +36,17 @@ const styles = theme => ({
 });
 
 class Contacts extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state ={
+      carNumberNeed: false
+    }
+  }
+
   componentDidMount(){
     const { dispatch, match, orderShow, layout } = this.props;
+    
     let backPath = "/"
     let title = "我的地址";
     if(match.params.backaction === "orderuse"){
@@ -72,13 +82,14 @@ class Contacts extends React.Component {
               carNumberNeed = true;
           }
       });
+      this.setState({
+        carNumberNeed
+      })
       dispatch(judgeCarNumberNeed(carNumberNeed));
+      dispatch(getUserContacts(getStore("userId")));
     }
     
   }
-  state = {
-    checked: [1],
-  };
 
   handleToggle = value => () => {
     const { checked } = this.state;
@@ -96,16 +107,19 @@ class Contacts extends React.Component {
     });
   };
   handleItemClick(e, value){
-    console.log(this.props);
     const { dispatch, orderShow } = this.props;
+    // return 
+    
+    console.log(orderShow.carNumberNeed);
+    if(!value.carNumber){
+      if(orderShow.carNumberNeed){
+        dispatch(appShowMsg("car_number_need", 1800));
+        return false;
+      }
+    }
+    
     if(orderShow.order){
-      dispatch(useOneContact({
-        mobile: "18820965455",
-        address: "黄泉路44号",
-        carNumber: "川A212312",
-        name: "徐三岛"
-  
-      }));
+      dispatch(useOneContact(value, orderShow.id));
     }
 
     this.props.history.push("/orders/"+orderShow.id);
@@ -137,7 +151,6 @@ class Contacts extends React.Component {
               <div style={{wordWrap: "break-all", wordBreak: "break-all", width: "20%"}} >{value.carNumber}</div>
               <Checkbox style={{width: "20%"}}
                   onChange={this.handleToggle(value)}
-                  checked={this.state.checked.indexOf(value) !== -1}
                 />
                 
               

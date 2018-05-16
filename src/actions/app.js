@@ -4,6 +4,7 @@ import { addProductsToAppCart } from './app_cart';
 import { createOneOrderByProduct, createOneOrder } from './orders';
 import { userLogout } from './users';
 import { createNewContact } from './contacts';
+import { loadOneProduct } from './products';
 
 export const history = createHistory();
 
@@ -53,6 +54,11 @@ export function switchActionNames(actionName){
         case 'save_user_contact':
             return {
                 action: createNewContact,
+            };
+
+        case 'load_one_order':
+            return {
+                action: loadOneProduct
             }
         
         default:
@@ -99,6 +105,16 @@ function msgSwitchByReason(reason, option={}){
         case "save_contact_success":
             return {
                 content: "新建地址成功"
+            };
+
+        case "update_order_success":
+            return {
+                content: "订单地址已经确认"
+            }
+
+        case "car_number_need":
+            return {
+                content: "您购买的黑卡,需要您选择带车牌号的地址"
             }
     
         default:
@@ -170,6 +186,8 @@ export function appShowMsgAndInjectDataReact(actionName, reason, msgSurvive=2350
 
 export function appShowMsgAndInjectDataReactWithPath(
     actionName, reason, msgSurvive=2350, actionParams, path="/"){
+        console.log(path);
+        
         let msgParams = msgSwitchByReason(reason)
     return dispatch => {
         dispatch(switchActionNames(actionName).action(actionParams));        

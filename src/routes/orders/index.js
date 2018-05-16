@@ -124,7 +124,7 @@ class Order extends React.Component {
            {custDivider()}
           
             
-            {!user.contactIsLoaded? 
+            {!orderShow.order.contact._id? 
             <div style={{display: "flex", padding: 7, width: "100%", justifyContent: "center"}}>
                 <Typography variant="title" gutterBottom>
                 
@@ -139,13 +139,13 @@ class Order extends React.Component {
                 <div style={{display: "flex", alignItems: "center"}}>
                      <List component="nav">
                         <ListItem>
-                        <ListItemText primary={"联系电话："+user.currentContact.mobile.toString()}  />
+                        <ListItemText primary={"联系电话："+orderShow.order.contact.mobile.toString()}  />
                         </ListItem>
                         <ListItem >
-                        <ListItemText primary={"收货地址: "+user.currentContact.address}  />
+                        <ListItemText primary={"收货地址: "+orderShow.order.contact.address}  />
                         </ListItem>
                         <ListItem >
-                        <ListItemText primary={"车牌号码: "+user.currentContact.carNumber}  />
+                        <ListItemText primary={"车牌号码: "+orderShow.order.contact.carNumber}  />
                         </ListItem>
                     </List>
                     <Button   style={{maxHeight: "80px", maxWidth: "100px"}}
@@ -163,7 +163,7 @@ class Order extends React.Component {
             {custDivider()}
             <Button onClick={()=> this.handlePayClick()} 
             className={classes.button} 
-            disabled={user.contactIsLoaded? false : true}
+            disabled={orderShow.order.contact._id? false : true}
             variant="raised" color="primary" 
              fullWidth={true}>确认订单并且支付
              </Button>

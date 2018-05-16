@@ -83,9 +83,15 @@ class NewContact extends React.Component {
        });
       return false;
     }
+    let contactParams = {
+      name: contact.name,
+      mobile: contact.mobile,
+      address: contact.address,
+      carNumber: contact.carNumber
+    }
     
     dispatch(appShowMsgAndInjectDataReactWithPath(
-      "save_user_contact", "save_contact_success", contact, "/my/contacts/orderuse"));
+      "save_user_contact", "save_contact_success",1350, contactParams, "/my/contacts/orderuse"));
       this.setState({
         name: "",
         mobile: "",
@@ -145,7 +151,7 @@ class NewContact extends React.Component {
           helperText={this.state.carNumberHelperText}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "carNumber")}
         /><br/>
-        <Button onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>        
+        <Button type="button" onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>        
         </form>
       </div>
     )

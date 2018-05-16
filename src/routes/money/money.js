@@ -95,30 +95,7 @@ class Money extends React.Component{
              明细
             </Typography>
             <Typography variant="headline" component="h2">
-              <div className={classes.root}>
-                <AppBar position="static" color="default">
-                  <Tabs
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    fullWidth
-                  >
-                    <Tab label="Item One" />
-                    <Tab label="Item Two" />
-                    <Tab label="Item Three" />
-                  </Tabs>
-                </AppBar>
-                <SwipeableViews
-                  axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                  index={this.state.value}
-                  onChangeIndex={this.handleChangeIndex}
-                >
-                  <TabContainer dir={theme.direction}>Item One</TabContainer>
-                  <TabContainer dir={theme.direction}>Item Two</TabContainer>
-                  <TabContainer dir={theme.direction}>Item Three</TabContainer>
-                </SwipeableViews>
-              </div>
+
             </Typography>
           </CardContent>
         </Card>

@@ -1,4 +1,5 @@
 import getRemoteMeteor from "../services/meteor/methods";
+import { userUpdateOrder } from "./orders";
 
 export const EXPECT_CREATE_NEW_CONTACT = "EXPECT_CREATE_NEW_CONTACT";
 export const CREATE_NEW_CONTACT = "CREATE_NEW_CONTACT";
@@ -159,9 +160,10 @@ export function getUserContacts(userId){
 export const USE_ONE_CONTACT = "USE_ONE_CONTACT";
 
 
-export function useOneContact(contact){
-    return {
-        type: USE_ONE_CONTACT,
-        contact
+export function useOneContact(contact, orderId){
+    return dispatch => {
+        dispatch(userUpdateOrder({
+            contact,
+        }, orderId));
     }
 }
