@@ -111,12 +111,12 @@ class Order extends React.Component {
            
             <List component="nav">
                 {orderShow.order.products.map(product=>{
-                    return <ListItem button>
+                    return <ListItem>
                         <Avatar
                                 alt="商品"
                                 src={product.cover}
                             />
-                    <ListItemText primary={product.name_zh}  />
+                    <ListItemText primary={<a href={"/#/products/"+product._id}>{product.name_zh}</a>}  />
                     <ListItemText primary={"×"+orderShow.order.productCounts[product._id]}  />
                     </ListItem>
                 })}
