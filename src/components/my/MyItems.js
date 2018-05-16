@@ -65,18 +65,22 @@ class MyItems extends React.Component{
                     </ListItemIcon>
                     <ListItemText primary="我的订单" />
                     </ListItem>
+
                     <ListItem button component="a" href="#simple-list">
                     <ListItemIcon>
                         <LocalOffer />
                     </ListItemIcon>
+
                     <ListItemText primary="券，道具，会员" />
                     </ListItem>
-                    <ListItem button component="a" href="#simple-list">
+
+                    <ListItem button component="a" href="#/my/bankcards_list">
                     <ListItemIcon>
                         <CreditCard />
                     </ListItemIcon>
                     <ListItemText primary="我的银行卡" />
                     </ListItem>
+
                     <ListItem button component="a" href="#simple-list">
                     <ListItemIcon>
                         <Contacts />

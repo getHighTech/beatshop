@@ -7,6 +7,8 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
+import grey from 'material-ui/colors/grey';
+
 import AddShoppingCart from 'material-ui-icons/AddShoppingCart'
 import Button from 'material-ui/Button'
 import { connect } from 'react-redux';
@@ -16,32 +18,83 @@ import Snackbar from 'material-ui/Snackbar';
 import { memoryPathBeforeLogined } from '../../actions/users';
 import { createOneOrderByProduct } from '../../actions/orders';
 import { openAppMsg } from '../../actions/app_msg';
+import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
   card: {
     maxWidth: 400,
     width: "100%",
-    margin: "10px"
+    margin: "10px",
+    color:grey[800]
   },
-  media: {
-    height: 194,
+  productImg:{
+    maxWidth:'100%',
+    marginTop:-9
   },
-  actions: {
-    display: 'flex',
+  productName:{
+    textAlign:'left',
+    fontSize:15,
+    margin:10,
+    fontWeight:900
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    marginLeft: 'auto',
+  productBrief:{
+    textAlign:'left',
+    marginLeft:10,
+    fontSize:10,
+    marginTop:-10,
+    fontWeight:300
   },
-  expandOpen: {
-    transform: 'rotate(180deg)',
+  productPrice:{
+    textAlign:'left',
+    margin:10
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
+  productPriceIcon:{
+    textAlign:'right',
+    paddingLeft:10
+  }
+,
+productPriceNumber:{
+  fontWeight:900,
+  marginLeft:2,
+  marginTop:4,
+  fontSize:16,
+  color:'#FF5722'
+},
+hotIcon:{
+  textAlign:'right'
+},
+productPriceNumberContain:{
+  textAlign:'left'
+},
+ButtonContain:{
+  textAlign:'right',
+  paddingRight:10,
+  marginBottom:10
+},
+button:{
+  marginRight:5,
+  color:'#F5F5F5',
+  backgroundColor:grey[800]
+}
+  // media: {
+  //   height: 194,
+  // },
+  // actions: {
+  //   display: 'flex',
+  // },
+  // expand: {
+  //   transform: 'rotate(0deg)',
+  //   transition: theme.transitions.create('transform', {
+  //     duration: theme.transitions.duration.shortest,
+  //   }),
+  //   marginLeft: 'auto',
+  // },
+  // expandOpen: {
+  //   transform: 'rotate(180deg)',
+  // },
+  // avatar: {
+  //   backgroundColor: red[500],
+  // },
 });
 let timer = null;
 class ProductCard extends React.Component {
@@ -53,7 +106,7 @@ class ProductCard extends React.Component {
     snackContent: "", key: null };
 
   handleExpandClick = (productId) => {
-   
+   console.log("22")
    this.props.history.push("/products/"+productId);
    
   };
@@ -76,62 +129,58 @@ class ProductCard extends React.Component {
     
   }
 
-
+ onClick(){
+   console.log('点击')
+ }
 
 
   render() {
     const { classes, product } = this.props;
     const { snackOpen, snackContent} =this.state;
     return (
-        <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="Recipe" className={classes.avatar}>
-                热门
-              </Avatar>
-            }
-           
-            title={product.name_zh}
-            subheader={"¥"+product.endPrice/100}
-          />
-          <CardMedia
-            className={classes.media}
-            image={product.cover}
-            title={product.name_zh}
-          />
-          <CardContent>
-            <Typography component="p">
-              {product.brief}
-            </Typography>
-          </CardContent>
-          <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="加入购物车" onClick={()=> this.handleAddToCart(product, 1, product.shopId)}>
-              <AddShoppingCart />
-            </IconButton>
-            <Button to="/products/" 
-              aria-label="产品详情"
-              onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}
-              >立刻购买</Button>
-           
-              <Button 
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
-              })}
-              onClick={()=>this.handleExpandClick(product._id)}
-              aria-expanded={this.state.expanded}
-              aria-label="产品详情"
-              >详情</Button>
-          </CardActions>
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={snackOpen}
-            onClose={this.handleSnackClose}
-            SnackbarContentProps={{
-                'aria-describedby': 'message-id',
-            }}
-            message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
-            
-          />
+        <Card className={classes.card} 
+          aria-expanded={this.state.expanded}
+          aria-label="产品详情">
+            <div className={classes.productHeader}>
+              <Grid container >
+                <Grid item xs={10}>
+                  <div className={classes.productName}>{product.name_zh}</div>
+                  <div className={classes.productBrief}>{product.brief}</div>
+                </Grid>
+                <Grid item xs={2}>
+                  <div className={classes.hotIcon}><img style={{height:56}} alt="热门商品"  src={require('../imgs/hot.svg')} /> </div>
+                </Grid>
+              </Grid>
+            </div>
+            <div>
+              <div className={classes.productContain}>
+                <img  onClick={()=>this.handleExpandClick(product._id)} className={classes.productImg} alt="产品图片" src={product.cover}/>
+              </div>
+            </div>
+            <div>
+              <Grid container >
+                <Grid item xs={4} style={{paddingTop:5}}>
+                  <Grid container >
+                        <Grid item xs={4} className={classes.productPriceIcon}>
+                          <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} /> 
+                        </Grid>
+                        <Grid item xs={8} className={classes.productPriceNumberContain}>
+                          <div  className={classes.productPriceNumber}>{product.endPrice/100}</div>
+                        </Grid>
+                      </Grid>
+                </Grid>
+                <Grid item xs={8}>
+                  <div className={classes.ButtonContain}>
+                    <Button variant="raised"  className={classes.button} onClick={()=> this.handleAddToCart(product, 1, product.shopId)}>
+                     加入购物车
+                    </Button>
+                    <Button variant="raised" color="secondary" onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
+                      立即购买
+                    </Button>
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
         </Card>
     );
   }
