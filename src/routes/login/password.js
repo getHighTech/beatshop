@@ -227,7 +227,6 @@ class AppLoginPassword extends React.Component {
          </Button>
          <div><br/>使用手机密码登录或者注册?<Button  onClick={()=>history.push("/login")} color="secondary">前往</Button></div>
          <div><br/>忘记密码?<Button  onClick={()=>history.push("/login/forgetpass")} color="secondary">前往</Button></div>
-         <div><br/>使用密码用户名注册?<Button color="secondary">立刻注册</Button></div>
          
           
           </form>

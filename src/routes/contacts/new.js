@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setAppLayout } from '../../actions/app';
+import { setAppLayout, appShowMsgAndInjectDataReactWithPath } from '../../actions/app';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
@@ -84,7 +84,8 @@ class NewContact extends React.Component {
       return false;
     }
     
-    dispatch(createNewContact(contact));
+    dispatch(appShowMsgAndInjectDataReactWithPath(
+      "save_user_contact", "save_contact_success", contact, "/my/contacts/orderuse"));
       this.setState({
         name: "",
         mobile: "",

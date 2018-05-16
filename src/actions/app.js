@@ -3,6 +3,7 @@ import { closeAppMsg } from "./app_msg";
 import { addProductsToAppCart } from './app_cart';
 import { createOneOrderByProduct, createOneOrder } from './orders';
 import { userLogout } from './users';
+import { createNewContact } from './contacts';
 
 export const history = createHistory();
 
@@ -49,6 +50,10 @@ export function switchActionNames(actionName){
                 action: createOneOrder,
                 type: APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH
             }
+        case 'save_user_contact':
+            return {
+                action: createNewContact,
+            }
         
         default:
             return;
@@ -89,6 +94,11 @@ function msgSwitchByReason(reason, option={}){
                 content: "正在生成订单",
                 actionText: "",
                 href: "#/"
+            }
+
+        case "save_contact_success":
+            return {
+                content: "新建地址成功"
             }
     
         default:
