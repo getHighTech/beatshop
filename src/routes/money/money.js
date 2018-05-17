@@ -8,6 +8,7 @@ import Bankcard from '../../components/bankcard/'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Table from '@material-ui/core/Table';
@@ -15,6 +16,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 import Button from '@material-ui/core/Button';
 
 
@@ -64,6 +67,13 @@ const styles = theme => ({
   },
   incomeNumber:{
     textAlign:'center'
+  },
+  cardItem:{
+    marginLeft:10
+  },
+  itemBox:{
+    display:'flex',
+    marginBottom:5
   }
 
 })
@@ -161,7 +171,14 @@ class Money extends React.Component{
         <Card className={classes.card}>
           <CardContent>
             <Typography className={classes.title} color="textSecondary">
-             收益
+            <div className={classes.itemBox}>
+                <div className={classes.cardIcon}>
+                  <img alt="收益图标" style={{height:17}} src={require('../../components/imgs/money_bag.svg')}/>
+                </div>
+                <div  className={classes.cardItem}>
+                  收益
+                </div>
+              </div> 
             </Typography>
             <Typography variant="headline" component="h2">
               <Table className={classes.table}>
@@ -187,7 +204,14 @@ class Money extends React.Component{
         <Card className={classes.card}>
           <CardContent>
             <Typography className={classes.title} color="textSecondary">
-             明细
+              <div className={classes.itemBox}>
+                <div className={classes.cardIcon}>
+                  <img alt="明细图标" style={{height:17}} src={require('../../components/imgs/list.svg')}/>
+                </div>
+                <div  className={classes.cardItem}>
+                  明细
+                </div>
+              </div> 
             </Typography>
             <Typography variant="headline" component="h2">
               <div>

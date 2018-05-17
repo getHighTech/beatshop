@@ -18,7 +18,8 @@ const styles = theme => ({
   root: {
     width: '100%',
     maxWidth: 560,
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
+    // backgroundColor:'red'
   },
   bigAvatar: {
     width: 60,
