@@ -6,6 +6,7 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import grey from 'material-ui/colors/grey'
 import Avatar from '@material-ui/core/Avatar';
+
 import IconButton from '@material-ui/core/IconButton';
 import Image from '../imgs/money.svg';
 import blue from 'material-ui/colors/blue'

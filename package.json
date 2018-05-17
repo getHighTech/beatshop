@@ -13,7 +13,6 @@
     "material-ui": "^1.0.0-beta.40",
     "material-ui-icons": "^1.0.0-beta.36",
     "prop-types": "latest",
-    "pull-pro": "^2.0.0",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^5.0.7",
