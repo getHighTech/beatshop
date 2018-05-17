@@ -1,15 +1,24 @@
-import app from '../config/app.json';
-import { getStore } from '../tools/localStorage';
+import { getStore, removeStore } from '../tools/localStorage';
 import getRemoteMeteor from '../services/meteor/methods';
+import { syncRemoteCartlocal, clearAllInterval } from './app_cart';
+import { history, appShowMsgAndInjectDataReactWithPath } from './app';
 
 export const EXPECT_CREATE_ONE_ORDER = "EXPECT_CREATE_ONE_ORDER";
-export const CREAT_ONE_ORDER = "CREAT_ONE_ORDER";
-export const CREAT_ONE_ORDER_FAIL = "CREAT_ONE_ORDER_FAIL";
-export const CREAT_ONE_ORDER_SUCCESS = "CREAT_ONE_ORDER_SUCCESS";
+export const CREATE_ONE_ORDER = "CREATE_ONE_ORDER";
+export const CREATE_ONE_ORDER_FAIL = "CREATE_ONE_ORDER_FAIL";
+export const CREATE_ONE_ORDER_SUCCESS = "CREATE_ONE_ORDER_SUCCESS";
+export const JUDGE_CAR_NUMBER_NEED = "JUDGE_CAR_NUMBER_NEED";
 
 export function expectCreateOneOrder(){
     return {
         type: EXPECT_CREATE_ONE_ORDER,
+    }
+}
+
+export function judgeCarNumberNeed(need){
+    return {
+        type: JUDGE_CAR_NUMBER_NEED,
+        need
     }
 }
 
@@ -18,6 +27,7 @@ function cartToOrderParams(cart){
     let productIdsChecked = [];
      let productsChecked = [];
      let productCountsChecked={};
+     
  
      for (let index = 0; index < productIds.length; index++) {
          let productId = productIds[index];
@@ -35,13 +45,22 @@ function cartToOrderParams(cart){
         totalAmount: cart.totalAmount,
      }
 }
-export function createOneOrder(cart, count){
+export function createOneOrder(cart){
     //以购物车的结构，完成商品的下单
     return (dispatch, getState) => {
-        dispatch(expectCreateOneOrder());        
+       
+        dispatch(expectCreateOneOrder()); 
+        clearAllInterval();
+        let userId = getStore("userId");
+        let cartId = getStore("cartId");
+        dispatch(syncRemoteCartlocal(cartId, userId));       
         let defaultContact = getState().AppUser.currentContact
+        if(!defaultContact){
+            defaultContact={}
+        }
         let orderParams = {
            ...cartToOrderParams(cart),
+           cartId: cart._id,
             contact: defaultContact,
         }
         return getRemoteMeteor(
@@ -58,7 +77,7 @@ export function createOneOrderByProduct(product, count){
     return (dispatch, getState) => {
         let productCounts = {}
         productCounts[product._id] = 1;
-        
+       
         dispatch(expectCreateOneOrder());        
         let defaultContact = getState().AppUser.currentContact
         if(!defaultContact){
@@ -74,7 +93,6 @@ export function createOneOrderByProduct(product, count){
             totalAmount: product.endPrice,
             contact: defaultContact,
         }
-        let loginToken = getStore("stampedToken");
         return getRemoteMeteor(
             dispatch,
              getState, 
@@ -88,18 +106,26 @@ export function createOneOrderByProduct(product, count){
 export function createOneOrderFail(reason){
     
     return {
-        type: CREAT_ONE_ORDER_FAIL,
+        type: CREATE_ONE_ORDER_FAIL,
         reason
     }
 }
 
 export function createOneOrderSuccess(msg){
-    console.log(msg);
+    history.push("/orders/"+msg);
     
-    return {
-        type: CREAT_ONE_ORDER_SUCCESS,
-        msg
+    return dispatch => {
+        let userId = getStore("userId");
+        let cartId = getStore("cartId");
+        clearAllInterval();        
+        dispatch(syncRemoteCartlocal(cartId, userId)); 
+        removeStore("cartId");
+        return dispatch({
+            type: CREATE_ONE_ORDER_SUCCESS,
+            msg
+        })
     }
+   
 }
 
 export const EXPECT_LOAD_ONE_ORDER = "EXPECT_LOAD_ONE_ORDER";
@@ -116,7 +142,6 @@ export function expectLoadOneOrder(){
 export function loadOneOrder(orderId){
     return (dispatch, getState) => {
         dispatch(expectLoadOneOrder());
-        let loginToken = getStore("stampedToken");
         return getRemoteMeteor(
             dispatch, getState, "orders", "app.load.one.order",
             [orderId],
@@ -134,10 +159,24 @@ export function loadOneOrderFail(reason){
 }
 
 export function loadOneOrderSuccess(msg){
-    return {
-        type: LOAD_ONE_ORDER_SUCCESS,
-        msg
+    return dispatch => {
+        console.log(msg);
+        let carNumberNeed = false;
+        msg.products.forEach(product => {
+            console.log(product.name_zh==="万人车汇黑卡");
+            
+            if(product.name_zh==="万人车汇黑卡"){
+               
+                carNumberNeed = true;
+            }
+        });
+        dispatch(judgeCarNumberNeed(carNumberNeed));
+        return dispatch({
+            type: LOAD_ONE_ORDER_SUCCESS,
+            msg
+        })
     }
+    
 }
 
 
@@ -160,6 +199,7 @@ export function getNewestUserOrderSuccess(msg){
 }
 
 export function getNewestUserOrderFail(reason){
+    
     return {
         type: GET_NEWEST_USER_ORDER_FAIL,
         reason
@@ -191,6 +231,7 @@ export function expectUserUpdateOrder(){
 }
 
 export function userUpdateOrderFail(reason){
+    
     return {
         type: USER_UPDATE_ORDER_FAIL,
         reason
@@ -198,9 +239,10 @@ export function userUpdateOrderFail(reason){
 }
 
 export function userUpdateOrderSuccess(msg){
-    return {
-        type: USER_UPDATE_ORDER_SUCCESS,
-        msg
+    return dispatch => {
+        return dispatch(appShowMsgAndInjectDataReactWithPath(
+            "load_one_order", "update_order_success", 1200, msg, "/orders/"+msg
+        ));
     }
 }
 

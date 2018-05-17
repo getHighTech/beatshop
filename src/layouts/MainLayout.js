@@ -5,7 +5,6 @@ import { withStyles } from 'material-ui/styles';
 import withRoot from '../withRoot';
 import MenuAppBar from './MenuAppBar';
 import BottemMav from './BottemNav';
-import Hidden from 'material-ui/Hidden';
 
 import AppInfo from '../config/app.json';
 const styles = theme => ({

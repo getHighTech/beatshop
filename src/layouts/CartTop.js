@@ -6,8 +6,6 @@ import IconButton from 'material-ui/IconButton';
 import ShoppingCart from 'material-ui-icons/ShoppingCart';
 import Badge from 'material-ui/Badge';
 import {connect} from 'react-redux';
-import Snackbar from 'material-ui/Snackbar';
-import Button from 'material-ui/Button';
 const styles = theme => ({
   progress: {
     margin: theme.spacing.unit * 2,
@@ -31,8 +29,7 @@ class CartTop extends React.Component{
     }
  
     render(){
-      const { snackOpen } = this.state;
-      const { classes } = this.props;
+      
       return (
         <div>
         <IconButton onClick={()=>this.props.history.push('/cart')}  color="secondary" aria-label="Menu">

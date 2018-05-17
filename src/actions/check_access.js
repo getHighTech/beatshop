@@ -1,5 +1,4 @@
-import getRemoteMeteor from "../services/meteor/methods";
-import { appShowMsgAndInjectDataReact, switchActionNames, APP_SHOW_MSG_AND_INJECT_DATA_REACT, appShowMsg, appShowMsgAndRedirectPath, APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH, appShowMsgAndInjectDataReactWithPath } from "./app";
+import { appShowMsgAndInjectDataReact, switchActionNames, APP_SHOW_MSG_AND_INJECT_DATA_REACT, appShowMsgAndRedirectPath, APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH, appShowMsgAndInjectDataReactWithPath } from "./app";
 
 export const CHECK_ACCESS_BUY = "CHECK_ACCESS_BUY";
 export const PASS_ACCESS = "PASS_ACCESS";

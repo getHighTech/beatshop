@@ -6,14 +6,11 @@ import { setAppLayout } from '../../actions/app';
 import { withStyles } from 'material-ui/styles';
 import Bankcard from '../../components/bankcard/'
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import SwipeableViews from 'react-swipeable-views';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,6 +18,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
+import Button from '@material-ui/core/Button';
 
 
 function TabContainer(props) {
@@ -164,8 +162,8 @@ class Money extends React.Component{
 
   render(){
 
-    const { classes, theme } = this.props;
-    const { value,count,incomeSource,withdrawData} = this.state;
+    const { classes } = this.props;
+    const { value, incomeSource,withdrawData} = this.state;
 
     return(
       <div>
@@ -259,7 +257,7 @@ class Money extends React.Component{
 
                   </Table>
                   <div className={classes.loadMore}>
-                  {this.state.incomeSource.length == this.state.incomeTotle?
+                  {this.state.incomeSource.length === this.state.incomeTotle?
                     <Button color="primary" className={classes.button} >
                     没有数据啦
                     </Button>:
@@ -296,7 +294,7 @@ class Money extends React.Component{
                   </TableBody>
                 </Table>
                 <div className={classes.loadMore}>
-                  {this.state.withdrawData.length == this.state.withdrawTotle?
+                  {this.state.withdrawData.length === this.state.withdrawTotle?
 
                     <Button color="primary" className={classes.button} >
                     没有数据啦

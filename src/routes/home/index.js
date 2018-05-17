@@ -12,6 +12,7 @@ import LoadingItem from '../../components/public/LoadingItem.js';
 import grey from 'material-ui/colors/grey'
 
 import { setAppLayout } from '../../actions/app';
+import { getStore } from '../../tools/localStorage.js';
 
 const styles = theme => ({
     root: {
@@ -19,7 +20,6 @@ const styles = theme => ({
         flexDirection: "column",
         alignItems: "center",
         height: "100%",
-        backgroundColor: "black",
         paddingBottom: "400px",
         position: "relative",
         top: "-50px",
@@ -77,6 +77,8 @@ class Home extends React.Component {
     componentWillReceiveProps(nextProps){
         const {dispatch, currentCity, layout, orderShow, history} = nextProps;
         if(orderShow.createStatus === "success"){
+            console.log("可以跳转了");
+            
             return history.push("/orders/"+orderShow.id);
           }
         if(currentCity !== this.props.currentCity){
@@ -100,13 +102,14 @@ class Home extends React.Component {
     render(){
         
         
-        const { classes, productsList, layout , dispatch} = this.props;
+        const { classes, productsList} = this.props;
         
         return (
             <div className={classes.root}>
-              <AppBanner />
+             
+              {getStore("userId")? <br/>: <AppBanner />}
               { productsList.loading? <LoadingItem/> : 
-              <div className={classes.root} style={{height: "auto"}}>
+              <div className={classes.root} style={{height: "auto", top: getStore("userId")? "60px": "inherit"}}>
                 <ProductGridList history={this.props.history} products={productsList.products} label="热门"/>
                 <div className={classes.shopsContainer}>
                     <h1 style={{color: "white"}}>优选商家</h1>

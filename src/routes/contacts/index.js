@@ -2,15 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import { setAppLayout } from '../../actions/app';
+import { setAppLayout, appShowMsg } from '../../actions/app';
 import grey from 'material-ui/colors/grey';
-import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
 import Divider from 'material-ui/Divider';
-import LoadingItem from '../../components/public/LoadingItem';
-import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
+import List from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
-import { useOneContact } from '../../actions/contacts';
+import { useOneContact, getUserContacts } from '../../actions/contacts';
+import { judgeCarNumberNeed } from '../../actions/orders';
+import { getStore } from '../../tools/localStorage';
 const styles = theme => ({
     row: {
         display: 'flex',
@@ -18,7 +19,6 @@ const styles = theme => ({
         flexDirection: "column",
         width: '100%',
         maxWidth: 560,
-        backgroundColor: theme.palette.background.paper,
         alignItems: "center",
         backgroundSize: '100%',
         backgroundColor: grey[100],
@@ -36,18 +36,24 @@ const styles = theme => ({
 });
 
 class Contacts extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state ={
+      carNumberNeed: false
+    }
+  }
+
   componentDidMount(){
     const { dispatch, match, orderShow, layout } = this.props;
+    
     let backPath = "/"
-    let title = "我的联系方式";
+    let title = "我的地址";
     if(match.params.backaction === "orderuse"){
-        title = "选择联系方式";
-        if(orderShow.id){
-            backPath="/orders/"+orderShow.id;
-        }else{
-          //若是不存在，获取最新的未确认的订单
-        }
+        title = "选择地址";
+        backPath="/orders/"+orderShow.id;
     }
+   
     
     if(layout.title !== title){
       dispatch(setAppLayout(
@@ -60,14 +66,30 @@ class Contacts extends React.Component {
             hasGeoLoc: false,
             hasSearch: false,
             hasNewCreate: true,
+            editorType: "new_contact"
         }
+        
       ));
+      let carNumberNeed = false;
+      if(!orderShow.order){
+        return this.props.history.push("/");
+      }
+      orderShow.order.products.forEach(product => {
+          console.log(product.name_zh==="万人车汇黑卡");
+          
+          if(product.name_zh==="万人车汇黑卡"){
+             
+              carNumberNeed = true;
+          }
+      });
+      this.setState({
+        carNumberNeed
+      })
+      dispatch(judgeCarNumberNeed(carNumberNeed));
+      dispatch(getUserContacts(getStore("userId")));
     }
     
   }
-  state = {
-    checked: [1],
-  };
 
   handleToggle = value => () => {
     const { checked } = this.state;
@@ -85,66 +107,68 @@ class Contacts extends React.Component {
     });
   };
   handleItemClick(e, value){
-    console.log(this.props);
     const { dispatch, orderShow } = this.props;
+    // return 
+    
+    console.log(orderShow.carNumberNeed);
+    if(!value.carNumber){
+      if(orderShow.carNumberNeed){
+        dispatch(appShowMsg("car_number_need", 1800));
+        return false;
+      }
+    }
+    
     if(orderShow.order){
-      dispatch(useOneContact({
-        mobile: "18820965455",
-        address: "黄泉路44号",
-        carNumber: "川A212312",
-        name: "徐三岛"
-  
-      }));
+      dispatch(useOneContact(value, orderShow.id));
     }
 
     this.props.history.push("/orders/"+orderShow.id);
     
   }
   render(){
-    const { classes, orderShow, user } = this.props;
+    const { classes, userContacts } = this.props;
     console.log(this.props);
-    
-    const custDivider = () => {
-        return (
-            <div style={{
-                backgroundColor: "darkgrey", 
-                height: 1, 
-                width: "90%",
-                margin: 2,
-            }}>&nbsp;</div>
-        )
-    }
 
     
     return (
       <div className={classes.row}>
-      
-        <List component="nav"  style={{width: "90%"}}>
-          {[0, 1, 2, 3].map(value => (
+        {
+          userContacts.contacts.length === 0? 
+          <div>
+            <h3>您还没有联系方式</h3>
+            <Button component="a" href="/#/my/new_contact"
+            variant="raised" color="primary" 
+             fullWidth={true}>立刻添加一个
+             </Button>
+          </div>:
+          <List component="nav"  style={{width: "90%"}}>
+          {userContacts.contacts.map(value => (
               <div>
-            <ListItem key={value} dense button onClick={(e) => this.handleItemClick(e, value)}>
-              <ListItemText primary={`徐事情 ${value + 1}`} secondary="(正在使用)" />
-              <ListItemText primary={`Line item ${value + 1}`} />
-              <ListItemText primary={`Line item ${value + 1}`} />
-              <ListItemSecondaryAction>
-                <Checkbox
+            <div style={{display: "flex", width: "100%", maxWidth: "500"}} key={value} >
+              <div style={{wordWrap: "break-all",  wordBreak: "break-all", width: "20%"}} >{value.name}</div>
+              <div style={{wordWrap: "break-all",  wordBreak: "break-all", width: "20%"}} >{value.mobile}</div>
+              <div style={{wordWrap: "break-all",  wordBreak: "break-all", width: "20%"}} >{value.address}</div>
+              <div style={{wordWrap: "break-all", wordBreak: "break-all", width: "20%"}} >{value.carNumber}</div>
+              <Checkbox style={{width: "20%"}}
                   onChange={this.handleToggle(value)}
-                  checked={this.state.checked.indexOf(value) !== -1}
                 />
-              </ListItemSecondaryAction>
-              <ListItemSecondaryAction>
-                <Checkbox
-                  onChange={this.handleToggle(value)}
-                  checked={this.state.checked.indexOf(value) !== -1}
-                />
-              </ListItemSecondaryAction>
+                
               
-            </ListItem>
+              
+            </div>
+                <div style={{width: "100%"}}>
+                  <Button onClick={(e) => this.handleItemClick(e, value)}  color="secondary" variant="raised" size="small">
+                    使用此地址
+                  </Button>
+                </div>
             <Divider />
             
             </div>
           ))}
         </List>
+
+        }
+        
      
             
       </div>
@@ -160,7 +184,8 @@ function mapToState(state){
   return {
     user: state.AppUser,
     orderShow: state.OrderShow,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    userContacts: state.UserContacts,
   }
 }
 

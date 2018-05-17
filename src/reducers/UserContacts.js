@@ -1,5 +1,4 @@
-import { EXPECT_CREATE_NEW_CONTACT, CREATE_NEW_CONTACT_FAIL, CREATE_NEW_CONTACT_SUCCESS } from "../actions/contacts";
-import { CREAT_ONE_ORDER_FAIL } from "../actions/orders";
+import { EXPECT_CREATE_NEW_CONTACT, CREATE_NEW_CONTACT_FAIL, CREATE_NEW_CONTACT_SUCCESS, GET_USER_CONTACTS_SUCCESS } from "../actions/contacts";
 
 export default function UserContacts(state={
     userId: "",
@@ -8,6 +7,9 @@ export default function UserContacts(state={
     editStatus: "untrigger",
     createFail: "noReason",
     contacts:[],
+    contactChecks: {
+
+    }
 }, action){
     switch (action.type) {
         case EXPECT_CREATE_NEW_CONTACT:
@@ -22,10 +24,16 @@ export default function UserContacts(state={
                 createFail: action.reason
             })
         case CREATE_NEW_CONTACT_SUCCESS:
+            let contacts = state.contacts;
+            contacts.push(action.msg);
             return Object.assign({}, state, {
                 createStatus: "success",
-                contacts: [action.msg, ...state.contacts]
-            })
+                contacts
+            });
+        case GET_USER_CONTACTS_SUCCESS:
+            return Object.assign({}, state, {
+                contacts: action.msg
+            });
     
         default:
             return state;

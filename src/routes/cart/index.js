@@ -8,7 +8,7 @@ import Avatar from 'material-ui/Avatar';
 import NumberInput from '../../components/public/NumberInput';
 import { connect } from 'react-redux';
 import Checkbox from 'material-ui/Checkbox';
-import { changeProductFromCartChecked, deleteProductFromCart } from '../../actions/app_cart';
+import { changeProductFromCartChecked, deleteProductFromCart, repeatSyncLocalCartRemote } from '../../actions/app_cart';
 import Clear from "material-ui-icons/Clear"
 import CartBottom from '../../components/cart/CartBottom';
 
@@ -22,9 +22,10 @@ const styles = theme => ({
 class AppCart extends React.Component {
   componentDidMount(){
     const { dispatch, layout } = this.props;
-    this.state = {
+    this.setState({
       productChecks: []
-    }
+    })
+   
     if(layout.title !== "购物车"){
       dispatch(setAppLayout(
         {
@@ -46,7 +47,8 @@ class AppCart extends React.Component {
     const { cart, dispatch } = this.props;
     this.setState({
       productChecks: cart.productChecks
-    })
+    });
+    dispatch(repeatSyncLocalCartRemote());
   }
   handleProductShow(id){
     

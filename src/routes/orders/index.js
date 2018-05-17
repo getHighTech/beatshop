@@ -3,17 +3,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { setAppLayout } from '../../actions/app';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 
 import grey from 'material-ui/colors/grey';
 import Typography from 'material-ui/Typography';
 import { connect } from 'react-redux';
-import Divider from 'material-ui/Divider';
 import { loadOneOrder } from '../../actions/orders';
 import LoadingItem from '../../components/public/LoadingItem';
 import Button from 'material-ui/Button'
 const styles = theme => ({
+    flex: {
+        width: "100%"
+    }, 
     row: {
         display: 'flex',
         justifyContent: 'center',
@@ -39,6 +41,7 @@ class Order extends React.Component {
   componentDidMount(){
     const { dispatch, match, layout } = this.props;
     console.log(this.props);
+    this.handlePayClick = this.handlePayClick.bind(this);
     
     if(layout.title!=='确认订单'){
         dispatch(loadOneOrder(match.params.id));
@@ -57,8 +60,24 @@ class Order extends React.Component {
     }
 
   }
+  handlePayClick(){
+    const { orderShow, user } = this.props;  
+    var urlencode = require('urlencode');
+             let data = {
+               "client": "web",
+               "data": {
+                 out_trade_no: orderShow.order._id,
+                 user_id: user.user._id,
+                 super_agency_id: "abcdef",
+                 version: 2
+               }
+             }
+
+    let payUrl = "http://bills.10000cars.cn/order/s?pdata="+urlencode(JSON.stringify(data));
+    window.location.assign(payUrl);
+  }
   render(){
-    const { classes, orderShow, user } = this.props;
+    const { classes, orderShow } = this.props;
     const custDivider = () => {
         return (
             <div style={{
@@ -91,46 +110,60 @@ class Order extends React.Component {
             {custDivider()}
            
             <List component="nav">
-                <ListItem button>
-                    <Avatar
-                            alt="商品"
-                            src={orderShow.order.products[0].cover}
-                        />
-                <ListItemText primary={orderShow.order.products[0].name_zh}  />
-                <ListItemText primary={"×"+orderShow.order.productCounts[orderShow.order.products[0]._id]}  />
-                </ListItem>
-           
+                {orderShow.order.products.map(product=>{
+                    return <ListItem>
+                        <Avatar
+                                alt="商品"
+                                src={product.cover}
+                            />
+                    <ListItemText primary={<a href={"/#/products/"+product._id}>{product.name_zh}</a>}  />
+                    <ListItemText primary={"×"+orderShow.order.productCounts[product._id]}  />
+                    </ListItem>
+                })}
             </List>
            {custDivider()}
           
             
-            {!user.contactIsLoaded? 
-            <div style={{display: "flex", padding: 7}}>
+            {!orderShow.order.contact._id? 
+            <div style={{display: "flex", padding: 7, width: "100%", justifyContent: "center"}}>
                 <Typography variant="title" gutterBottom>
-                无联系方式
-            </Typography><Button 
+                
+            </Typography>
+                <Button  
                     className={classes.button} component="a" href="#/my/contacts/orderuse"
                     variant="raised" color="secondary" 
-                    >立刻填写您的联系方式
+                    >请填写您的联系方式
                 </Button> 
             </div>
                 : 
-             <List component="nav">
-                <ListItem button>
-                <ListItemText primary={user.currentContact.mobile.toString()}  />
-                </ListItem>
-                <ListItem button>
-                <ListItemText primary={user.currentContact.address}  />
-                </ListItem>
-             </List>
+                <div style={{display: "flex", alignItems: "center"}}>
+                     <List component="nav">
+                        <ListItem>
+                        <ListItemText primary={"联系电话："+orderShow.order.contact.mobile.toString()}  />
+                        </ListItem>
+                        <ListItem >
+                        <ListItemText primary={"收货地址: "+orderShow.order.contact.address}  />
+                        </ListItem>
+                        <ListItem >
+                        <ListItemText primary={"车牌号码: "+orderShow.order.contact.carNumber}  />
+                        </ListItem>
+                    </List>
+                    <Button   style={{maxHeight: "80px", maxWidth: "100px"}}
+                        className={classes.button} component="a" href="#/my/contacts/orderuse"
+                        variant="raised" color="secondary" 
+                    >更改左边信息
+                    </Button> 
+                </div>
+            
             }
             {custDivider()}
             <Typography variant="title" gutterBottom>
             总计: <span style={{fontWeight: "bolder"}}>¥{orderShow.order.totalAmount/100}</span>
             </Typography>
             {custDivider()}
-            <Button 
-            className={classes.button}
+            <Button onClick={()=> this.handlePayClick()} 
+            className={classes.button} 
+            disabled={orderShow.order.contact._id? false : true}
             variant="raised" color="primary" 
              fullWidth={true}>确认订单并且支付
              </Button>

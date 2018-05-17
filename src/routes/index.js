@@ -28,10 +28,10 @@ import NewContact from './contacts/new';
 
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
-import { openAppMsg } from '../actions/app_msg';
 import BankcardsList from './my/BankcardsList';
 import Money from './money/money'
-
+import MyOrders from './orders/my.js'
+import PayResult from './pay/index.js'
 
 const history = createHistory();
 
@@ -58,12 +58,7 @@ const ProductShowWithPath = ({ match }) => (
 )
 
 class App extends React.Component {
-    constructor(props){
-        super(props)
-       
-        
-    }
-
+   
     componentDidMount(){
         const { dispatch, appInfo} = this.props;
         
@@ -81,7 +76,7 @@ class App extends React.Component {
 
    
     render(){
-        const {classes, appInfo, order, msg, user, dispatch} = this.props;
+        const {classes, appInfo, order, msg, user} = this.props;
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route
               {...rest}
@@ -109,7 +104,7 @@ class App extends React.Component {
           );
         if (!appInfo.init ) {
             return (
-                <LoadApp title="应用载入中" />
+                <LoadApp title="载入中" />
             )
         }
         if(order.loading){
@@ -132,6 +127,8 @@ class App extends React.Component {
                 <MainLayout history={history} store={this.props.store}>
                     <Switch>
                         <PrivateRoute exact path="/my" component={MyIndex} />
+                        <PrivateRoute exact path="/my/orders" component={MyOrders} />
+                        <PrivateRoute exact path="/pay/:status" component={PayResult} />
                         <PrivateRoute exact path="/money" component={Money} />
                         <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />

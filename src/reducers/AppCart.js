@@ -1,5 +1,6 @@
 import { ADD_PRODUCTS_TO_APP_CART, CHANGE_PRODUCT_FROM_CART_CHECKED, SYNC_REMOTE_CART_LOCAL_SUCCESS, DELETE_PRODUCT_FROM_CART, PLUS_PRODUCT_FROM_CART, MINUS_PRODUCT_FROM_CART, CHANGE_PRODUCT_COUNT_FROM_CART, UNSELECT_SELECT_ALL_ITEMS_FROM_CART } from "../actions/app_cart";
 import { removeItem } from "./arrays";
+import { CREATE_ONE_ORDER_SUCCESS } from "../actions/orders";
 
 function calNeedToPay(state){
     let products = state.products;
@@ -26,7 +27,6 @@ function checkCartChecked(productChecks){
     let allSelected = true;
     let empty = 0;
     //对全空选判断
-    console.log(productChecks);
     for (const key in productChecks) {
         
         if (productChecks.hasOwnProperty(key)) {
@@ -229,6 +229,7 @@ export default function AppCart
             //再判断一下check
 
             status = checkCartChecked(productChecks);
+            
             totalAmount = calNeedToPay(state);
             
             return Object.assign({}, state, {
@@ -244,7 +245,7 @@ export default function AppCart
         case CHANGE_PRODUCT_COUNT_FROM_CART:
             productCounts = state.productCounts;
             productChecks = state.productChecks;
-            productCounts[action.productId] = parseInt(action.number);
+            productCounts[action.productId] = parseInt(action.number,0);
             count = 0
             for (const key in productCounts) {
                 if (productCounts.hasOwnProperty(key)) {
@@ -283,7 +284,27 @@ export default function AppCart
                 status
             })
             
-
+        case CREATE_ONE_ORDER_SUCCESS:
+            return {
+                count: 0,
+                productIds: [],//[id, id, id]
+                products: [],
+                shopIds:[],//[shopId, shopId, shopId]
+                shopNames: [],
+                shopProducts: {},//"shopId": [1,2,3]
+                productCounts: {},//"productId": countNumber,
+                productChecks: {},//"productId": "false",
+                shopChecks: {},//"shopId": "false",
+                status: "all-unselected",
+                orderStatus: "notFinish",
+                allChecked: false,
+                isCurrent: false,
+                userId: null,
+                newComing: "false",
+                mode: "default",
+                needToCal: "false",
+                totalAmount: 0,
+            };
         default:
             return state;
     }

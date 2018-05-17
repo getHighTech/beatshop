@@ -1,23 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classnames from 'classnames';
-import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
-import red from 'material-ui/colors/red';
+import Card from 'material-ui/Card';
 import grey from 'material-ui/colors/grey';
 
-import AddShoppingCart from 'material-ui-icons/AddShoppingCart'
 import Button from 'material-ui/Button'
 import { connect } from 'react-redux';
-import { addProductsToAppCart } from '../../actions/app_cart';
 import { checkAccess } from '../../actions/check_access';
-import Snackbar from 'material-ui/Snackbar';
-import { memoryPathBeforeLogined } from '../../actions/users';
-import { createOneOrderByProduct } from '../../actions/orders';
-import { openAppMsg } from '../../actions/app_msg';
 import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
@@ -76,25 +65,7 @@ button:{
   color:'#F5F5F5',
   backgroundColor:grey[800]
 }
-  // media: {
-  //   height: 194,
-  // },
-  // actions: {
-  //   display: 'flex',
-  // },
-  // expand: {
-  //   transform: 'rotate(0deg)',
-  //   transition: theme.transitions.create('transform', {
-  //     duration: theme.transitions.duration.shortest,
-  //   }),
-  //   marginLeft: 'auto',
-  // },
-  // expandOpen: {
-  //   transform: 'rotate(180deg)',
-  // },
-  // avatar: {
-  //   backgroundColor: red[500],
-  // },
+
 });
 let timer = null;
 class ProductCard extends React.Component {
@@ -136,7 +107,6 @@ class ProductCard extends React.Component {
 
   render() {
     const { classes, product } = this.props;
-    const { snackOpen, snackContent} =this.state;
     return (
         <Card className={classes.card} 
           aria-expanded={this.state.expanded}

@@ -67,7 +67,6 @@ export function openAppMsg(reason, msgSurvive=2000){
                 return false;
         }
         
-        dispatch(openAppMsgDone(msgSurvive));
     }
    
 }

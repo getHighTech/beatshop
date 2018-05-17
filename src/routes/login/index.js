@@ -10,6 +10,8 @@ import { getSMSCode } from '../../actions/users';
 import {testPhone} from '../../tools/regValid'
 import Snackbar from "material-ui/Snackbar";
 import { openAppMsg } from '../../actions/app_msg';
+import { userLogin } from '../../actions/process/login';
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -48,12 +50,13 @@ class AppLogin extends React.Component {
       mobileLabel: "手机号",
       SMSLabel: "验证码",
       SMSCode: "",
+      buttonText: "登录/注册"
     }
   }
 
   
   componentDidMount(){
-    const { dispatch, user } = this.props;
+    const { dispatch } = this.props;
     if (this.props.match.params.msg) {
       dispatch(openAppMsg("NEED TO LOGIN", 1200))
       
@@ -91,24 +94,24 @@ class AppLogin extends React.Component {
       validDisabled: true,
     })
     dispatch(getSMSCode(this.state.mobile));
-    for(var i = 0; i < 60; i++ ){
-        
-        let timer = setTimeout(() => {
-          console.log(i--);
-          this.setState({
-            currentTime: i,
-          })
-          if(i===0){
-            this.setState({
-              currentTime: 60,
-              validDisabled: false,
-            })
-            
-          }
-        }, 1000*i);
-        timers.push(timer);
+    let timer = null;
+    let countBack = 0
+    let exeLoop = () => {
+      if(countBack === 60){
+        clearInterval(timer);
+        this.setState({
+          validDisabled: false,
+        })
+      }
+      this.setState({
+        currentTime: 60-countBack,
+      })
      
     }
+    timer = setInterval(()=>{
+      exeLoop();
+      countBack++;
+    }, 1000);
   }
 
   componentWillUnmount(){
@@ -117,7 +120,7 @@ class AppLogin extends React.Component {
     })
   }
   componentWillReceiveProps(nextProps){
-    const {user} = nextProps;
+    const {user, history} = nextProps;
     if(user.SMSCodeStatus === "sending"){
       return this.setState({
         snackOpen: true,
@@ -137,6 +140,41 @@ class AppLogin extends React.Component {
         snackContent: "验证码获取太频繁，请稍后重试"
       })
     }
+    if(user.loginStatus === "untrigger"){
+      return this.setState({
+        buttonText: "登录/注册",
+      })
+    }
+    if(user.loginStatus==="loading"){
+      return this.setState({
+        buttonText: "正在登录",
+      })
+    }
+    if(user.loginStatus==="success"){
+       this.setState({
+        buttonText: "登录成功, 开始跳转",
+      })
+      return setTimeout(()=>{
+        history.push("/");
+      },1000)
+
+    }
+
+    if(user.loginStatus==="failed"){
+      if(user.loginFailReason === "USER NOT FOUND"){
+        return this.setState({
+          usernameError: true,
+          usernameLabel: "用户不存在" 
+        })
+      }
+      if(user.loginFailReason === "LOGIN PASS WRONG"){
+        return this.setState({
+          passwordError: true,
+          passwordLabel: "密码错误" 
+        })
+      }
+    }
+
     
   }
   handleOnChange(e, item){
@@ -160,6 +198,7 @@ class AppLogin extends React.Component {
     
   }
   handleLoginBtnClick(){
+    const { dispatch, location, currentCity } = this.props;
     this.setState({
       mobileError: false,
       mobileLabel: "手机号",
@@ -182,10 +221,19 @@ class AppLogin extends React.Component {
 
       return false;
     }
-    
+    let position = location.position;
+    let address = location.addressComponent;
+    let city = currentCity;
+    let loginParams = {
+      mobile: this.state.mobile,
+      position,
+      address,
+      city,
+    }
+    return dispatch(userLogin("mobileSMS", loginParams));
   }
   render(){
-    const { classes, history } = this.props;
+    const { classes, history, user } = this.props;
     const { 
       validDisabled, currentTime, mobileError,
        SMSError, mobileLabel, SMSLabel, snackOpen, snackContent } = this.state;
@@ -223,19 +271,18 @@ class AppLogin extends React.Component {
              {validDisabled? currentTime+"秒后重新获取": "获取验证码"}
              </Button><br/>
          </div><br/>
-         <Button onClick={this.handleLoginBtnClick.bind(this)} variant="raised" color="primary" className={classes.button} fullWidth={true}>登录/注册</Button>
+         <Button onClick={this.handleLoginBtnClick.bind(this)} variant="raised" color="primary" className={classes.button} fullWidth={true}>
+         {this.state.buttonText}
+         </Button>
          <div><br/>使用密码用户名方式登录?<Button onClick={()=>history.push("/password-login")}  color="secondary">前往</Button></div>
-         <div><br/>使用密码用户名注册?<Button  color="secondary">立刻注册</Button></div>
          
           
           </form>
           <Snackbar
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               open={snackOpen}
+              disabled={(user.loginStatus === "loading" || user.loginStatus === "success")? true : false}
               onClose={this.handleSnackClose}
-              SnackbarContentProps={{
-                'aria-describedby': 'message-id',
-              }}
               message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
              
           />
@@ -250,7 +297,9 @@ AppLogin.propTypes = {
 };
 function mapToState(state){
   return {
-    user: state.AppUser
+    user: state.AppUser,
+    location: state.AppInfo.amap,
+    currentCity: state.AppInfo.currentCity
   }
 }
 

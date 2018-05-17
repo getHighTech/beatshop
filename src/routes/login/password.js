@@ -6,7 +6,6 @@ import { setAppLayout } from '../../actions/app';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
-import {testPhone} from '../../tools/regValid'
 import Snackbar from "material-ui/Snackbar";
 import { userLogin } from '../../actions/process/login';
 import { LinearProgress } from 'material-ui/Progress';
@@ -58,7 +57,7 @@ class AppLoginPassword extends React.Component {
 
   
   componentDidMount(){
-    const { dispatch, user } = this.props;
+    const { dispatch } = this.props;
     dispatch(setAppLayout(
       {
           isBack: true, 
@@ -84,11 +83,7 @@ class AppLoginPassword extends React.Component {
       clearTimeout(timer);
     })
   }
-  componentWillReceiveProps(nextProps){
-    const {user} = nextProps;
-    
-    
-  }
+
   handleOnChange(e, item){
     this.setState({
       usernameError: false,
@@ -190,7 +185,7 @@ class AppLoginPassword extends React.Component {
   render(){
     const { classes, history, user } = this.props;
     const { 
-      validDisabled, currentTime, usernameError,
+       usernameError,
        passwordError, usernameLabel, passwordLabel, snackOpen, snackContent } = this.state;
     return (
       <div style={{
@@ -232,7 +227,6 @@ class AppLoginPassword extends React.Component {
          </Button>
          <div><br/>使用手机密码登录或者注册?<Button  onClick={()=>history.push("/login")} color="secondary">前往</Button></div>
          <div><br/>忘记密码?<Button  onClick={()=>history.push("/login/forgetpass")} color="secondary">前往</Button></div>
-         <div><br/>使用密码用户名注册?<Button color="secondary">立刻注册</Button></div>
          
           
           </form>
