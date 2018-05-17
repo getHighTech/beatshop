@@ -68,7 +68,7 @@ class BankcardsList extends React.Component{
       
           <CardContent className={classes.content}>
           <Typography>
-            <Button variant="fab" color="primary" aria-label="add" className={classes.button} href="#/my/bankcards/orderuse">
+            <Button variant="fab" color="primary" aria-label="add" className={classes.button} href="#/my/new_bankcard">
               <Icon>add_circle</Icon>
             </Button>
           </Typography>

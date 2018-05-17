@@ -25,6 +25,7 @@ import MyIndex from './my'
 import Order from './orders'
 import Contacts from './contacts';
 import NewContact from './contacts/new';
+import NewBankcard from './my/NewBankcard'
 
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
@@ -126,6 +127,7 @@ class App extends React.Component {
             <Router  className={classes.root} >
                 <MainLayout history={history} store={this.props.store}>
                     <Switch>
+                    NewBankcard
                         <PrivateRoute exact path="/my" component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
                         <PrivateRoute exact path="/pay/:status" component={PayResult} />
@@ -135,6 +137,7 @@ class App extends React.Component {
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
                         <PrivateRoute exact path="/cart" component={AppCart} />
                         <PrivateRoute exact path="/my/bankcards_list" component={BankcardsList} />
+                        <PrivateRoute exact path="/my/new_bankcard" component={NewBankcard} />
                         <Route exact path="/" component={HomeWithPath} />
                         <Route  path="/products_by_rolename/:rolename/:productname" component={ProductShowWithPath} />
                         <Route  path="/products/:id" component={ProductShowWithPath} />
