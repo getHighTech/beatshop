@@ -17,7 +17,7 @@ const styles = {
     width: "100%",
     alignItems: "center",
     backgroundSize: '100%',
-    backgroundColor: cyan[100],
+    // backgroundColor: cyan[100],
     paddingTop: "30px"
   },
   bigAvatar: {
