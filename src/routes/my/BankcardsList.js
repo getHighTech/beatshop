@@ -5,7 +5,7 @@ import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Image from '../../components/imgs/money.svg';
-import Card,{CardActions,CardContent,CardHeader} from 'material-ui/Card';
+import Card,{ CardContent} from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import grey from 'material-ui/colors/grey'
 import Button from '@material-ui/core/Button';

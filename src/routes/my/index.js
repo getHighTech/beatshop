@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import MyItems from '../../components/my/MyItems';
-import cyan from 'material-ui/colors/cyan';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
 import { appShowMsgAndInjectDataReact } from '../../actions/app';
