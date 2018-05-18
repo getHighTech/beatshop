@@ -10,8 +10,6 @@ import { loadOneProduct, loadOneProductByRolename } from '../../actions/products
 import LoadingItem from '../../components/public/LoadingItem'
 import Paper from '@material-ui/core/Paper';
 import { setAppLayout } from '../../actions/app';
-import Snackbar from '@material-ui/core/Snackbar';
-
 import ProductBottomBar from '../../components/products/ProductBottomBar';
 
 
@@ -183,19 +181,8 @@ const styles = theme => ({
                     <br/><br/>
                     <br/>
                     <br/>
-                    <Snackbar
-                            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                            open={snackOpen}
-                            onClose={this.handleSnackClose}
-                            SnackbarContentProps={{
-                                'aria-describedby': 'message-id',
-                            }}
-                            message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
-                            
-                        />
-                        <div style={{width: "100%"}}>
+                    
                     <ProductBottomBar product={productShow.product} history={history} url={match.url}/>
-                    </div>
         </Grid>
 
         );
