@@ -1,19 +1,19 @@
-import React from 'react';
+import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import withWidth from 'material-ui/utils/withWidth';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import withWidth from '@material-ui/core/withWidth';
 import { connect } from 'react-redux';
 import CitySelector from '../components/public/CitySelector';
 import CartTop from './CartTop';
-import ChevronLeft from 'material-ui-icons/ChevronLeft';
-import Button from 'material-ui/Button';
-import ModeEdit from "material-ui-icons/ModeEdit";
-import OpenInNew from "material-ui-icons/OpenInNew"
-import grey from 'material-ui/colors/grey'
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import Button from '@material-ui/core/Button';
+import ModeEdit from "@material-ui/icons/ModeEdit";
+import OpenInNew from "@material-ui/icons/OpenInNew"
+import grey from '@material-ui/core/colors/grey'
 
 const styles = theme => ({
   root: {

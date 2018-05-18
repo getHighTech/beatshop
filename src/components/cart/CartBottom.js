@@ -8,7 +8,7 @@ import { unselectSelectAllItemsFromCart } from '../../actions/app_cart';
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
 import Checkbox from '@material-ui/core/Checkbox';
-import {  FormControlLabel } from 'material-ui/Form';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { createOneOrder } from '../../actions/orders';
 const styles = theme => ({
     root: {

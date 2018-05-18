@@ -1,9 +1,11 @@
 
-import React from 'react';
+import React, {Component} from 'react';
+
+
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import ShoppingCart from 'material-ui-icons/ShoppingCart';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
 import {connect} from 'react-redux';
 const styles = theme => ({

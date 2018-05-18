@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
-import Card,{CardActions,CardContent} from '@material-ui/core/Card';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from 'material-ui/Typography';
-import grey from 'material-ui/colors/grey'
+import Typography from '@material-ui/core/Typography';
+import grey from '@material-ui/core/colors/grey'
 import Avatar from '@material-ui/core/Avatar';
 import Image from '../imgs/money.svg';
-import blue from 'material-ui/colors/blue'
+import blue from '@material-ui/core/colors/blue'
 import Grid from '@material-ui/core/Grid';
 
 

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React from 'react'
+
+import React, {Component} from 'react'
 
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';

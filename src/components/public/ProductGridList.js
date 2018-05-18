@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import GridList, { GridListTile } from '@material-ui/core/GridList';
-// import Subheader from '@material-ui/core/List/ListSubheader';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
-
 import ProductCard from './ProductCard';
 import deepOrange from '@material-ui/core/colors/deepOrange'
 

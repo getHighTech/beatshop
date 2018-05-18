@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Bankcard from '../../components/bankcard/'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
