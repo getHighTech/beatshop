@@ -1,14 +1,14 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { setAppLayout } from '../../actions/app';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { getSMSCode } from '../../actions/users';
 import {testPhone} from '../../tools/regValid'
-import Snackbar from "material-ui/Snackbar";
+import Snackbar from "@material-ui/core/Snackbar";
 import { openAppMsg } from '../../actions/app_msg';
 import { userLogin } from '../../actions/process/login';
 

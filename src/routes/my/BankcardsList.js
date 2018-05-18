@@ -3,11 +3,11 @@ import Bankcard from '../../components/bankcard/'
 import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Image from '../../components/imgs/money.svg';
-import Card,{ CardContent} from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import grey from 'material-ui/colors/grey'
+import Card,{CardActions,CardContent,CardHeader} from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import grey from '@material-ui/core/colors/grey'
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 

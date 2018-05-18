@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import GridList, { GridListTile } from 'material-ui/GridList';
-import Subheader from 'material-ui/List/ListSubheader';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import GridList, { GridListTile } from '@material-ui/core/GridList';
+// import Subheader from '@material-ui/core/List/ListSubheader';
+import ListSubheader from '@material-ui/core/ListSubheader';
+
 import ProductCard from './ProductCard';
-import deepOrange from 'material-ui/colors/deepOrange'
+import deepOrange from '@material-ui/core/colors/deepOrange'
 
 const styles = theme => ({
   root: {
@@ -61,9 +63,9 @@ function ProductGridList(props) {
       <GridList 
         cellHeight={180} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <Subheader component="header" className={classes.subheader} >
+          <ListSubheader component="header" className={classes.subheader} >
             <img alt="主 / 打 / 商 / 品" src={require("../imgs/recommend.svg")}/>
-          </Subheader>
+          </ListSubheader>
         </GridListTile>
         {products.map((product,index) => (
           <ProductCard key={product._id} product={product} history={history} />

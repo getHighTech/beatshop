@@ -1,17 +1,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { setAppLayout } from '../../actions/app';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
+import List, { ListItem, ListItemText } from '@material-ui/core/List';
+import Avatar from '@material-ui/core/Avatar';
 
-import grey from 'material-ui/colors/grey';
-import Typography from 'material-ui/Typography';
+import grey from '@material-ui/core/colors/grey';
+import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { loadOneOrder } from '../../actions/orders';
 import LoadingItem from '../../components/public/LoadingItem';
-import Button from 'material-ui/Button'
+import Button from '@material-ui/core/Button'
 const styles = theme => ({
     flex: {
         width: "100%"
