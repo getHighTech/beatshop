@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import {connect} from 'react-redux';
 
 import ProductCarousel from '../../components/products/carousel';
 import ProductTabs from '../../components/products/tabs';
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 import { loadOneProduct, loadOneProductByRolename } from '../../actions/products';
 import LoadingItem from '../../components/public/LoadingItem'
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 import { setAppLayout } from '../../actions/app';
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import ProductBottomBar from '../../components/products/ProductBottomBar';
 

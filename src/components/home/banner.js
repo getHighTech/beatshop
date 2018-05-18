@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux';
 import Image from '../imgs/background3.jpg';
-import Hidden from 'material-ui/Hidden';
-import Typography from 'material-ui/Typography';
+import Hidden from '@material-ui/core/Hidden';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {

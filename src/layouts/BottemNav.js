@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
-import Home from 'material-ui-icons/Home';
+import { withStyles } from '@material-ui/core/styles';
+import BottomNavigation, { BottomNavigationAction } from '@material-ui/core/BottomNavigation';
+// import Home from 'material-ui/core-icons/Home';
+// import AccountBalance from 'material-ui/core-icons/AccountBalance';
 import AccountBalance from 'material-ui-icons/AccountBalance';
+import Home from 'material-ui-icons/Home';
 import Person from 'material-ui-icons/Person';
-import brown from 'material-ui/colors/brown';
+
+// import Person from 'material-ui-icons/Person';
+import brown from '@material-ui/core/colors/brown';
 import { connect } from 'react-redux'
 const styles = {
   root: {

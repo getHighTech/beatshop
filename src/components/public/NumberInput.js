@@ -1,10 +1,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Add from "material-ui-icons/AddCircle";
-import Remove from "material-ui-icons/RemoveCircle"
-import Input from "material-ui/Input";
+import { withStyles } from '@material-ui/core/styles';
+import Add from "material-ui-icons/Add";
+
+import Remove from "material-ui-icons/Remove";
+import Input from "@material-ui/core/Input";
 import { connect } from 'react-redux';
 import { plusProductFromCart, minusProductFromCart, changeProductCountFromCart } from '../../actions/app_cart';
 

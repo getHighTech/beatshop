@@ -6,14 +6,14 @@ import {
     Switch,Redirect
   } from 'react-router-dom';
 
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import createHistory from 'history/createHashHistory';
 
 import MainLayout from '../layouts/MainLayout.js';
 import Home from './home/index.js'
 import {connect} from 'react-redux';
-import LoadApp from './LoadApp.js';
+import  LoadApp from './LoadApp.js';
 import { loadApp, loadGeoAddress, syncRemoteUser } from '../actions/process/load_app';
 import InvalidApp from './InvalidApp';
 import NoMatchPage from './not_match_page'
@@ -27,8 +27,8 @@ import Contacts from './contacts';
 import NewContact from './contacts/new';
 import NewBankcard from './my/NewBankcard'
 
-import Button from 'material-ui/Button';
-import Snackbar from 'material-ui/Snackbar';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 import BankcardsList from './my/BankcardsList';
 import Money from './money/money'
 import MyOrders from './orders/my.js'

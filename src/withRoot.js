@@ -1,9 +1,9 @@
 import React from 'react';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import CssBaseline from 'material-ui/CssBaseline';
-import grey from 'material-ui/colors/grey'
-import deepOrange from 'material-ui/colors/deepOrange'
-import amber from 'material-ui/colors/amber'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import grey from '@material-ui/core/colors/grey'
+import deepOrange from '@material-ui/core/colors/deepOrange'
+import amber from '@material-ui/core/colors/amber'
 
 let amberFun = () => amber;
 amberFun();
