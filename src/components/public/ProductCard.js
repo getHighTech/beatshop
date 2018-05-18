@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Card from 'material-ui/Card';
-import grey from 'material-ui/colors/grey';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import grey from '@material-ui/core/colors/grey';
 
-import Button from 'material-ui/Button'
+import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   card: {

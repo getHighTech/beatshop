@@ -2,7 +2,7 @@ import React from 'react'
 import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({})
 
 class MyOrders extends React.Component{

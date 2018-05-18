@@ -3,9 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAppLayout, appShowMsgAndInjectDataReactWithPath } from '../../actions/app';
-import TextField from 'material-ui/TextField';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   container: {

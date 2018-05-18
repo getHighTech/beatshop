@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui/Progress';
+import { withStyles } from '@material-ui/core/styles';
+import { LinearProgress } from '@material-ui/core/LinearProgress';
+
 
 const styles = {
   root: {
@@ -13,17 +14,35 @@ const styles = {
   },
 };
 
-function LoadApp(props) {
-  const { classes } = props;
+// function LoadApp(props) {
+//   const { classes } = props;
+//   return (
+//     <div className={classes.root}>
+//       <h4>{props.title}</h4>
+//       <LinearProgress />
+//       <br />
+//       <LinearProgress color="secondary" />
+//     </div>
+//   );
+// }
+
+class LoadApp extends React.Component(){
+  constructor(props){
+    super(props);
+  }
+  render(){
+      const { classes } = this.props;
+
   return (
     <div className={classes.root}>
-      <h4>{props.title}</h4>
+      <h4>{this.props.title}</h4>
       <LinearProgress />
       <br />
       <LinearProgress color="secondary" />
     </div>
   );
-}
+  }
+  }
 
 LoadApp.propTypes = {
   classes: PropTypes.object.isRequired,
