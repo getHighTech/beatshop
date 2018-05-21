@@ -145,7 +145,11 @@ class Order extends React.Component {
                         <ListItemText primary={"收货地址: "+orderShow.order.contact.address}  />
                         </ListItem>
                         <ListItem >
-                        <ListItemText primary={"车牌号码: "+orderShow.order.contact.carNumber}  />
+                            {
+                                orderShow.carNumberNeed? <ListItemText primary={"车牌号码: "+orderShow.order.contact.carNumber}  />:
+                                <div></div>
+                            }
+                        
                         </ListItem>
                     </List>
                     <Button   style={{maxHeight: "80px", maxWidth: "100px"}}

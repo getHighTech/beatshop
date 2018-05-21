@@ -8,13 +8,13 @@ import { unselectSelectAllItemsFromCart } from '../../actions/app_cart';
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
 import Checkbox from '@material-ui/core/Checkbox';
-import {  FormControlLabel } from 'material-ui/Form';
+import   FormControlLabel  from '@material-ui/core/FormControlLabel';
 import { createOneOrder } from '../../actions/orders';
 const styles = theme => ({
     root: {
         flexGrow: 1,
         position: "fixed",
-        width: "100%",
+        // width: "100%",
         zIndex: '1000',
         bottom: 0,
         display: "flex",

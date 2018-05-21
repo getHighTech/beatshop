@@ -9,7 +9,7 @@ import NumberInput from '../../components/public/NumberInput';
 import { connect } from 'react-redux';
 import Checkbox from '@material-ui/core/Checkbox';
 import { changeProductFromCartChecked, deleteProductFromCart, repeatSyncLocalCartRemote } from '../../actions/app_cart';
-import Clear from "material-ui-icons/Clear"
+import Clear from "@material-ui/icons/Clear"
 import CartBottom from '../../components/cart/CartBottom';
 
 const styles = theme => ({

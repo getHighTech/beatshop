@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import AddShoppingCart from 'material-ui-icons/AddShoppingCart'
+import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
 

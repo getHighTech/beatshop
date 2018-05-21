@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import CreditCard from 'material-ui-icons/CreditCard';
-import CardMembership from 'material-ui-icons/CardMembership';
-import LocalOffer from 'material-ui-icons/LocalOffer';
-import FeaturedPlayList from 'material-ui-icons/FeaturedPlayList';
-import PermIdentity from 'material-ui-icons/PermIdentity';
-import Contacts from 'material-ui-icons/Contacts';
-import Avatar from 'material-ui/Avatar';
+import { withStyles } from '@material-ui/core/styles';
+import List, { ListItem, ListItemIcon, ListItemText } from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import CreditCard from '@material-ui/icons/CreditCard';
+import CardMembership from '@material-ui/icons/CardMembership';
+import LocalOffer from '@material-ui/icons/LocalOffer';
+import FeaturedPlayList from '@material-ui/icons/FeaturedPlayList';
+import PermIdentity from '@material-ui/icons/PermIdentity';
+import Contacts from '@material-ui/icons/Contacts';
+import Avatar from '@material-ui/core/Avatar';
 import userImg from '../imgs/timg.jpg';
 import { connect } from "react-redux";
 
