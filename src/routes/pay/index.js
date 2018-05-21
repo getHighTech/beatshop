@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
