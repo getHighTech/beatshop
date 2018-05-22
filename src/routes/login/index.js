@@ -11,6 +11,12 @@ import {testPhone} from '../../tools/regValid'
 import Snackbar from "@material-ui/core/Snackbar";
 import { openAppMsg } from '../../actions/app_msg';
 import { userLogin } from '../../actions/process/login';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
+
 
 const styles = theme => ({
   container: {
@@ -23,17 +29,26 @@ const styles = theme => ({
     width: "100%",
     maxWidth: "400px",
     position: "relative",
-    top: "30px"
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: "90%",
 
-  },button: {
+  },
+  button: {
     margin: theme.spacing.unit,
     color: "white",
   },
+  root:{
+    backgroundColor:'#151313',
+    height:700
+  },
+
+  card:{
+    width:'92%',
+    marginLeft:'4%',
+  }
 });
 //倒计时
 let timers =[]
@@ -238,54 +253,70 @@ class AppLogin extends React.Component {
       validDisabled, currentTime, mobileError,
        SMSError, mobileLabel, SMSLabel, snackOpen, snackContent } = this.state;
     return (
-      <div style={{
-            display: 'flex',
-          flexWrap: 'wrap',
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor: "white",
-          padding: "5px"
-          }}>
-          <form className={classes.container} noValidate autoComplete="off">
-          <TextField required={!mobileError} error={mobileError}
-            id="mobile-input"
-            label={mobileLabel}
-            className={classes.textField}
-            type="text"
-            autoComplete="current-password"
-            onChange={(e)=>this.handleOnChange.bind(this)(e, "mobile")}
-          /><br/>
-         <div style={{width: "93%", display: "flex"}}>
-         <TextField required={!SMSError} error={SMSError}
-            style={{width: "50%"}}
-            id="sms-code-input"
-            label={SMSLabel}
-            className={classes.textField}
-            type="text"
-            autoComplete="current-password"
-            onChange={(e)=>this.handleOnChange.bind(this)(e, "SMS")}
-          />
-            <Button style={{color: validDisabled? "black": "white"}} 
-            disabled={validDisabled} variant="raised" color="secondary" size="small"
-             className={classes.button} onClick={()=>this.startValidtimeOut()}>
-             {validDisabled? currentTime+"秒后重新获取": "获取验证码"}
-             </Button><br/>
-         </div><br/>
-         <Button onClick={this.handleLoginBtnClick.bind(this)} variant="raised" color="primary" className={classes.button} fullWidth={true}>
-         {this.state.buttonText}
-         </Button>
-         <div><br/>使用密码用户名方式登录?<Button onClick={()=>history.push("/password-login")}  color="secondary">前往</Button></div>
-         
-          
-          </form>
-          <Snackbar
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              open={snackOpen}
-              disabled={(user.loginStatus === "loading" || user.loginStatus === "success")? true : false}
-              onClose={this.handleSnackClose}
-              message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
-             
-          />
+      <div className={classes.root}>
+        <div className={classes.logo}>
+          <img style={{width:'70%',marginLeft:'15%'}}alt="LOGO" src={require('../../components/imgs/webwxgetmsgimg.jpeg')} />
+        </div>
+        <Card className={classes.card}>
+          <CardContent>
+            <div style={{
+                  display: 'flex',
+                flexWrap: 'wrap',
+                flexDirection: "column",
+                alignItems: "center",
+                backgroundColor: "white",
+                padding: "5px"
+                }}>
+                <form className={classes.container} noValidate autoComplete="off">
+                <TextField required={!mobileError} error={mobileError}
+                  id="mobile-input"
+                  label={mobileLabel}
+                  className={classes.textField}
+                  type="text"
+                  autoComplete="current-password"
+                  onChange={(e)=>this.handleOnChange.bind(this)(e, "mobile")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
+                  }}
+                /><br/>
+              <div style={{width: "93%", display: "flex"}}>
+              <TextField required={!SMSError} error={SMSError}
+                  style={{width: "50%"}}
+                  id="sms-code-input"
+                  label={SMSLabel}
+                  className={classes.textField}
+                  type="text"
+                  autoComplete="current-password"
+                  onChange={(e)=>this.handleOnChange.bind(this)(e, "SMS")}
+                />
+                  <Button style={{color: validDisabled? "black": "white"}} 
+                  disabled={validDisabled} variant="raised" color="secondary" size="small"
+                  className={classes.button} onClick={()=>this.startValidtimeOut()}>
+                  {validDisabled? currentTime+"秒后重新获取": "获取验证码"}
+                  </Button><br/>
+              </div><br/>
+              <Button onClick={this.handleLoginBtnClick.bind(this)} variant="raised" color="secondary" className={classes.button} fullWidth={true}>
+              {this.state.buttonText}
+              </Button>
+              <div><br/>使用密码用户名方式登录?<Button onClick={()=>history.push("/password-login")}  color="secondary">前往</Button></div>
+              
+                
+                </form>
+                <Snackbar
+                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                    open={snackOpen}
+                    disabled={(user.loginStatus === "loading" || user.loginStatus === "success")? true : false}
+                    onClose={this.handleSnackClose}
+                    message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
+                  
+                />
+              </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }

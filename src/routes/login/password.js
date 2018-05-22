@@ -8,7 +8,14 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import Snackbar from "@material-ui/core/Snackbar";
 import { userLogin } from '../../actions/process/login';
-import { LinearProgress } from '@material-ui/core/LinearProgress';
+import  LinearProgress  from '@material-ui/core/LinearProgress';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Lock from '@material-ui/icons/Lock';
+
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -20,7 +27,7 @@ const styles = theme => ({
     width: "100%",
     maxWidth: "400px",
     position: "relative",
-    top: "30px"
+
   },  progress: {
     margin: theme.spacing.unit * 2,
   },
@@ -30,11 +37,18 @@ const styles = theme => ({
     width: "90%",
 
   },button: {
-    margin: 8,
+    margin: theme.spacing.unit,
     color: "white",
-    height: "auto",
-    fontSize: "x-large"
   },
+  root:{
+    backgroundColor:'#151313',
+    height:700
+  },
+
+  card:{
+    width:'92%',
+    marginLeft:'4%',
+  }
 });
 //倒计时
 let timers =[]
@@ -188,59 +202,83 @@ class AppLoginPassword extends React.Component {
        usernameError,
        passwordError, usernameLabel, passwordLabel, snackOpen, snackContent } = this.state;
     return (
-      <div style={{
-            display: 'flex',
-          flexWrap: 'wrap',
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor: "white",
-          padding: "5px"
-          }}>
-          <form className={classes.container} noValidate autoComplete="off">
-          <TextField required={!usernameError} error={usernameError}
-            id="username-input"
-            label={usernameLabel}
-            className={classes.textField}
-            type="text"
-            autoComplete="current-password"
-            onChange={(e)=>this.handleOnChange.bind(this)(e, "username")}
-          /><br/>
-         <TextField required={!passwordError} error={passwordError}
-            id="password-input"
-            label={passwordLabel}
-            className={classes.textField}
-            type="password"
-            autoComplete="current-password"
-            onChange={(e)=>this.handleOnChange.bind(this)(e, "password")}
-          /><br/>
-         <div style={{ flexGrow: 1, width: "100%"}}>
-            {(user.loginStatus === "loading")&& <LinearProgress color="secondary" />}
+          <div className={classes.root}>
+            <div className={classes.logo}>
+              <img style={{width:'70%',marginLeft:'15%'}}alt="LOGO" src={require('../../components/imgs/webwxgetmsgimg.jpeg')} />
+            </div>
+            <Card className={classes.card}>
+              <CardContent>
+                <div style={{
+                    display: 'flex',
+                  flexWrap: 'wrap',
+                  flexDirection: "column",
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  padding: "5px"
+                  }}>
+                <form className={classes.container} noValidate autoComplete="off">
+                  <TextField required={!usernameError} error={usernameError}
+                    id="username-input"
+                    label={usernameLabel}
+                    className={classes.textField}
+                    type="text"
+                    autoComplete="current-password"
+                    onChange={(e)=>this.handleOnChange.bind(this)(e, "username")}                      
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <AccountCircle />
+                        </InputAdornment>
+                      ),
+                    }}
+                    
+                  /><br/>
+                  <TextField required={!passwordError} error={passwordError}
+                      id="password-input"
+                      label={passwordLabel}
+                      className={classes.textField}
+                      type="password"
+                      autoComplete="current-password"
+                      onChange={(e)=>this.handleOnChange.bind(this)(e, "password")}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Lock />
+                          </InputAdornment>
+                        ),
+                      }}
+                    /><br/>
+                  <div style={{ flexGrow: 1, width: "100%"}}>
+                      {(user.loginStatus === "loading")&& <LinearProgress color="secondary" />}
+                    </div>
+                  <Button 
+                  onClick={this.handleLoginBtnClick} 
+                  disabled={(user.loginStatus === "loading" || user.loginStatus === "success")? true : false}
+                  variant="raised" color="secondary" 
+                  style={{color: (user.loginStatus === "loading" || user.loginStatus === "success")? "black" : "white"}}
+                  className={classes.button} 
+                  fullWidth={true}>
+                  {this.state.buttonText}
+                  </Button>
+                  <div><br/>使用手机密码登录或者注册?<Button  onClick={()=>history.push("/login")} color="secondary">前往</Button></div>
+                  <div><br/>忘记密码?<Button  onClick={()=>history.push("/login/forgetpass")} color="secondary">前往</Button></div>
+                  
+                    
+                  </form>
+                  <Snackbar
+                      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                      open={snackOpen}
+                      onClose={this.handleSnackClose}
+                      SnackbarContentProps={{
+                        'aria-describedby': 'message-id',
+                      }}
+                      message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
+                    
+                  />
+              </div>
+              </CardContent>
+            </Card>
           </div>
-         <Button 
-         onClick={this.handleLoginBtnClick} 
-         disabled={(user.loginStatus === "loading" || user.loginStatus === "success")? true : false}
-         variant="raised" color="primary" 
-         style={{color: (user.loginStatus === "loading" || user.loginStatus === "success")? "black" : "white"}}
-         className={classes.button} 
-         fullWidth={true}>
-         {this.state.buttonText}
-         </Button>
-         <div><br/>使用手机密码登录或者注册?<Button  onClick={()=>history.push("/login")} color="secondary">前往</Button></div>
-         <div><br/>忘记密码?<Button  onClick={()=>history.push("/login/forgetpass")} color="secondary">前往</Button></div>
-         
-          
-          </form>
-          <Snackbar
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              open={snackOpen}
-              onClose={this.handleSnackClose}
-              SnackbarContentProps={{
-                'aria-describedby': 'message-id',
-              }}
-              message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
-             
-          />
-      </div>
     );
   }
   

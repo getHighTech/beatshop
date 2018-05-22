@@ -13,7 +13,7 @@ import createHistory from 'history/createHashHistory';
 import MainLayout from '../layouts/MainLayout.js';
 import Home from './home/index.js'
 import {connect} from 'react-redux';
-import  LoadApp from './LoadApp.js';
+import  LoadApp from './LoadApp.jsx';
 import { loadApp, loadGeoAddress, syncRemoteUser } from '../actions/process/load_app';
 import InvalidApp from './InvalidApp';
 import NoMatchPage from './not_match_page'
