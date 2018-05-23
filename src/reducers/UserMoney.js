@@ -49,7 +49,8 @@ export default function UserMoney(state={
                     staticDone:true
                 })
             }
+            break;
         default:
-            return state
+            return state;
     }
 }

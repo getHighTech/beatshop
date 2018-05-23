@@ -8,9 +8,7 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { getSMSCode } from '../../actions/users';
 import {testPhone} from '../../tools/regValid'
-import Snackbar from "@material-ui/core/Snackbar";
 import { openAppMsg } from '../../actions/app_msg';
-import { userLogin } from '../../actions/process/login';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -251,10 +249,10 @@ class AppLogin extends React.Component {
       )
   }
   render(){
-    const { classes, history, user } = this.props;
+    const { classes, history } = this.props;
     const { 
       validDisabled, currentTime, mobileError,
-       SMSError, mobileLabel, SMSLabel, snackOpen, snackContent } = this.state;
+       SMSError, mobileLabel, SMSLabel } = this.state;
     return (
       <div className={classes.root}>
         <div className={classes.logo}>

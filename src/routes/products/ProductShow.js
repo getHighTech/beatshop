@@ -78,7 +78,6 @@ const styles = theme => ({
     }
 
     render() {
-        const { snackOpen, snackContent} =this.state;
         const {classes, appInfo, productShow, match, history} = this.props;
         if(productShow.product === {}){
             return (

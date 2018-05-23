@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { setAppLayout } from '../../actions/app';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import NumberInput from '../../components/public/NumberInput';

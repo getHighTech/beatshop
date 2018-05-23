@@ -18,13 +18,8 @@ export default function getRemoteMeteor(
         }
     });
     let tempResult = null;
-    let tempRemoteMethodName = null;
-    let tempEndParams = null;
-    let loadTimes = 0;
     MClient.method(remoteMethodName, endParams);
        
-        tempRemoteMethodName = remoteMethodName;
-        tempEndParams = endParams;
         return MClient.on("result", message => {
            
             if (!message.error) {
@@ -34,6 +29,8 @@ export default function getRemoteMeteor(
                     if (message.result.fromMethod === remoteMethodName) {
                         if(tempResult ===message.result.msg){
                             return false;
+                        }else{
+                            tempResult = message.result.msg
                         }
                         return dispatch(successAction(message.result.msg));
                     }

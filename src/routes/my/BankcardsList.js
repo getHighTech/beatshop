@@ -1,14 +1,11 @@
 import React from 'react'
 import Bankcard from '../../components/bankcard/'
-import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Image from '../../components/imgs/money.svg';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey'
 import Button from '@material-ui/core/Button';
@@ -37,7 +34,7 @@ const styles = theme => ({
 class BankcardsList extends React.Component{
 
   componentDidMount(){
-    const { dispatch, match, layout } = this.props;
+    const { dispatch, layout } = this.props;
     
     if(layout.title!=='我的银行卡'){
         dispatch(setAppLayout(

@@ -12,7 +12,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { useOneContact, getUserContacts, deleteUserContact } from '../../actions/contacts';
 import { judgeCarNumberNeed } from '../../actions/orders';
 import { getStore } from '../../tools/localStorage';
-import CartBottom from '../../components/cart/CartBottom';
 import ContactsBottom from '../../components/contacts/ContactsBottom';
 const styles = theme => ({
     row: {

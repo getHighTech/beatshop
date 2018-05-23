@@ -13,7 +13,6 @@ export function clearAllInterval(){
 }
 export function repeatSyncLocalCartRemote(){
     return (dispatch, getState)=>{
-        let i = 0;
         let cartId = getStore("cartId");
         if(!cartId){cartId = "000";}
         let intervalTimer = setInterval(()=>{

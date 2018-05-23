@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MyItems from '../../components/my/MyItems';
-import cyan from '@material-ui/core/colors/cyan';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { appShowMsgAndInjectDataReact } from '../../actions/app';
@@ -31,7 +30,7 @@ const styles = {
 
 class MyIndex extends React.Component{
   componentDidMount(){
-    const { dispatch, match, layout } = this.props;
+    const { dispatch, layout } = this.props;
     
     if(layout.title!=='个人中心'){
         dispatch(setAppLayout(

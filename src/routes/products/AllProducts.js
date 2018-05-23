@@ -1,5 +1,4 @@
 import React from 'react'
-import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -7,11 +6,8 @@ import PropTypes from 'prop-types';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -116,7 +112,7 @@ class AllProducts extends React.Component{
   }
 
   componentDidMount(){
-    const { dispatch, match, layout } = this.props;
+    const { dispatch, layout } = this.props;
     console.log(this.props);
     
     if(layout.title!=='万人车汇商品库'){

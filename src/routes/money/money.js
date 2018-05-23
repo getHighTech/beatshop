@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 import { withStyles } from '@material-ui/core/styles';
 import Bankcard from '../../components/bankcard/'
@@ -126,7 +125,7 @@ class Money extends React.Component{
     this.setState({withdrawData:dataSource1})
   }
   componentDidMount(){
-    const { dispatch, match, layout, money } = this.props;
+    const { dispatch, layout, money } = this.props;
 
     if(layout.title!=='财务'){
         dispatch(setAppLayout(
@@ -170,7 +169,7 @@ class Money extends React.Component{
 
     const { classes, user, money } = this.props;
     const { value, incomeSource,withdrawData} = this.state;
-    let totalAmount = money.balance.amount!==undefined ? parseInt(money.balance.amount)/100: "载入中";
+    let totalAmount = ((money.balance.amount!==undefined) ? parseInt(money.balance.amount, 10)/100: "载入中");
     return(
       <div>
         <Bankcard isBankcard={false} 
