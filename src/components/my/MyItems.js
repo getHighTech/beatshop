@@ -16,6 +16,17 @@ import Contacts from '@material-ui/icons/Contacts';
 import Avatar from '@material-ui/core/Avatar';
 import userImg from '../imgs/timg.jpg';
 import { connect } from "react-redux";
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import Shop from '@material-ui/icons/Shop';
+import Stars from '@material-ui/icons/Stars';
+import AddToQueue from '@material-ui/icons/AddToQueue';
+import Face from '@material-ui/icons/Face';
+
+
+
+
 
 const styles = theme => ({
   root: {
@@ -28,8 +39,16 @@ const styles = theme => ({
     width: 60,
     height: 60,
   },
+  listIcon:{
+      color:'#ff5722'
+  }
 });
 class MyItems extends React.Component{
+    state = { open: false };
+    handleClick = () => {
+        this.setState({ open: !this.state.open });
+      };
+    
     render(){
         const { classes } = this.props;
     return (
@@ -45,46 +64,69 @@ class MyItems extends React.Component{
             <ListItemText primary="个性签名"  />
             </ListItem>
             <ListItem button>
-            <ListItemIcon>
-                <PermIdentity />
+            <ListItemIcon className={classes.listIcon}>
+                <Face />
             </ListItemIcon>
             <ListItemText primary="我的资料" />
             </ListItem>
         </List>
         <Divider />
-        <ListItem button>
-            <ListItemIcon>
+        <ListItem button onClick={this.handleClick}>
+            <ListItemIcon className={classes.listIcon}>
+              <Shop  />
+            </ListItemIcon>
+            <ListItemText inset primary="我的店铺" />
+            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button className={classes.nested} component="a" href="#/products">
+                <ListItemIcon className={classes.listIcon}>
+                  <AddToQueue />
+                </ListItemIcon>
+                <ListItemText inset primary="新加商品"  />
+              </ListItem>
+              <ListItem button className={classes.nested}  component="a" href="#/my/products">
+                <ListItemIcon className={classes.listIcon}>
+                  <Stars />
+                </ListItemIcon>
+                <ListItemText inset primary="正在出售的商品" />
+              </ListItem>
+            </List>
+          </Collapse>
+        {/* <ListItem button>
+            <ListItemIcon className={classes.listIcon}>
                 <CardMembership />
             </ListItemIcon>
             <ListItemText primary="我的卡片" />
-        </ListItem>
+        </ListItem> */}
                 <Divider />
                 
                 <List component="nav">
                     <ListItem button>
-                    <ListItemIcon>
+                    <ListItemIcon className={classes.listIcon}>
                         <FeaturedPlayList />
                     </ListItemIcon>
                     <ListItemText primary="我的订单" />
                     </ListItem>
 
-                    <ListItem button component="a" href="#simple-list">
-                    <ListItemIcon>
+                    {/* <ListItem button component="a" href="#simple-list">
+                    <ListItemIcon className={classes.listIcon}>
                         <LocalOffer />
                     </ListItemIcon>
 
                     <ListItemText primary="券，道具，会员" />
-                    </ListItem>
+                    </ListItem> */}
 
                     <ListItem button component="a" href="#/my/bankcards_list">
-                    <ListItemIcon>
+                    <ListItemIcon className={classes.listIcon}>
                         <CreditCard />
                     </ListItemIcon>
                     <ListItemText primary="我的银行卡" />
                     </ListItem>
 
                     <ListItem button component="a" href="#simple-list">
-                    <ListItemIcon>
+                    <ListItemIcon className={classes.listIcon}>
                         <Contacts />
                     </ListItemIcon>
                     <ListItemText primary="我的联系方式" />

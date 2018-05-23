@@ -26,6 +26,9 @@ import Order from './orders'
 import Contacts from './contacts';
 import NewContact from './contacts/new';
 import NewBankcard from './my/NewBankcard'
+import AllProducts from './products/AllProducts'
+import SellingProducts from './products/SellingProducts'
+
 
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -130,6 +133,8 @@ class App extends React.Component {
                     NewBankcard
                         <PrivateRoute exact path="/my" component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
+                        <PrivateRoute exact path="/products" component={AllProducts} />
+                        <PrivateRoute exact path="/my/products" component={SellingProducts} />
                         <PrivateRoute exact path="/pay/:status" component={PayResult} />
                         <PrivateRoute exact path="/money" component={Money} />
                         <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
