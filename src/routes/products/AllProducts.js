@@ -120,7 +120,6 @@ class AllProducts extends React.Component{
     console.log(this.props);
     
     if(layout.title!=='万人车汇商品库'){
-        dispatch(loadOneOrder(match.params.id));
         dispatch(setAppLayout(
             {
                 isBack: true, 
