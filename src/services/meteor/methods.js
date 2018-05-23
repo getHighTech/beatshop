@@ -2,7 +2,14 @@ import { MClient } from '../../config/ddp.js';
 import { getStore } from '../../tools/localStorage.js';
 import App from '../../config/app.json'
 
-export default function getRemoteMeteor(dispatch, getState, collectionType, remoteMethodName, params, successAction, failAction){
+export default function getRemoteMeteor(
+    dispatch,
+     getState,
+      collectionType,
+       remoteMethodName,
+        params,
+         successAction,
+          failAction){
     let loginToken = getStore("stampedToken");
     let endParams = [loginToken, App.name];
     params.forEach(element => {
@@ -10,26 +17,28 @@ export default function getRemoteMeteor(dispatch, getState, collectionType, remo
             endParams.push(element);
         }
     });
-    let remoteMethodBackNumber=0;
-    console.log(endParams);
-    
+    let tempResult = null;
+    let tempRemoteMethodName = null;
+    let tempEndParams = null;
+    let loadTimes = 0;
     MClient.method(remoteMethodName, endParams);
+       
+        tempRemoteMethodName = remoteMethodName;
+        tempEndParams = endParams;
         return MClient.on("result", message => {
-            if(remoteMethodBackNumber>0){
-                //防止同一个远程方法多次执行
-                return false;
-            }
+           
             if (!message.error) {
                 
                 if (message.result.type === collectionType) {
                    
                     if (message.result.fromMethod === remoteMethodName) {
-                        remoteMethodBackNumber++;
+                        if(tempResult ===message.result.msg){
+                            return false;
+                        }
                         return dispatch(successAction(message.result.msg));
                     }
                 }
                 if(message.result.type === "error"){
-                    console.error(message.result);
                     
                     return dispatch(failAction(message.result.reason));
                 }
@@ -38,7 +47,6 @@ export default function getRemoteMeteor(dispatch, getState, collectionType, remo
                    return dispatch(failAction(message.result.reason));
                }
             }else{
-                console.log(message.error.error);
                 return dispatch(failAction(message.error.error));
             }
         })

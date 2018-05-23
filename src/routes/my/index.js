@@ -6,7 +6,6 @@ import cyan from '@material-ui/core/colors/cyan';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { appShowMsgAndInjectDataReact } from '../../actions/app';
-import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 
 const styles = {
@@ -33,10 +32,8 @@ const styles = {
 class MyIndex extends React.Component{
   componentDidMount(){
     const { dispatch, match, layout } = this.props;
-    console.log(this.props);
     
     if(layout.title!=='个人中心'){
-        dispatch(loadOneOrder(match.params.id));
         dispatch(setAppLayout(
             {
                 isBack: true, 
@@ -61,7 +58,6 @@ class MyIndex extends React.Component{
         <MyItems /><br/>
         
         <Button onClick={()=>{
-          console.log("logout");
           dispatch(appShowMsgAndInjectDataReact("logout", "logout_success", 2360))
           
         }}  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>

@@ -57,7 +57,6 @@ class CartBottom extends React.Component{
     
     render(){
       const { classes, cart, dispatch } = this.props;
-      console.log(cart.status);
       
       return (
         <div className={classes.root}>

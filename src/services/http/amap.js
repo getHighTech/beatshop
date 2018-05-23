@@ -35,12 +35,10 @@ export function getAddress(dispatch, getState) {
 }
 
 function onComplete(dispatch, data) {
-    console.log("定位成功")
     dispatch(loadGeoAddressSuccess(data));
 }
 
 function onError(dispatch, data){
-    console.log(data);
     
     dispatch(loadGeoAddressSuccess(data));
   }

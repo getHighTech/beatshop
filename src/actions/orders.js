@@ -160,10 +160,8 @@ export function loadOneOrderFail(reason){
 
 export function loadOneOrderSuccess(msg){
     return dispatch => {
-        console.log(msg);
         let carNumberNeed = false;
         msg.products.forEach(product => {
-            console.log(product.name_zh==="万人车汇黑卡");
             
             if(product.name_zh==="万人车汇黑卡"){
                

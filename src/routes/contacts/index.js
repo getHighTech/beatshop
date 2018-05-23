@@ -52,7 +52,6 @@ class Contacts extends React.Component {
   }
 
   deleteMethod(){
-      console.log("deletMethod");
       this.setState({
         checkedIds: {},
         checkedId:null,
@@ -67,7 +66,6 @@ class Contacts extends React.Component {
   }
 
   setDefaultMethod(){
-    console.log("setDefaultMethod");
     this.setState({
       checkedIds: {},
       checkedId:null,
@@ -107,7 +105,6 @@ class Contacts extends React.Component {
         return this.props.history.push("/");
       }
       orderShow.order.products.forEach(product => {
-          console.log(product.name_zh==="万人车汇黑卡");
           
           if(product.name_zh==="万人车汇黑卡"){
              

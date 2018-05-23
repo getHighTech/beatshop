@@ -144,7 +144,6 @@ export function getUserContactsFail(reason){
     }
 }
 export function getUserContactsSuccess(msg){
-    console.log(msg);
     
     return {
         type: GET_USER_CONTACTS_SUCCESS,

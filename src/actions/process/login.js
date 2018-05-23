@@ -16,9 +16,7 @@ export function expectUserLogin(){
     }
 }
 export function userLoginFail(reason){
-    console.log("userLoginFail");
     
-    console.log(reason)
     return {
         type: USER_LOGIN_FAIL,
         reason
@@ -29,11 +27,10 @@ export function userLoginSuccess(msg){
     setStore("stampedToken", msg.stampedToken);
     setStore("userId", msg.userId);
     setStore("expiredTime", msg.stampedToken.when["$date"]+EXPIRED_LOGIN_TIME)
-    console.log(getStore('cartId'));
     
     return dispatch => {
         dispatch(syncRemoteUser());
-        dispatch(syncRemoteCartlocal(msg.userId, getStore('cartId')));
+        dispatch(syncRemoteCartlocal(getStore("userId"), getStore('cartId')));
         
         return dispatch( {
             type: USER_LOGIN_SUCCESS,

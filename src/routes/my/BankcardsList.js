@@ -38,10 +38,8 @@ class BankcardsList extends React.Component{
 
   componentDidMount(){
     const { dispatch, match, layout } = this.props;
-    console.log(this.props);
     
     if(layout.title!=='我的银行卡'){
-        dispatch(loadOneOrder(match.params.id));
         dispatch(setAppLayout(
             {
                 isBack: true, 

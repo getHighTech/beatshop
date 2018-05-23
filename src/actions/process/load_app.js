@@ -41,7 +41,6 @@ export function loadApp(){
 }
 
 export function syncRemoteUserFail(reason){
-    console.log(reason);
     
     return {
         type: SYNC_REMOTE_USER_FAIL,
@@ -50,7 +49,6 @@ export function syncRemoteUserFail(reason){
 }
 
 export function syncRemoteUserSuccess(msg){
-    console.log(msg);
     
     return {
         type: SYNC_REMOTE_USER_SUCCESS,
@@ -69,26 +67,25 @@ export function syncRemoteUser(){
     let stampedToken = getStore("stampedToken")
     let expiredTime = getStore("expiredTime");
     let cartId = getStore("cartId");
-    console.log(cartId);
     return (dispatch, getState) => {
         if(cartId){
             dispatch(syncRemoteCartlocal(userId, cartId));
         }
         if(!userId){
-            return dispatch(syncRemoteUserFail("LOCAL USERID NOT FOUND"));
+            dispatch(syncRemoteUserFail("LOCAL USERID NOT FOUND"));
         }
         if(!stampedToken){
-            return dispatch(syncRemoteUserFail("LOCAL STAMPEDTOKEN NOT FOUND"));
+            dispatch(syncRemoteUserFail("LOCAL STAMPEDTOKEN NOT FOUND"));
         }
         if(!expiredTime){
-            return dispatch(syncRemoteUserFail("LOCAL EXPIREDTIME NOT FOUND"));
+            dispatch(syncRemoteUserFail("LOCAL EXPIREDTIME NOT FOUND"));
         }
         let newDate = new Date();
         if(expiredTime < newDate.getTime()){
             removeStore("userId");
             removeStore("stampedToken");
             removeStore("expiredTime");
-            return dispatch(syncRemoteUserFail("TOKEN EXPIRED"));
+            dispatch(syncRemoteUserFail("TOKEN EXPIRED"));
         }
         dispatch(expectSyncRemoteUser());
        

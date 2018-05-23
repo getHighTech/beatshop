@@ -67,7 +67,6 @@ class Bankcard extends React.Component{
 
   render(){
     const { classes, cardData } = this.props;
-    console.log(this.props.isBankcard)
     return(
       <div>
         <Card className={classes.card}>

@@ -13,7 +13,6 @@ export default function UserContacts(state={
 }, action){
     switch (action.type) {
         case EXPECT_CREATE_NEW_CONTACT:
-            console.log("expect create cont");
             
             return Object.assign({}, state, {
                 createStatus: "loading",

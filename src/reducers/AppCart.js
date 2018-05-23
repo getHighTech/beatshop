@@ -8,7 +8,6 @@ function calNeedToPay(state){
     let productCounts = state.productCounts
     let money = 0;
     for (let index = 0; index < products.length; index++) {
-        console.log(products[index]);
         let check = productChecks[products[index]._id];
         if(check!==0 && check){
             let count = productCounts[products[index]._id];

@@ -197,7 +197,6 @@ export function appShowMsgAndInjectDataReact(actionName, reason, msgSurvive=2350
 
 export function appShowMsgAndInjectDataReactWithPath(
     actionName, reason, msgSurvive=2350, actionParams, path="/"){
-        console.log(path);
         
         let msgParams = msgSwitchByReason(reason)
     return dispatch => {

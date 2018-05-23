@@ -41,11 +41,13 @@ const styles = theme => ({
 class Order extends React.Component {
   componentDidMount(){
     const { dispatch, match, layout } = this.props;
-    console.log(this.props);
     this.handlePayClick = this.handlePayClick.bind(this);
     
     if(layout.title!=='确认订单'){
-        dispatch(loadOneOrder(match.params.id));
+        if(match.params.id){
+            dispatch(loadOneOrder(match.params.id));
+        }
+       
         dispatch(setAppLayout(
             {
                 isBack: true, 

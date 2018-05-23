@@ -35,7 +35,6 @@ export default function AppUser(state={
       switch (action.type) {
        
           case EXPECT_CHECK_ACCESS:
-          console.log(action.checkAccessAction);
             return Object.assign({}, state, {
               checkAccessStatus: "checking",
               accessable: false,
@@ -104,7 +103,6 @@ export default function AppUser(state={
             });
          
           case MEMORY_PATH_BEFORE_LOGINED:
-            console.log(action.path)
             return Object.assign({}, state, {
               urlBeforeLogined: action.path,
             })
@@ -124,7 +122,6 @@ export default function AppUser(state={
             return Object.assign({}, state, {
               syncRemote: "fail",
               syncRemoteFailReason: action.reason,
-              roles: ["nobody"]
             })
 
           case SYNC_REMOTE_USER_SUCCESS:

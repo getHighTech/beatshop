@@ -16,7 +16,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
-import { loadMoneyPage } from '../../actions/balances';
+import { loadMoneyPage, getIncomeWithTime } from '../../actions/balances';
 import { getStore } from '../../tools/localStorage';
 
 
@@ -126,10 +126,9 @@ class Money extends React.Component{
     this.setState({withdrawData:dataSource1})
   }
   componentDidMount(){
-    const { dispatch, match, layout } = this.props;
+    const { dispatch, match, layout, money } = this.props;
 
     if(layout.title!=='财务'){
-        dispatch(loadOneOrder(match.params.id));
         dispatch(setAppLayout(
             {
                 isBack: true, 
@@ -145,7 +144,16 @@ class Money extends React.Component{
     }
     this.loadFirstPageData()
     this.loadWithdrawFirstPageData()
-    dispatch(loadMoneyPage(getStore('userId')));
+    if(money.balance_incomes.length === 0){
+       dispatch(loadMoneyPage(getStore('userId')));
+    }
+   
+    if(money.staticDone === false){
+       dispatch(getIncomeWithTime(1, getStore("userId"),"days"))
+       dispatch(getIncomeWithTime(1, getStore("userId"),"weeks"))
+       dispatch(getIncomeWithTime(1, getStore("userId"),"months"))
+    }
+    
   }
 
 
@@ -162,7 +170,6 @@ class Money extends React.Component{
 
     const { classes, user, money } = this.props;
     const { value, incomeSource,withdrawData} = this.state;
-    console.log("total money", money.balance.amount);
     let totalAmount = money.balance.amount!==undefined ? parseInt(money.balance.amount)/100: "载入中";
     return(
       <div>
@@ -170,7 +177,7 @@ class Money extends React.Component{
         cardData={{title:user.user.username,subtitle:'已在万人车汇获得佣金',carNumber:'￥'+totalAmount}}/>
         <Card className={classes.card}>
           <CardContent>
-            <Typography className={classes.title} color="textSecondary">
+            <Typography component="div" className={classes.title} color="textSecondary">
             <div className={classes.itemBox}>
                 <div className={classes.cardIcon}>
                   <img alt="收益图标" style={{height:17}} src={require('../../components/imgs/money_bag.svg')}/>
@@ -180,7 +187,7 @@ class Money extends React.Component{
                 </div>
               </div> 
             </Typography>
-            <Typography variant="headline" component="h2">
+            <Typography variant="headline" component="div">
               <Table className={classes.table}>
                 <TableHead className={classes.tableHeader}>
                   <TableRow>
@@ -191,9 +198,9 @@ class Money extends React.Component{
                 </TableHead>
                 <TableBody>
                   <TableRow className={classes.row}>
-                    <TableCell className={classes.incomeNumber} numeric>100</TableCell>
-                    <TableCell className={classes.incomeNumber} numeric>100</TableCell>
-                    <TableCell className={classes.incomeNumber} numeric>1000</TableCell>
+                    <TableCell className={classes.incomeNumber} numeric>{(money.todayTotalAmount/100).toString()}</TableCell>
+                    <TableCell className={classes.incomeNumber} numeric>{(money.weekTotalAmount/100).toString()}</TableCell>
+                    <TableCell className={classes.incomeNumber} numeric>{(money.monthTotalAmount/100).toString()}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -203,7 +210,7 @@ class Money extends React.Component{
         </Card>
         <Card className={classes.card}>
           <CardContent>
-            <Typography className={classes.title} color="textSecondary">
+            <Typography component="div" className={classes.title} color="textSecondary">
               <div className={classes.itemBox}>
                 <div className={classes.cardIcon}>
                   <img alt="明细图标" style={{height:17}} src={require('../../components/imgs/list.svg')}/>
@@ -213,7 +220,7 @@ class Money extends React.Component{
                 </div>
               </div> 
             </Typography>
-            <Typography variant="headline" component="h2">
+            <Typography variant="headline" component="div">
               <div>
                 <Tabs
                   value={this.state.value}

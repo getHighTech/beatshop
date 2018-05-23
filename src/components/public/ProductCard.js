@@ -77,7 +77,6 @@ class ProductCard extends React.Component {
     snackContent: "", key: null };
 
   handleExpandClick = (productId) => {
-   console.log("22")
    this.props.history.push("/products/"+productId);
    
   };
@@ -100,9 +99,6 @@ class ProductCard extends React.Component {
     
   }
 
- onClick(){
-   console.log('点击')
- }
 
 
   render() {

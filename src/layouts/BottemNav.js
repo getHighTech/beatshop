@@ -31,8 +31,6 @@ class BottemNav extends React.Component {
     this.setState({
       bottom: 0
     })
-    console.log(window.innerHeight);
-    console.log(window.innerHeight -  document.body.clientHeight);
       //兼容非正常浏览器，比如微信
     
     if(window.innerHeight -  document.body.clientHeight < 0){
