@@ -132,7 +132,6 @@ class MenuAppBar extends React.Component {
     }
   }
   handleEditorClick(type){
-    console.log("编辑模式", type);
     switch (type) {
       case "new_contact":
         this.props.history.push("/my/new_contact")

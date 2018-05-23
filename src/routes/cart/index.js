@@ -63,7 +63,7 @@ class AppCart extends React.Component {
     
     return (
       <div className={classes.root}>
-           <List>
+           <List className={classes.root} style={{width: "100%"}}>
                {
                  cart.products.length === 0? <ListItem key="0" component="a" href="#/">
                 

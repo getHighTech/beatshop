@@ -17,7 +17,6 @@ export function repeatSyncLocalCartRemote(){
         let cartId = getStore("cartId");
         if(!cartId){cartId = "000";}
         let intervalTimer = setInterval(()=>{
-            console.log(i++);
             dispatch(syncLocalCartRemote(cartId, getState().AppCart));
         }, 2000)      
         intervalTimers.push(intervalTimer);
@@ -63,7 +62,6 @@ export function expectSyncRemoteCartlocal(){
     }
 }
 export function syncRemoteCartlocalFail(reason){
-    console.log(reason);
     return {
         type: SYNC_REMOTE_CART_LOCAL_FAIL,
         reason
@@ -105,7 +103,6 @@ export function syncLocalCartRemoteFail(reason){
     }
 }
 export function syncLocalCartRemoteSuccess(msg){
-    console.log(msg);
     if(msg!==1){
         setStore("cartId", msg);
     }

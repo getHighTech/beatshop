@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,7 +8,6 @@ class PayResult extends React.Component{
 
   componentDidMount(){
     const { dispatch, match, layout } = this.props;
-    console.log(this.props);
     let title = '';
     if(match.params.status === "success"){
         title = "支付成功";
@@ -25,7 +23,6 @@ class PayResult extends React.Component{
     }
     
     if(layout.title!==title){
-        dispatch(loadOneOrder(match.params.id));
         dispatch(setAppLayout(
             {
                 isBack: true, 

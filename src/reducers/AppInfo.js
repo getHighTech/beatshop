@@ -65,7 +65,6 @@ export default function AppInfo
             }
 
             if(action.amap.info==="SUCCESS"){
-                console.log(action.amap);
                 if(action.amap.addressComponent){
                     currentCity = action.amap.addressComponent.city
                 }else{

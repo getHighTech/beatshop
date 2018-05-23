@@ -4,7 +4,6 @@ export const ERROR_SOMEHOW_UNKNOW = "ERROR_SOMEHOW_UNKNOW";
 export const PRODUCT_NOT_FOUND_ERROR = "PRODUCT_NOT_FOUND_ERROR";
 export const GET_SMS_CODE_FAIL = "GET_SMS_CODE_FAIL";
 export function dealWithError(reason){
-    console.log(reason);
     if (reason === "invalid app") {
         return {
             type: "APP_LOAD_FAIL",

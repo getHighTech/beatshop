@@ -42,7 +42,7 @@ const styles = theme => ({
     
 });
 let timer = null;
-class CartBottom extends React.Component{
+class ContactsBottom extends React.Component{
 
     componentWillUnMount(){
       clearTimeout(timer);
@@ -56,29 +56,15 @@ class CartBottom extends React.Component{
       }
     
     render(){
-      const { classes, cart, dispatch } = this.props;
+      const { classes, dispatch } = this.props;
       
       return (
         <div className={classes.root}>
         
         <AppBar position="static" className={classes.appbar} color="default">
           <Toolbar style={{backgroundColor: "rgba(4, 4, 4, 0.3)", color: "white"}}>
-          <FormControlLabel style={{color: "white"}}
-          
-          control={ 
-            <Checkbox
-              checked={cart.status === "all-selected"?  true : false}
-              color="secondary"
-              onClick={()=>{dispatch(unselectSelectAllItemsFromCart())}}
-              style={{color: "white"}}
-            />
-          }
-          label={
-              <span  style={{color: "white"}}>全选</span>
-          }
-        />
-               <Button color="inherit" className={classes.flex}>合计: ￥{cart.totalAmount/100}</Button>
-              <Button onClick={()=>dispatch(createOneOrder(cart))} disabled={cart.status==="all-unselected"? true : false} color="inherit">结算</Button>
+          <Button onClick={()=> this.props.deleteMethod()} color="primary" className={classes.flex}>删除</Button>
+          {/* <Button onClick={()=> this.props.setDefaultMethod()} color="secondary" className={classes.flex} >设为默认</Button> */}
           </Toolbar>
         </AppBar>
         
@@ -88,14 +74,9 @@ class CartBottom extends React.Component{
   
 }
 
-CartBottom.propTypes = {
+ContactsBottom.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-function mapToState(state){
-    return {
-      cart: state.AppCart,
-    }
-  }
 
-export default connect(mapToState)(withStyles(styles)(CartBottom))
+export default withStyles(styles)(ContactsBottom)
 

@@ -41,11 +41,13 @@ const styles = theme => ({
 class Order extends React.Component {
   componentDidMount(){
     const { dispatch, match, layout } = this.props;
-    console.log(this.props);
     this.handlePayClick = this.handlePayClick.bind(this);
     
     if(layout.title!=='确认订单'){
-        dispatch(loadOneOrder(match.params.id));
+        if(match.params.id){
+            dispatch(loadOneOrder(match.params.id));
+        }
+       
         dispatch(setAppLayout(
             {
                 isBack: true, 
@@ -140,10 +142,13 @@ class Order extends React.Component {
                 <div style={{display: "flex", alignItems: "center"}}>
                      <List component="nav">
                         <ListItem>
-                        <ListItemText primary={"联系电话："+orderShow.order.contact.mobile.toString()}  />
+                        <ListItemText style={{wordBreak: "break-all"}} primary={"联系电话："+orderShow.order.contact.mobile.toString()}  />
+                        </ListItem>
+                        <ListItem>
+                        <ListItemText style={{wordBreak: "break-all"}} primary={"姓名："+orderShow.order.contact.name.toString()}  />
                         </ListItem>
                         <ListItem >
-                        <ListItemText primary={"收货地址: "+orderShow.order.contact.address}  />
+                        <ListItemText style={{wordBreak: "break-all"}} primary={"收货地址: "+orderShow.order.contact.address}  />
                         </ListItem>
                         <ListItem >
                             {

@@ -47,29 +47,7 @@ const styles = theme => ({
     handleSnackClose = () => {
         this.setState({ snackOpen: false });
       };
-    componentWillReceiveProps(nextProps){
-        const { dispatch, match } = nextProps;
-        if(nextProps.match.params.id && !match.params.rolename){
-            if(this.props.match.params.id !== match.params.id){
-                dispatch(loadOneProduct(match.params.id));
-            }
-        }
-
-        if(nextProps.match.params.rolename && !match.params.id){
-            if(this.props.match.params.rolename !== match.params.rolename){
-                dispatch(loadOneProductByRolename(match.params.rolename));
-                if(match.params.productname){
-                    this.setState({
-                        snackOpen: true,
-                        snackContent: ""+match.params.productname+"，请先购买此商品"
-                    })
-                }
-                
-            }
-        }
-        
-        
-    }
+   
     componentDidMount(){
         
         const { dispatch, match } = this.props;
@@ -102,6 +80,18 @@ const styles = theme => ({
     render() {
         const { snackOpen, snackContent} =this.state;
         const {classes, appInfo, productShow, match, history} = this.props;
+        if(productShow.product === {}){
+            return (
+                <Grid  container
+                direction="column"
+                justify="space-between"
+                alignContent="center" 
+                alignItems="center"
+                style={{backgroundColor: "white"}}>
+                    <h2>此商品已经下架，敬请期待</h2>
+                </Grid>
+            )
+        }
         if(appInfo.error){
             if(appInfo.reason===404 || appInfo.reason===500){
                 return (
@@ -116,18 +106,7 @@ const styles = theme => ({
                     </Grid>
                 )
             }
-            if(appInfo.reason=== "PRODUCT NOT FOUND"){
-                return (
-                    <Grid  container
-                    direction="column"
-                    justify="space-between"
-                    alignContent="center" 
-                    alignItems="center"
-                    style={{backgroundColor: "white"}}>
-                        <h2>此商品已经下架，敬请期待</h2>
-                    </Grid>
-                )
-            }
+            
         }
         if(productShow.loading){
             return (

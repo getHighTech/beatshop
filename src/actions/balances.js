@@ -1,9 +1,9 @@
 import getRemoteMeteor from "../services/meteor/methods";
 
 export const  LOAD_MONEY_PAGE = "LOAD_MONEY_PAGE";
-export const  EXPECT_LOAD_MONEY_PAGE = "LOAD_MONEY_PAGE";
-export const  LOAD_MONEY_PAGE_FAIL = "LOAD_MONEY_PAGE";
-export const  LOAD_MONEY_PAGE_SUCCESS = "LOAD_MONEY_PAGE";
+export const  EXPECT_LOAD_MONEY_PAGE = "EXPECT_LOAD_MONEY_PAGE";
+export const  LOAD_MONEY_PAGE_FAIL = "LOAD_MONEY_PAGE_FAIL";
+export const  LOAD_MONEY_PAGE_SUCCESS = "LOAD_MONEY_PAGE_SUCCESS";
 
 
 export function expectLoadMoneyPage(){
@@ -128,6 +128,55 @@ export function userCreateBankcard(userId, realName, accountNumber, bankAddress)
         return getRemoteMeteor(dispatch, getState, "bankcards",
     'app.user.create.bankcard', [userId, realName, accountNumber, bankAddress],
 userCreateBankcardSuccess, userCreateBankcardFail);
+    }
+}
+
+
+
+export const GET_INCOMES_WITHIN_TIME = "GET_INCOMES_WITHIN_TIME";
+export const EXPECT_GET_INCOMES_WITHIN_TIME = "EXPECT_GET_INCOMES_WITHIN_TIME";
+export const GET_INCOMES_WITHIN_TIME_FAIL = "GET_INCOMES_WITHIN_TIME_FAIL";
+export const GET_INCOMES_WITHIN_TIME_SUCCESS = "GET_INCOMES_WITHIN_TIME_SUCCESS";
+
+let sendTimes = 0;
+export function expectGetIncomesWithinTime(unit){
+    
+    return {
+        type: EXPECT_GET_INCOMES_WITHIN_TIME,
+        unit
+    }
+}
+
+
+export function getIncomeWithTimeSuccess(msg){
+    return {
+        type: GET_INCOMES_WITHIN_TIME_SUCCESS,
+        msg
+    }
+}
+
+export function getIncomeWithTimeFail(reason){
+    return {
+        type: GET_INCOMES_WITHIN_TIME_FAIL,
+        reason
+    }
+}
+
+
+export function getIncomeWithTime(rangLength, userId, unit){
+    sendTimes = sendTimes + 1;
+    if(sendTimes >3){
+        return {
+            type: GET_INCOMES_WITHIN_TIME_FAIL,
+            reason: "block too many require"
+        };
+    }
+    return (dispatch, getState) => {
+        dispatch(expectGetIncomesWithinTime(unit));
+        return getRemoteMeteor(
+            dispatch,getState, "balances",
+             "app.get.incomes.time.range",
+            [rangLength, userId, unit], getIncomeWithTimeSuccess, getIncomeWithTimeFail)
     }
 }
 

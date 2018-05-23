@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { setAppLayout } from '../../actions/app';
+import { setAppLayout, appShowMsgAndInjectDataReactWithPath } from '../../actions/app';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
@@ -245,7 +245,10 @@ class AppLogin extends React.Component {
       address,
       city,
     }
-    return dispatch(userLogin("mobileSMS", loginParams));
+    return dispatch(
+      appShowMsgAndInjectDataReactWithPath(
+        "user_mobile_login", "mobile_login", 1200, loginParams, "/")
+      )
   }
   render(){
     const { classes, history, user } = this.props;
@@ -302,18 +305,11 @@ class AppLogin extends React.Component {
               <Button onClick={this.handleLoginBtnClick.bind(this)} variant="raised" color="secondary" className={classes.button} fullWidth={true}>
               {this.state.buttonText}
               </Button>
-              <div><br/>使用密码用户名方式登录?<Button onClick={()=>history.push("/password-login")}  color="secondary">前往</Button></div>
+              <div><br/>密码用户名登录?<Button onClick={()=>history.push("/password-login")}  color="secondary">前往</Button></div>
               
                 
                 </form>
-                <Snackbar
-                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                    open={snackOpen}
-                    disabled={(user.loginStatus === "loading" || user.loginStatus === "success")? true : false}
-                    onClose={this.handleSnackClose}
-                    message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
-                  
-                />
+                
               </div>
           </CardContent>
         </Card>

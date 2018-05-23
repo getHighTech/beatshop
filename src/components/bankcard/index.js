@@ -64,9 +64,9 @@ const styles = theme => ({
 class Bankcard extends React.Component{
 
 
+
   render(){
-    const { classes } = this.props;
-    console.log(this.props.isBankcard)
+    const { classes, cardData } = this.props;
     return(
       <div>
         <Card className={classes.card}>
@@ -85,7 +85,7 @@ class Bankcard extends React.Component{
             <div className={classes.cardHead1}>
             <Grid container>
               <Grid item xs={2}>
-              <Avatar className={classes.blueAvatar}>N</Avatar>
+              <Avatar className={classes.blueAvatar}>{cardData.title.substr(0,1)}</Avatar>
               </Grid>
               <Grid item xs={8} sm={6}>
                 <div className={classes.cardTitle}>{this.props.cardData.title}</div>

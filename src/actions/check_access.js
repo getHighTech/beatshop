@@ -42,13 +42,11 @@ export function checkAccess(opera, product, accessName){
             })
            
         });
-        console.log(access);
         
         if(access){
             return dispatch(passAccess(productRoleTemp+" PASS", product, accessName));
             
         }else{
-            console.log(productRoleTemp+" MISSING");
             
             return dispatch(denyAccess(productRoleTemp+" MISSING", product));
             
@@ -58,7 +56,6 @@ export function checkAccess(opera, product, accessName){
 
 export function passAccess(reason, product, accessName){
     let action = switchActionNames(accessName);
-    console.log(action);
     
     return dispatch => {
         switch (action.type) {
@@ -82,7 +79,6 @@ export function passAccess(reason, product, accessName){
 
 
 export function denyAccess(reason, product){
-    console.log(reason);
     
     return dispatch=> {
         switch(reason){

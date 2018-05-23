@@ -30,7 +30,6 @@ export function createNewContact(contact){
 }
 
 export function createNewContactFail(reason){
-    console.log(reason);
     return {
         type: CREATE_NEW_CONTACT_FAIL,
         reason
@@ -38,7 +37,6 @@ export function createNewContactFail(reason){
 }
 
 export function createNewContactSuccess(msg){
-    console.log(msg);
     
     return {
         type: CREATE_NEW_CONTACT_SUCCESS,
@@ -59,7 +57,7 @@ export function deleteUserContact(contactId){
             dispatch,
             getState,
             "contacts",
-            "app.delete.user.contacts",
+            "app.delete.user.contact",
             [contactId]
         );
     }
@@ -76,10 +74,14 @@ export function deleteUserContactFail(reason){
     }
 }
 export function deleteUserContactSuccess(msg){
-    return {
-        type: DELETE_USER_CONTACT_SUCCESS,
-        msg
+    return dispatch => {
+        dispatch(getUserContacts());
+        return dispatch({
+            type: DELETE_USER_CONTACT_SUCCESS,
+            msg
+        })
     }
+    
 }
 
 
@@ -102,10 +104,14 @@ export function setDefaultContactFail(reason){
     }
 }
 export function setDefaultContactSuccess(msg){
-    return {
-        type: SET_DEFAULT_CONTACT_SUCCESS,
-        msg
+    return dispatch => {
+        dispatch(getUserContacts());
+        return dispatch({
+            type: SET_DEFAULT_CONTACT_SUCCESS,
+            msg
+        })
     }
+    
 }
 export function setDefaultContact(contactId){
     return (dispatch, getState) => {
@@ -138,7 +144,6 @@ export function getUserContactsFail(reason){
     }
 }
 export function getUserContactsSuccess(msg){
-    console.log(msg);
     
     return {
         type: GET_USER_CONTACTS_SUCCESS,

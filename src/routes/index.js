@@ -38,7 +38,6 @@ import MyOrders from './orders/my.js'
 import PayResult from './pay/index.js'
 
 const history = createHistory();
-console.log(LoadApp.toString());
 
 const styles = theme => ({
   root: {

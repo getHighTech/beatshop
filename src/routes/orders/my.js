@@ -1,5 +1,4 @@
 import React from 'react'
-import { loadOneOrder } from '../../actions/orders';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,11 +7,9 @@ const styles = theme => ({})
 class MyOrders extends React.Component{
 
   componentDidMount(){
-    const { dispatch, match, layout } = this.props;
-    console.log(this.props);
+    const { dispatch, layout } = this.props;
     
     if(layout.title!=='我的订单'){
-        dispatch(loadOneOrder(match.params.id));
         dispatch(setAppLayout(
             {
                 isBack: true, 

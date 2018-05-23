@@ -16,7 +16,6 @@ const styles = theme => ({
 class NotMatchPage extends React.Component {
   componentDidMount(){
     const { dispatch } = this.props;
-    console.log(this.props);
     
     dispatch(setAppLayout(
       {
