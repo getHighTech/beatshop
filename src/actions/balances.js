@@ -1,9 +1,9 @@
 import getRemoteMeteor from "../services/meteor/methods";
 
 export const  LOAD_MONEY_PAGE = "LOAD_MONEY_PAGE";
-export const  EXPECT_LOAD_MONEY_PAGE = "LOAD_MONEY_PAGE";
-export const  LOAD_MONEY_PAGE_FAIL = "LOAD_MONEY_PAGE";
-export const  LOAD_MONEY_PAGE_SUCCESS = "LOAD_MONEY_PAGE";
+export const  EXPECT_LOAD_MONEY_PAGE = "EXPECT_LOAD_MONEY_PAGE";
+export const  LOAD_MONEY_PAGE_FAIL = "LOAD_MONEY_PAGE_FAIL";
+export const  LOAD_MONEY_PAGE_SUCCESS = "LOAD_MONEY_PAGE_SUCCESS";
 
 
 export function expectLoadMoneyPage(){

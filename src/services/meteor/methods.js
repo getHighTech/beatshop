@@ -29,6 +29,7 @@ export default function getRemoteMeteor(dispatch, getState, collectionType, remo
                     }
                 }
                 if(message.result.type === "error"){
+                    console.error(message.result);
                     
                     return dispatch(failAction(message.result.reason));
                 }

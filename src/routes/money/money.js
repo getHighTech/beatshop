@@ -16,6 +16,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
+import { loadMoneyPage } from '../../actions/balances';
+import { getStore } from '../../tools/localStorage';
 
 
 function TabContainer(props) {
@@ -143,7 +145,7 @@ class Money extends React.Component{
     }
     this.loadFirstPageData()
     this.loadWithdrawFirstPageData()
-
+    dispatch(loadMoneyPage(getStore('userId')));
   }
 
 
@@ -156,15 +158,16 @@ class Money extends React.Component{
     this.setState({ page });
   };
 
-
   render(){
 
-    const { classes } = this.props;
+    const { classes, user, money } = this.props;
     const { value, incomeSource,withdrawData} = this.state;
-
+    console.log("total money", money.balance.amount);
+    let totalAmount = money.balance.amount!==undefined ? parseInt(money.balance.amount)/100: "载入中";
     return(
       <div>
-        <Bankcard isBankcard={false} cardData={{title:"杨志强",subtitle:'已在万人车汇获得佣金',carNumber:'￥9562356',}}/>
+        <Bankcard isBankcard={false} 
+        cardData={{title:user.user.username,subtitle:'已在万人车汇获得佣金',carNumber:'￥'+totalAmount}}/>
         <Card className={classes.card}>
           <CardContent>
             <Typography className={classes.title} color="textSecondary">
@@ -313,7 +316,8 @@ class Money extends React.Component{
 function mapToState(state){
   return {
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    money: state.UserMoney
   }
 }
 

@@ -19,6 +19,7 @@ export function loadOneProductSuccess(product){
 
 export function loadOneProduct(id){
     return (dispatch, getState) => {
+        console.log(id);
         dispatch(expectOneProduct(id))
         return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.id", [id, app.name], loadOneProductSuccess, dealWithError);
     }

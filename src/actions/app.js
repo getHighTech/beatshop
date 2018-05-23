@@ -5,6 +5,7 @@ import { createOneOrderByProduct, createOneOrder } from './orders';
 import { userLogout } from './users';
 import { createNewContact } from './contacts';
 import { loadOneProduct } from './products';
+import { userLogin } from './process/login';
 
 export const history = createHistory();
 
@@ -59,6 +60,11 @@ export function switchActionNames(actionName){
         case 'load_one_order':
             return {
                 action: loadOneProduct
+            }
+
+        case 'user_mobile_login':
+            return {
+                action: (actionParams) => userLogin("mobileSMS", actionParams)
             }
         
         default:
@@ -115,6 +121,11 @@ function msgSwitchByReason(reason, option={}){
         case "car_number_need":
             return {
                 content: "您购买的黑卡,需要您选择带车牌号的地址"
+            }
+
+        case "mobile_login":
+            return {
+                content: "登录成功"
             }
     
         default:

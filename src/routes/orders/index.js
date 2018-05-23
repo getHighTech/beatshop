@@ -140,10 +140,13 @@ class Order extends React.Component {
                 <div style={{display: "flex", alignItems: "center"}}>
                      <List component="nav">
                         <ListItem>
-                        <ListItemText primary={"联系电话："+orderShow.order.contact.mobile.toString()}  />
+                        <ListItemText style={{wordBreak: "break-all"}} primary={"联系电话："+orderShow.order.contact.mobile.toString()}  />
+                        </ListItem>
+                        <ListItem>
+                        <ListItemText style={{wordBreak: "break-all"}} primary={"姓名："+orderShow.order.contact.name.toString()}  />
                         </ListItem>
                         <ListItem >
-                        <ListItemText primary={"收货地址: "+orderShow.order.contact.address}  />
+                        <ListItemText style={{wordBreak: "break-all"}} primary={"收货地址: "+orderShow.order.contact.address}  />
                         </ListItem>
                         <ListItem >
                             {

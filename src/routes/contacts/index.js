@@ -9,9 +9,11 @@ import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import Checkbox from '@material-ui/core/Checkbox';
-import { useOneContact, getUserContacts } from '../../actions/contacts';
+import { useOneContact, getUserContacts, deleteUserContact } from '../../actions/contacts';
 import { judgeCarNumberNeed } from '../../actions/orders';
 import { getStore } from '../../tools/localStorage';
+import CartBottom from '../../components/cart/CartBottom';
+import ContactsBottom from '../../components/contacts/ContactsBottom';
 const styles = theme => ({
     row: {
         display: 'flex',
@@ -40,8 +42,38 @@ class Contacts extends React.Component {
   constructor(props){
     super(props);
     this.state ={
-      carNumberNeed: false
+      carNumberNeed: false,
+      showBottomOpera: false,
+      checkedId: null,
+      checkedIds: {
+
+      }
     }
+  }
+
+  deleteMethod(){
+      console.log("deletMethod");
+      this.setState({
+        checkedIds: {},
+        checkedId:null,
+        showBottomOpera: false
+      })
+
+      const { dispatch } = this.props;
+      dispatch(deleteUserContact(this.state.checkedId));
+      dispatch(getUserContacts(getStore('userId')));
+      
+    
+  }
+
+  setDefaultMethod(){
+    console.log("setDefaultMethod");
+    this.setState({
+      checkedIds: {},
+      checkedId:null,
+      showBottomOpera: false
+    })
+    
   }
 
   componentDidMount(){
@@ -92,25 +124,33 @@ class Contacts extends React.Component {
   }
 
   handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
+    
+    let checkedIds = {};
+    if(this.state.checkedIds[value._id]){
+       checkedIds[value._id] = !this.state.checkedIds[value._id];
+    }else{
+      checkedIds[value._id] = true;
     }
-
-    this.setState({
-      checked: newChecked,
-    });
+    if(checkedIds[value._id]){
+      this.setState({
+        checkedIds,
+        checkedId: value._id,
+        showBottomOpera: true
+      })
+    }else{
+      this.setState({
+        checkedIds,
+        checkedId: value._id,        
+        showBottomOpera: false
+      })
+    }
+    
+    
   };
   handleItemClick(e, value){
     const { dispatch, orderShow } = this.props;
     // return 
     
-    console.log(orderShow.carNumberNeed);
     if(!value.carNumber){
       if(orderShow.carNumberNeed){
         dispatch(appShowMsg("car_number_need", 1800));
@@ -127,9 +167,7 @@ class Contacts extends React.Component {
   }
   render(){
     const { classes, userContacts } = this.props;
-    console.log(this.props);
 
-    
     return (
       <div className={classes.row}>
         {
@@ -142,15 +180,16 @@ class Contacts extends React.Component {
              </Button>
           </div>:
           <List component="nav"  style={{width: "90%"}}>
-          {userContacts.contacts.map(value => (
+          {userContacts.contacts.map((value, index) => (
               <div>
-            <div style={{display: "flex", width: "100%", maxWidth: "500"}} key={value} >
+            <div style={{display: "flex", width: "100%", maxWidth: "500"}} key={index} >
               <div style={{wordWrap: "break-all",  wordBreak: "break-all", width: "20%"}} >{value.name}</div>
               <div style={{wordWrap: "break-all",  wordBreak: "break-all", width: "20%"}} >{value.mobile}</div>
               <div style={{wordWrap: "break-all",  wordBreak: "break-all", width: "20%"}} >{value.address}</div>
               <div style={{wordWrap: "break-all", wordBreak: "break-all", width: "20%"}} >{value.carNumber}</div>
               <Checkbox style={{width: "20%"}}
-                  onChange={this.handleToggle(value)}
+                  onChange={this.handleToggle(value)} 
+                  checked={this.state.checkedIds[value._id]? true : false}
                 />
                 
               
@@ -165,11 +204,14 @@ class Contacts extends React.Component {
             
             </div>
           ))}
+         
         </List>
 
         }
-        
-     
+        {
+          this.state.showBottomOpera && <ContactsBottom setDefaultMethod={()=>this.setDefaultMethod()} deleteMethod={() => this.deleteMethod()} />
+        }
+       
             
       </div>
     );

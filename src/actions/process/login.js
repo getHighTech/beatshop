@@ -32,10 +32,10 @@ export function userLoginSuccess(msg){
     console.log(getStore('cartId'));
     
     return dispatch => {
-       
+        dispatch(syncRemoteUser());
         dispatch(syncRemoteCartlocal(msg.userId, getStore('cartId')));
         
-        dispatch( {
+        return dispatch( {
             type: USER_LOGIN_SUCCESS,
             msg,
         })
