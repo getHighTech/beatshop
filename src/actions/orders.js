@@ -43,6 +43,7 @@ function cartToOrderParams(cart){
         productIds: productIdsChecked,
         productCounts: productCountsChecked,
         totalAmount: cart.totalAmount,
+        shopProducts: cart.shopProducts,
      }
 }
 export function createOneOrder(cart){

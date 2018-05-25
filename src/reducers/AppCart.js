@@ -225,6 +225,17 @@ export default function AppCart
                     count += productCounts[key];
                 }
             }
+            let shopId = state.products[action.index].shopId;
+            shopProducts = state.shopProducts;
+            for(const shop in shopProducts){
+                if (shopProducts.hasOwnProperty(shopId)) {
+                    if(shopProducts[shopId].length === 1){
+                        shopProducts[shopId]=[];
+                        break;
+                    }
+                    shopProducts[shopId] = shopProducts[shopId].slice(action.index-1,1);
+                }
+            }
             //再判断一下check
 
             status = checkCartChecked(productChecks);
@@ -235,6 +246,7 @@ export default function AppCart
                 productIds: removeItem(state.productIds, action),
                 productChecks,
                 productCounts,
+                shopProducts,
                 products: removeItem(state.products, action),
                 status,
                 count,
