@@ -9,7 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import CreditCard from '@material-ui/icons/CreditCard';
 import FeaturedPlayList from '@material-ui/icons/FeaturedPlayList';
-import Contacts from '@material-ui/icons/Contacts';
 import Avatar from '@material-ui/core/Avatar';
 import userImg from '../imgs/timg.jpg';
 import { connect } from "react-redux";

@@ -8,11 +8,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import OrderCard from '../../components/orders/OrderCard'
 
@@ -130,7 +125,7 @@ class MyOrders extends React.Component{
 
   }
   render (){
-    const { classes, user, money } = this.props;
+    const { classes} = this.props;
     const { value,withdrawData} = this.state;
     return(
       <div>
