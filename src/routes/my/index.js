@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { appShowMsgAndInjectDataReact } from '../../actions/app';
 import { setAppLayout } from '../../actions/app';
-
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 const styles = {
   row: {
     display: 'flex',
@@ -24,6 +25,17 @@ const styles = {
   },
   button: {
       width: "90%"
+  },
+  card:{
+    width:'94%',
+    marginLeft:'3%',
+    marginTop:'3%',
+    borderRadius:8,
+    height:500
+
+  },
+  botton:{
+    textAlign:'center'
   }
 };
 
@@ -51,17 +63,19 @@ class MyIndex extends React.Component{
   render(){
     const { classes, dispatch } = this.props;
     return (
-      <div className={classes.row}>
-
+      <Card className={classes.card}>
+        <CardContent>
         <br/>
         <MyItems /><br/>
         
-        <Button onClick={()=>{
-          dispatch(appShowMsgAndInjectDataReact("logout", "logout_success", 2360))
-          
-        }}  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>
-        
-      </div>
+        <div className={classes.botton}>
+          <Button onClick={()=>{
+            dispatch(appShowMsgAndInjectDataReact("logout", "logout_success", 2360))
+            
+          }}  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>
+        </div>
+        </CardContent>
+      </Card>
     );
   }
 }
