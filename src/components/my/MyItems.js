@@ -50,25 +50,25 @@ class MyItems extends React.Component{
         const { classes } = this.props;
     return (
         <div className={classes.root}>
-        <List component="nav">
-            <ListItem button>
-                <Avatar
-                        alt="个人头像"
-                        src={userImg}
-                        className={classNames(classes.bigAvatar)}
-                    />
-            <ListItemText primary="昵称" secondary="用户名" />
-            <ListItemText primary="个性签名"  />
-            </ListItem>
-            <ListItem button>
-            <ListItemIcon className={classes.listIcon}>
-                <Face />
-            </ListItemIcon>
-            <ListItemText primary="我的资料" />
-            </ListItem>
-        </List>
-        <Divider />
-        <ListItem button onClick={this.handleClick}>
+            <List component="nav">
+                <ListItem button>
+                    <Avatar
+                            alt="个人头像"
+                            src={userImg}
+                            className={classNames(classes.bigAvatar)}
+                        />
+                <ListItemText primary="昵称" secondary="用户名" />
+                <ListItemText primary="个性签名"  />
+                </ListItem>
+                <ListItem button>
+                <ListItemIcon className={classes.listIcon}>
+                    <Face />
+                </ListItemIcon>
+                <ListItemText primary="我的资料" />
+                </ListItem>
+            </List>
+            <Divider />
+            <ListItem button onClick={this.handleClick}>
             <ListItemIcon className={classes.listIcon}>
               <Shop  />
             </ListItemIcon>
@@ -91,46 +91,25 @@ class MyItems extends React.Component{
               </ListItem>
             </List>
           </Collapse>
-        {/* <ListItem button>
-            <ListItemIcon className={classes.listIcon}>
-                <CardMembership />
-            </ListItemIcon>
-            <ListItemText primary="我的卡片" />
-        </ListItem> */}
+            <Divider />    
+            <List component="nav">
+                <ListItem button component="a" href="#/my/orders">
+                <ListItemIcon className={classes.listIcon}>
+                    <FeaturedPlayList />
+                </ListItemIcon>
+                <ListItemText primary="我的订单" />
+                </ListItem>
+
                 <Divider />
                 
-                <List component="nav">
-                    <ListItem button>
-                    <ListItemIcon className={classes.listIcon}>
-                        <FeaturedPlayList />
-                    </ListItemIcon>
-                    <ListItemText primary="我的订单" />
-                    </ListItem>
-
-                    {/* <ListItem button component="a" href="#simple-list">
-                    <ListItemIcon className={classes.listIcon}>
-                        <LocalOffer />
-                    </ListItemIcon>
-
-                    <ListItemText primary="券，道具，会员" />
-                    </ListItem> */}
-
-                    <ListItem button component="a" href="#/my/bankcards_list">
-                    <ListItemIcon className={classes.listIcon}>
-                        <CreditCard />
-                    </ListItemIcon>
-                    <ListItemText primary="我的银行卡" />
-                    </ListItem>
-
-                    <ListItem button component="a" href="#simple-list">
-                    <ListItemIcon className={classes.listIcon}>
-                        <Contacts />
-                    </ListItemIcon>
-                    <ListItemText primary="我的联系方式" />
-                    </ListItem>
-                </List>
-                
-                </div>
+                <ListItem button component="a" href="#/my/bankcards_list">
+                <ListItemIcon className={classes.listIcon}>
+                    <CreditCard />
+                </ListItemIcon>
+                <ListItemText primary="我的银行卡" />
+                </ListItem>
+            </List>
+        </div>
             );
         }
 }
