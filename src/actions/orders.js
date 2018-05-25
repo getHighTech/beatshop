@@ -84,6 +84,10 @@ export function createOneOrderByProduct(product, count){
         if(!defaultContact){
             defaultContact={}
         }
+        let shopProducts = {
+
+        };
+        shopProducts[product.shopId] = [0];
         let orderParams = {
             products: [product],
             productIds: [product._id],
@@ -93,6 +97,7 @@ export function createOneOrderByProduct(product, count){
             name: getState().AppUser.user.username,//兼容1.0
             totalAmount: product.endPrice,
             contact: defaultContact,
+            shopProducts
         }
         return getRemoteMeteor(
             dispatch,
