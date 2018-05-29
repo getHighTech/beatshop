@@ -169,6 +169,7 @@ export function useOneContact(contact, orderId){
     return dispatch => {
         dispatch(userUpdateOrder({
             contact,
+            status: "confirmed"
         }, orderId));
     }
 }

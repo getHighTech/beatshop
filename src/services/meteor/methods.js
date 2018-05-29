@@ -22,13 +22,13 @@ export default function getRemoteMeteor(
        
         return MClient.on("result", message => {
            
-            if (!message.error) {
+            if (!message.error && message.result) {
                 
                 if (message.result.type === collectionType) {
                    
                     if (message.result.fromMethod === remoteMethodName) {
                         if(tempResult ===message.result.msg){
-                            return false;
+                            return dispatch(successAction(message.result.msg));
                         }else{
                             tempResult = message.result.msg
                         }

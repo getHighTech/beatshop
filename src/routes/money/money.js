@@ -15,9 +15,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
-import { loadMoneyPage, getIncomeWithTime } from '../../actions/balances';
+import { loadMoneyPage, getIncomeWithTime, getIncomesLimit } from '../../actions/balances';
 import { getStore } from '../../tools/localStorage';
-
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 
 function TabContainer(props) {
   return (
@@ -87,35 +89,18 @@ class Money extends React.Component{
     withdrawTotle:6
   };
   loadMore(){
-    let dataSource2 = [
-      {id:1,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-      {id:2,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-      {id:3,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-      {id:4,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-      {id:5,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-      {id:6,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-    ]
-    this.setState({incomeSource:dataSource2})
+    const {dispatch} = this.props;
+    dispatch(getIncomesLimit(2, 5));    
+   
   }
   loadFirstPageData(){
-    let dataSource1 = [
-      {id:1,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-      {id:2,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-      {id:3,productName:'黑卡黑卡黑黑卡黑卡黑',  price:3651.11, buyer:'杨志强强', income:128.81,time:'今天'},
-    ]
-    this.setState({incomeSource:dataSource1})
+    
+    this.setState({incomeSource:this.props.money.balance_incomes})
   }
 
   loadMoreWithdrawData(){
-    let dataSource2 = [
-      {id:1,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:2,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:3,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:4,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:5,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:6,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'}
-    ]
-    this.setState({withdrawData:dataSource2})
+    
+    this.setState({withdrawData:this.props.money.balance_incomes})
   }
 
   loadWithdrawFirstPageData(){
@@ -166,9 +151,16 @@ class Money extends React.Component{
   };
 
   render(){
-
     const { classes, user, money } = this.props;
     const { value, incomeSource,withdrawData} = this.state;
+    let getUsername = function(income, index){
+      if(income.user){
+        return income.user.username;
+      }
+      if(income.userId){
+        return money.users[index].username;
+      }
+    }
     let totalAmount = ((money.balance.amount!==undefined) ? parseInt(money.balance.amount, 10)/100: "载入中");
     return(
       <div>
@@ -239,23 +231,22 @@ class Money extends React.Component{
                     <TableHead>
                       <TableRow>
                         <TableCell className={classes.thName} >商品名称</TableCell>
-                        <TableCell  className={classes.th} numeric>价钱</TableCell>
                         <TableCell  className={classes.th} numeric>购买者</TableCell>
                         <TableCell  className={classes.th} numeric>我的收入</TableCell>
                         <TableCell  className={classes.th} numeric>时间</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {incomeSource.map(n => {
+                      {this.props.money.balance_incomes.map((n, index) => {
+                        
                         return (
-                          <TableRow key={n.id}>
+                          <TableRow key={index}>
                             <TableCell className={classes.thName} component="th" scope="row">
-                              {n.productName}
+                              {!n.product? "老黑卡会员卡分享": "新会员"}
                             </TableCell>
-                            <TableCell className={classes.th} numeric>{n.price}</TableCell>
-                            <TableCell className={classes.th} numeric>{n.buyer}</TableCell>
-                            <TableCell className={classes.th} numeric>{n.income}</TableCell>
-                            <TableCell className={classes.th} numeric>{n.time}</TableCell>
+                            <TableCell className={classes.th} numeric>{getUsername(n, index)}</TableCell>
+                            <TableCell className={classes.th} numeric>{"￥"+n.amount/100}</TableCell>
+                            <TableCell className={classes.th} numeric>{moment(n.createdAt).fromNow()}</TableCell>
                           </TableRow>
                         );
                       })}
@@ -263,14 +254,12 @@ class Money extends React.Component{
 
                   </Table>
                   <div className={classes.loadMore}>
-                  {this.state.incomeSource.length === this.state.incomeTotle?
-                    <Button color="primary" className={classes.button} >
-                    没有数据啦
-                    </Button>:
-                    <Button color="primary" className={classes.button} onClick={this.loadMore.bind(this)}>
-                    加载更多
+                 
+                    
+                    <Button disabled={this.props.money.loadingMore} color="primary" className={classes.button} onClick={this.loadMore.bind(this)}>
+                    {this.props.money.loadingMore? "正在加载" : "加载更多"}
                     </Button>
-                  }
+                  
                   </div>
                 </div>
               </TabContainer>}
