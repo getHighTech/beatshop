@@ -37,6 +37,7 @@ import Money from './money/money'
 import MyOrders from './orders/my.js'
 import PayResult from './pay/index.js'
 import Shop from './shop/shop';
+import withdraw from './withdraw/withdraw';
 
 const history = createHistory();
 
@@ -142,7 +143,7 @@ class App extends React.Component {
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
                         <PrivateRoute exact path="/shops/:id" component={Shop} />
-
+                        <PrivateRoute exact path="/withdraw" component={withdraw} />
                         <PrivateRoute exact path="/cart" component={AppCart} />
                         <PrivateRoute exact path="/my/bankcards_list" component={BankcardsList} />
                         <PrivateRoute exact path="/my/new_bankcard" component={NewBankcard} />
