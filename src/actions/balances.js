@@ -1,4 +1,5 @@
 import getRemoteMeteor from "../services/meteor/methods";
+import { getStore } from "../tools/localStorage";
 
 export const  LOAD_MONEY_PAGE = "LOAD_MONEY_PAGE";
 export const  EXPECT_LOAD_MONEY_PAGE = "EXPECT_LOAD_MONEY_PAGE";
@@ -177,6 +178,45 @@ export function getIncomeWithTime(rangLength, userId, unit){
             dispatch,getState, "balances",
              "app.get.incomes.time.range",
             [rangLength, userId, unit], getIncomeWithTimeSuccess, getIncomeWithTimeFail)
+    }
+}
+
+
+export const GET_INCOMES_LIMIT = "GET_INCOMES_LIMIT";
+export const EXPECT_GET_INCOMES_LIMIT = "EXPECT_GET_INCOMES_LIMIT";
+export const GET_INCOMES_LIMIT_SUCCESS = "GET_INCOMES_LIMIT_SUCCESS";
+export const GET_INCOMES_LIMIT_FAIL = "GET_INCOMES_LIMIT_FAIL";
+
+
+
+export function expectGetIncomeLimit(){
+    return {
+        type: EXPECT_GET_INCOMES_LIMIT,
+    }
+}
+
+export function getIncomesLimitSuccess(msg){
+    
+    return {
+        type: GET_INCOMES_LIMIT_SUCCESS,
+        msg
+
+    }
+}
+export function getIncomesLimitFail(reason){
+    
+    return {
+        type: GET_INCOMES_LIMIT_FAIL,
+        reason,
+    }
+}
+export function getIncomesLimit(page, pagesize){
+    return (dispatch, getState) => {
+        dispatch(expectGetIncomeLimit());
+        return getRemoteMeteor(dispatch, getState, "balances", 
+        "app.get.incomes.limit", [getStore("userId"), page, pagesize],
+        getIncomesLimitSuccess, getIncomesLimitFail
+    )
     }
 }
 

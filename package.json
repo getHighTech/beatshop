@@ -11,6 +11,7 @@
     "ddp.js": "^2.2.1",
     "gh-pages": "^1.1.0",
     "html-to-react": "^1.3.3",
+    "moment": "^2.22.1",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",

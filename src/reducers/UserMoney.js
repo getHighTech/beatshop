@@ -1,4 +1,4 @@
-import { LOAD_MONEY_PAGE_SUCCESS, GET_INCOMES_WITHIN_TIME_SUCCESS, EXPECT_GET_INCOMES_WITHIN_TIME } from "../actions/balances";
+import { LOAD_MONEY_PAGE_SUCCESS,GET_INCOMES_LIMIT, GET_INCOMES_WITHIN_TIME_SUCCESS, EXPECT_GET_INCOMES_WITHIN_TIME, GET_INCOMES_LIMIT_SUCCESS, EXPECT_GET_INCOMES_LIMIT } from "../actions/balances";
 
 export default function UserMoney(state={
     loading: false,
@@ -9,7 +9,9 @@ export default function UserMoney(state={
     weekTotalAmount: NaN,
     monthTotalAmount: NaN,
     staticDone: false,
+    agencies: [],
     unit: [],
+    loadingMore: false,
 }, action){
     switch(action.type){
         case LOAD_MONEY_PAGE_SUCCESS:
@@ -17,7 +19,9 @@ export default function UserMoney(state={
                 loading: true,
                 balance: action.msg.balance,
                 balance_incomes: action.msg.balance_incomes,
-                balance_charges: action.msg.balance_charges
+                balance_charges: action.msg.balance_charges,
+                agencies: action.msg.agencies,
+                users: action.msg.users
             });
         case EXPECT_GET_INCOMES_WITHIN_TIME:
             return Object.assign({}, state, {
@@ -49,7 +53,21 @@ export default function UserMoney(state={
                     staticDone:true
                 })
             }
-            break;
+        case EXPECT_GET_INCOMES_LIMIT:
+            return Object.assign({}, state, {
+                loadingMore: true
+            })
+        case GET_INCOMES_LIMIT_SUCCESS:
+            let incomes = state.balance_incomes;
+            incomes = incomes.concat(action.msg.incomes);
+            let users = state.users;
+            users = users.concat(action.msg.users);
+            return Object.assign({}, state, {
+                balance_incomes: incomes,
+                users,
+                loadingMore: false,
+            })
+
         default:
             return state;
     }
