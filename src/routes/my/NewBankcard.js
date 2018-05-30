@@ -134,7 +134,7 @@ class NewBankcard extends React.Component {
         />
         <TextField
           id="full-width"
-          label="收获地址"
+          label="收货地址"
           fullWidth required  error={this.state.addressFeildError}
           margin="normal"
           value={this.state.address}
