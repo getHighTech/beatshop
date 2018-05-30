@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import ProductCard from '../../components/products/ProductCard'
 import { setAppLayout } from '../../actions/app';
 
 

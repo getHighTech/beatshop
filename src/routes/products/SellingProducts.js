@@ -37,42 +37,50 @@ class SellingProducts extends React.Component{
 
   loadMoreProductData(){
     let Products = [
-      {
+      { 
+        id:1,
         img:'/imgs/b1.png',
         title:'万人车汇黑卡',
         price:356.11,
       },
       {
+        id:2,
         img:'/imgs/b2.png',
         title:'万人车汇黑卡',
         price:356,
       },
       {
+        id:3,
         img:'/imgs/b3.png',
         title:'万人车汇黑卡',
         price:356,
       },
       {
+        id:4,
         img:'/imgs/b4.png',
         title:'万人车汇黑卡',
         price:356,
       },
       {
+        id:5,
         img:'/imgs/b5.png',
         title:'万人车汇黑卡',
         price:356,
       },
       {
+        id:6,
         img:'/imgs/b6.png',
         title:'万人车汇黑卡',
         price:356,
       },
       {
+        id:7,
         img:'/imgs/background3.jpg',
         title:'万人车汇黑卡',
         price:356,
       },
       {
+        id:8,
         img:'/imgs/webwxgetmsgimg.jpeg',
         title:'万人车汇黑卡',
         price:356,
@@ -83,16 +91,19 @@ class SellingProducts extends React.Component{
   loadFirstPageData(){
     let Products = [
       {
+        id:1,
         img:'/imgs/b1.png',
         title:'万人车汇黑卡',
         price:356.11,
       },
       {
+        id:2,
         img:'/imgs/b2.png',
         title:'万人车汇黑卡',
         price:356,
       },
       {
+        id:3,
         img:'/imgs/b3.png',
         title:'万人车汇黑卡',
         price:356,
@@ -131,7 +142,7 @@ class SellingProducts extends React.Component{
       <div className={classes.root}>
         {this.state.Products.map(product => {
           return (
-            <ProductCard />
+            <ProductCard key={product.id}/>
           )
         }
         )}
