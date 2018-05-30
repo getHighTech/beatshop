@@ -71,7 +71,7 @@ class ProductBottomBar extends React.Component{
                 <AddShoppingCart onClick={()=> this.handleAddToCart(product, 1, product.shopId)} color="secondary" />
               </IconButton>
                <Button onClick={()=> dispatch(checkAccess("buy", product, "create_one_order_by_product"))}  color="inherit" className={classes.flex}>立即购买</Button>
-              <Button color="inherit">查看店铺</Button>
+              <Button color="inherit" href={'#/shops/'+ product.shopId}>查看店铺</Button>
           </Toolbar>
         </AppBar>
         
