@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { loadOneProduct, loadOneProductByRolename } from '../../actions/products';
 import LoadingItem from '../../components/public/LoadingItem'
 import Paper from '@material-ui/core/Paper';
-import { setAppLayout } from '../../actions/app';
+import { setAppLayout, appShowMsg } from '../../actions/app';
 import ProductBottomBar from '../../components/products/ProductBottomBar';
 
 
@@ -58,6 +58,12 @@ const styles = theme => ({
         }
         if(match.params.rolename && !match.params.id){
             dispatch(loadOneProductByRolename(match.params.rolename));
+            
+        }
+        if(match.params.productname){
+            if(match.params.productname === "openshop"){
+                dispatch(appShowMsg("open_shop_fail", 3000));
+            }
             
         }
         

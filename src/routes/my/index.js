@@ -61,12 +61,12 @@ class MyIndex extends React.Component{
 
   }
   render(){
-    const { classes, dispatch } = this.props;
+    const { classes, dispatch, user } = this.props;
     return (
       <Card className={classes.card}>
         <CardContent>
         <br/>
-        <MyItems /><br/>
+        <MyItems user={user} history={this.props.history} /><br/>
         
         <div className={classes.botton}>
           <Button onClick={()=>{

@@ -136,6 +136,9 @@ class MenuAppBar extends React.Component {
       case "new_contact":
         this.props.history.push("/my/new_contact")
         break;
+      case "withdraw":
+        this.props.history.push("/withdraw")
+        break;
     
       default:
         break;
@@ -188,6 +191,13 @@ class MenuAppBar extends React.Component {
                 <OpenInNew />
               </Button>
             }
+            { layout.hasWithdraw &&
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
+                提现
+                <OpenInNew />
+              </Button>
+            }
+
           </Toolbar>
         </AppBar>
       </div>

@@ -19,7 +19,12 @@ import Shop from '@material-ui/icons/Shop';
 import Stars from '@material-ui/icons/Stars';
 import AddToQueue from '@material-ui/icons/AddToQueue';
 import Face from '@material-ui/icons/Face';
-
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 
@@ -40,10 +45,48 @@ const styles = theme => ({
   }
 });
 class MyItems extends React.Component{
-    state = { open: false };
+    state = { open: false,
+         confirmContent: "开店需要万人车汇黑卡权限，是否立即购买黑卡？", 
+         confirmOpen: false
+        };
     handleClick = () => {
         this.setState({ open: !this.state.open });
       };
+
+
+    handleConfirmCancel = () => {
+        this.setState({
+            confirmOpen: false,
+        })
+    }
+
+    handleConfirm = () => {
+        this.props.history.push('/products_by_rolename/blackcard/open');
+        this.setState({
+            confirmOpen: false,
+        })
+    }
+
+    handleGoToShop = (my='') => {
+        const { user, history  } = this.props;
+        console.log('my', my);
+        
+        let roles = user.roles;
+        
+        if(roles.includes("blackcard_holder")){
+            history.push(my+"/products");
+        }else{
+            console.log("no access");
+
+            this.setState({
+                confirmOpen: true,
+            })
+
+            
+            
+        }
+        
+    }
     
     render(){
         const { classes } = this.props;
@@ -56,15 +99,16 @@ class MyItems extends React.Component{
                             src={userImg}
                             className={classNames(classes.bigAvatar)}
                         />
-                <ListItemText primary="昵称" secondary="用户名" />
-                <ListItemText primary="个性签名"  />
+                <ListItemText primary={this.props.user.user.nickname} 
+                secondary={this.props.user.user.username} />
+                <ListItemText primary={this.props.user.user.dataAutograph}  />
                 </ListItem>
-                <ListItem button>
+                {this.props.user.roles.includes("blackcard_holder") && <ListItem button>
                 <ListItemIcon className={classes.listIcon}>
                     <Face />
                 </ListItemIcon>
-                <ListItemText primary="我的资料" />
-                </ListItem>
+                <ListItemText primary="万人车汇黑卡" />
+                </ListItem>}
             </List>
             <Divider />
             <ListItem button onClick={this.handleClick}>
@@ -76,13 +120,13 @@ class MyItems extends React.Component{
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested} component="a" href="#/products">
+              <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop()} component="button">
                 <ListItemIcon className={classes.listIcon}>
                   <AddToQueue />
                 </ListItemIcon>
                 <ListItemText inset primary="新加商品"  />
               </ListItem>
-              <ListItem button className={classes.nested}  component="a" href="#/my/products">
+              <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop("/my")}  component="button" href="#/my/products">
                 <ListItemIcon className={classes.listIcon}>
                   <Stars />
                 </ListItemIcon>
@@ -108,6 +152,27 @@ class MyItems extends React.Component{
                 <ListItemText primary="我的银行卡" />
                 </ListItem>
             </List>
+            <Dialog
+                open={this.state.confirmOpen}
+                onClose={this.handleClose}
+                aria-labelledby="form-dialog-title"
+                >
+                <DialogTitle id="form-dialog-title">推荐购买黑卡</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                    {this.state.confirmContent}
+                    </DialogContentText>
+                    
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleConfirmCancel} color="primary">
+                    残忍拒绝
+                    </Button>
+                    <Button onClick={this.handleConfirm} color="primary">
+                    立即购买
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
             );
         }

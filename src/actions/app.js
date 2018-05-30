@@ -67,6 +67,8 @@ export function switchActionNames(actionName){
                 action: (actionParams) => userLogin("mobileSMS", actionParams)
             }
         
+      
+        
         default:
             return;
     }
@@ -126,6 +128,11 @@ function msgSwitchByReason(reason, option={}){
         case "mobile_login":
             return {
                 content: "登录成功"
+            }
+
+        case "open_shop_fail":
+            return {
+                content: "若您需要开店， 需要先购买会员卡，一旦成为黑卡会员后可以立刻开店咯"
             }
     
         default:

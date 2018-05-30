@@ -1,7 +1,8 @@
 import { MClient } from '../../config/ddp.js';
 import { getStore } from '../../tools/localStorage.js';
 import App from '../../config/app.json'
-
+let rltIds = [];
+let tempResult = null;
 export default function getRemoteMeteor(
     dispatch,
      getState,
@@ -17,12 +18,23 @@ export default function getRemoteMeteor(
             endParams.push(element);
         }
     });
-    let tempResult = null;
-    MClient.method(remoteMethodName, endParams);
+    let actionIsNew = true;
+    let rltId = MClient.method(remoteMethodName, endParams);
+        for (let index = 0; index< rltIds.length; index++) {
+             if(rltIds[index] === rltId){
+                 actionIsNew = false;
+             }
+            
+        }
+        if(actionIsNew){
+            rltIds.push(rltId);
+        }
+
+       
        
         return MClient.on("result", message => {
            
-            if (!message.error && message.result) {
+            if (message.id === rltId && !message.error && message.result && rltIds.includes(message.id)) {
                 
                 if (message.result.type === collectionType) {
                    
@@ -44,7 +56,8 @@ export default function getRemoteMeteor(
                    return dispatch(failAction(message.result.reason));
                }
             }else{
-                return dispatch(failAction(message.error.error));
+                
+                return dispatch(failAction(message.error));
             }
         })
        
