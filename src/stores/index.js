@@ -9,6 +9,7 @@ import AppCart from '../reducers/AppCart';
 import AppMsg from '../reducers/AppMsg';
 import UserContacts from '../reducers/UserContacts';
 import UserMoney from '../reducers/UserMoney';
+import UserBankcards from '../reducers/UserBankcards';
 export default function configureStore() {
   const enhancer = compose(
     applyMiddleware(thunk),
@@ -24,7 +25,8 @@ export default function configureStore() {
       OrderShow, 
       UserContacts,
       AppMsg,
-      UserMoney
+      UserMoney,
+      UserBankcards,
       
     }),
     enhancer);

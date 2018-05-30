@@ -90,32 +90,10 @@ class AllProducts extends React.Component{
     ]
     this.setState({Products:Products})
   }
-  loadFirstPageData(){
-    let Products = [
-      {
-        img:'/imgs/b1.png',
-        title:'万人车汇黑卡',
-        price:356.11,
-      },
-      {
-        img:'/imgs/b2.png',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-      {
-        img:'/imgs/b3.png',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-    ]
-    this.setState({
-      Products:Products
-    })
-  }
+  
 
   componentDidMount(){
-    const { dispatch, layout } = this.props;
-    console.log(this.props);
+    const { dispatch, layout, products } = this.props;
     
     if(layout.title!=='万人车汇商品库'){
         dispatch(setAppLayout(
@@ -131,14 +109,26 @@ class AllProducts extends React.Component{
             }
         ));
     }
-    this.loadFirstPageData()
-    dispatch(getShopProductsLimit("000", 1, 4));
+    
+    if(products === "unloaded"){
+      
+      dispatch(getShopProductsLimit("000", 1, 4));
+    }
+    
+    
+  
   }
   render(){
     const { classes, productsLoading, products } = this.props;
-    console.log(products);
+    console.log("render once");
+    if (products === "unloaded") {
+      return (
+        <div className={classes.root}>
+          <h3>暂无商品可以供应</h3>
+        </div>
+      )
+    }
     
-
     return(
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
@@ -211,10 +201,8 @@ AllProducts.propTypes = {
 
 function mapToState(state){
   return {
-    orderShow: state.OrderShow,
-    user: state.AppUser,
     layout: state.AppInfo.layout,
-    products: state.ProductsList.products,
+    products: state.ProductsList.shopProducts,
     productsLoading: state.ProductsList.loading,
   }
 }

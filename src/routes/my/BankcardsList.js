@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey'
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+import { loadUserBankcards } from '../../actions/bankcards';
 
 
 const styles = theme => ({
@@ -34,7 +35,7 @@ const styles = theme => ({
 class BankcardsList extends React.Component{
 
   componentDidMount(){
-    const { dispatch, layout } = this.props;
+    const { dispatch, layout, bankcards } = this.props;
     
     if(layout.title!=='我的银行卡'){
         dispatch(setAppLayout(
@@ -47,34 +48,30 @@ class BankcardsList extends React.Component{
                 hasGeoLoc: false,
                 hasEditor: false, 
                 hasSearch: false,
+                hasCreateBankcard: true,
+                editorType: "createNewBankcard"
             }
         ));
     }
+    console.log(bankcards);
+    
+    if(bankcards === "unloaded"){
+      console.log(bankcards);
+      
+      dispatch(loadUserBankcards());
+      
+    }
+
 
   }
   render (){
     const { classes } = this.props;
 
     return(
-      <div>
-        <Bankcard isBankcard={true} cardData={{title:"储蓄卡",subtitle:'支行地址:厦门松柏支行',carNumber:'565223268689562356',}}/>
-        <Bankcard isBankcard={false} cardData={{title:"杨志强",subtitle:'已在万人车汇获得佣金',carNumber:'￥9562356',}}/>
         <div>
-        <Card className={classes.card}>
-    
-
-      
-          <CardContent className={classes.content}>
-          <Typography>
-            <Button variant="fab" color="primary" aria-label="add" className={classes.button} href="#/my/new_bankcard">
-              <Icon>add_circle</Icon>
-            </Button>
-          </Typography>
-  
-          </CardContent>
-
-
-        </Card>
+          <Bankcard isBankcard={true} cardData={{title:"储蓄卡",subtitle:'支行地址:厦门松柏支行',carNumber:'565223268689562356',}}/>
+        <div>
+        
       </div>
       </div>
     )
@@ -86,7 +83,8 @@ function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    bankcards: state.UserBankcards.cards,
   }
 }
 

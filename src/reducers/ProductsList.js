@@ -7,6 +7,7 @@ export default function ProductsList
     {
         loading: "true",
         products: [],
+        shopProducts: "unloaded",
     },
     action
 ){
@@ -21,19 +22,19 @@ export default function ProductsList
                 loading: false,
                 products: action.products
             });
-        case EXPECT_GET_SHOP_PRODUCTS_LIMIT:
-            return Object.assign({}, state, {
-                loading: true,
-            });
+
         case EXPECT_GET_SHOP_PRODUCTS_LIMIT: 
+            
             return Object.assign({}, state, {
                 loading: true,
+                shopProducts: "unloaded",
+                
             })
         case GET_SHOP_PRODUCTS_LIMIT_SUCCESS:
             
             return Object.assign({}, state, {
                 loading: false,
-                products: action.msg
+                shopProducts: action.msg,
             })
     
         default:
