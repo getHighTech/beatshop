@@ -87,7 +87,6 @@ class App extends React.Component {
             <Route
               {...rest}
               render={props => {
-                  console.log(props)
                 if(user.roles.includes("login_user")){
                     return (
                         <Component {...props} />

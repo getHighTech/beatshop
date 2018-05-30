@@ -211,15 +211,22 @@ export function getIncomesLimitFail(reason){
         reason,
     }
 }
+let Tpage = 1;
 export function getIncomesLimit(page, pagesize){
     return (dispatch, getState) => {
         fetchTimer++
         if(fetchTimer>1){
             return dispatch(getIncomesLimitFail("tooMany"));
         }
+        // Tpage = page;
+        if(Tpage >= 1){
+            Tpage = Tpage+page;
+        }
         dispatch(expectGetIncomeLimit());
+        console.log("Tpage", Tpage);
+        
         return getRemoteMeteor(dispatch, getState, "balances", 
-        "app.get.incomes.limit", [getStore("userId"), page, pagesize],
+        "app.get.incomes.limit", [getStore("userId"), Tpage, pagesize],
         getIncomesLimitSuccess, getIncomesLimitFail
     )
     }

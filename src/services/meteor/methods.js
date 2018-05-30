@@ -30,14 +30,11 @@ export default function getRemoteMeteor(
             rltIds.push(rltId);
         }
 
-        console.log(rltIds);
-        
        
        
         return MClient.on("result", message => {
            
             if (message.id === rltId && !message.error && message.result && rltIds.includes(message.id)) {
-                console.log("message", message);
                 
                 if (message.result.type === collectionType) {
                    

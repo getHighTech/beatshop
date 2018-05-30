@@ -90,14 +90,8 @@ class Money extends React.Component{
   };
   loadMore(){
     const {dispatch} = this.props;
-    let page = this.state.page;
-    page++
-    this.setState({
-      page 
-    })
-    console.log("page", page);
     
-    dispatch(getIncomesLimit(page, 5));    
+    dispatch(getIncomesLimit(1, 5));    
    
   }
   loadFirstPageData(){
@@ -130,6 +124,8 @@ class Money extends React.Component{
                 hasGeoLoc: false,
                 hasEditor: false, 
                 hasSearch: false,
+                hasWithdraw: true,
+                editorType: "withdraw"
             }
         ));
     }
@@ -257,7 +253,7 @@ class Money extends React.Component{
                             </TableCell>
                             <TableCell className={classes.th} numeric>{getUsername(n, index)}</TableCell>
                             <TableCell className={classes.th} numeric>{"￥"+n.amount/100}</TableCell>
-                            <TableCell className={classes.th} numeric>{moment(n.createdAt).fromNow()}</TableCell>
+                            <TableCell className={classes.th} numeric>{moment(n.createdAt["$date"]).fromNow()}</TableCell>
                           </TableRow>
                         );
                       })}
