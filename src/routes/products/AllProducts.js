@@ -13,6 +13,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { getShopProductsLimit } from '../../actions/products';
+import LoadingItem from '../../components/public/LoadingItem';
 
 const styles = theme => ({
   root:{
@@ -130,24 +132,31 @@ class AllProducts extends React.Component{
         ));
     }
     this.loadFirstPageData()
+    dispatch(getShopProductsLimit("000", 1, 4));
   }
   render(){
-    const { classes } = this.props;
-
+    const { classes, productsLoading, products } = this.props;
+    console.log(products);
+    
 
     return(
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
-          {this.state.Products.map(tile => {
+          {products.map((tile, index) => {
             return (
             
-            <GridListTile key={tile.img}>
-              <img src={tile.img} alt={tile.title} />
+            <GridListTile key={index}>
+              <img src={tile.cover? tile.cover : '/imgs/b5.png'} alt={tile.endPrice} />
               <GridListTileBar
                 title={tile.title}
-                subtitle={<div><span>价: ¥{tile.price}</span><span> 佣: ¥{tile.price}</span></div>}
+                subtitle={<div style={{wordWrap: "break-all"}}><span>价: ¥{tile.endPrice/100}</span>&nbsp;
+                <span> 
+                  佣: ¥{tile.agencyLevelPrices[0]/100}</span></div>}
                 actionIcon={
-                  <Button variant="fab" mini color="primary" onClick={this.handleClickOpen} aria-label="add" className={classes.button}>
+                  <Button variant="fab" 
+                  mini color="primary" 
+                  onClick={this.handleClickOpen} 
+                  aria-label="add" className={classes.button}>
                   <AddIcon />
                 </Button>
 
@@ -180,13 +189,14 @@ class AllProducts extends React.Component{
           )}
         </GridList>
         <div className={classes.loadMore}>
+          {productsLoading && <LoadingItem />}
           {this.state.Products.length === this.state.productsTotle?
 
             <Button color="primary" className={classes.button} >
             没有数据啦
             </Button>:
-            <Button color="primary" className={classes.button} onClick={this.loadMoreProductData.bind(this)}>
-            加载更多
+            <Button onClick={{}} disabled={productsLoading? true: false} color="primary" className={classes.button} onClick={this.loadMoreProductData.bind(this)}>
+            {productsLoading? "正在加载": "加载更多"}
             </Button>
           }
         </div>
@@ -203,7 +213,9 @@ function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    products: state.ProductsList.products,
+    productsLoading: state.ProductsList.loading,
   }
 }
 

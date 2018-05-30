@@ -150,6 +150,8 @@ export function expectGetIncomesWithinTime(unit){
 
 
 export function getIncomeWithTimeSuccess(msg){
+    sendTimes = 0;
+    
     return {
         type: GET_INCOMES_WITHIN_TIME_SUCCESS,
         msg
@@ -157,6 +159,7 @@ export function getIncomeWithTimeSuccess(msg){
 }
 
 export function getIncomeWithTimeFail(reason){
+    sendTimes = 0;
     return {
         type: GET_INCOMES_WITHIN_TIME_FAIL,
         reason
@@ -165,14 +168,12 @@ export function getIncomeWithTimeFail(reason){
 
 
 export function getIncomeWithTime(rangLength, userId, unit){
-    sendTimes = sendTimes + 1;
-    if(sendTimes >3){
-        return {
-            type: GET_INCOMES_WITHIN_TIME_FAIL,
-            reason: "block too many require"
-        };
-    }
+    
     return (dispatch, getState) => {
+            sendTimes = sendTimes + 1;
+            if(sendTimes >1){
+                dispatch(getIncomesLimitFail("too many"))
+            }
         dispatch(expectGetIncomesWithinTime(unit));
         return getRemoteMeteor(
             dispatch,getState, "balances",
@@ -188,7 +189,7 @@ export const GET_INCOMES_LIMIT_SUCCESS = "GET_INCOMES_LIMIT_SUCCESS";
 export const GET_INCOMES_LIMIT_FAIL = "GET_INCOMES_LIMIT_FAIL";
 
 
-
+let fetchTimer = 0;
 export function expectGetIncomeLimit(){
     return {
         type: EXPECT_GET_INCOMES_LIMIT,
@@ -196,7 +197,7 @@ export function expectGetIncomeLimit(){
 }
 
 export function getIncomesLimitSuccess(msg){
-    
+    fetchTimer = 0;
     return {
         type: GET_INCOMES_LIMIT_SUCCESS,
         msg
@@ -204,7 +205,7 @@ export function getIncomesLimitSuccess(msg){
     }
 }
 export function getIncomesLimitFail(reason){
-    
+    fetchTimer = 0;
     return {
         type: GET_INCOMES_LIMIT_FAIL,
         reason,
@@ -212,6 +213,10 @@ export function getIncomesLimitFail(reason){
 }
 export function getIncomesLimit(page, pagesize){
     return (dispatch, getState) => {
+        fetchTimer++
+        if(fetchTimer>1){
+            return dispatch(getIncomesLimitFail("tooMany"));
+        }
         dispatch(expectGetIncomeLimit());
         return getRemoteMeteor(dispatch, getState, "balances", 
         "app.get.incomes.limit", [getStore("userId"), page, pagesize],

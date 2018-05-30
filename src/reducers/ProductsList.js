@@ -1,4 +1,5 @@
 import { EXPECT_HOME_INDEX_PRODUCTS, LOAD_HOME_INDEX_PRODUCTS_SUCCESS } from "../actions/process/home_index";
+import { GET_SHOP_PRODUCTS_LIMIT_SUCCESS, EXPECT_GET_SHOP_PRODUCTS_LIMIT } from "../actions/products";
 
 export default function ProductsList
 (
@@ -19,6 +20,20 @@ export default function ProductsList
             return Object.assign({}, state, {
                 loading: false,
                 products: action.products
+            });
+        case EXPECT_GET_SHOP_PRODUCTS_LIMIT:
+            return Object.assign({}, state, {
+                loading: true,
+            });
+        case EXPECT_GET_SHOP_PRODUCTS_LIMIT: 
+            return Object.assign({}, state, {
+                loading: true,
+            })
+        case GET_SHOP_PRODUCTS_LIMIT_SUCCESS:
+            
+            return Object.assign({}, state, {
+                loading: false,
+                products: action.msg
             })
     
         default:

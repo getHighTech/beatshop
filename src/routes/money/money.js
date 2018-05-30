@@ -90,7 +90,14 @@ class Money extends React.Component{
   };
   loadMore(){
     const {dispatch} = this.props;
-    dispatch(getIncomesLimit(2, 5));    
+    let page = this.state.page;
+    page++
+    this.setState({
+      page 
+    })
+    console.log("page", page);
+    
+    dispatch(getIncomesLimit(page, 5));    
    
   }
   loadFirstPageData(){
@@ -137,6 +144,10 @@ class Money extends React.Component{
        dispatch(getIncomeWithTime(1, getStore("userId"),"weeks"))
        dispatch(getIncomeWithTime(1, getStore("userId"),"months"))
     }
+
+    this.setState({
+      page: 1
+    })
     
   }
 

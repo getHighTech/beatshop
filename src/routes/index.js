@@ -87,6 +87,7 @@ class App extends React.Component {
             <Route
               {...rest}
               render={props => {
+                  console.log(props)
                 if(user.roles.includes("login_user")){
                     return (
                         <Component {...props} />
@@ -100,6 +101,32 @@ class App extends React.Component {
                     return <Redirect
                     to={{
                       pathname: "/login"+msg,
+                      state: { from: props.location }
+                    }}
+                  />
+                }
+                }
+              }
+            />
+          );
+          const CarMemberRoute = ({ component: Component, ...rest }) => (
+            <Route
+              {...rest}
+              render={props => {
+                  console.log(props)
+                if(user.roles.includes("blackcard_holder")){
+                    return (
+                        <Component {...props} />
+                      )
+                }else{
+                    let msg = props.match.path;
+                    if(msg === '/my'){
+                        //在个人主页并不提醒需要先登录
+                        msg=""
+                    }
+                    return <Redirect
+                    to={{
+                      pathname: '/products_by_rolename/blackcard/openshop',
                       state: { from: props.location }
                     }}
                   />
@@ -133,9 +160,9 @@ class App extends React.Component {
                 <MainLayout history={history} store={this.props.store}>
                     <Switch>
                     NewBankcard
-                        <PrivateRoute exact path="/my" component={MyIndex} />
+                        <PrivateRoute exact path="/my"  component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
-                        <PrivateRoute exact path="/products" component={AllProducts} />
+                        <CarMemberRoute exact path="/products" component={AllProducts} />
                         <PrivateRoute exact path="/my/products" component={SellingProducts} />
                         <PrivateRoute exact path="/pay/:status" component={PayResult} />
                         <PrivateRoute exact path="/money" component={Money} />
