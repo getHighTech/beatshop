@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { loadUserBankcards } from '../../actions/bankcards';
 import LoadingItem from '../../components/public/LoadingItem';
+import { getStore } from '../../tools/localStorage';
 
 
 const styles = theme => ({
@@ -65,22 +66,34 @@ const bankcard = [
 class Withdraw extends React.Component{
   state = {
   number: '',
-  bankcard:'JPY'
+  bankcard: '1'
   };
 
-  handleChange = name => event => {
+  handleChange = (name, event) => {
     this.setState({
-      [name]: event.target.number,
+      [name]: event.target.value,
     });
   };
   withdraw = () => {
     const {dispatch, bankcards} = this.props;
+    let bankcard = bankcards[parseInt(this.state.bankcard, 10)];
+   
+    let amount = this.state.number;
+
+     let  withdrawParams = {
+       bankcard,
+       amount, 
+       userId: getStore("userId")
+     }
+     console.log(withdrawParams);
+     
+
   }
 
 
   componentDidMount(){
     const { dispatch, layout, bankcards } = this.props;
-    console.log(this.props);
+    console.log(this.state);
     
     if(layout.title!=='提现界面'){
         dispatch(setAppLayout(
@@ -104,6 +117,8 @@ class Withdraw extends React.Component{
   }
   render(){
     const { classes, bankcards } = this.props;
+    console.log(this.state);
+    
     if(bankcards === "unloaded"){
         return <LoadingItem />
     }
@@ -119,7 +134,7 @@ class Withdraw extends React.Component{
             id="number"
             label="提现金额"
             defaultValue={this.state.number}
-            onChange={this.handleChange('number')}
+            onChange={(e)=>this.handleChange('number', e)}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -133,7 +148,7 @@ class Withdraw extends React.Component{
               label="银行卡"
               className={classes.textField}
               value={this.state.bankcard}
-              onChange={this.handleChange('bankcard')}
+              onChange={(e)=>this.handleChange('bankcard', e)}
               SelectProps={{
                 native: true,
                 MenuProps: {
@@ -146,12 +161,9 @@ class Withdraw extends React.Component{
               helperText="请选择银行卡"
               margin="normal"
             >
-              {bankcards.map(option => (
-                <option key={option.id} value={option.number}>
-                <div>
-                  
-                  <div>{option.accountNumber}</div>
-                </div>
+              {bankcards.map((option, index) => (
+                <option key={index} value={index}>
+               {option.accountNumber}
                   
                 </option>
               ))}
