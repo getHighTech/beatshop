@@ -40,6 +40,7 @@ import PayResult from './pay/index.js'
 import Shop from './shop/shop';
 import withdraw from './withdraw/withdraw';
 import Share from './share/share';
+import BlackcardHolder from './my/BlackcardHolder';
 
 const history = createHistory();
 
@@ -172,6 +173,7 @@ class App extends React.Component {
                         <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
                         <PrivateRoute exact path="/my/orders/:id" component={orderDetails} />
+                        <PrivateRoute exact path="/my/blackcard_holder" component={BlackcardHolder} />
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
                         <PrivateRoute exact path="/share/:id" component={Share} />
                         <PrivateRoute exact path="/shops/:id" component={Shop} />
