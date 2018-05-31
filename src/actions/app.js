@@ -6,6 +6,7 @@ import { userLogout } from './users';
 import { createNewContact } from './contacts';
 import { loadOneProduct } from './products';
 import { userLogin } from './process/login';
+import { createNewBankCard } from './bankcards';
 
 export const history = createHistory();
 
@@ -65,6 +66,11 @@ export function switchActionNames(actionName){
         case 'user_mobile_login':
             return {
                 action: (actionParams) => userLogin("mobileSMS", actionParams)
+            }
+
+        case 'save_user_bankcard':
+            return {
+                action: createNewBankCard
             }
         
       
@@ -134,6 +140,12 @@ function msgSwitchByReason(reason, option={}){
             return {
                 content: "若您需要开店， 需要先购买会员卡，一旦成为黑卡会员后可以立刻开店咯"
             }
+
+        case "save_bankcard_success":
+            return {
+                content: "绑定银行卡成功"
+            }
+
     
         default:
             break;

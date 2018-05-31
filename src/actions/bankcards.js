@@ -70,6 +70,11 @@ export function expectCreateNewBankCard(){
 export function createNewBankCard(bankCardParams){
     return (dispatch, getState) => {
         dispatch(expectCreateNewBankCard());
-        return getRemoteMeteor(dispatch, getState, 'bankcards', "app.created.bankcard", [])
+        return getRemoteMeteor(dispatch, getState, 'bankcards',
+         "app.user.create.bankcard", 
+         [bankCardParams.userId, 
+            bankCardParams.realName,
+            bankCardParams.accountNumber,
+            bankCardParams.bankAddress], createNewBankCardSuccess, createNewBankCardFail)
     }
 }

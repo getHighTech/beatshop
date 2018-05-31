@@ -87,6 +87,10 @@ class MyItems extends React.Component{
         }
         
     }
+
+    handleGoToMemeberCenter(){
+        
+    }
     
     render(){
         const { classes } = this.props;
@@ -107,7 +111,7 @@ class MyItems extends React.Component{
                 <ListItemIcon className={classes.listIcon}>
                     <Face />
                 </ListItemIcon>
-                <ListItemText primary="万人车汇黑卡" />
+                <ListItemText primary="黑卡尊享会员" />
                 </ListItem>}
             </List>
             <Divider />
