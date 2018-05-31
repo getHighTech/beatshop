@@ -35,7 +35,6 @@ const styles = {
     fontSize:13,
   },
   price:{
-    fontWeight:900,
     color:'#ff5722'
 
   },
@@ -44,7 +43,6 @@ const styles = {
     fontSize:9,
   },
   finalPrice:{
-    fontWeight:900,
     fontSize:15,
     color:'#ff5722'
 

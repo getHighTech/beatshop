@@ -16,7 +16,6 @@ const styles = theme => ({
     display:'flex'
    },
    productName:{
-     fontWeight:900,
      fontSize:14,
      color:'#424242'
    },
@@ -63,52 +62,57 @@ const styles = theme => ({
 });
 
 class ProductCard extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {  }
+  }
   onClick(){
     console.log('------------------------------------');
     console.log('点击了商品标题');
     console.log('------------------------------------');
   }
-  share(){
+  share(id){
+    const { history } = this.props
     console.log('------------------------------------');
-    console.log('跳到分享页面');
+    history.push('/share/'+id)
     console.log('------------------------------------');
   }
   delete(){
     console.log('------------------------------------');
-    console.log('取消代理');
+    console.log('');
     console.log('------------------------------------');
   }
   render(){
-    const { classes } = this.props;
-
+    const { classes,id,history } = this.props;
+    console.log(this.props)
     return(
       <div>
         <Card className={classes.card}>
-            <div className={classes.cardContent}>
-                <div className={classes.leftContent}>
-                    <img src='/imgs/webwxgetmsgimg.jpeg' alt='商品图片'style={{height:80,width:80}}/>       
-                </div>
-                <div className={classes.rightContent}>
-                  <a  onClick={this.onClick.bind(this)} className={classes.a}>
-                    <div className={classes.productName}>商品名字商品名字商品名字商品名字商</div>
-                    <div className={classes.subProductName}>商品简介</div>
-                  </a>      
-                  <div className={classes.cardBottom}>
-                    <div className={classes.productPrice}>
-                      <div>价格:¥100.00</div>
-                      <div>佣金:¥100.00</div>
-                    </div>
-                    <div className={classes.share}>
-                    <IconButton className={classes.button} onClick={this.delete} aria-label="Delete"  color="secondary">
-                        <DeleteIcon />
-                      </IconButton>
-                      <IconButton color="secondary" onClick={this.share} className={classes.button} aria-label="Add an alarm">
-                        <Icon>share</Icon>
-                      </IconButton>
-                    </div>
-                  </div>                        
-                </div>
-            </div>
+          <div className={classes.cardContent}>
+              <div className={classes.leftContent}>
+                  <img src='/imgs/webwxgetmsgimg.jpeg' alt='商品图片'style={{height:80,width:80}}/>       
+              </div>
+              <div className={classes.rightContent}>
+                <a  onClick={this.onClick.bind(this)} className={classes.a}>
+                  <div className={classes.productName}>商品名字商品名字商品名字商品名字商</div>
+                  <div className={classes.subProductName}>商品简介</div>
+                </a>      
+                <div className={classes.cardBottom}>
+                  <div className={classes.productPrice}>
+                    <div>价格:¥100.00</div>
+                    <div>佣金:¥100.00</div>
+                  </div>
+                  <div className={classes.share}>
+                  <IconButton className={classes.button} onClick={this.delete} aria-label="Delete"  color="secondary">
+                      <DeleteIcon />
+                    </IconButton>
+                    <IconButton color="secondary"  onClick={() => this.share(id)} className={classes.button} aria-label="Add an alarm">
+                      <Icon>share</Icon>
+                    </IconButton>
+                  </div>
+                </div>                        
+              </div>
+          </div>
         </Card>
       </div>
     )

@@ -24,7 +24,6 @@ const styles = theme => ({
     textAlign:'left',
     fontSize:15,
     margin:10,
-    fontWeight:900
   },
   productBrief:{
     textAlign:'left',
@@ -43,7 +42,6 @@ const styles = theme => ({
   }
 ,
 productPriceNumber:{
-  fontWeight:900,
   marginLeft:2,
   marginTop:4,
   fontSize:16,
