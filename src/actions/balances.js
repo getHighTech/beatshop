@@ -45,6 +45,8 @@ export function expectWithdrawMoney(){
     }
 }
 export function withdrawMoneyFail(reason){
+    console.log("提现失败了", reason);
+    
     return {
         type: WITHDRAW_MONEY_FAIL,
         reason,
@@ -56,11 +58,17 @@ export function withdrawMoneySuccess(msg){
         msg
     }
 }
-export function withdrawMoney(userId, amount, bankId){
+export function withdrawMoney(withdrawParams){
     return (dispatch, getState)=>{
         dispatch(expectWithdrawMoney());
-        return getRemoteMeteor(dispatch, getState, "balances", 'app.withdraw.money',
-    [userId, amount, bankId], withdrawMoneySuccess, withdrawMoneyFail);
+        return getRemoteMeteor(dispatch, getState, 
+            "balances", 'app.withdraw.money',
+                [withdrawParams.userId, 
+                withdrawParams.amount, 
+                withdrawParams.bankId, 
+                withdrawParams.bank], 
+            withdrawMoneySuccess, 
+            withdrawMoneyFail);
     }
 }
 
