@@ -34,7 +34,8 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import BankcardsList from './my/BankcardsList';
 import Money from './money/money'
-import MyOrders from './orders/my.js'
+import MyOrders from './orders/myOrders.js'
+import orderDetails from './orders/orderDetails'
 import PayResult from './pay/index.js'
 import Shop from './shop/shop';
 import withdraw from './withdraw/withdraw';
@@ -170,6 +171,7 @@ class App extends React.Component {
                         <PrivateRoute exact path="/money" component={Money} />
                         <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
+                        <PrivateRoute exact path="/my/orders/:id" component={orderDetails} />
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
                         <PrivateRoute exact path="/share/:id" component={Share} />
                         <PrivateRoute exact path="/shops/:id" component={Shop} />

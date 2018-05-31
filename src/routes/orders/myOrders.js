@@ -27,7 +27,7 @@ const styles = theme => ({
   card:{
     width:'92%',
     marginLeft:'4%',
-    marginTop:'4%',
+    marginTop:4,
     borderRadius:8
   },
   th:{
@@ -162,7 +162,7 @@ class MyOrders extends React.Component{
 
                       {withdrawData.map(n => {
                         return (
-                            <OrderCard status="unpaid" key={n.id}/>
+                            <OrderCard status="unpaid" key={n.id} id={n.id}/>
                         );
                       })}
 

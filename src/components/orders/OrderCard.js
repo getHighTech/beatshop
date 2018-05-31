@@ -7,11 +7,7 @@ import Button from '@material-ui/core/Button';
 
 
 const styles = {
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
+
   title: {
     marginBottom: 16,
     fontSize: 14,
@@ -58,7 +54,8 @@ const styles = {
 class OrderCard extends React.Component{
   
   render(){
-    const {classes} = this.props
+    const {classes,id} = this.props
+    console.log(this.props)
     return(
       <div className={classes.root}>
         <div className={classes.cardTitle}>
@@ -71,6 +68,56 @@ class OrderCard extends React.Component{
             </Grid>
             <Grid item xs={3} sm={3} >
               <div className={classes.orderStatus} >待付款</div>
+            </Grid>
+          </Grid>
+        </div>
+        {/* 多个商品循环这个模块 */}
+        <div className={classes.cardContent}>
+          <Grid container spacing={24}>
+            <Grid item xs={2} sm={2}>
+              <div className={classes.productImg}>
+                <img alt="店铺图标" style={{height:45,width:45}} src={'/imgs/webwxgetmsgimg.jpeg'}/>
+              </div>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <div className={classes.productName}>万人车汇黑卡会员商品名字BLBLA人车汇黑L</div>
+            </Grid>
+            <Grid item xs={2} sm={2}>
+              <div className={classes.price}>￥450</div>
+              <div className={classes.count}>x1</div>
+            </Grid>
+          </Grid>
+        </div>
+        {/* 多个商品循环这个模块 */}
+        <div className={classes.cardContent}>
+          <Grid container spacing={24}>
+            <Grid item xs={2} sm={2}>
+              <div className={classes.productImg}>
+                <img alt="店铺图标" style={{height:45,width:45}} src={'/imgs/webwxgetmsgimg.jpeg'}/>
+              </div>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <div className={classes.productName}>万人车汇黑卡会员商品名字BLBLA人车汇黑L</div>
+            </Grid>
+            <Grid item xs={2} sm={2}>
+              <div className={classes.price}>￥450</div>
+              <div className={classes.count}>x1</div>
+            </Grid>
+          </Grid>
+        </div>
+        <div className={classes.cardContent}>
+          <Grid container spacing={24}>
+            <Grid item xs={2} sm={2}>
+              <div className={classes.productImg}>
+                <img alt="店铺图标" style={{height:45,width:45}} src={'/imgs/webwxgetmsgimg.jpeg'}/>
+              </div>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <div className={classes.productName}>万人车汇黑卡会员商品名字BLBLA人车汇黑L</div>
+            </Grid>
+            <Grid item xs={2} sm={2}>
+              <div className={classes.price}>￥450</div>
+              <div className={classes.count}>x1</div>
             </Grid>
           </Grid>
         </div>
@@ -100,6 +147,9 @@ class OrderCard extends React.Component{
                 <Button variant="outlined"  size="small" className={classes.button}>
                   取消订单
                 </Button>
+                <Button variant="outlined"  size="small" href={"#/my/orders/" + id}   className={classes.button}>
+                  查看详情
+                </Button>
                 <Button variant="raised"  size="small" color="secondary" className={classes.button}>
                   付款
                 </Button>
@@ -114,6 +164,9 @@ class OrderCard extends React.Component{
                 {/* <Button variant="outlined"  size="small" className={classes.button}>
                   申请退款
                 </Button> */}
+                <Button variant="outlined"  size="small"  className={classes.button}>
+                  查看详情
+                </Button>
                 <Button variant="raised"  size="small" color="secondary" className={classes.button}>
                   确认收货
                 </Button>
