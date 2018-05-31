@@ -38,7 +38,6 @@ export const GET_SHOP_PRODUCTS_LIMIT_SUCCESS = "GET_SHOP_PRODUCTS_LIMIT_SUCCESS"
 
 
 
-let requireTimer = 0;
 export function expectGetShopProductsLimit(){
     return {
         type: EXPECT_GET_SHOP_PRODUCTS_LIMIT,
@@ -48,7 +47,7 @@ export function expectGetShopProductsLimit(){
 
 export function getShopProductsLimitFail(reason){
     console.log(reason);
-    requireTimer = 0;
+    
     return {
         type: GET_SHOP_PRODUCTS_LIMIT_FAIL,
         reason
@@ -58,7 +57,7 @@ export function getShopProductsLimitFail(reason){
 
 export function getShopProductsLimitSuccess(msg){
     console.log(msg);
-    requireTimer = 0;
+    
     return {
         type: GET_SHOP_PRODUCTS_LIMIT_SUCCESS,
         msg
@@ -69,10 +68,6 @@ export function getShopProductsLimitSuccess(msg){
 
 export function getShopProductsLimit(shopId, page, pagesize){
     return (dispatch, getState) => {
-        requireTimer++;
-        if (requireTimer>1) {
-            return dispatch(getShopProductsLimitFail("tooMany"))
-        }
         dispatch(expectGetShopProductsLimit());
         return getRemoteMeteor(
             dispatch,getState, "products", 

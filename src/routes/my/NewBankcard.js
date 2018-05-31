@@ -6,6 +6,7 @@ import { setAppLayout, appShowMsgAndInjectDataReactWithPath } from '../../action
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { getStore } from '../../tools/localStorage';
 
 const styles = theme => ({
   container: {
@@ -23,17 +24,14 @@ class NewBankcard extends React.Component {
     super(props);
     this.state = {
      name: "",
-     mobile: "",
+     cardNumber: "",
      address: "",
-     carNumber: "",
      nameHelperText: "",
-     mobileHelperText: "",
+     cardNumberHelperText: "",
      addressHelperText: "",
-     carNumberHelperText: "",
      nameFeildError: true,
-     mobileFeildError: true,
+     cardNumberFeildError: true,
      addressFeildError: true,
-     carNumberFeildError: true,
     }
   }
 
@@ -68,10 +66,10 @@ class NewBankcard extends React.Component {
         });
        return false;
      }
-     if(!contact.mobile){
+     if(!contact.cardNumber){
       this.setState({
         nameHelperText: "此处为必须项",
-        mobileFeildError: true,
+        cardNumberFeildError: true,
        });
       return false;
     }
@@ -82,20 +80,19 @@ class NewBankcard extends React.Component {
        });
       return false;
     }
-    let contactParams = {
-      name: contact.name,
-      mobile: contact.mobile,
-      address: contact.address,
-      carNumber: contact.carNumber
+    let bankCardParams = {
+      realName: contact.name,
+      accountNumber: contact.cardNumber,
+      bankAddress: contact.address,
+      userId: getStore("userId"),
     }
     
     dispatch(appShowMsgAndInjectDataReactWithPath(
-      "save_user_contact", "save_contact_success",1350, contactParams, "/my/contacts/orderuse"));
+      "save_user_bankcard", "save_bankcard_success",1350, bankCardParams, "/my/bankcards_list"));
       this.setState({
         name: "",
-        mobile: "",
+        cardNumber: "",
         address: "",
-        carNumber: "",
         helperText: ""
        });
   }
@@ -114,7 +111,7 @@ class NewBankcard extends React.Component {
         <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="full-width"
-          label="您的姓名"
+          label="开户户头姓名"
           fullWidth required error={this.state.nameFeildError}
           margin="normal"
           value={this.state.name}
@@ -124,32 +121,24 @@ class NewBankcard extends React.Component {
         />
         <TextField
           id="full-width"
-          label="电话号码"
-          fullWidth required  error={this.state.mobileFeildError}
+          label="银行卡号"
+          fullWidth required  error={this.state.cardNumberFeildError}
           margin="normal"
-          value={this.state.mobile}
-          helperText={this.state.mobileHelperText}
-          onChange={(e)=>this.handleInputChange.bind(this)(e, "mobile")}
+          value={this.state.cardNumber}
+          helperText={this.state.cardNumberHelperText}
+          onChange={(e)=>this.handleInputChange.bind(this)(e, "cardNumber")}
           
         />
         <TextField
           id="full-width"
-          label="收货地址"
+          label="银行开户行（具体到支行）"
           fullWidth required  error={this.state.addressFeildError}
           margin="normal"
           value={this.state.address}
           helperText={this.state.addressHelperText}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "address")}
         />
-        <TextField
-          id="full-width"
-          label="车牌号码(如购买黑卡，此项目必须填写)"
-          fullWidth  error={this.state.carNumberFeildError}
-          margin="normal"
-          value={this.state.carNumber}
-          helperText={this.state.carNumberHelperText}
-          onChange={(e)=>this.handleInputChange.bind(this)(e, "carNumber")}
-        /><br/>
+        <br/>
         <Button type="button" onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>        
         </form>
       </div>

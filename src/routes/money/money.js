@@ -161,6 +161,9 @@ class Money extends React.Component{
     const { classes, user, money } = this.props;
     const { value, incomeSource,withdrawData} = this.state;
     let getUsername = function(income, index){
+      if(income.shopCustomer){
+        return income.shopCustomer.username;
+      }
       if(income.user){
         return income.user.username;
       }
@@ -249,7 +252,7 @@ class Money extends React.Component{
                         return (
                           <TableRow key={index}>
                             <TableCell className={classes.thName} component="th" scope="row">
-                              {!n.product? "老黑卡会员卡分享": "新会员"}
+                              {!n.product? "老黑卡会员卡分享": n.product.name_zh}
                             </TableCell>
                             <TableCell className={classes.th} numeric>{getUsername(n, index)}</TableCell>
                             <TableCell className={classes.th} numeric>{"￥"+n.amount/100}</TableCell>

@@ -139,6 +139,9 @@ class MenuAppBar extends React.Component {
       case "withdraw":
         this.props.history.push("/withdraw")
         break;
+
+      case "createNewBankcard":
+      this.props.history.push("/my/new_bankcard");
     
       default:
         break;
@@ -194,6 +197,12 @@ class MenuAppBar extends React.Component {
             { layout.hasWithdraw &&
               <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
                 提现
+                <OpenInNew />
+              </Button>
+            }
+            { layout.hasCreateBankcard &&
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
+                新增加银行卡
                 <OpenInNew />
               </Button>
             }
