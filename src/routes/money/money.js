@@ -78,16 +78,21 @@ const styles = theme => ({
 
 })
 class Money extends React.Component{
-  state = {
-    value: 0,
-    page: 0,
-    rowsPerPage: 5,
-    count:100,
-    incomeSource:[],
-    incomeTotle:6,
-    withdrawData:[],
-    withdrawTotle:6
-  };
+  constructor(props){
+    super(props);
+    const {dispatch} = this.props;
+    this.state = {
+      value: 0,
+      page: 0,
+      rowsPerPage: 5,
+      count:100,
+      incomeSource:[],
+      incomeTotle:6,
+      withdrawData:[],
+      withdrawTotle:6
+    };
+  }
+  
   loadMore(){
     const {dispatch} = this.props;
     
@@ -131,11 +136,11 @@ class Money extends React.Component{
     }
     this.loadFirstPageData()
     this.loadWithdrawFirstPageData()
-    if(money.balance_incomes.length === 0){
-       dispatch(loadMoneyPage(getStore('userId')));
-    }
    
-    if(money.staticDone === false){
+   console.log(money.staticDone);
+     
+    if(!money.staticDone && money.balance_incomes === "unloaded"){
+       dispatch(loadMoneyPage(getStore('userId')));
        dispatch(getIncomeWithTime(1, getStore("userId"),"days"))
        dispatch(getIncomeWithTime(1, getStore("userId"),"weeks"))
        dispatch(getIncomeWithTime(1, getStore("userId"),"months"))
@@ -158,8 +163,11 @@ class Money extends React.Component{
   };
 
   render(){
+
     const { classes, user, money } = this.props;
     const { value, incomeSource,withdrawData} = this.state;
+   
+    
     let getUsername = function(income, index){
       if(income.shopCustomer){
         return income.shopCustomer.username;
@@ -234,7 +242,7 @@ class Money extends React.Component{
                   <Tab label="提现记录"  />
                 </Tabs>
               </div>
-              {value === 0 && 
+              {value === 0 && this.props.money.balance_incomes !== "unloaded" &&
               <TabContainer >
                 <div className={classes.root}>
                   <Table className={classes.table}>
@@ -247,7 +255,16 @@ class Money extends React.Component{
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {this.props.money.balance_incomes.map((n, index) => {
+                      { this.props.money.balance_incomes.length===0 ?
+                        <div style={{
+                          width: 339,
+                          zIndex: 400,
+                          height: 60,
+                          top: -87,
+                          position: "relative",
+                          background: "white"
+                        }}> 暂无数据 </div> :
+                        this.props.money.balance_incomes.map((n, index) => {
                         
                         return (
                           <TableRow key={index}>

@@ -53,10 +53,8 @@ class BankcardsList extends React.Component{
             }
         ));
     }
-    console.log(bankcards);
     
     if(bankcards === "unloaded"){
-      console.log(bankcards);
       
       dispatch(loadUserBankcards());
       
@@ -66,7 +64,11 @@ class BankcardsList extends React.Component{
   }
   render (){
     const { classes, bankcards } = this.props;
-    if(bankcards === "unloaded" || bankcards === []){
+    if(bankcards === "unloaded"){
+      return <h3>加载中</h3>
+      
+    }
+    if(bankcards.length === 0){
       return <h3>您还没有绑定银行卡</h3>
     }
 

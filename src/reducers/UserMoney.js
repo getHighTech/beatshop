@@ -1,10 +1,10 @@
-import { LOAD_MONEY_PAGE_SUCCESS,GET_INCOMES_LIMIT, GET_INCOMES_WITHIN_TIME_SUCCESS, EXPECT_GET_INCOMES_WITHIN_TIME, GET_INCOMES_LIMIT_SUCCESS, EXPECT_GET_INCOMES_LIMIT } from "../actions/balances";
+import { LOAD_MONEY_PAGE_SUCCESS,GET_INCOMES_LIMIT, GET_INCOMES_WITHIN_TIME_SUCCESS, EXPECT_GET_INCOMES_WITHIN_TIME, GET_INCOMES_LIMIT_SUCCESS, EXPECT_GET_INCOMES_LIMIT, LOAD_MONEY_PAGE_FAIL, GET_INCOMES_WITHIN_TIME_FAIL, GET_INCOMES_LIMIT_FAIL, EXPECT_LOAD_MONEY_PAGE } from "../actions/balances";
 
 export default function UserMoney(state={
     loading: false,
     balance: {},
-    balance_incomes: [],
-    balance_charges: [],
+    balance_incomes: "unloaded",
+    balance_charges: "unloaded",
     todayTotalAmount: NaN,
     weekTotalAmount: NaN,
     monthTotalAmount: NaN,
@@ -14,6 +14,15 @@ export default function UserMoney(state={
     loadingMore: false,
 }, action){
     switch(action.type){
+        case "CLEAN_ALL_ON_MONEY_PAGE":
+            return Object.assign({}, state, {
+                    loading: false,
+                    todayTotalAmount: NaN,
+                    weekTotalAmount: NaN,
+                    monthTotalAmount: NaN,
+                    staticDone: false,
+                    loadingMore: false,
+            })
         case LOAD_MONEY_PAGE_SUCCESS:
             return Object.assign({}, state, {
                 loading: true,
@@ -21,11 +30,35 @@ export default function UserMoney(state={
                 balance_incomes: action.msg.balance_incomes,
                 balance_charges: action.msg.balance_charges,
                 agencies: action.msg.agencies,
-                users: action.msg.users
+                users: action.msg.users,
+                staticDone: true
             });
+        case EXPECT_LOAD_MONEY_PAGE:
+            return Object.assign({}, state, {
+                    loading: false,
+                    balance: {},
+                    balance_incomes: "unloaded",
+                    balance_charges: "unloaded",
+                    todayTotalAmount: NaN,
+                    weekTotalAmount: NaN,
+                    monthTotalAmount: NaN,
+                    staticDone: false,
+                    agencies: [],
+                    unit: [],
+                    loadingMore: false,
+            })
+        case LOAD_MONEY_PAGE_FAIL:
+            return Object.assign({}, state, {
+                staticDone: true,
+            })
         case EXPECT_GET_INCOMES_WITHIN_TIME:
             return Object.assign({}, state, {
-                unit: action.unit
+                unit: action.unit,
+                staticDone: false,
+            })
+        case GET_INCOMES_WITHIN_TIME_FAIL:
+            return Object.assign({}, state, {
+                staticDone: true,
             })
         case GET_INCOMES_WITHIN_TIME_SUCCESS: 
             let unitAmount = action.msg.totalAmount;
@@ -39,12 +72,14 @@ export default function UserMoney(state={
             
             if(unit === "days"){
                 return Object.assign({}, state, {
-                    todayTotalAmount: unitAmount
+                    todayTotalAmount: unitAmount,
+                    staticDone: true
                 })
             }
             if(unit === "weeks"){
                 return Object.assign({}, state, {
-                    weekTotalAmount: unitAmount
+                    weekTotalAmount: unitAmount,
+                    staticDone: true
                 })
             }
             if(unit === "months"){
@@ -55,7 +90,13 @@ export default function UserMoney(state={
             }
         case EXPECT_GET_INCOMES_LIMIT:
             return Object.assign({}, state, {
-                loadingMore: true
+                loadingMore: true,
+                staticDone: false,
+            })
+        case GET_INCOMES_LIMIT_FAIL:
+            return Object.assign({}, state, {
+                loadingMore: false,
+                staticDone: true,
             })
         case GET_INCOMES_LIMIT_SUCCESS:
             let incomes = state.balance_incomes;
@@ -65,6 +106,7 @@ export default function UserMoney(state={
             return Object.assign({}, state, {
                 balance_incomes: incomes,
                 users,
+                staticDone: false,
                 loadingMore: false,
             })
 
