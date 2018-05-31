@@ -38,6 +38,7 @@ import MyOrders from './orders/my.js'
 import PayResult from './pay/index.js'
 import Shop from './shop/shop';
 import withdraw from './withdraw/withdraw';
+import Share from './share/share';
 
 const history = createHistory();
 
@@ -61,6 +62,9 @@ const OrderWithPath = ({ match }) => (
 
 const ProductShowWithPath = ({ match }) => (
     <ProductShow history={history} match={match}/>
+)
+const SellingProductsPath = ({ match }) => (
+    <SellingProducts history={history} match={match}/>
 )
 
 class App extends React.Component {
@@ -158,16 +162,16 @@ class App extends React.Component {
             <Router  className={classes.root} >
                 <MainLayout history={history} store={this.props.store}>
                     <Switch>
-                    NewBankcard
                         <PrivateRoute exact path="/my"  component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
                         <CarMemberRoute exact path="/products" component={AllProducts} />
-                        <PrivateRoute exact path="/my/products" component={SellingProducts} />
+                        <PrivateRoute exact path="/my/products" component={SellingProductsPath} />
                         <PrivateRoute exact path="/pay/:status" component={PayResult} />
                         <PrivateRoute exact path="/money" component={Money} />
                         <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
+                        <PrivateRoute exact path="/share/:id" component={Share} />
                         <PrivateRoute exact path="/shops/:id" component={Shop} />
                         <PrivateRoute exact path="/withdraw" component={withdraw} />
                         <PrivateRoute exact path="/cart" component={AppCart} />

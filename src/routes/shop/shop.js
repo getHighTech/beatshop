@@ -62,7 +62,6 @@ const styles = theme => ({
     paddingBottom:0,
    },
    productName:{
-     fontWeight:900,
      fontSize:14
    },
    productPrice:{
