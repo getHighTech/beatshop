@@ -20,7 +20,7 @@ const styles = theme => ({
     background:'url('+Image+')',
     width:'92%',
     marginLeft:'4%',
-    marginTop:'4%',
+    marginTop:4,
     backgroundRepeat: 'no-repeat',
     backgroundPosition:'100% 0%',
     borderRadius:8,
