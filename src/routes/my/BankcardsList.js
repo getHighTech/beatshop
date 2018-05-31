@@ -65,11 +65,23 @@ class BankcardsList extends React.Component{
 
   }
   render (){
-    const { classes } = this.props;
+    const { classes, bankcards } = this.props;
+    if(bankcards === "unloaded" || bankcards === []){
+      return <h3>您还没有绑定银行卡</h3>
+    }
 
     return(
         <div>
-          <Bankcard isBankcard={true} cardData={{title:"储蓄卡",subtitle:'支行地址:厦门松柏支行',carNumber:'565223268689562356',}}/>
+          
+          {
+            bankcards.map((card, index)=> {
+              
+               
+              return <Bankcard key={index} isBankcard={true} 
+              cardData={{title:card.realName, subtitle: card.bankAddress, carNumber: card.accountNumber,}}/>
+            })
+          }
+          
         <div>
         
       </div>
