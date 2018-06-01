@@ -64,13 +64,14 @@ class ProductTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-          <div style={
+          {/* <div style={
             {textAlign: "center", 
             marginBottom: "15%",
              display: "flex", 
              flexDirection: "column"}}>
           { htmlToReactParser.parse(this.props.des)}
-          </div>
+          </div> */}
+          <img src={this.props.des} style={{width: "100%"}}/>
           
           </TabContainer>
           <TabContainer dir={theme.direction}>
