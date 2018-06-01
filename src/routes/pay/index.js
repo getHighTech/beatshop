@@ -2,32 +2,21 @@ import React from 'react';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import Result from './result';
 const styles = theme => ({})
 
 class PayResult extends React.Component{
 
   componentDidMount(){
     const { dispatch, match, layout } = this.props;
-    let title = '';
-    if(match.params.status === "success"){
-        title = "支付成功";
-        
-    }
-    if(match.params.status === "cancel"){
-        title = "支付已经取消";
-        
-    }
-    if(match.params.status === "fail"){
-        title = "支付失败";
-        
-    }
+
     
-    if(layout.title!==title){
+    if(layout.title!=='支付结果'){
         dispatch(setAppLayout(
             {
                 isBack: true, 
                 backTo: "/my/orders", 
-                title, 
+                title:'支付结果',
                 hasCart: false, 
                 hasBottomNav: false, 
                 hasGeoLoc: false,
@@ -39,11 +28,18 @@ class PayResult extends React.Component{
 
   }
   render (){
-      const { layout } = this.props;
+      const { layout,match} = this.props;
     return(
       <div>
-        <h1>{layout.title}</h1>
-            我的所有订单
+          {match.params.status === "success"&&
+            <div><Result status='success'/></div>
+        }
+        {match.params.status === "cancel"&&
+            <div><Result status='cancel' /></div>
+        }
+        {match.params.status === "fail"&&
+            <div><Result status='fail'/></div>
+        }
       </div>
     )
   }

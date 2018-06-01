@@ -107,12 +107,13 @@ class MyItems extends React.Component{
                 secondary={this.props.user.user.username} />
                 <ListItemText primary={this.props.user.user.dataAutograph}  />
                 </ListItem>
-                {this.props.user.roles.includes("blackcard_holder") && <ListItem button>
-                <ListItemIcon className={classes.listIcon}>
-                    <Face />
-                </ListItemIcon>
-                <ListItemText primary="黑卡尊享会员" />
-                </ListItem>}
+                {this.props.user.roles.includes("blackcard_holder") && 
+                    <ListItem button component="a" href="#/my/blackcard_holder">
+                    <ListItemIcon className={classes.listIcon}>
+                        <Face />
+                    </ListItemIcon>
+                    <ListItemText primary="黑卡尊享会员" />
+                    </ListItem>}
             </List>
             <Divider />
             <ListItem button onClick={this.handleClick}>

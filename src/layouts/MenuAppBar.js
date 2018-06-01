@@ -202,7 +202,7 @@ class MenuAppBar extends React.Component {
             }
             { layout.hasCreateBankcard &&
               <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
-                新增加银行卡
+                新增
                 <OpenInNew />
               </Button>
             }
