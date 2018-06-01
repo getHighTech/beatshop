@@ -62,9 +62,10 @@ class Withdraw extends React.Component{
   };
   withdraw = () => {
     const {dispatch, bankcards} = this.props;
+    console.log(bankcards);
     
     let bankcard = bankcards[parseInt(this.state.bankcard, 10)];
-    if(bankcards.lenght === 0){
+    if(bankcards.length === 1){
       bankcard = bankcards[0];
     }
     let amount = this.state.number;
