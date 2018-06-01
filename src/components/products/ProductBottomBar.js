@@ -56,7 +56,7 @@ class ProductBottomBar extends React.Component{
     };
     handleAddToCart(product, count, shopId){
         const {dispatch} = this.props;
-        dispatch(checkAccess("buy", product, "add_product_to_cart"))
+        dispatch(checkAccess("read", product, "add_product_to_cart"))
       }
     
     render(){

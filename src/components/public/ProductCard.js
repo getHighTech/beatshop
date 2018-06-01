@@ -81,7 +81,7 @@ class ProductCard extends React.Component {
 
   handleAddToCart(product){
     const {dispatch} = this.props;
-    dispatch(checkAccess("buy", product, "add_product_to_cart"))
+    dispatch(checkAccess("read", product, "add_product_to_cart"))
     
   }
   componentWillUnMount(){
@@ -93,7 +93,7 @@ class ProductCard extends React.Component {
 
   handleBuyOneProductBtnClick(product){
     const {dispatch} = this.props;
-    dispatch(checkAccess("buy", product, "create_one_order_by_product"));
+    dispatch(checkAccess("read", product, "create_one_order_by_product"));
     
   }
 
