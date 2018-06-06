@@ -7,7 +7,7 @@ import { createNewContact } from './contacts';
 import { loadOneProduct } from './products';
 import { userLogin } from './process/login';
 import { createNewBankCard } from './bankcards';
-
+import { withdrawMoney } from './balances.js'
 export const history = createHistory();
 
 
@@ -71,6 +71,10 @@ export function switchActionNames(actionName){
         case 'save_user_bankcard':
             return {
                 action: createNewBankCard
+            }
+        case 'revoke_withdraw':
+            return {
+                action: withdrawMoney
             }
         
       
@@ -144,6 +148,19 @@ function msgSwitchByReason(reason, option={}){
         case "save_bankcard_success":
             return {
                 content: "绑定银行卡成功"
+            }
+        case "revoke_withdraw_success":
+            return {
+                content: "提现发起成功"
+            }
+        case "too_monay_withdraw_allow":
+            return {
+                content: "提现金额大于可提现金额"
+            }
+
+        case "withdraw_mustbe_persent":
+            return {
+                content: "提现金额必须是100元的倍数"
             }
 
     

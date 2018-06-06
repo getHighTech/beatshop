@@ -1,4 +1,5 @@
 import { LOAD_MONEY_PAGE_SUCCESS,GET_INCOMES_LIMIT, GET_INCOMES_WITHIN_TIME_SUCCESS, EXPECT_GET_INCOMES_WITHIN_TIME, GET_INCOMES_LIMIT_SUCCESS, EXPECT_GET_INCOMES_LIMIT, LOAD_MONEY_PAGE_FAIL, GET_INCOMES_WITHIN_TIME_FAIL, GET_INCOMES_LIMIT_FAIL, EXPECT_LOAD_MONEY_PAGE } from "../actions/balances";
+import { APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH } from '../actions/app.js'
 
 export default function UserMoney(state={
     loading: false,
@@ -14,10 +15,11 @@ export default function UserMoney(state={
     loadingMore: false,
 }, action){
     switch(action.type){
-        case "CLEAN_ALL_ON_MONEY_PAGE":
+        case APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH:
             return Object.assign({}, state, {
                     loading: false,
                     todayTotalAmount: NaN,
+                    balance_incomes: "unloaded",
                     weekTotalAmount: NaN,
                     monthTotalAmount: NaN,
                     staticDone: false,

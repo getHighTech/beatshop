@@ -83,3 +83,35 @@ export function getShopProductsLimit(shopId, page, pagesize){
 export function getMoreShopProducts(shopId, page, pagesize){
     
 }
+
+export const EXPECT_AGENCY_ONE_PRODUCT = "EXPECT_AGENCY_ONE_PRODUCT"
+export const AGENCY_ONE_PRODUCT_FAIL = "AGENCY_ONE_PRODUCT_FAIL"
+export const AGENCY_ONE_PRODUCT_SUCCESS = "AGENCY_ONE_PRODUCT_SUCCESS";
+
+export function expectAgencyOneProduct(){
+    return {
+        type: EXPECT_AGENCY_ONE_PRODUCT
+    }
+}
+export function agencyOneProductFail(reason){
+    return {
+        type: AGENCY_ONE_PRODUCT_FAIL,
+        reason
+    }
+}
+export function agencyOneProductSuccess(msg){
+    return {
+        type: AGENCY_ONE_PRODUCT_SUCCESS,
+        msg
+    }
+}
+export function agencyOneProduct(product, userId){
+    return (dispatch, getState) => {
+        dispatch(expectAgencyOneProduct());
+        return getRemoteMeteor(dispatch, getState,
+             "shops", "app.agency.one.product",
+                [product, userId], agencyOneProductSuccess, 
+                agencyOneProductFail
+            )
+    }
+}

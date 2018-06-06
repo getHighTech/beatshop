@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { setAppLayout } from '../../actions/app';
+import { setAppLayout, appShowMsgAndInjectDataReactWithPath, appShowMsg } from '../../actions/app';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { loadUserBankcards } from '../../actions/bankcards';
 import LoadingItem from '../../components/public/LoadingItem';
 import { getStore } from '../../tools/localStorage';
+import { loadMoneyPage } from '../../actions/balances';
 
 
 const styles = theme => ({
@@ -45,28 +46,13 @@ const styles = theme => ({
       width:'92%'
     }
 });
-const bankcard = [
-  { 
-    id:1,
-    number: '6226898939191111',
-  },
-  {
-    id:2,
-    number: '6226898939192222',
-  },
-  {
-    id:3,
-    number: '6226898939193333',
-  },
-  {
-    id:4,
-    number: '6226898939194444',
-  },
-];
+
 class Withdraw extends React.Component{
   state = {
   number: '',
-  bankcard: '1'
+  bankcard: '1',
+  balanceLoad: false,
+  ableToWithDrawAmount: 0,
   };
 
   handleChange = (name, event) => {
@@ -76,24 +62,41 @@ class Withdraw extends React.Component{
   };
   withdraw = () => {
     const {dispatch, bankcards} = this.props;
+    console.log(bankcards);
+    
     let bankcard = bankcards[parseInt(this.state.bankcard, 10)];
-   
+    if(bankcards.length === 1){
+      bankcard = bankcards[0];
+    }
     let amount = this.state.number;
 
+    if(amount > this.state.ableToWithDrawAmount){
+      dispatch(appShowMsg("too_monay_withdraw_allow", 1200));
+      return false;
+    }
+
+    if(amount%100 !== 0) {
+      dispatch(appShowMsg("withdraw_mustbe_persent", 1200));
+      return false
+    }
+
      let  withdrawParams = {
-       bankcard,
+       bank: bankcard,
        amount, 
-       userId: getStore("userId")
+       userId: getStore("userId"),
+       bankId: bankcard._id
      }
-     console.log(withdrawParams);
+    dispatch(appShowMsgAndInjectDataReactWithPath(
+      "revoke_withdraw",
+     "revoke_withdraw_success",
+    1500, withdrawParams, "/money"))
      
 
   }
 
 
   componentDidMount(){
-    const { dispatch, layout, bankcards } = this.props;
-    console.log(this.state);
+    const { dispatch, layout, bankcards, money } = this.props;
     
     if(layout.title!=='提现界面'){
         dispatch(setAppLayout(
@@ -109,17 +112,33 @@ class Withdraw extends React.Component{
             }
         ));
     }
-    if(bankcards === "unloaded"){
-      
+    if(money.balance.amount){
+      this.setState({
+        balanceLoad: true,
+        ableToWithDrawAmount: this.ableToWithDrawAmount()
+      })
+    }
+    if(bankcards === "unloaded" && !this.state.balanceLoad){
+        dispatch(loadMoneyPage(getStore('userId')));
         dispatch(loadUserBankcards());
         
       }
+  }
+  ableToWithDrawAmount= () =>{
+    const { money } = this.props;
+    let amount = money.balance.amount;
+    console.log(amount);
+    
+    amount = amount - (amount%10000);
+    console.log(amount);
+    
+    return amount/100
   }
   render(){
     const { classes, bankcards } = this.props;
     console.log(this.state);
     
-    if(bankcards === "unloaded"){
+    if(bankcards === "unloaded" || !this.state.balanceLoad){
         return <LoadingItem />
     }
     return(
@@ -128,7 +147,7 @@ class Withdraw extends React.Component{
           <form className={classes.container} noValidate autoComplete="off">
             <div className={classes.totolMoney}>
               <div className={classes.moneyText}>可提现金额</div>
-              <div className={classes.moneyNumber}>￥100</div>
+              <div className={classes.moneyNumber}>￥{this.state.ableToWithDrawAmount}</div>
             </div>
             <TextField
             id="number"
@@ -180,10 +199,10 @@ class Withdraw extends React.Component{
 
 function mapToState(state){
   return {
-    orderShow: state.OrderShow,
     user: state.AppUser,
     layout: state.AppInfo.layout,
     bankcards: state.UserBankcards.cards,
+    money: state.UserMoney,
   }
 }
 

@@ -13,8 +13,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { getShopProductsLimit } from '../../actions/products';
+import { getShopProductsLimit, agencyOneProduct } from '../../actions/products';
 import LoadingItem from '../../components/public/LoadingItem';
+import { getStore } from '../../tools/localStorage';
 
 const styles = theme => ({
   root:{
@@ -35,61 +36,29 @@ class AllProducts extends React.Component{
   state = {
     productsTotle:8,
     Products:[],
-    open: false
+    open: []
   }
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  handleClickOpen = (index) => {
+    let open = this.state.open;
+    open[index] = true;
+    this.setState({ open });
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  handleClose = (index) => {
+    let open = this.state.open;
+    open[index] = false;
+    this.setState({ open });
   };
 
-  loadMoreProductData(){
-    let Products = [
-      {
-        img:'/imgs/b1.png',
-        title:'万人车汇黑卡',
-        price:356.11,
-      },
-      {
-        img:'/imgs/b2.png',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-      {
-        img:'/imgs/b3.png',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-      {
-        img:'/imgs/b4.png',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-      {
-        img:'/imgs/b5.png',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-      {
-        img:'/imgs/b6.png',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-      {
-        img:'/imgs/background3.jpg',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-      {
-        img:'/imgs/webwxgetmsgimg.jpeg',
-        title:'万人车汇黑卡',
-        price:356,
-      },
-    ]
-    this.setState({Products:Products})
+  beginToAgency = (index) => {
+    const { dispatch, products } = this.props;
+    console.log("one product", products[index]);
+    
+    dispatch(agencyOneProduct(products[index], getStore("userId")))
+    this.handleClose(index)
   }
+
+  
   
 
   componentDidMount(){
@@ -133,6 +102,7 @@ class AllProducts extends React.Component{
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
           {products.map((tile, index) => {
+            
             return (
             
             <GridListTile key={index}>
@@ -145,7 +115,7 @@ class AllProducts extends React.Component{
                 actionIcon={
                   <Button variant="fab" 
                   mini color="primary" 
-                  onClick={this.handleClickOpen} 
+                  onClick={() => this.handleClickOpen(index)} 
                   aria-label="add" className={classes.button}>
                   <AddIcon />
                 </Button>
@@ -153,7 +123,7 @@ class AllProducts extends React.Component{
                 }
               />
               <Dialog
-                open={this.state.open}
+                open={this.state.open[index]}
                 onClose={this.handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
@@ -161,14 +131,15 @@ class AllProducts extends React.Component{
                 <DialogTitle id="alert-dialog-title">{"确定代理这件商品吗?"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    代理文案bilibala代理文案bilibala代理文案bilibala代理文案bilibala代理文案bilibala代理文案bilibala
+                    选择代理销售{tile.name_zh},每卖出一件， 
+                    可以获得{tile.agencyLevelPrices[0]/100}元人民币
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
+                  <Button onClick={()=>this.handleClose(index)} color="primary">
                     取消
                   </Button>
-                  <Button onClick={this.handleClose} color="primary" autoFocus>
+                  <Button onClick={()=> this.beginToAgency(index)} color="primary" autoFocus>
                     确认
                   </Button>
                 </DialogActions>
@@ -185,7 +156,7 @@ class AllProducts extends React.Component{
             <Button color="primary" className={classes.button} >
             没有数据啦
             </Button>:
-            <Button onClick={{}} disabled={productsLoading? true: false} color="primary" className={classes.button} onClick={this.loadMoreProductData.bind(this)}>
+            <Button  disabled={productsLoading? true: false} color="primary" className={classes.button}>
             {productsLoading? "正在加载": "加载更多"}
             </Button>
           }

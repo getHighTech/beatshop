@@ -155,7 +155,7 @@ const styles = theme => ({
                         <div className={classes.productItem} >库存: 47</div>
                     </Grid>
                     <div style={{width: "100%"}}>
-                       <ProductTabs des={productShow.product.description}/>
+                       <ProductTabs des={productShow.product.detailsImage}/>
                     </div>
                     <br/>
                     
