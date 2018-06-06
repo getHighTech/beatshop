@@ -216,3 +216,65 @@ export function removeBankcard(bankcardId){
         return getRemoteMeteor(dispatch,getState,'bankcards','app.user.remove.bankcards',[bankcardId],removeBankcardSuccess,removeBankcardFail)
     }
 }
+
+const EXPECT_LOAD_USER_PRODUCTS = "EXPECT_LOAD_USER_PRODUCTS";
+const LOAD_USER_PRODUCTS_FAIL = "LOAD_USER_PRODUCTS_FAIL";
+const LOAD_USER_PRODUCTS_SUCCESS = "LOAD_USER_PRODUCTS_SUCCESS";
+
+
+export function expectLoadUserProducts(){
+    return {
+        type: EXPECT_LOAD_USER_PRODUCTS,
+    }
+}
+export function loadUserProductsFail(reason){
+    console.log(reason);
+    
+    return {
+        type: LOAD_USER_PRODUCTS_FAIL,
+        reason
+    }
+}
+export function loadUserProductsSuccess(msg){
+
+    return {
+        type:  LOAD_USER_PRODUCTS_SUCCESS,
+        msg
+    }
+}
+export function loadUserProducts(){
+    return (dispatch, getState) => {
+        dispatch(expectLoadUserProducts());
+        return getRemoteMeteor(dispatch, getState, "product_owner", 
+         'app.get.product.owners', [getStore('userId')], loadUserProductsSuccess,loadUserProductsFail);
+    }
+}
+
+export  const EXPECT_LOAD_BLACK_CARD = "EXPECT_LOAD_BLACK_CARD";
+export  const LOAD_BLACK_CARD_FAIL ="LOAD_BLACK_CARD_FAIL";
+export  const LOAD_BLACK_CARD_SUCCESS = "LOAD_BLACK_CARD_SUCCESS";
+
+
+export function expectLoadBlackCard(){
+    return {
+        type: EXPECT_ADD_BANKCARD
+    }
+}
+export function loadBlackCardFail(reason){
+    return {
+        type: LOAD_BLACK_CARD_FAIL,
+        reason
+    }
+}
+export function loadBlackCardSuccess(msg){
+    return {
+        type: LOAD_BLACK_CARD_SUCCESS,
+        msg
+    }
+}
+export function loadBlackCard(productId){
+    return (dispatch, getState) => {
+        dispatch(expectLoadBlackCard());''
+        return getRemoteMeteor();
+    }
+}

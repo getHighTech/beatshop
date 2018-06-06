@@ -52,7 +52,7 @@ class CartBottom extends React.Component{
     };
     handleAddToCart(product, count, shopId){
         const {dispatch } = this.props;
-        dispatch(checkAccess("read", product, "add_product_to_cart"))
+        dispatch(checkAccess("buty", product, "add_product_to_cart"))
       }
     
     render(){

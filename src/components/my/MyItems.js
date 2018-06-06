@@ -93,7 +93,7 @@ class MyItems extends React.Component{
     }
     
     render(){
-        const { classes } = this.props;
+        const { classes, user } = this.props;
     return (
         <div className={classes.root}>
             <List component="nav">
@@ -116,13 +116,17 @@ class MyItems extends React.Component{
                     </ListItem>}
             </List>
             <Divider />
-            <ListItem button onClick={this.handleClick}>
-            <ListItemIcon className={classes.listIcon}>
-              <Shop  />
-            </ListItemIcon>
-            <ListItemText inset primary="我的店铺" />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
+            {
+                user.user.username !== "wanchehui" && <ListItem button onClick={this.handleClick}>
+                <ListItemIcon className={classes.listIcon}>
+                  <Shop  />
+                </ListItemIcon>
+                <ListItemText inset primary="我的店铺" />
+                {this.state.open ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+            }
+            
+          
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop()} component="button">

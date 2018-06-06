@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { setAppLayout } from '../../actions/app';
-
+import { loadUserProducts } from '../../actions/users';
 
 const styles = theme => ({
   root:{
-
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column"
   },
   card:{
     width:'92%',
@@ -15,6 +17,9 @@ const styles = theme => ({
     paddingTop:10,
     paddingBottom:10,
     fontSize:13,
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column"
   },
   header:{
     display:'flex',
@@ -53,6 +58,7 @@ class BlackcardHolder extends Component {
                 hasSearch: false,
             }
         ));
+        dispatch(loadUserProducts());
     }
 
   }
