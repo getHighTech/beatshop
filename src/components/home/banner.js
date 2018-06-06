@@ -95,7 +95,7 @@ class AppBanner extends React.Component {
                       color="inherit"
                     
                     >
-                     享受精彩汽车生活享受精
+                     享受精彩汽车生活
                     
                     </Typography>
                     <br/>

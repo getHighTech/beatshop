@@ -20,7 +20,7 @@ const styles = theme => ({
         flexDirection: "column",
         alignItems: "center",
         height: "100%",
-        paddingBottom: "400px",
+        paddingBottom: "50px",
         position: "relative",
         top: "-50px",
         width: "100%",
@@ -111,7 +111,7 @@ class Home extends React.Component {
               <div className={classes.root} style={{height: "auto", top: getStore("userId")? "60px": "inherit"}}>
                 <ProductGridList history={this.props.history} products={productsList.products} label="热门"/>
                 <div className={classes.shopsContainer}>
-                    <h1 style={{color: "white"}}>优选商家</h1>
+                    {/* <h1 style={{color: "white"}}>优选商家</h1> */}
                 </div>
                 
               </div>
