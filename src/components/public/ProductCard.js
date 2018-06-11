@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
 
 const styles = theme => ({
   card: {
@@ -18,8 +20,7 @@ const styles = theme => ({
   },
   productImg:{
     maxWidth:'100%',
-    marginTop:-9
-  },
+    },
   productName:{
     textAlign:'left',
     fontSize:15,
@@ -32,38 +33,39 @@ const styles = theme => ({
     marginTop:-10,
     fontWeight:300
   },
-  productPrice:{
-    textAlign:'left',
-    margin:10
+  productPriceNumber:{
+    marginLeft:2,
+    marginTop:4,
+    fontSize:16,
+    color:'#FF5722'
   },
-  productPriceIcon:{
-    textAlign:'right',
-    paddingLeft:10
+  ButtonContain:{
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginBottom:10
+  },
+  button:{
+    marginRight:5,
+    color:'#F5F5F5',
+    backgroundColor:grey[800]
+  },
+  productHeader:{
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginBottom:10
+  },
+  right:{
+    display:'flex',
+    paddingRight:10
+  },
+  recommend:{
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginLeft:10
   }
-,
-productPriceNumber:{
-  marginLeft:2,
-  marginTop:4,
-  fontSize:16,
-  color:'#FF5722'
-},
-hotIcon:{
-  textAlign:'right'
-},
-productPriceNumberContain:{
-  textAlign:'left'
-},
-ButtonContain:{
-  textAlign:'right',
-  paddingRight:10,
-  marginBottom:10
-},
-button:{
-  marginRight:5,
-  color:'#F5F5F5',
-  backgroundColor:grey[800]
-}
-
 });
 let timer = null;
 class ProductCard extends React.Component {
@@ -106,15 +108,15 @@ class ProductCard extends React.Component {
           aria-expanded={this.state.expanded}
           aria-label="产品详情">
             <div className={classes.productHeader}>
-              <Grid container >
-                <Grid item xs={10}>
-                  <div className={classes.productName}>{product.name_zh}</div>
-                  <div className={classes.productBrief}>{product.brief}</div>
-                </Grid>
-                <Grid item xs={2}>
-                  <div className={classes.hotIcon}><img style={{height:56}} alt="热门商品"  src={require('../imgs/hot.svg')} /> </div>
-                </Grid>
-              </Grid>
+              <div className={classes.left}>
+                <div className={classes.productName}>{product.name_zh}</div>
+                <div className={classes.productBrief}>{product.brief}</div>
+              </div>
+
+              <div className={classes.right}>
+                <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} /> 
+                <div  className={classes.productPriceNumber}>{product.endPrice/100}</div>
+              </div>
             </div>
             <div>
               <div className={classes.productContain}>
@@ -122,28 +124,17 @@ class ProductCard extends React.Component {
               </div>
             </div>
             <div>
-              <Grid container >
-                <Grid item xs={4} style={{paddingTop:5}}>
-                  <Grid container >
-                        <Grid item xs={4} className={classes.productPriceIcon}>
-                          <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} /> 
-                        </Grid>
-                        <Grid item xs={8} className={classes.productPriceNumberContain}>
-                          <div  className={classes.productPriceNumber}>{product.endPrice/100}</div>
-                        </Grid>
-                      </Grid>
-                </Grid>
-                <Grid item xs={8}>
-                  <div className={classes.ButtonContain}>
-                    <Button variant="raised"  className={classes.button} onClick={()=> this.handleAddToCart(product, 1, product.shopId)}>
-                     加入购物车
-                    </Button>
-                    <Button variant="raised" color="secondary" onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
-                      立即购买
-                    </Button>
-                  </div>
-                </Grid>
-              </Grid>
+              <div className={classes.ButtonContain}>
+                <div className={classes.recommend}>
+                  <img style={{height:24}} alt="推荐"  src={require('../imgs/recommend.svg')} /> 
+                  <IconButton aria-label="加入购物车">
+                  <AddShoppingCart onClick={()=> this.handleAddToCart(product, 1, product.shopId)} color="primary" />
+                  </IconButton>
+                </div>
+                <Button variant="raised" color="secondary" onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
+                  立即购买
+                </Button>
+              </div>
             </div>
         </Card>
     );

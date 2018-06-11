@@ -35,11 +35,8 @@ const styles = theme => ({
   rightIcon: {
     marginLeft: theme.spacing.unit,
   },
-  subheader:{
-    color:deepOrange[500],
-    fontSize:20,
-    marginTop:-113,
-    height:165
+  solgon:{
+    width:'100%',
   }
 });
 
@@ -58,14 +55,13 @@ function ProductGridList(props) {
     direction="row"
     justify="center"
    >
+      <div className={classes.solgon}>
+        <img alt="新品上市"  style={{width:'100%',height:'auto'}} src={require("../imgs/new_products.jpeg")}/>
+      </div>
     
       <GridList 
         cellHeight={180} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="header" className={classes.subheader} >
-            <img alt="主 / 打 / 商 / 品" src={require("../imgs/recommend.svg")}/>
-          </ListSubheader>
-        </GridListTile>
+
         {products.map((product,index) => (
           <ProductCard key={product._id} product={product} history={history} />
         ))}
