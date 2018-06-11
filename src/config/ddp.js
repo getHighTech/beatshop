@@ -7,4 +7,3 @@ const options = {
 };
 
 export const MClient = new DDP(options);
-

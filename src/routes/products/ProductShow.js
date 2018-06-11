@@ -18,23 +18,25 @@ const styles = theme => ({
     root: {
       margin: theme.spacing.unit * 2,
     },
-    productItem: {
-        position: "relative",
-        width: "23%",
-        textAlign: "center",
-        [theme.breakpoints.down('md')]: {
-            position: "relative",
-            width: "45%",
-            
-          },
-        
+    productInfo:{
+        padding:10
     },
-    productItems:{
-        width: "80%",
-        position: "relative",
-        top: "20px",
-        marginBottom: "3%"
+    productBrief:{
+        fontSize:10
+    },
+    productPrice:{
+        display:'flex',
+        justifyContent:'space-between',
+        alignItems:'center',
+        paddingTop:10
+    },
+    send:{
+        fontSize:10
+    },
+    price:{
+        color:'#ff5722'
     }
+
   });
  class ProductShow extends Component {
     constructor(props){
@@ -131,42 +133,25 @@ const styles = theme => ({
             <Grid  container
                 direction="column"
                 justify="space-between"
-                alignContent="center" 
-                alignItems="center"
+                // alignContent="center" 
+                // alignItems="center"
                 style={{backgroundColor: "white"}}>
                <ProductCarousel imgs={productShow.product.images}/>
-    
-                    <Grid container
-                        spacing={8}
-                        alignItems="center" 
-                        alignContent="center"
-                        direction="row"
-                        justify="space-between"
-                        className={classes.productItems}
-                    >   
-                    <Paper style={{width: "100%", textAlign: "center", padding: 4, margin: 5}}>
-                         <div style={{width: "100%", textAlign: "center"}}>{productShow.product.name_zh}</div>
-                        <div style={{width: "100%", textAlign: "center", fontWeight: "bolder"}}>{"¥"+productShow.product.endPrice/100}</div>
-                        <div style={{width: "100%", textAlign: "center"}} >{productShow.product.brief}</div>
-                    </Paper>
-                        
-                        <div className={classes.productItem} >分享: {"¥"+productShow.product.agencyLevelPrices[0]/100}</div>
-                        <div className={classes.productItem} >配送方式: 到店自提（滴滴车主俱乐部）</div>
-                        <div className={classes.productItem} >库存: 47</div>
-                    </Grid>
-                    <div style={{width: "100%"}}>
-                       <ProductTabs des={productShow.product.detailsImage}/>
+               <div className={classes.productInfo}>
+                    <div className={classes.productName}>{productShow.product.name_zh}</div>
+                    <div className={classes.productBrief} >{productShow.product.brief}</div>
+                    <div className={classes.productPrice}>
+                        <div className={classes.price}>{"¥"+productShow.product.endPrice/100}</div>
+                        <div className={classes.send}>
+                            配送方式:包邮
+                        </div>
                     </div>
-                    <br/>
-                    
-                    <br/>
-                    <br/><br/>
-                    <br/>
-                    <br/><br/>
-                    <br/>
-                    <br/>
-                    
-                    <ProductBottomBar product={productShow.product} history={history} url={match.url}/>
+
+                </div>
+                <div style={{width: "100%",paddingBottom:50}}>
+                    <ProductTabs des={productShow.product.detailsImage}/>
+                </div>                    
+                <ProductBottomBar product={productShow.product} history={history} url={match.url}/>
         </Grid>
 
         );
