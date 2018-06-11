@@ -19,6 +19,7 @@ import { loadMoneyPage, getIncomeWithTime, getIncomesLimit } from '../../actions
 import { getStore } from '../../tools/localStorage';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+import Withdrawals from '../../components/money/Withdrawals';
 moment.locale('zh-cn');
 
 function TabContainer(props) {
@@ -291,30 +292,7 @@ class Money extends React.Component{
                 </div>
               </TabContainer>}
               {value === 1 && <TabContainer>
-                <Table className={classes.table}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell className={classes.thName} >提现金额</TableCell>
-                      <TableCell  className={classes.th} numeric>到账金额</TableCell>
-                      <TableCell  className={classes.th} numeric>时间</TableCell>
-                      <TableCell  className={classes.th} numeric>状态</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {withdrawData.map(n => {
-                      return (
-                        <TableRow key={n.id}>
-                          <TableCell className={classes.thName} component="th" scope="row">
-                            {n.withdraw}
-                          </TableCell>
-                          <TableCell className={classes.th} numeric>{n.arrival}</TableCell>
-                          <TableCell className={classes.th} numeric>{n.time}</TableCell>
-                          <TableCell className={classes.th} numeric>{n.status}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
+                  <Withdrawals withdrawData={withdrawData}/>
                 <div className={classes.loadMore}>
                   {this.state.withdrawData.length === this.state.withdrawTotle?
 
