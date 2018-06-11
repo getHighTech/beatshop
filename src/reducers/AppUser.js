@@ -31,6 +31,7 @@ export default function AppUser(state={
     bankcardList:[],
     user: null,
     currentContact: {},
+    products: "unloaded",
    }, action){
       switch (action.type) {
        
