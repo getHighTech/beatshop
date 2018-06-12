@@ -10,6 +10,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import OrderCard from '../../components/orders/OrderCard'
+import { getOrdersLimit } from '../../actions/app_orders'
 
 function TabContainer(props) {
   return (
@@ -81,8 +82,9 @@ class MyOrders extends React.Component{
   };
 
   handleChange = (event, value) => {
+    const { dispatch
+     } = this.props;
     this.setState({ value });
-
   };
 
 
@@ -105,7 +107,7 @@ class MyOrders extends React.Component{
     this.setState({withdrawData:dataSource1})
   }
   componentDidMount(){
-    const { dispatch, layout } = this.props;
+    const { dispatch, layout, orders } = this.props;
     
     if(layout.title!=='我的订单'){
         dispatch(setAppLayout(
@@ -121,11 +123,14 @@ class MyOrders extends React.Component{
             }
         ));
     }
-    this.loadWithdrawFirstPageData()
+    // this.loadWithdrawFirstPageData()
+    if(orders.orders_confirmed === "unloaded"){
+      dispatch(getOrdersLimit("confirmed",1,4))
+    }
 
   }
   render (){
-    const { classes} = this.props;
+    const { classes, orders} = this.props;
     const { value,withdrawData} = this.state;
     return(
       <div>
@@ -156,13 +161,13 @@ class MyOrders extends React.Component{
                   <Tab label="已取消"  />
                 </Tabs>
               </div>
-              {value === 0 && 
+              {value === 0 &&  orders.orders_confirmed!=="unloaded" &&
               <TabContainer >
                 <div className={classes.root}>
 
-                      {withdrawData.map(n => {
+                      {orders.orders_confirmed.map(n => {
                         return (
-                            <OrderCard status="unpaid" key={n.id} id={n.id}/>
+                            <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch}/>
                         );
                       })}
 
@@ -178,10 +183,10 @@ class MyOrders extends React.Component{
                   </div>
                 </div>
               </TabContainer>}
-              {value === 1 && <TabContainer>
-                    {withdrawData.map(n => {
+              {value === 1 && orders.orders_paid!=="unloaded" && <TabContainer>
+                    {orders.orders_paid.map(n => {
                       return (
-                        <OrderCard status="paid" key={n.id}/>
+                        <OrderCard status="paid" key={n._id}  {...n} dispatch={this.props.dispatch}/>
                       );
                     })}
 
@@ -197,12 +202,13 @@ class MyOrders extends React.Component{
                   }
                   </div>
               </TabContainer>}
-              {value === 2 && <TabContainer>
-                    {withdrawData.map(n => {
-                      return (
-                        <OrderCard status="done" key={n.id}/>
-                      );
-                    })}
+              {value === 2 && orders.orders_recevied!=="unloaded" && <TabContainer>
+                      {orders.orders_recevied.map(n => {
+                          return (
+                              <OrderCard status="recevied" key={n._id}  {...n} dispatch={this.props.dispatch}/>
+                          );
+                        })
+                      }
 
                 <div className={classes.loadMore}>
                   {this.state.withdrawData.length === this.state.withdrawTotle?
@@ -217,11 +223,13 @@ class MyOrders extends React.Component{
                   </div>
               </TabContainer>}
               {value === 3 && <TabContainer>
-                    {withdrawData.map(n => {
-                      return (
-                        <OrderCard status="cancel" key={n.id}/>
-                      );
-                    })}
+                      {orders.orders_cancel.map(n => {
+                          return (
+                              <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch}/>
+                          );
+                        })
+                      }
+
 
                 <div className={classes.loadMore}>
                   {this.state.withdrawData.length === this.state.withdrawTotle?
@@ -248,7 +256,8 @@ function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    orders: state.AppOrders
   }
 }
 

@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import QRCode from 'qrcode-react'
+import { loadOneOrder } from '../../actions/orders' 
 
 
 const styles = {
@@ -80,10 +81,15 @@ class orderDetails extends React.Component {
     this.state = {  }
   }
 
-  componentDidMount(){
-    const { dispatch, layout } = this.props;
-    
+  componentDidMount() {
+    const { dispatch, layout,match} = this.props;
+    console.log(`去哪了`)
+    console.log('id'+match.params.id)
+   
     if(layout.title!=='订单详情'){
+      if(match.params.id){
+        dispatch(loadOneOrder(match.params.id));
+      }
         dispatch(setAppLayout(
             {
                 isBack: true, 
@@ -101,7 +107,9 @@ class orderDetails extends React.Component {
   }
 
   render() { 
+    console.log(`见鬼了`)
     const { classes } = this.props
+    const { order } = this.props.order
     return (  
       <div className={ classes.root}>
         <Card className={ classes.card}> 
@@ -109,9 +117,13 @@ class orderDetails extends React.Component {
             <img alt="收货地址"  style={{height:17,marginRight:5}} src={require('../../components/imgs/address.svg')} />
             <div>收货地址</div>
           </div>
-          <div>姓名：杨志强</div>
-          <div>电话：18026938187</div>
-          <div>地址：万科城市花园52栋C101</div>
+          {   <div>
+                                            <div>姓名：{order.contact.name}</div>
+                                            <div>电话：{order.contact.mobile}</div>
+                                            <div>地址：{order.contact.address}</div>
+                                         </div> 
+          
+          }
         </Card>
         <Card className={ classes.card}> 
           <div className={classes.cardTitle}>
@@ -128,23 +140,29 @@ class orderDetails extends React.Component {
             </Grid>
           </div>
           <div className={classes.cardContent}>
-            <Grid container spacing={24}>
-              <Grid item xs={2} sm={2}>
-                <div className={classes.productImg}>
-                  <img alt="店铺图标" style={{height:45,width:45}} src={'/imgs/webwxgetmsgimg.jpeg'}/>
-                </div>
-              </Grid>
-              <Grid item xs={8} sm={8}>
-                <div className={classes.productName}>万人车汇黑卡会员商品名字BLBLA人车汇黑L</div>
-              </Grid>
-              <Grid item xs={2} sm={2}>
-                <div className={classes.price}>￥450</div>
-                <div className={classes.count}>x1</div>
-              </Grid>
-            </Grid>
+            {order.products!==undefined ? order.products.map((product,index)=> {
+              return(
+                <Grid container spacing={24} key={index}>
+                  <Grid item xs={2} sm={2}>
+                    <div className={classes.productImg}>
+                      <img alt="店铺图标" style={{height:45,width:45}} src={'/imgs/webwxgetmsgimg.jpeg'}/>
+                    </div>
+                  </Grid>
+                  <Grid item xs={8} sm={8}>
+                    <div className={classes.productName}>{product.name_zh}</div>
+                  </Grid>
+                  <Grid item xs={2} sm={2}>
+                    <div className={classes.price}>￥{product.endPrice/100}</div>
+                    <div className={classes.count}>x{order.productCounts[product._id]}</div>
+                  </Grid>
+                </Grid>
+              )
+            }) : null
+            }
+            
           </div>
           <div className={classes.cardBottom}>
-            <div style={{marginTop:12}}>共计<span>1</span>件商品，合计：<span className={classes.finalPrice}>￥2000</span>（含运费￥0.00）</div>
+            <div style={{marginTop:12}}>共计<span>{order.count}</span>件商品，合计：<span className={classes.finalPrice}>￥{order.totalAmount/100}</span>（含运费￥0.00）</div>
 
               <Grid container spacing={24}>
                 <Grid item xs={12} sm={12}>
@@ -174,7 +192,7 @@ class orderDetails extends React.Component {
             <img alt="下单时间"   style={{height:17,marginRight:5}}  src={require('../../components/imgs/details.svg')} />
             <div>下单时间</div>
           </div>
-          <div>订单编号：15877176633289632</div>
+          <div>订单编号：{order.orderCode}</div>
           <div>创建时间：2018-05-31 20:50:11</div>
         </Card>
       </div>
@@ -191,7 +209,7 @@ orderDetails.propTypes = {
 
 function mapToState(state){
   return {
-    orderShow: state.OrderShow,
+    order: state.OrderShow,
     user: state.AppUser,
     layout: state.AppInfo.layout
   }
