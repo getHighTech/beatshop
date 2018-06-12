@@ -7,7 +7,6 @@ import grey from '@material-ui/core/colors/grey';
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
 

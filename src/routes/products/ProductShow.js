@@ -8,7 +8,6 @@ import ProductTabs from '../../components/products/tabs';
 import Grid from '@material-ui/core/Grid';
 import { loadOneProduct, loadOneProductByRolename } from '../../actions/products';
 import LoadingItem from '../../components/public/LoadingItem'
-import Paper from '@material-ui/core/Paper';
 import { setAppLayout, appShowMsg } from '../../actions/app';
 import ProductBottomBar from '../../components/products/ProductBottomBar';
 

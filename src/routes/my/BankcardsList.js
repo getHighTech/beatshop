@@ -4,12 +4,7 @@ import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Image from '../../components/imgs/money.svg';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey'
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 import { loadUserBankcards } from '../../actions/bankcards';
 
 
@@ -63,7 +58,7 @@ class BankcardsList extends React.Component{
 
   }
   render (){
-    const { classes, bankcards } = this.props;
+    const {  bankcards } = this.props;
     if(bankcards === "unloaded"){
       return <h3>加载中</h3>
       

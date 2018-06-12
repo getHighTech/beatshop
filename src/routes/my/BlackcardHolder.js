@@ -42,7 +42,7 @@ class BlackcardHolder extends Component {
   }
 
   componentDidMount(){
-    const { dispatch, match, layout } = this.props;
+    const { dispatch, layout } = this.props;
 
     
     if(layout.title!=='我的卡包'){

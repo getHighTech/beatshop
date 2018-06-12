@@ -142,6 +142,7 @@ class MenuAppBar extends React.Component {
 
       case "createNewBankcard":
       this.props.history.push("/my/new_bankcard");
+      break;
     
       default:
         break;

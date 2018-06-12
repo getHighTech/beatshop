@@ -6,8 +6,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-const HtmlToReactParser = require('html-to-react').Parser;
-const htmlToReactParser = new HtmlToReactParser();
 function TabContainer({ children, dir }) {
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
@@ -71,7 +69,7 @@ class ProductTabs extends React.Component {
              flexDirection: "column"}}>
           { htmlToReactParser.parse(this.props.des)}
           </div> */}
-          <img src={this.props.des} style={{width: "100%"}}/>
+          <img src={this.props.des} style={{width: "100%"}} alt=''/>
           
           </TabContainer>
           <TabContainer dir={theme.direction}>

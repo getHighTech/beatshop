@@ -228,6 +228,8 @@ export default function AppCart
             let shopId = state.products[action.index].shopId;
             shopProducts = state.shopProducts;
             for(const shop in shopProducts){
+                console.log(shop);
+                
                 if (shopProducts.hasOwnProperty(shopId)) {
                     if(shopProducts[shopId].length === 1){
                         shopProducts[shopId]=[];
