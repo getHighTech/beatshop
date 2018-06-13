@@ -18,7 +18,7 @@ const styles = theme => ({
     paddingBottom:10,
     fontSize:13,
     display: "flex",
-    alignItems: "center",
+    // alignItems: "center",
     flexDirection: "column"
   },
   header:{
