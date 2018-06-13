@@ -167,7 +167,7 @@ class MyOrders extends React.Component{
 
                       {orders.orders_confirmed.map(n => {
                         return (
-                            <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch}/>
+                            <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch} userId={user.userId}/>
                         );
                       })}
 
