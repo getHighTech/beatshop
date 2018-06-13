@@ -56,8 +56,24 @@ class OrderCard extends React.Component{
   _CancelOrder = (orderId)  => {
       this.props.dispatch(cancelOrder(orderId))
   }
+  handlePayClick = (orderId,userId) => {
+    const { orderShow, user } = this.props;  
+    var urlencode = require('urlencode');
+             let data = {
+               "client": "web",
+               "data": {
+                 out_trade_no: orderId,
+                 user_id: userId,
+                 super_agency_id: "abcdef",
+                 version: 2
+               }
+          }
+
+    let payUrl = "http://bills.10000cars.cn/order/s?pdata="+urlencode(JSON.stringify(data));
+    window.location.assign(payUrl);
+  }
   render(){
-    const {classes,id, products,productCounts,totalAmount,count,status,orderId} = this.props
+    const {classes,id, products,productCounts,totalAmount,count,status,orderId,userId} = this.props
     return(
       <div className={classes.root}>
         <div className={classes.cardTitle}>
@@ -110,7 +126,7 @@ class OrderCard extends React.Component{
                 <Button variant="outlined"  size="small" href={"#/my/orders/" + orderId}   className={classes.button}>
                   查看详情
                 </Button>
-                <Button variant="raised"  size="small" color="secondary" className={classes.button}>
+                <Button variant="raised"  size="small" color="secondary" className={classes.button} onClick={()=>this.handlePayClick(orderId,userId)}>
                   付款
                 </Button>
                 </div>
