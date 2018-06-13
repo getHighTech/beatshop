@@ -150,7 +150,7 @@ const styles = theme => ({
                 <div style={{width: "100%",paddingBottom:50}}>
                     <ProductTabs des={productShow.product.detailsImage}/>
                 </div>                    
-                <ProductBottomBar product={productShow.product} history={history} url={match.url}/>
+                <ProductBottomBar isAppointment={productShow.product.isAppointment} product={productShow.product} history={history} url={match.url}/>
         </Grid>
 
         );
