@@ -88,7 +88,7 @@ class OrderCard extends React.Component{
             </Grid>
           </Grid>
         </div>
-        {  products.map((product,index)=> {
+        { products!==undefined ? products.map((product,index)=> {
             return(
               <div className={classes.cardContent} key={index}>
               <Grid container spacing={24}>
@@ -107,9 +107,23 @@ class OrderCard extends React.Component{
               </Grid>
             </div>
             )
-        }) 
+        }) : 
+          <div className={classes.cardContent} >
+          <Grid container spacing={24}>
+            <Grid item xs={2} sm={2}>
+             
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <div className={classes.productName}>黑卡</div>
+            </Grid>
+            <Grid item xs={2} sm={2}>
+              <div className={classes.price}>￥{this.props.price}</div>
+              <div className={classes.count}>x{this.props.count}</div>
+            </Grid>
+          </Grid>
+        </div>
+        
       }
-       
         
        
        
