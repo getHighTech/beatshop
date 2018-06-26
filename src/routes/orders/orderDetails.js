@@ -117,11 +117,14 @@ class orderDetails extends React.Component {
             <img alt="收货地址"  style={{height:17,marginRight:5}} src={require('../../components/imgs/address.svg')} />
             <div>收货地址</div>
           </div>
-          {   <div>
-                                            <div>姓名：{order.contact.name}</div>
-                                            <div>电话：{order.contact.mobile}</div>
-                                            <div>地址：{order.contact.address}</div>
-                                         </div> 
+          {     order.contact !== undefined ?
+                    <div>
+                      <div>姓名：{order.contact.name}</div>
+                      <div>电话：{order.contact.mobile}</div>
+                      <div>地址：{order.contact.address}</div>
+                    </div> 
+                    :
+                    null
           
           }
         </Card>
@@ -145,7 +148,7 @@ class orderDetails extends React.Component {
                 <Grid container spacing={24} key={index}>
                   <Grid item xs={2} sm={2}>
                     <div className={classes.productImg}>
-                      <img alt="店铺图标" style={{height:45,width:45}} src={'/imgs/webwxgetmsgimg.jpeg'}/>
+                      <img alt="店铺图标" style={{height:45,width:45}} src={product.cover}/>
                     </div>
                   </Grid>
                   <Grid item xs={8} sm={8}>
@@ -157,13 +160,31 @@ class orderDetails extends React.Component {
                   </Grid>
                 </Grid>
               )
-            }) : null
+            }) 
+            : 
+            <Grid container spacing={24} >
+            <Grid item xs={2} sm={2}>
+              <div className={classes.productImg}>
+                <img alt="店铺图标" style={{height:45,width:45}} src={'/imgs/webwxgetmsgimg.jpeg'}/>
+              </div>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <div className={classes.productName}>黑卡</div>
+            </Grid>
+            <Grid item xs={2} sm={2}>
+              <div className={classes.price}>￥{order.price}</div>
+              <div className={classes.count}>x{order.price*order.count}</div>
+            </Grid>
+          </Grid>
             }
             
           </div>
           <div className={classes.cardBottom}>
+          {order.products!==undefined ?
             <div style={{marginTop:12}}>共计<span>{order.count}</span>件商品，合计：<span className={classes.finalPrice}>￥{order.totalAmount/100}</span>（含运费￥0.00）</div>
-
+            :
+            <div style={{marginTop:12}}>共计<span>{order.count}</span>件商品，合计：<span className={classes.finalPrice}>￥{order.price}</span>（含运费￥0.00）</div>
+          }
               <Grid container spacing={24}>
                 <Grid item xs={12} sm={12}>
                   <div className={classes.orderButton}>
@@ -185,15 +206,19 @@ class orderDetails extends React.Component {
             <img alt="二维码"   style={{height:17,marginRight:5}}  src={require('../../components/imgs/details.svg')} />
             <div>二维码</div>
           </div>
-          <div className={classes.qrcode}><QRCode value={this.state.url} logo='/imgs/webwxgetmsgimg.jpeg'/></div>
+          <div className={classes.qrcode}><QRCode value={`'/orders/order_details/${order._id}'`} logo='/imgs/webwxgetmsgimg.jpeg'/></div>
         </Card>
         <Card className={ classes.card}> 
           <div className={classes.cardTitle}>
             <img alt="下单时间"   style={{height:17,marginRight:5}}  src={require('../../components/imgs/details.svg')} />
             <div>下单时间</div>
           </div>
-          <div>订单编号：{order.orderCode}</div>
-          <div>创建时间：2018-05-31 20:50:11</div>
+          { order.products!==undefined ?
+            <div>订单编号：{order.orderCode}</div>
+            :
+            <div>订单编号：{order.transactionId}</div>
+          }
+          <div>创建时间：{}</div>
         </Card>
       </div>
     )

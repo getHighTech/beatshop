@@ -130,7 +130,7 @@ class MyOrders extends React.Component{
 
   }
   render (){
-    const { classes, orders} = this.props;
+    const { classes, orders, user} = this.props;
     const { value,withdrawData} = this.state;
     return(
       <div>
