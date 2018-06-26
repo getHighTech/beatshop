@@ -1,7 +1,5 @@
 import { getStore } from '../tools/localStorage';
-import app from '../config/app.json';
 import getRemoteMeteor from "../services/meteor/methods";
-import { dealWithError } from "./error_fail";
 export const EXPECT_ORDERS_LIMIT = "EXPECT_ORDERS_LIMIT";
 export const GET_ORDERS_LIMIT_SUCCESS = "GET_ORDERS_LIMIT_SUCCESS";
 export const GET_ORDERS_LIMIT_FAIL = "GET_ORDERS_LIMIT_FAIL";

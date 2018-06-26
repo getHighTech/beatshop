@@ -2,8 +2,6 @@ import {
          EXPECT_ORDERS_LIMIT,
          GET_ORDERS_LIMIT_SUCCESS,
          GET_ORDERS_LIMIT_FAIL,
-         GET_ORDER_CANCEL_SUCCESS,
-         CHANGE_ORDER_STATUS,
         } from "../actions/app_orders";
 
 export default function  AppOrders(
