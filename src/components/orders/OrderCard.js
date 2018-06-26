@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { cancelOrder } from '../../actions/orders'
+import { cancelOrder } from '../../actions/app_orders'
 
 
 const styles = {
@@ -53,8 +53,9 @@ const styles = {
   }
 };
 class OrderCard extends React.Component{
-  _CancelOrder = (orderId)  => {
-      this.props.dispatch(cancelOrder(orderId))
+  _CancelOrder = (orderId,userId)  => {
+    console.log(`order:`+ orderId)
+      this.props.dispatch(cancelOrder(orderId,userId))
   }
   handlePayClick = (orderId,userId) => {
     const { orderShow, user } = this.props;  
@@ -73,7 +74,7 @@ class OrderCard extends React.Component{
     window.location.assign(payUrl);
   }
   render(){
-    const {classes,id, products,productCounts,totalAmount,count,status,orderId,userId} = this.props
+    const {classes,id, products,productCounts,totalAmount,count,status,_id,userId} = this.props
     return(
       <div className={classes.root}>
         <div className={classes.cardTitle}>
@@ -128,33 +129,39 @@ class OrderCard extends React.Component{
        
        
         <div className={classes.cardBottom}>
-          <div style={{marginTop:12}}>共计<span>{count}</span>件商品，合计：<span className={classes.finalPrice}>￥{totalAmount/100}</span>（含运费￥0.00）</div>
+          {
+          products!==undefined ? 
+           <div style={{marginTop:12}}>共计<span>{count}</span>件商品，合计：<span className={classes.finalPrice}>￥{totalAmount/100}</span>（含运费￥0.00）</div> 
+              :
+            <div style={{marginTop:12}}>共计<span>{count}</span>件商品，合计：<span className={classes.finalPrice}>￥{this.props.price * this.props.count}</span>（含运费￥0.00）</div> 
+          }
+          
 
           {status ==='confirmed'&&
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12}>
                 <div className={classes.orderButton}>
-                <Button variant="outlined"  size="small" className={classes.button} onClick={()=>this._CancelOrder(orderId)}>
+                <Button variant="outlined"  size="small" className={classes.button} onClick={()=>this._CancelOrder(_id,userId)}>
                   取消订单
                 </Button>
-                <Button variant="outlined"  size="small" href={"#/my/orders/" + orderId}   className={classes.button}>
+                <Button variant="outlined"  size="small" href={"#/my/orders/" + _id}   className={classes.button}>
                   查看详情
                 </Button>
-                <Button variant="raised"  size="small" color="secondary" className={classes.button} onClick={()=>this.handlePayClick(orderId,userId)}>
+                <Button variant="raised"  size="small" color="secondary" className={classes.button} onClick={()=>this.handlePayClick(_id,userId)}>
                   付款
                 </Button>
                 </div>
               </Grid>
             </Grid>
         }
-        {this.props.status ==='paid'&&
+        {this.props.status ==='paid'&& 
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12}>
                 <div className={classes.orderButton}>
                 {/* <Button variant="outlined"  size="small" className={classes.button}>
                   申请退款
                 </Button> */}
-                <Button variant="outlined"  size="small"  className={classes.button} href={"#/my/orders/" + orderId} >
+                <Button variant="outlined"  size="small"  className={classes.button} href={"#/my/orders/" + _id} >
                   查看详情
                 </Button>
                 <Button variant="raised"  size="small" color="secondary" className={classes.button} >

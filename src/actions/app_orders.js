@@ -53,6 +53,45 @@ export function getOrdersLimit(status,page, pagesize){
     }
 }
 
+export const EXPECT_CANCEL_ORDER = "EXPECT_CANCEL_ORDER"
+export const CANCEL_ORDER_FAIL = "CANCEL_ORDER_FAIL"
+export const CANCEL_ORDER_SUCCESS = "CANCEL_ORDER_SUCCESS"
+
+
+export function expectCancelOrder(){
+    return {
+        type: EXPECT_CANCEL_ORDER
+    }
+}
+
+
+export function cancelOrderFail(reason){
+    return {
+        type: CANCEL_ORDER_FAIL,
+        reason
+    }
+}
+
+
+export function cancelOrderSuccess(msg){
+    return {
+        type: CANCEL_ORDER_SUCCESS,
+        msg
+    }
+}
+
+export function cancelOrder(orderId,userId,page, pagesize) {
+    return (dispatch, getState) => {
+        dispatch(expectCancelOrder());
+        return getRemoteMeteor(
+            dispatch, getState, "orders", "app.cancel.one.order",
+            [orderId,userId,1,4],
+            cancelOrderSuccess,
+            cancelOrderFail
+        )
+    }
+}
+
 
 
 
