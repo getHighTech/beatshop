@@ -8,7 +8,7 @@ const styles = theme => ({})
 class PayResult extends React.Component{
 
   componentDidMount(){
-    const { dispatch, match, layout } = this.props;
+    const { dispatch, layout } = this.props;
 
     
     if(layout.title!=='支付结果'){
@@ -28,7 +28,7 @@ class PayResult extends React.Component{
 
   }
   render (){
-      const { layout,match} = this.props;
+      const { match} = this.props;
     return(
       <div>
           {match.params.status === "success"&&

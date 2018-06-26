@@ -18,7 +18,7 @@ const styles = theme => ({
     paddingBottom:10,
     fontSize:13,
     display: "flex",
-    alignItems: "center",
+    // alignItems: "center",
     flexDirection: "column"
   },
   header:{
@@ -42,7 +42,7 @@ class BlackcardHolder extends Component {
   }
 
   componentDidMount(){
-    const { dispatch, match, layout } = this.props;
+    const { dispatch, layout } = this.props;
 
     
     if(layout.title!=='我的卡包'){

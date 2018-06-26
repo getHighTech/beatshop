@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import QRCode from 'qrcode-react'

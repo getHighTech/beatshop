@@ -272,9 +272,9 @@ export function loadBlackCardSuccess(msg){
         msg
     }
 }
-export function loadBlackCard(productId){
-    return (dispatch, getState) => {
-        dispatch(expectLoadBlackCard());''
-        return getRemoteMeteor();
-    }
-}
+// export function loadBlackCard(productId){
+//     return (dispatch, getState) => {
+//         dispatch(expectLoadBlackCard());''
+//         return getRemoteMeteor();
+//     }
+// }

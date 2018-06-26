@@ -31,7 +31,7 @@ class Result extends Component {
     this.state = {  }
   }
   render() { 
-    const { classes,layout,status } = this.props
+    const { classes, status } = this.props
     return ( 
       <Card className={classes.card}>
         {status==='success'&&

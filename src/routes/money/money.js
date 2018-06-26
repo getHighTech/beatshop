@@ -81,7 +81,6 @@ const styles = theme => ({
 class Money extends React.Component{
   constructor(props){
     super(props);
-    const {dispatch} = this.props;
     this.state = {
       value: 0,
       page: 0,
@@ -166,7 +165,7 @@ class Money extends React.Component{
   render(){
 
     const { classes, user, money } = this.props;
-    const { value, incomeSource,withdrawData} = this.state;
+    const { value, withdrawData} = this.state;
    
     
     let getUsername = function(income, index){

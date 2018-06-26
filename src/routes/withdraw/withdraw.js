@@ -36,8 +36,6 @@ const styles = theme => ({
     height:50,
     color:'#fff',
     alignItems:'center',
-    paddingLeft:'4%',
-    paddingRight:'4%',
     fontWeigh:900
     },
     textField:{
