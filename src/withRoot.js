@@ -7,8 +7,6 @@ import amber from '@material-ui/core/colors/amber'
 
 let amberFun = () => amber;
 amberFun();
-// A theme with custom primary and secondary color.
-// It's optional.
 const theme = createMuiTheme({
   palette: {
     primary: {
