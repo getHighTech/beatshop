@@ -117,33 +117,36 @@ class MyItems extends React.Component{
             </List>
             <Divider />
             {
-                user.user.username !== "wanchehui" && <ListItem button onClick={this.handleClick}>
-                <ListItemIcon className={classes.listIcon}>
-                  <Shop  />
-                </ListItemIcon>
-                <ListItemText inset primary="我的店铺" />
-                {this.state.open ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-            }
-            
-          
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop()} component="button">
-                <ListItemIcon className={classes.listIcon}>
-                  <AddToQueue />
-                </ListItemIcon>
-                <ListItemText inset primary="新加商品"  />
-              </ListItem>
-              <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop("/my")}  component="button" href="#/my/products">
-                <ListItemIcon className={classes.listIcon}>
-                  <Stars />
-                </ListItemIcon>
-                <ListItemText inset primary="正在出售的商品" />
-              </ListItem>
-            </List>
-          </Collapse>
-            <Divider />    
+                user.user.username !== "wanchehui" && 
+                <div>
+                    <ListItem button onClick={this.handleClick}>
+                    <ListItemIcon className={classes.listIcon}>
+                    <Shop  />
+                    </ListItemIcon>
+                    <ListItemText inset primary="我的店铺" />
+                    {this.state.open ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                        <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop()} component="button">
+                            <ListItemIcon className={classes.listIcon}>
+                            <AddToQueue />
+                            </ListItemIcon>
+                            <ListItemText inset primary="新加商品"  />
+                        </ListItem>
+                        <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop("/my")}  component="button" href="#/my/products">
+                            <ListItemIcon className={classes.listIcon}>
+                            <Stars />
+                            </ListItemIcon>
+                            <ListItemText inset primary="正在出售的商品" />
+                        </ListItem>
+                        </List>
+                    </Collapse>
+                    <Divider />    
+                </div>
+        }
+         
+       
             <List component="nav">
                 <ListItem button component="a" href="#/my/orders">
                 <ListItemIcon className={classes.listIcon}>
