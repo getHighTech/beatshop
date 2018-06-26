@@ -14,6 +14,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { setAppLayout } from '../../actions/app';
+import { getShopProductsLimit } from '../../actions/app_shop'
 
 
 
@@ -121,10 +122,13 @@ class Shop extends React.Component{
     this.setState({products:products})
   }
   componentDidMount(){
-    const { dispatch, layout } = this.props;
-    console.log(this.props);
-    
+    const { dispatch, layout, match } = this.props;
+    let shopId = match.params.id
+  
     if(layout.title!=='店铺详情'){
+      if(shopId){
+        dispatch(getShopProductsLimit(shopId,1,4))
+      }
         dispatch(setAppLayout(
             {
                 isBack: true, 
@@ -139,8 +143,14 @@ class Shop extends React.Component{
         ));
     }
   }
+
+
+  sub = (name) => {
+    return name.substr(0,1)
+  }
   render(){
     const { classes } = this.props;
+    const { shop, products } = this.props.shop;
     const { value } = this.state;
   
 
@@ -149,9 +159,9 @@ class Shop extends React.Component{
       <div>
         <div className={classes.shopHeader}>
           <div className={classes.avatarBox}>
-          <Avatar className={classes.avatar}>H</Avatar>
+          <Avatar className={classes.avatar}>{shop.name!==undefined? this.sub(shop.name):null}</Avatar>
           </div>
-          <div  className={classes.title}>打码少年</div>
+          <div  className={classes.title}>{shop.name}</div>
           <div  className={classes.title}>我在猪八戒，服务全世界</div>
         </div>
           <Tabs value={value} 
@@ -164,20 +174,20 @@ class Shop extends React.Component{
           </Tabs>
         {value === 0 && 
         <TabContainer>
-        {this.state.products.map(product => {
+        {products.map(product => {
           return (
-            <Card className={classes.card} key={product.id}>
+            <Card className={classes.card} key={product._id}>
               <div className={classes.cardContent}>
                 <Grid container spacing={24}>
                   <Grid item xs={3} sm={3}>
-                    <img src={product.img} alt={product.title} style={{height:60,width:60}}/>     
+                    <img src={product.cover} alt={product.title} style={{height:60,width:60}}/>     
                   </Grid>
                   <Grid item xs={9} sm={9}>
                     <a id={product.id} onClick={this.onClick.bind(this)} className={classes.a}>
-                      <div className={classes.productName}>{product.name}</div>
+                      <div className={classes.productName}>{product.name_zh}</div>
                     </a>      
                     <div className={classes.cardBottom}>
-                      <div className={classes.productPrice}>价格:¥{product.price}</div>
+                      <div className={classes.productPrice}>价格:¥{product.price/100}</div>
                       <div className={classes.share}>
                         <IconButton color="primary" onClick={this.share} className={classes.button} aria-label="Add an alarm">
                           <Icon>share</Icon>
@@ -203,7 +213,7 @@ class Shop extends React.Component{
         }
       </div>
         </TabContainer>}
-        {value === 1 && <TabContainer>敬请期待精彩的简介</TabContainer>}
+        {value === 1 && <TabContainer>{shop.description}</TabContainer>}
       </div>
     )
   }
@@ -212,7 +222,8 @@ function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    shop: state.AppShop,
   }
 }
 
