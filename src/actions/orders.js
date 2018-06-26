@@ -168,14 +168,6 @@ export function loadOneOrderFail(reason){
 export function loadOneOrderSuccess(msg){
     return dispatch => {
         let carNumberNeed = false;
-        msg.products.forEach(product => {
-            
-            if(product.name_zh==="万人车汇黑卡"){
-               
-                carNumberNeed = true;
-            }
-        });
-        dispatch(judgeCarNumberNeed(carNumberNeed));
         return dispatch({
             type: LOAD_ONE_ORDER_SUCCESS,
             msg
@@ -265,9 +257,7 @@ export function userUpdateOrder(orderParams, orderId){
 export const EXPECT_LOAD_DETAIL_ORDER = "EXPECT_LOAD_DETAIL_ORDER";
 export const LOAD_DETAIL_ORDER_FAIL = " LOAD_DETAIL_ORDER_FAIL";
 export const LOAD_DETAIL_ORDER_SUCCESS = "LOAD_DETAIL_ORDER_SUCCESS";
-export const EXPECT_CANCEL_ORDER = "EXPECT_CANCEL_ORDER";
-export const CANCEL_ORDER_FAIL = "CANCEL_ORDER_FAIL";
-export const CANCEL_ORDER_SUCCESS = "CANCEL_ORDER_SUCCESS";
+
 
 
 export function  loadDetailOrder(orderId) {
@@ -315,39 +305,7 @@ export function loadDetailOrderSuccess(msg){
     
 }
 
-export function expectCancelOrder(){
-    return {
-        type: EXPECT_CANCEL_ORDER
-    }
-}
 
-
-export function cancelOrderFail(reason){
-    return {
-        type: CANCEL_ORDER_FAIL,
-        reason
-    }
-}
-
-
-export function cancelOrderSuccess(msg){
-    return {
-        type: CANCEL_ORDER_SUCCESS,
-        msg
-    }
-}
-
-export function cancelOrder(orderId) {
-    return (dispatch, getState) => {
-        dispatch(expectLoadDetailOrder());
-        return getRemoteMeteor(
-            dispatch, getState, "orders", "app.cancel.one.order",
-            [orderId],
-            loadDetailOrderSuccess,
-            loadDetailOrderFail
-        )
-    }
-}
 
 
 
