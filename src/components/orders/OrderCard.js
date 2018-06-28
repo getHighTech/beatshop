@@ -58,7 +58,6 @@ class OrderCard extends React.Component{
       this.props.dispatch(cancelOrder(orderId,userId))
   }
   handlePayClick = (orderId,userId) => {
-    const { orderShow, user } = this.props;  
     var urlencode = require('urlencode');
              let data = {
                "client": "web",
