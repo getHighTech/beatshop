@@ -78,3 +78,38 @@ export function createNewBankCard(bankCardParams){
             bankCardParams.bankAddress], createNewBankCardSuccess, createNewBankCardFail)
     }
 }
+
+
+export const EXPECT_REMOVE_BANKCARD ="EXPECT_REMOVE_BANKCARD";
+export const REMOVE_BANKCARD_FAIL ="REMOVE_BANKCARD_FAIL";
+export const REMOVE_BANKCARD_SUCCESS ="REMOVE_BANKCARD_SUCCESS";
+
+
+export function removeBankCardFail(reason){
+    return {
+        type: REMOVE_BANKCARD_FAIL,
+        reason
+    }
+}
+export function removeBankCardSuccess(msg){
+    return {
+        type: REMOVE_BANKCARD_SUCCESS,
+        msg
+    }
+}
+export function expectRemoveBankCard(){
+    return {
+        type: EXPECT_REMOVE_BANKCARD
+    }
+}
+
+
+export function removeBankCard(bankCardId){
+    return (dispatch, getState) => {
+        console.log(`输出`+bankCardId)
+        let userId = getStore("userId");
+        return getRemoteMeteor(dispatch, getState, 'bankcards',
+         "app.user.remove.bankcardpp.user.remove.bankcard", 
+         [userId,bankCardId], removeBankCardSuccess, removeBankCardFail)
+    }
+}
