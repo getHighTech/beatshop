@@ -74,7 +74,7 @@ class BankcardsList extends React.Component{
             bankcards.map((card, index)=> {
               
                
-              return <Bankcard key={index} isBankcard={true} 
+              return <Bankcard key={index} isBankcard={true}  cardId={card._id} dispatch={this.props.dispatch}
               cardData={{title:card.realName, subtitle: card.bankAddress, carNumber: card.accountNumber,}}/>
             })
           }
