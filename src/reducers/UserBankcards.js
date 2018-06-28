@@ -1,6 +1,11 @@
-import { EXPECT_LOAD_USER_BANK_CARDS, LOAD_USER_BANK_CARDS_SUCCESS } from "../actions/bankcards";
+import { 
+    EXPECT_LOAD_USER_BANK_CARDS, 
+    LOAD_USER_BANK_CARDS_SUCCESS,
+    EXPECT_REMOVE_BANKCARD,
+    REMOVE_BANKCARD_FAIL,
+    REMOVE_BANKCARD_SUCCESS,
+ } from "../actions/bankcards";
 import { APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH } from "../actions/app";
-
 export default function UserBankcards(
     state={
         cards: "unloaded",
@@ -20,6 +25,11 @@ export default function UserBankcards(
             });
 
         case LOAD_USER_BANK_CARDS_SUCCESS:
+            return Object.assign({}, state, {
+                cards: action.msg,
+            })
+        case REMOVE_BANKCARD_SUCCESS:
+        console.log(`妈妈`)
             return Object.assign({}, state, {
                 cards: action.msg,
             })
