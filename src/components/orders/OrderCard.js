@@ -54,8 +54,11 @@ const styles = {
 };
 class OrderCard extends React.Component{
   _CancelOrder = (orderId,userId)  => {
-    console.log(`order:`+ orderId)
       this.props.dispatch(cancelOrder(orderId,userId))
+  }
+
+  _confirmOrder = (orderId,userId) => {
+
   }
   handlePayClick = (orderId,userId) => {
     var urlencode = require('urlencode');
@@ -73,7 +76,9 @@ class OrderCard extends React.Component{
     window.location.assign(payUrl);
   }
   render(){
-    const {classes,id, products,productCounts,totalAmount,count,status,_id,userId} = this.props
+    console.log(this.props)
+    const {classes,id, products,productCounts,totalAmount,count,status,_id,userId,orderId} = this.props
+    console.log(orderId)
     return(
       <div className={classes.root}>
         <div className={classes.cardTitle}>
@@ -140,10 +145,10 @@ class OrderCard extends React.Component{
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12}>
                 <div className={classes.orderButton}>
-                <Button variant="outlined"  size="small" className={classes.button} onClick={()=>this._CancelOrder(_id,userId)}>
+                <Button variant="outlined"  size="small" className={classes.button} onClick={()=>this._CancelOrder(orderId,userId)}>
                   取消订单
                 </Button>
-                <Button variant="outlined"  size="small" href={"#/my/orders/" + _id}   className={classes.button}>
+                <Button variant="outlined"  size="small" href={"#/my/orders/" + orderId}   className={classes.button}>
                   查看详情
                 </Button>
                 <Button variant="raised"  size="small" color="secondary" className={classes.button} onClick={()=>this.handlePayClick(_id,userId)}>
@@ -160,7 +165,7 @@ class OrderCard extends React.Component{
                 {/* <Button variant="outlined"  size="small" className={classes.button}>
                   申请退款
                 </Button> */}
-                <Button variant="outlined"  size="small"  className={classes.button} href={"#/my/orders/" + _id} >
+                <Button variant="outlined"  size="small"  className={classes.button} href={"#/my/orders/" + orderId} >
                   查看详情
                 </Button>
                 <Button variant="raised"  size="small" color="secondary" className={classes.button} >

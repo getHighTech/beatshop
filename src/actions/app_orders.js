@@ -1,4 +1,5 @@
 import { getStore } from '../tools/localStorage';
+import axios from 'axios';
 import getRemoteMeteor from "../services/meteor/methods";
 export const EXPECT_ORDERS_LIMIT = "EXPECT_ORDERS_LIMIT";
 export const GET_ORDERS_LIMIT_SUCCESS = "GET_ORDERS_LIMIT_SUCCESS";
