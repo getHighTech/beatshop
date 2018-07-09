@@ -11,6 +11,8 @@ import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import OrderCard from '../../components/orders/OrderCard'
 import { getOrdersLimit } from '../../actions/app_orders'
+import axios from 'axios';
+import { getStore } from '../../tools/localStorage';
 
 function TabContainer(props) {
   return (
@@ -78,12 +80,89 @@ class MyOrders extends React.Component{
     incomeSource:[],
     incomeTotle:6,
     withdrawData:[],
-    withdrawTotle:6
+    withdrawTotle:6,
+    order_confirmed: [],
+    order_paid: [],
+    order_recevied: [],
+    order_cancel: [],
   };
 
   handleChange = (event, value) => {
     const { dispatch
      } = this.props;
+     let userId = getStore("userId");
+     var status;
+     switch (value) {
+       case 0:
+         status = "confirmed";
+         axios.get('http://localhost:3001/order/status',{
+            params: {
+                  userId,
+                  status
+              }
+            }
+          ).then((res)=>{
+            console.log(res)
+                this.setState({
+                  order_confirmed: res.data.order
+                })
+              })
+              .catch((err)=>{
+                console.log(err)
+              })
+         break;
+       case 1:
+        status = "paid";
+        axios.get('http://localhost:3001/order/status',{
+            params: {
+                  userId,
+                  status
+              }
+            }
+          ).then((res)=>{
+              this.setState({
+                order_paid: res.data.order
+              })
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
+        break;
+       case 2:
+        status = "recevied";
+        axios.get('http://localhost:3001/order/status',{
+            params: {
+                  userId,
+                  status
+              }
+            }
+          ).then((res)=>{
+              this.setState({
+                order_recevied: res.data.order
+              })
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
+       case 3:
+        status = "cancel";
+        axios.get('http://localhost:3001/order/status',{
+            params: {
+                  userId,
+                  status
+              }
+            }
+          ).then((res)=>{
+              this.setState({
+                order_cancel: res.data.order
+              })
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
+       default:
+         break;
+     }
     this.setState({ value });
   };
 
@@ -123,15 +202,32 @@ class MyOrders extends React.Component{
             }
         ));
     }
+    let userId = getStore("userId");
+    let status = "confirmed";
+         axios.get('http://localhost:3001/order/status',{
+            params: {
+                  userId,
+                  status
+              }
+            }
+          ).then((res)=>{
+            console.log(res)
+                this.setState({
+                  order_confirmed: res.data.order
+                })
+              })
+              .catch((err)=>{
+                console.log(err)
+              })
     // this.loadWithdrawFirstPageData()
-    if(orders.orders_confirmed === "unloaded"){
-      dispatch(getOrdersLimit("confirmed",1,4))
-    }
+    // if(orders.orders_confirmed === "unloaded"){
+    //   dispatch(getOrdersLimit("confirmed",1,4))
+    // }
 
   }
   render (){
     const { classes, orders, user} = this.props;
-    const { value,withdrawData} = this.state;
+    const { value,withdrawData, order_confirmed, order_paid, order_recevied,order_cancel} = this.state;
     return(
       <div>
         <Card className={classes.card}>
@@ -161,11 +257,11 @@ class MyOrders extends React.Component{
                   <Tab label="已取消"  />
                 </Tabs>
               </div>
-              {value === 0 &&  orders.orders_confirmed!=="unloaded" &&
+              {value === 0 &&   
               <TabContainer >
                 <div className={classes.root}>
 
-                      {orders.orders_confirmed.map(n => {
+                      {order_confirmed.map(n => {
                         return (
                             <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch} userId={user.userId}/>
                         );
@@ -183,8 +279,8 @@ class MyOrders extends React.Component{
                   </div>
                 </div>
               </TabContainer>}
-              {value === 1 && orders.orders_paid!=="unloaded" && <TabContainer>
-                    {orders.orders_paid.map(n => {
+              {value === 1 &&  <TabContainer>
+                    {order_paid.map(n => {
                       return (
                         <OrderCard status="paid" key={n._id}  {...n} dispatch={this.props.dispatch}/>
                       );
@@ -202,8 +298,8 @@ class MyOrders extends React.Component{
                   }
                   </div>
               </TabContainer>}
-              {value === 2 && orders.orders_recevied!=="unloaded" && <TabContainer>
-                      {orders.orders_recevied.map(n => {
+              {value === 2 &&  <TabContainer>
+                      { order_recevied.map(n => {
                           return (
                               <OrderCard status="recevied" key={n._id}  {...n} dispatch={this.props.dispatch}/>
                           );
@@ -223,7 +319,7 @@ class MyOrders extends React.Component{
                   </div>
               </TabContainer>}
               {value === 3 && <TabContainer>
-                      {orders.orders_cancel.map(n => {
+                      {order_cancel.map(n => {
                           return (
                               <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch}/>
                           );

@@ -90,7 +90,7 @@ function msgSwitchByReason(reason, option={}){
             
             return {
                 content: "需要先登录",
-                actionText: "立即登录",
+                actionText: "",
                 href: "#/login",
             };
         case "blackcard_holder MISSING":
