@@ -65,7 +65,7 @@ class Home extends React.Component {
             {
                 isBack: false, 
                 backTo: "/", 
-                title: "万人车汇", 
+                title: "鲜至臻品", 
                 hasCart: true, 
                 hasBottomNav: true, 
                 hasGeoLoc: true,
@@ -88,7 +88,7 @@ class Home extends React.Component {
                 {
                     isBack: false, 
                     backTo: "/", 
-                    title: "万人车汇", 
+                    title: "鲜至臻品", 
                     hasCart: true, 
                     hasBottomNav: true, 
                     hasGeoLoc: true,
