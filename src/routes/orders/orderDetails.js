@@ -8,6 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import QRCode from 'qrcode-react'
 import { loadOneOrder } from '../../actions/orders' 
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 
 
 const styles = {
@@ -217,7 +220,7 @@ class orderDetails extends React.Component {
             :
             <div>订单编号：{order.transactionId}</div>
           }
-          <div>创建时间：{}</div>
+          <div>创建时间：{order.createdAt!==undefined ? moment(order.createdAt["$date"]).format("YYYY-MM-DD HH:mm:ss"): null}</div>
         </Card>
       </div>
     )

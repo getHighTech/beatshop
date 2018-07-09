@@ -46,7 +46,7 @@ export default function  AppOrders(
             })
         case CANCEL_ORDER_SUCCESS:
             return Object.assign({}, state, {
-                orders_cancel: action.msg.orders_cancel,
+                orders_confirmed: action.msg.orders_confirmed,
             })
         default:
             return state;

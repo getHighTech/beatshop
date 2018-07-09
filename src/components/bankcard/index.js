@@ -11,6 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Image from '../imgs/money.svg';
 import blue from '@material-ui/core/colors/blue'
 import Grid from '@material-ui/core/Grid';
+import { deleteBankCard } from '../../actions/bankcards'
 
 
 
@@ -63,7 +64,10 @@ const styles = theme => ({
 
 class Bankcard extends React.Component{
 
-
+  removeBankcard = (bankcardId) => {
+    console.log(this.props)
+    this.props.dispatch(deleteBankCard(bankcardId))
+  } 
 
   render(){
     const { classes, cardData } = this.props;
@@ -106,7 +110,7 @@ class Bankcard extends React.Component{
           </CardContent>
           {this.props.isBankcard===true?
             <CardActions style={{textAlign:'right',display:'list-item'}}>
-              <Button size="small" variant="raised" color="secondary">解除绑定</Button>
+              <Button size="small" variant="raised" color="secondary" onClick={()=>this.removeBankcard(this.props.bankcardId)}>解除绑定</Button>
             </CardActions>:            
             <Typography component="p" className={classes.chips}>
               用了万人车汇，赚钱就是这么简单
