@@ -6,6 +6,7 @@ import { setAppLayout, appShowMsgAndInjectDataReactWithPath } from '../../action
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import isEmpty from 'lodash.isempty'
 
 const styles = theme => ({
   container: {
@@ -26,14 +27,11 @@ class NewContact extends React.Component {
      mobile: "",
      address: "",
      carNumber: "",
-     nameHelperText: "",
-     mobileHelperText: "",
-     addressHelperText: "",
-     carNumberHelperText: "",
      nameFeildError: true,
      mobileFeildError: true,
      addressFeildError: true,
      carNumberFeildError: true,
+     errors: {},
     }
   }
 
@@ -56,32 +54,22 @@ class NewContact extends React.Component {
    
   }
 
-  handleSubmitBtn(){
-       let contact = this.state;
-       const { dispatch } = this.props;
+  handleSubmitBtn = e => {
+    e.preventDefault()
+    let contact = this.state;
+    console.log(contact);
+    const { dispatch } = this.props;
+
+    const errors = this.validate()
+    if (!isEmpty(errors)) {
+      this.setState({
+        errors: {...errors}
+      })
+      return
+    }
+
+    delete contact.errors
        
- 
-      if(!contact.name){
-       this.setState({
-         nameHelperText: "此处为必须项",
-         nameFeildError: true,
-        });
-       return false;
-     }
-     if(!contact.mobile){
-      this.setState({
-        nameHelperText: "此处为必须项",
-        mobileFeildError: true,
-       });
-      return false;
-    }
-    if(!contact.address){
-      this.setState({
-        addressHelperText: "此处为必须项",
-        addressFeildError: true,
-       });
-      return false;
-    }
     let contactParams = {
       name: contact.name,
       mobile: contact.mobile,
@@ -103,12 +91,37 @@ class NewContact extends React.Component {
   handleInputChange(e, feild){
     let inputObj = {};
     inputObj[feild] = e.target.value;
+    console.log('inputObj')
+    console.log(inputObj)
     this.setState(inputObj);
 
   }
 
+
+  validate = () => {
+    const {name, mobile , address , carNumber} = this.state
+
+    const errors = {}
+    if (!name || !/^[\u4e00-\u9fa5]{1}\S/.test(name)) {
+      errors.name = '用户名格式错误'
+    }
+    if (!mobile || !/^1[3|4|5|7|8][0-9]\d{8}$/.test(mobile)) {
+      errors.mobile = '手机号格式不正确'
+    }
+    if (!address || !/^[\u4e00-\u9fa5]{1}\S/.test(address)) {
+      errors.address = '地址输入格式错误'
+    }
+    if (!carNumber || !/^[\u4e00-\u9fa5]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{3}/.test(carNumber)) {
+      errors.carNumber = '车牌号格式错误'
+    }
+    console.log(errors)
+    return errors
+  }
+
   render(){
     const { classes } = this.props;
+    const { errors } = this.state;
+    console.log(this.state)
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off">
@@ -118,9 +131,8 @@ class NewContact extends React.Component {
           fullWidth required error={this.state.nameFeildError}
           margin="normal"
           value={this.state.name}
-          helperText={this.state.nameHelperText}
+          helperText={errors.name}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "name")}
-          
         />
         <TextField
           id="full-width"
@@ -128,17 +140,17 @@ class NewContact extends React.Component {
           fullWidth required  error={this.state.mobileFeildError}
           margin="normal"
           value={this.state.mobile}
-          helperText={this.state.mobileHelperText}
+          helperText={errors.mobile}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "mobile")}
           
         />
         <TextField
           id="full-width"
-          label="收获地址"
+          label="收货地址"
           fullWidth required  error={this.state.addressFeildError}
           margin="normal"
           value={this.state.address}
-          helperText={this.state.addressHelperText}
+          helperText={errors.address}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "address")}
         />
         <TextField
@@ -147,7 +159,7 @@ class NewContact extends React.Component {
           fullWidth  error={this.state.carNumberFeildError}
           margin="normal"
           value={this.state.carNumber}
-          helperText={this.state.carNumberHelperText}
+          helperText={errors.carNumber}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "carNumber")}
         /><br/>
         <Button type="button" onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>        
