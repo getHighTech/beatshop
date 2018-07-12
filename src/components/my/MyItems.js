@@ -45,7 +45,8 @@ const styles = theme => ({
   }
 });
 class MyItems extends React.Component{
-    state = { open: false,
+    state = { 
+         open: false,
          confirmContent: "开店需要万人车汇黑卡权限，是否立即购买黑卡？", 
          confirmOpen: false
         };
@@ -69,11 +70,13 @@ class MyItems extends React.Component{
 
     handleGoToShop = (my='') => {
         const { user, history  } = this.props;
-        console.log('my', my);
+        console.log('my:'+ my);
         
-        let roles = user.roles;
+        let shopId = user.shopId;
         
-        if(roles.includes("blackcard_holder")){
+        
+        if(shopId!==null){
+            console.log(`走这里`)
             history.push(my+"/products");
         }else{
             console.log("no access");

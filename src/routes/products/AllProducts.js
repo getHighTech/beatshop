@@ -51,10 +51,9 @@ class AllProducts extends React.Component{
   };
 
   beginToAgency = (index) => {
-    const { dispatch, products } = this.props;
+    const { dispatch, products,user } = this.props;
     console.log("one product", products[index]);
-    
-    dispatch(agencyOneProduct(products[index], getStore("userId")))
+    dispatch(agencyOneProduct(products[index], getStore("userId")),user.appNameShopId,user.shopId)
     this.handleClose(index)
   }
 
@@ -81,7 +80,7 @@ class AllProducts extends React.Component{
     
     if(products === "unloaded"){
       
-      dispatch(getShopProductsLimit("000", 1, 4));
+      dispatch(getShopProductsLimit());
     }
     
     
@@ -111,7 +110,10 @@ class AllProducts extends React.Component{
                 title={tile.title}
                 subtitle={<div style={{wordWrap: "break-all"}}><span>价: ¥{tile.endPrice/100}</span>&nbsp;
                 <span> 
-                  佣: ¥{tile.agencyLevelPrices[0]/100}</span></div>}
+                  佣: ¥
+                  
+                  {tile.agencyLevelPrices.length> 0 ?tile.agencyLevelPrices[0]/100 : 0}
+                  </span></div>}
                 actionIcon={
                   <Button variant="fab" 
                   mini color="primary" 
@@ -132,7 +134,10 @@ class AllProducts extends React.Component{
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
                     选择代理销售{tile.name_zh},每卖出一件， 
-                    可以获得{tile.agencyLevelPrices[0]/100}元人民币
+                    可以获得
+                    { tile.agencyLevelPrices.length> 0 ? tile.agencyLevelPrices[0]/100 : 0}
+
+                    元人民币
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -175,6 +180,7 @@ function mapToState(state){
     layout: state.AppInfo.layout,
     products: state.ProductsList.shopProducts,
     productsLoading: state.ProductsList.loading,
+    user: state.AppUser
   }
 }
 

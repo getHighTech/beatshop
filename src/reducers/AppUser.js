@@ -32,6 +32,8 @@ export default function AppUser(state={
     user: null,
     currentContact: {},
     products: "unloaded",
+    shopId: null,
+    appNameShopId: null,
    }, action){
       switch (action.type) {
        
@@ -134,11 +136,12 @@ export default function AppUser(state={
               user: action.msg.user,
               userId: action.msg.userId,
               contactIsLoaded: action.msg.userContact? true: false,
-              currentContact: action.msg.userContact
+              currentContact: action.msg.userContact,
+              shopId: action.msg.shopId,
+              appNameShopId: action.msg.appNameShopId
             })
 
           case USER_LOGIN_SUCCESS:
-            
             return Object.assign({}, state, {
               loginStatus: "success",
               roles: action.msg.roles,
@@ -146,7 +149,7 @@ export default function AppUser(state={
               userId: action.msg.userId,
               user: action.msg.user,
               contactIsLoaded: action.msg.userContact? true: false,              
-              currentContact: action.msg.userContact
+              currentContact: action.msg.userContact,
             });
           case USER_LOGIN_FAIL:
             return Object.assign({}, state, {
@@ -169,7 +172,7 @@ export default function AppUser(state={
           case USER_LOG_OUT_SUCCESS: 
             return Object.assign({}, state, {
               
-            })
+            })  
           case GET_BANKCARD_LIST_SUCCESS:
           return Object.assign({},state,{
             bankcardList:action.msg

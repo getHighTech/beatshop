@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import ProductCard from '../../components/products/ProductCard'
-
+import ProductCard from '../../components/products/ProductCard';
+import { loadAgencyProducts } from '../../actions/products';
 const styles = theme => ({
   root:{
     width:'100%'
@@ -115,10 +115,10 @@ class SellingProducts extends React.Component{
   }
 
   componentDidMount(){
-    const { dispatch, layout } = this.props;
-    console.log(this.props);
-    
+    const { dispatch, layout,user  } = this.props;
     if(layout.title!=='万人车汇商品库'){
+      dispatch(loadAgencyProducts(user.shopId))
+
         dispatch(setAppLayout(
             {
                 isBack: true, 
@@ -135,14 +135,14 @@ class SellingProducts extends React.Component{
     this.loadFirstPageData()
   }
   render(){
-    const { classes } = this.props;
+    const { classes,products,dispatch } = this.props;
 
 
     return(
       <div className={classes.root}>
-        {this.state.Products.map(product => {
+        {products.map(product => {
           return (
-            <ProductCard key={product.id} id={product.id} history={this.props.history}/>
+            <ProductCard key={product._id}  history={this.props.history} {...product} dispatch={dispatch}/>
           )
         }
         )}
@@ -170,7 +170,8 @@ function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    products: state.ProductShow.products
   }
 }
 
