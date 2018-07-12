@@ -41,6 +41,8 @@ import Shop from './shop/shop';
 import withdraw from './withdraw/withdraw';
 import Share from './share/share';
 import BlackcardHolder from './my/BlackcardHolder';
+import WechatChecker from './WechatChecker.js';
+
 
 const history = createHistory();
 
@@ -70,23 +72,23 @@ const SellingProductsPath = ({ match }) => (
 )
 
 class App extends React.Component {
-   
+
     componentDidMount(){
         const { dispatch, appInfo} = this.props;
-        
-        
+
+
         dispatch(syncRemoteUser());
         if(!appInfo.init){
-            
+
             dispatch(loadGeoAddress());
             dispatch(loadApp());
         }
 
     }
 
-    
 
-   
+
+
     render(){
         const {classes, appInfo, order, msg, user} = this.props;
         const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -164,6 +166,8 @@ class App extends React.Component {
             <Router  className={classes.root} >
                 <MainLayout history={history} store={this.props.store}>
                     <Switch>
+                        <PrivateRoute exact path="/wechat_checker/"  component={WechatChecker} />
+                        <PrivateRoute exact path="/wechat_checker/:openid"  component={WechatChecker} />
                         <PrivateRoute exact path="/my"  component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
                         <CarMemberRoute exact path="/products" component={AllProducts} />
@@ -203,7 +207,7 @@ class App extends React.Component {
                         }
                     />
                 </MainLayout>
-                
+
             </Router>
         )
     }

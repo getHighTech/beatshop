@@ -12,11 +12,14 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { loadOneOrder } from '../../actions/orders';
 import LoadingItem from '../../components/public/LoadingItem';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
+import { isWeChat, logWechat } from '../../actions/wechat.js';
+import { getStore } from '../../tools/localStorage.js';
+
 const styles = theme => ({
     flex: {
         width: "100%"
-    }, 
+    },
     row: {
         display: 'flex',
         justifyContent: 'center',
@@ -40,23 +43,30 @@ const styles = theme => ({
 
 class Order extends React.Component {
   componentDidMount(){
+    if(isWeChat()){
+      // alert(getStore("openid"));
+      if(!getStore("openid")){
+        logWechat(this.props.history);
+      }
+    }
     const { dispatch, match, layout } = this.props;
     this.handlePayClick = this.handlePayClick.bind(this);
-    
+
+
     if(layout.title!=='确认订单'){
         if(match.params.id){
             dispatch(loadOneOrder(match.params.id));
         }
-       
+
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/", 
-                title: "确认订单", 
-                hasCart: false, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/",
+                title: "确认订单",
+                hasCart: false,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
@@ -64,7 +74,7 @@ class Order extends React.Component {
 
   }
   handlePayClick(){
-    const { orderShow, user } = this.props;  
+    const { orderShow, user } = this.props;
     var urlencode = require('urlencode');
              let data = {
                "client": "web",
@@ -84,8 +94,8 @@ class Order extends React.Component {
     const custDivider = () => {
         return (
             <div style={{
-                backgroundColor: "darkgrey", 
-                height: 1, 
+                backgroundColor: "darkgrey",
+                height: 1,
                 width: "90%",
                 margin: 2,
             }}>&nbsp;</div>
@@ -102,16 +112,16 @@ class Order extends React.Component {
         )
     }
 
-    
+
     return (
       <div className={classes.row}>
-     
+
           <div className={classes.row}>
               <Typography variant="subheading" gutterBottom>
                 订单号:{orderShow.order.orderCode}
                 </Typography>
             {custDivider()}
-           
+
             <List component="nav">
                 {orderShow.order.products.map(product=>{
                     return <ListItem>
@@ -125,20 +135,20 @@ class Order extends React.Component {
                 })}
             </List>
            {custDivider()}
-          
-            
-            {!orderShow.order.contact._id? 
+
+
+            {!orderShow.order.contact._id?
             <div style={{display: "flex", padding: 7, width: "100%", justifyContent: "center"}}>
                 <Typography variant="title" gutterBottom>
-                
+
             </Typography>
-                <Button  
+                <Button
                     className={classes.button} component="a" href="#/my/contacts/orderuse"
-                    variant="raised" color="secondary" 
+                    variant="raised" color="secondary"
                     >请填写您的联系方式
-                </Button> 
+                </Button>
             </div>
-                : 
+                :
                 <div style={{display: "flex", alignItems: "center"}}>
                      <List component="nav">
                         <ListItem>
@@ -155,34 +165,34 @@ class Order extends React.Component {
                                 orderShow.carNumberNeed? <ListItemText primary={"车牌号码: "+orderShow.order.contact.carNumber}  />:
                                 <div></div>
                             }
-                        
+
                         </ListItem>
                     </List>
                     <Button   style={{maxHeight: "80px", maxWidth: "100px"}}
                         className={classes.button} component="a" href="#/my/contacts/orderuse"
-                        variant="raised" color="secondary" 
+                        variant="raised" color="secondary"
                     >更改左边信息
-                    </Button> 
+                    </Button>
                 </div>
-            
+
             }
             {custDivider()}
             <Typography variant="title" gutterBottom>
             总计: <span style={{fontWeight: "bolder"}}>¥{orderShow.order.totalAmount/100}</span>
             </Typography>
             {custDivider()}
-            <Button onClick={()=> this.handlePayClick()} 
-            className={classes.button} 
+            <Button onClick={()=> this.handlePayClick()}
+            className={classes.button}
             disabled={orderShow.order.contact._id? false : true}
-            variant="raised" color="primary" 
+            variant="raised" color="primary"
              fullWidth={true}>确认订单并且支付
              </Button>
           </div>
-            
+
       </div>
     );
   }
-  
+
 }
 
 Order.propTypes = {
