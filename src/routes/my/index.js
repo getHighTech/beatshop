@@ -8,6 +8,7 @@ import { appShowMsgAndInjectDataReact } from '../../actions/app';
 import { setAppLayout } from '../../actions/app';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+// import {getMyOrder} from '../../services/http/axios.js';
 const styles = {
   row: {
     display: 'flex',
@@ -42,18 +43,19 @@ const styles = {
 
 class MyIndex extends React.Component{
   componentDidMount(){
+    // getMyOrder();
     const { dispatch, layout } = this.props;
-    
+
     if(layout.title!=='个人中心'){
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/", 
-                title: "个人中心", 
-                hasCart: false, 
-                hasBottomNav: true, 
+                isBack: true,
+                backTo: "/",
+                title: "个人中心",
+                hasCart: false,
+                hasBottomNav: true,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
@@ -67,11 +69,11 @@ class MyIndex extends React.Component{
         <CardContent>
         <br/>
         <MyItems user={user} history={this.props.history} /><br/>
-        
+
         <div className={classes.botton}>
           <Button onClick={()=>{
             dispatch(appShowMsgAndInjectDataReact("logout", "logout_success", 2360))
-            
+
           }}  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>
         </div>
         </CardContent>
