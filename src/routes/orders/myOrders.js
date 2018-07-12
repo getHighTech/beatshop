@@ -71,6 +71,8 @@ const styles = theme => ({
 
 })
 
+const hosturl = 'http://test2.10000cars.cn'
+
 class MyOrders extends React.Component{
   state = {
     value: 0,
@@ -95,7 +97,7 @@ class MyOrders extends React.Component{
      switch (value) {
        case 0:
          status = "confirmed";
-         axios.get('http://localhost:3001/order/status',{
+         axios.get(hosturl+'/api/order/status',{
             params: {
                   userId,
                   status
@@ -113,7 +115,7 @@ class MyOrders extends React.Component{
          break;
        case 1:
         status = "paid";
-        axios.get('http://localhost:3001/order/status',{
+        axios.get(hosturl+'/api/order/status',{
             params: {
                   userId,
                   status
@@ -130,7 +132,7 @@ class MyOrders extends React.Component{
         break;
        case 2:
         status = "recevied";
-        axios.get('http://localhost:3001/order/status',{
+        axios.get(hosturl+'/api/order/status',{
             params: {
                   userId,
                   status
@@ -146,7 +148,7 @@ class MyOrders extends React.Component{
             })
        case 3:
         status = "cancel";
-        axios.get('http://localhost:3001/order/status',{
+        axios.get(hosturl+'/api/order/status',{
             params: {
                   userId,
                   status
@@ -187,24 +189,24 @@ class MyOrders extends React.Component{
   }
   componentDidMount(){
     const { dispatch, layout, orders } = this.props;
-    
+
     if(layout.title!=='我的订单'){
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/my", 
-                title: "我的订单", 
-                hasCart: false, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/my",
+                title: "我的订单",
+                hasCart: false,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
     }
     let userId = getStore("userId");
     let status = "confirmed";
-         axios.get('http://localhost:3001/order/status',{
+         axios.get(hosturl+'/api/order/status',{
             params: {
                   userId,
                   status
@@ -240,7 +242,7 @@ class MyOrders extends React.Component{
                 <div  className={classes.cardItem}>
                   我的订单
                 </div>
-              </div> 
+              </div>
             </Typography>
             <Typography variant="headline" component="div">
               <div>
@@ -257,7 +259,7 @@ class MyOrders extends React.Component{
                   <Tab label="已取消"  />
                 </Tabs>
               </div>
-              {value === 0 &&   
+              {value === 0 &&
               <TabContainer >
                 <div className={classes.root}>
 
