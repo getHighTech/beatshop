@@ -68,7 +68,7 @@ class ProductCard extends React.Component{
     console.log('------------------------------------');
   }
   share(id){
-    const { history } = this.props
+    const { history,dispatch,cover } = this.props
     console.log('------------------------------------');
     history.push('/share/'+id)
     console.log('------------------------------------');
@@ -79,30 +79,31 @@ class ProductCard extends React.Component{
     console.log('------------------------------------');
   }
   render(){
-    const { classes, id } = this.props;
+    const { classes, _id,name_zh,cover,endPrice,description, agencyLevelPrices } = this.props;
+    console.log(`来了`)
     console.log(this.props)
     return(
       <div>
         <Card className={classes.card}>
           <div className={classes.cardContent}>
               <div className={classes.leftContent}>
-                  <img src='/imgs/webwxgetmsgimg.jpeg' alt='商品图片'style={{height:80,width:80}}/>       
+                  <img src={cover} alt='商品图片'style={{height:80,width:80}}/>       
               </div>
               <div className={classes.rightContent}>
                 <a  onClick={this.onClick.bind(this)} className={classes.a}>
-                  <div className={classes.productName}>商品名字商品名字商品名字商品名字商</div>
-                  <div className={classes.subProductName}>商品简介</div>
+                  <div className={classes.productName}>{name_zh}</div>
+                  <div className={classes.subProductName}>{description}</div>
                 </a>      
                 <div className={classes.cardBottom}>
                   <div className={classes.productPrice}>
-                    <div>价格:¥100.00</div>
-                    <div>佣金:¥100.00</div>
+                    <div>价格:¥{endPrice/100}</div>
+                    <div>佣金:¥{agencyLevelPrices.length>0 ? agencyLevelPrices[0]/100 : 0}</div>
                   </div>
                   <div className={classes.share}>
                   <IconButton className={classes.button} onClick={this.delete} aria-label="Delete"  color="secondary">
                       <DeleteIcon />
                     </IconButton>
-                    <IconButton color="secondary"  onClick={() => this.share(id)} className={classes.button} aria-label="Add an alarm">
+                    <IconButton color="secondary"  onClick={() => this.share(_id)} className={classes.button} aria-label="Add an alarm">
                       <Icon>share</Icon>
                     </IconButton>
                   </div>
