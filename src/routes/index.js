@@ -120,8 +120,7 @@ class App extends React.Component {
             <Route
               {...rest}
               render={props => {
-                  console.log(props)
-                if(user.roles.includes("blackcard_holder")){
+                if(user.shopId!==null){
                     return (
                         <Component {...props} />
                       )

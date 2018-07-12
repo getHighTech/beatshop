@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
+import { loadShareProdcut } from '../../actions/products'
 
 const styles = theme => ({
   header:{
@@ -40,9 +41,13 @@ class Share extends React.Component {
      }
   }
   componentDidMount(){
-    const { dispatch, layout } = this.props;
+    const { dispatch, layout,product } = this.props;
 
     if(layout.title!=='分享页面'){
+      console.log(this.props.match.params.id)
+      if(this.props.match.params.id){
+        dispatch(loadShareProdcut(this.props.match.params.id))
+      }
       dispatch(setAppLayout(
           {
               isBack: true, 
@@ -58,12 +63,13 @@ class Share extends React.Component {
   }
     console.log(this.props)
     let id = this.props.match.params.id
-    this.setState({
-      url:'https://wanchehui/#/products/' + id
-    })
+    // this.setState({
+    //   url:'https://wanchehui/#/products/' + id
+    // })
   }
   render() { 
-    const { classes } = this.props
+    const { classes,product } = this.props
+    console.log(product)
     return (
       <div className={classes.root}>
         <div className={classes.header}>
@@ -71,7 +77,7 @@ class Share extends React.Component {
           <div className={classes.slogon}>与其在别处仰望，不如在这里并肩</div>
         </div>
         <div className={classes.cover}>
-          <img alt='商品主图' src='/imgs/webwxgetmsgimg.jpeg' style={{height:'auto',width:'100%'}}/>
+          <img alt='商品主图' src={product.cover} style={{height:'auto',width:'100%'}}/>
         </div>
         <div className={classes.description}>
           <div>分享二维码或者商品链接</div>
@@ -79,7 +85,7 @@ class Share extends React.Component {
         </div>
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
         <div className={classes.qecode}>
-          <QRCode value={this.state.url} logo='/imgs/webwxgetmsgimg.jpeg'/>
+          <QRCode value={'https://wanchehui/#/products/' + this.props.match.params.id} logo='/imgs/webwxgetmsgimg.jpeg'/>
         </div>
       </div>
      )
@@ -91,7 +97,8 @@ function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    product: state.ProductShow
   }
 }
 
