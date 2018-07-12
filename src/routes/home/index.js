@@ -12,7 +12,7 @@ import LoadingItem from '../../components/public/LoadingItem.js';
 import grey from '@material-ui/core/colors/grey'
 
 import { setAppLayout } from '../../actions/app';
-import { isWeChat, logWechat } from '../../actions/wechat.js';
+// import { isWeChat, logWechat } from '../../actions/wechat.js';
 import { getStore } from '../../tools/localStorage.js';
 
 const styles = theme => ({
@@ -60,12 +60,12 @@ class Home extends React.Component {
         });
     };
     componentDidMount(){
-      if(isWeChat()){
-        // alert(getStore("openid"));
-        if(!getStore("openid")){
-          logWechat(this.props.history);
-        }
-      }
+      // if(isWeChat()){
+      //   // alert(getStore("openid"));
+      //   if(!getStore("openid")){
+      //     logWechat(this.props.history);
+      //   }
+      // }
         const { dispatch } = this.props
         dispatch(loadHomeIndexProducts());
         dispatch(setAppLayout(
