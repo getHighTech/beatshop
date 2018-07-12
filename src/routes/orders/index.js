@@ -76,17 +76,20 @@ class Order extends React.Component {
   handlePayClick(){
     const { orderShow, user } = this.props;
     var urlencode = require('urlencode');
-             let data = {
-               "client": "web",
-               "data": {
-                 out_trade_no: orderShow.order._id,
-                 user_id: user.user._id,
-                 super_agency_id: "abcdef",
-                 version: 2
-               }
-             }
-    let from_url = `http://test2.10000cars.cn/api/v1/wechat/payback/show?openid=${getStore('openid')}&fee=${orderShow.order.totalAmount}&appname=wanchehui`;
+    // var encodeUrl = require('encodeurl')
+            //  let data = {
+            //    "client": "web",
+            //    "data": {
+            //      out_trade_no: orderShow.order._id,
+            //      user_id: user.user._id,
+            //      super_agency_id: "abcdef",
+            //      version: 2
+            //    }
+            //  }
+
+    let from_url = `http://test2.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=wanchehui`;
     from_url = urlencode(from_url);
+    console.log(from_url);
     window.location.assign('http://test2.10000cars.cn/app/getopenid/'+from_url);
   }
   render(){
