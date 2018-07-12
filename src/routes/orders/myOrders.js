@@ -13,6 +13,7 @@ import OrderCard from '../../components/orders/OrderCard'
 import { getOrdersLimit } from '../../actions/app_orders'
 import axios from 'axios';
 import { getStore } from '../../tools/localStorage';
+import serverConfig  from '../../config/server';
 
 function TabContainer(props) {
   return (
@@ -97,7 +98,7 @@ class MyOrders extends React.Component{
      switch (value) {
        case 0:
          status = "confirmed";
-         axios.get(hosturl+'/api/order/status',{
+         axios.get(`${serverConfig.server_url}/api/order/status`,{
             params: {
                   userId,
                   status
@@ -115,7 +116,7 @@ class MyOrders extends React.Component{
          break;
        case 1:
         status = "paid";
-        axios.get(hosturl+'/api/order/status',{
+        axios.get(`${serverConfig.server_url}/api/order/status`,{
             params: {
                   userId,
                   status
@@ -132,7 +133,9 @@ class MyOrders extends React.Component{
         break;
        case 2:
         status = "recevied";
-        axios.get(hosturl+'/api/order/status',{
+
+        axios.get(`${serverConfig.server_url}/api/order/status`,{
+
             params: {
                   userId,
                   status
@@ -148,7 +151,9 @@ class MyOrders extends React.Component{
             })
        case 3:
         status = "cancel";
-        axios.get(hosturl+'/api/order/status',{
+
+        axios.get(`${serverConfig.server_url}/api/order/status`,{
+
             params: {
                   userId,
                   status
@@ -206,7 +211,8 @@ class MyOrders extends React.Component{
     }
     let userId = getStore("userId");
     let status = "confirmed";
-         axios.get(hosturl+'/api/order/status',{
+         axios.get(`${serverConfig.server_url}/api/order/status`,{
+
             params: {
                   userId,
                   status
