@@ -80,12 +80,12 @@ class Share extends React.Component {
           <img alt='商品主图' src={product.cover} style={{height:'auto',width:'100%'}}/>
         </div>
         <div className={classes.description}>
-          <div>分享二维码或者商品链接</div>
+          <div>分享二维码或者商品链接1</div>
           <div>有人购买该商品即可获得相应推荐奖励</div>
         </div>
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
         <div className={classes.qecode}>
-          <QRCode value={ window.location.host +'/'+  this.props.match.params.id} logo='/imgs/webwxgetmsgimg.jpeg'/>
+          <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo='/imgs/webwxgetmsgimg.jpeg'/>
         </div>
       </div>
      )
