@@ -85,7 +85,7 @@ class Share extends React.Component {
         </div>
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
         <div className={classes.qecode}>
-          <QRCode value={'https://wanchehui/#/products/' + this.props.match.params.id} logo='/imgs/webwxgetmsgimg.jpeg'/>
+          <QRCode value={ window.location.host +'/'+  this.props.match.params.id} logo='/imgs/webwxgetmsgimg.jpeg'/>
         </div>
       </div>
      )
