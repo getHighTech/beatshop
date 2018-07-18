@@ -34,6 +34,7 @@ export default function AppUser(state={
     products: "unloaded",
     shopId: null,
     appNameShopId: null,
+    agencyRole: false,
    }, action){
       switch (action.type) {
        
@@ -138,7 +139,8 @@ export default function AppUser(state={
               contactIsLoaded: action.msg.userContact? true: false,
               currentContact: action.msg.userContact,
               shopId: action.msg.shopId,
-              appNameShopId: action.msg.appNameShopId
+              appNameShopId: action.msg.appNameShopId,
+              agencyRole: action.msg.agencyRole
             })
 
           case USER_LOGIN_SUCCESS:
