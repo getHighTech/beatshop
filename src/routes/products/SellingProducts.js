@@ -116,14 +116,14 @@ class SellingProducts extends React.Component{
 
   componentDidMount(){
     const { dispatch, layout,user  } = this.props;
-    if(layout.title!=='万人车汇商品库'){
+    if(layout.title!=='正在出售的商品'){
       dispatch(loadAgencyProducts(user.shopId))
 
         dispatch(setAppLayout(
             {
                 isBack: true, 
                 backTo: "/my", 
-                title: "万人车汇商品库", 
+                title: "正在出售的商品", 
                 hasCart: false, 
                 hasBottomNav: false, 
                 hasGeoLoc: false,

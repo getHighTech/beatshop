@@ -34,7 +34,8 @@ export default function AppUser(state={
     products: "unloaded",
     shopId: null,
     appNameShopId: null,
-    agencyRole: false,
+    agencyRole: null,
+    senior: false,
    }, action){
       switch (action.type) {
        
@@ -140,10 +141,12 @@ export default function AppUser(state={
               currentContact: action.msg.userContact,
               shopId: action.msg.shopId,
               appNameShopId: action.msg.appNameShopId,
-              agencyRole: action.msg.agencyRole
+              agencyRole: action.msg.agencyRole,
+              senior: action.msg.senior,
             })
 
           case USER_LOGIN_SUCCESS:
+          console.log(`成功`)
             return Object.assign({}, state, {
               loginStatus: "success",
               roles: action.msg.roles,
@@ -154,6 +157,7 @@ export default function AppUser(state={
               currentContact: action.msg.userContact,
             });
           case USER_LOGIN_FAIL:
+          console.log(`失败了`)
             return Object.assign({}, state, {
               loginStatus: "failed",
               loginFailReason: action.reason,

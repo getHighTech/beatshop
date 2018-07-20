@@ -25,6 +25,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
 
 
 
@@ -75,7 +76,7 @@ class MyItems extends React.Component{
         let shopId = user.shopId;
         
         
-        if(shopId!==null){
+        if(user.agencyRole!==false){
             console.log(`走这里`)
             history.push(my+"/products");
         }else{
@@ -151,6 +152,24 @@ class MyItems extends React.Component{
          
        
             <List component="nav">
+            {
+                user.senior === true ? 
+                <div>
+                    <ListItem button component="a" href="#/my/team">
+                    <ListItemIcon className={classes.listIcon}>
+                        <PersonPinIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="我的团队" />
+                    </ListItem>
+
+                    <Divider />
+                </div>
+                :
+                null
+            
+            }
+              
+
                 <ListItem button component="a" href="#/my/orders">
                 <ListItemIcon className={classes.listIcon}>
                     <FeaturedPlayList />
@@ -159,6 +178,8 @@ class MyItems extends React.Component{
                 </ListItem>
 
                 <Divider />
+
+               
                 
                 <ListItem button component="a" href="#/my/bankcards_list">
                 <ListItemIcon className={classes.listIcon}>
