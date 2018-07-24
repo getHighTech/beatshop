@@ -48,7 +48,7 @@ const styles = theme => ({
 class MyItems extends React.Component{
     state = { 
          open: false,
-         confirmContent: "开店需要万人车汇黑卡权限，是否立即购买黑卡？", 
+         confirmContent: "开店需要鲜至臻品黑卡权限，是否立即购买黑卡？", 
          confirmOpen: false
         };
     handleClick = () => {
@@ -116,7 +116,7 @@ class MyItems extends React.Component{
                     <ListItemIcon className={classes.listIcon}>
                         <Face />
                     </ListItemIcon>
-                    <ListItemText primary="黑卡尊享会员" />
+                    <ListItemText primary="鲜至店长" />
                     </ListItem>}
             </List>
             <Divider />
