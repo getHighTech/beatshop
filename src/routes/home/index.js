@@ -70,11 +70,12 @@ class Home extends React.Component {
         dispatch(loadHomeIndexProducts());
         dispatch(setAppLayout(
             {
-                isBack: false,
-                backTo: "/",
-                title: "鲜至臻品",
-                hasCart: true,
-                hasBottomNav: true,
+
+                isBack: false, 
+                backTo: "/", 
+                title: "鲜至臻品", 
+                hasCart: true, 
+                hasBottomNav: true, 
                 hasGeoLoc: true,
                 hasEditor: false,
                 hasSearch: false,
@@ -93,11 +94,12 @@ class Home extends React.Component {
         if(!layout.hasBottomNav){
             dispatch(setAppLayout(
                 {
-                    isBack: false,
-                    backTo: "/",
-                    title: "鲜至臻品",
-                    hasCart: true,
-                    hasBottomNav: true,
+
+                    isBack: false, 
+                    backTo: "/", 
+                    title: "鲜至臻品", 
+                    hasCart: true, 
+                    hasBottomNav: true, 
                     hasGeoLoc: true,
                     hasEditor: false,
                     hasSearch: false,
