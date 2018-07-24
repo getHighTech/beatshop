@@ -87,7 +87,7 @@ class Order extends React.Component {
             //    }
             //  }
 
-    let from_url = `http://test2.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=wanchehui`;
+    let from_url = `http://test2.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=wanchehui&order=${orderShow.order._id}`;
     from_url = urlencode(from_url);
     console.log(from_url);
     window.location.assign('http://test2.10000cars.cn/app/getopenid/'+from_url);
