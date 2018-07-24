@@ -105,7 +105,7 @@ class Contacts extends React.Component {
       }
       orderShow.order.products.forEach(product => {
           
-          if(product.name_zh==="万人车汇黑卡"){
+          if(product.name_zh==="鲜至臻品黑卡"){
              
               carNumberNeed = true;
           }

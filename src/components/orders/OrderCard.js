@@ -85,7 +85,7 @@ class OrderCard extends React.Component{
           <Grid container spacing={24}>
             <Grid item xs={9} sm={9} style={{display:'flex'}}>
               <img alt="店铺图标" style={{height:17}} src={require('../../components/imgs/shop.svg')}/>
-              <div className={classes.shopName}>万人车汇自营店</div>
+              <div className={classes.shopName}>鲜至臻品自营店</div>
               <img alt="店铺图标" style={{height:17}} src={require('../../components/imgs/right.svg')}/>
             </Grid>
             <Grid item xs={3} sm={3} >
