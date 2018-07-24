@@ -25,6 +25,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
 
 
 
@@ -45,8 +46,9 @@ const styles = theme => ({
   }
 });
 class MyItems extends React.Component{
-    state = { open: false,
-         confirmContent: "开店需要万人车汇黑卡权限，是否立即购买黑卡？", 
+    state = { 
+         open: false,
+         confirmContent: "开店需要鲜至臻品黑卡权限，是否立即购买黑卡？", 
          confirmOpen: false
         };
     handleClick = () => {
@@ -69,11 +71,13 @@ class MyItems extends React.Component{
 
     handleGoToShop = (my='') => {
         const { user, history  } = this.props;
-        console.log('my', my);
+        console.log('my:'+ my);
         
-        let roles = user.roles;
+        let shopId = user.shopId;
         
-        if(roles.includes("blackcard_holder")){
+        
+        if(user.agencyRole!==false){
+            console.log(`走这里`)
             history.push(my+"/products");
         }else{
             console.log("no access");
@@ -112,7 +116,7 @@ class MyItems extends React.Component{
                     <ListItemIcon className={classes.listIcon}>
                         <Face />
                     </ListItemIcon>
-                    <ListItemText primary="黑卡尊享会员" />
+                    <ListItemText primary="鲜至店长" />
                     </ListItem>}
             </List>
             <Divider />
@@ -148,6 +152,24 @@ class MyItems extends React.Component{
          
        
             <List component="nav">
+            {
+                user.senior === true ? 
+                <div>
+                    <ListItem button component="a" href="#/my/team">
+                    <ListItemIcon className={classes.listIcon}>
+                        <PersonPinIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="我的团队" />
+                    </ListItem>
+
+                    <Divider />
+                </div>
+                :
+                null
+            
+            }
+              
+
                 <ListItem button component="a" href="#/my/orders">
                 <ListItemIcon className={classes.listIcon}>
                     <FeaturedPlayList />
@@ -156,6 +178,8 @@ class MyItems extends React.Component{
                 </ListItem>
 
                 <Divider />
+
+               
                 
                 <ListItem button component="a" href="#/my/bankcards_list">
                 <ListItemIcon className={classes.listIcon}>

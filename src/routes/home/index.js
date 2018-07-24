@@ -12,6 +12,7 @@ import LoadingItem from '../../components/public/LoadingItem.js';
 import grey from '@material-ui/core/colors/grey'
 
 import { setAppLayout } from '../../actions/app';
+// import { isWeChat, logWechat } from '../../actions/wechat.js';
 import { getStore } from '../../tools/localStorage.js';
 
 const styles = theme => ({
@@ -26,16 +27,16 @@ const styles = theme => ({
         width: "100%",
         justifyContent: "space-between",
         backgroundColor:grey[100]
-      
+
     },
     shopsContainer: {
-        
+
         width: "100%",
         position: "relative",
         top: "50%",
         textAlign: "center"
     }
-   
+
   });
 
 
@@ -46,7 +47,7 @@ class Home extends React.Component {
         open: false,
         imgSrc: null
       };
-    
+
     handleClose = () => {
         this.setState({
             open: false,
@@ -59,17 +60,24 @@ class Home extends React.Component {
         });
     };
     componentDidMount(){
+      // if(isWeChat()){
+      //   // alert(getStore("openid"));
+      //   if(!getStore("openid")){
+      //     logWechat(this.props.history);
+      //   }
+      // }
         const { dispatch } = this.props
         dispatch(loadHomeIndexProducts());
         dispatch(setAppLayout(
             {
+
                 isBack: false, 
                 backTo: "/", 
                 title: "鲜至臻品", 
                 hasCart: true, 
                 hasBottomNav: true, 
                 hasGeoLoc: true,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
@@ -77,7 +85,7 @@ class Home extends React.Component {
     componentWillReceiveProps(nextProps){
         const {dispatch, currentCity, layout, orderShow, history} = nextProps;
         if(orderShow.createStatus === "success"){
-            
+
             return history.push("/orders/"+orderShow.id);
           }
         if(currentCity !== this.props.currentCity){
@@ -86,38 +94,39 @@ class Home extends React.Component {
         if(!layout.hasBottomNav){
             dispatch(setAppLayout(
                 {
+
                     isBack: false, 
                     backTo: "/", 
                     title: "鲜至臻品", 
                     hasCart: true, 
                     hasBottomNav: true, 
                     hasGeoLoc: true,
-                    hasEditor: false, 
+                    hasEditor: false,
                     hasSearch: false,
                 }
             ));
         }
     }
     render(){
-        
-        
+
+
         const { classes, productsList} = this.props;
-        
+
         return (
             <div className={classes.root}>
-             
+
               {getStore("userId")? <br/>: <AppBanner />}
-              { productsList.loading? <LoadingItem/> : 
+              { productsList.loading? <LoadingItem/> :
               <div className={classes.root} style={{height: "auto", top: getStore("userId")? "60px": "inherit"}}>
                 <ProductGridList history={this.props.history} products={productsList.products} label="热门"/>
                 <div className={classes.shopsContainer}>
                     {/* <h1 style={{color: "white"}}>优选商家</h1> */}
                 </div>
-                
+
               </div>
               }
-             
-               
+
+
               </div>
         )
     }
@@ -134,5 +143,5 @@ Home.propTypes = {
           orderShow: state.OrderShow
       }
   }
-  
+
 export default connect(mapUserState)(withStyles(styles)(Home));

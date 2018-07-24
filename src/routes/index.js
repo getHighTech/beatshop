@@ -41,6 +41,10 @@ import Shop from './shop/shop';
 import withdraw from './withdraw/withdraw';
 import Share from './share/share';
 import BlackcardHolder from './my/BlackcardHolder';
+import WechatChecker from './WechatChecker.js';
+import Team from '../routes/team/index';
+import Toast from '../routes/toast/index';
+
 
 const history = createHistory();
 
@@ -70,23 +74,23 @@ const SellingProductsPath = ({ match }) => (
 )
 
 class App extends React.Component {
-   
+
     componentDidMount(){
         const { dispatch, appInfo} = this.props;
-        
-        
+
+
         dispatch(syncRemoteUser());
         if(!appInfo.init){
-            
+
             dispatch(loadGeoAddress());
             dispatch(loadApp());
         }
 
     }
 
-    
 
-   
+
+
     render(){
         const {classes, appInfo, order, msg, user} = this.props;
         const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -118,8 +122,7 @@ class App extends React.Component {
             <Route
               {...rest}
               render={props => {
-                  console.log(props)
-                if(user.roles.includes("blackcard_holder")){
+                if(user.agencyRole!==false){
                     return (
                         <Component {...props} />
                       )
@@ -164,6 +167,8 @@ class App extends React.Component {
             <Router  className={classes.root} >
                 <MainLayout history={history} store={this.props.store}>
                     <Switch>
+                        <PrivateRoute exact path="/wechat_checker/"  component={WechatChecker} />
+                        <PrivateRoute exact path="/wechat_checker/:openid"  component={WechatChecker} />
                         <PrivateRoute exact path="/my"  component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
                         <CarMemberRoute exact path="/products" component={AllProducts} />
@@ -187,6 +192,8 @@ class App extends React.Component {
                         <Route path="/password-login" component={AppLoginPassword} />
                         <Route path="/login/:msg" component={AppLogin} />
                         <Route exact path="/login" component={AppLogin} />
+                        <Route exact path="/toast" component={Toast} />
+                        <Route component={Team}  path="/my/team" exact/>
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>
@@ -203,7 +210,7 @@ class App extends React.Component {
                         }
                     />
                 </MainLayout>
-                
+
             </Router>
         )
     }

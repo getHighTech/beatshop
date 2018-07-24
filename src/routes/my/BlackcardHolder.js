@@ -92,7 +92,7 @@ class BlackcardHolder extends Component {
           </div>
           <div className={classes.bottom}>
             <div className={classes.text}>
-              1.可以在万人车汇平台上开设自己的店铺
+              1.可以在鲜至臻品平台上开设自己的店铺
             </div>
             <div className={classes.text}>
               2.尊享万车汇俱乐部及其联盟商家汽车服务最低价格优惠，产品服务特惠不定期更新
@@ -101,7 +101,7 @@ class BlackcardHolder extends Component {
               3.会员有效期从购卡当日算起，一年内有效，过期权益不可使用
             </div>
             <div className={classes.text}>
-              4.会员卡所有的解释权最终归万人车汇所有
+              4.会员卡所有的解释权最终归鲜至臻品所有
             </div>
           </div>
         </div>

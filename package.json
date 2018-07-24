@@ -32,7 +32,6 @@
     "urlencode": "latest",
     "ws": "^5.2.0"
   },
-  "proxy": "http://localhost:7001",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -24,7 +24,6 @@ export default function ProductsList
             });
 
         case EXPECT_GET_SHOP_PRODUCTS_LIMIT: 
-            
             return Object.assign({}, state, {
                 loading: true,
                 shopProducts: "unloaded",

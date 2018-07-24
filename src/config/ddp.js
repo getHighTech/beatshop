@@ -4,7 +4,7 @@ const options = {
     // endpoint: "ws:/p.10000cars.cn:8085/websocket",//for test
     endpoint: "ws:/p.10000cars.cn/websocket",//for production
     SocketConstructor:  WebSocket
-    
+
 };
 
 export const MClient = new DDP(options);

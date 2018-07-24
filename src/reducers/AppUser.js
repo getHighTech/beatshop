@@ -32,6 +32,10 @@ export default function AppUser(state={
     user: null,
     currentContact: {},
     products: "unloaded",
+    shopId: null,
+    appNameShopId: null,
+    agencyRole: null,
+    senior: false,
    }, action){
       switch (action.type) {
        
@@ -134,11 +138,15 @@ export default function AppUser(state={
               user: action.msg.user,
               userId: action.msg.userId,
               contactIsLoaded: action.msg.userContact? true: false,
-              currentContact: action.msg.userContact
+              currentContact: action.msg.userContact,
+              shopId: action.msg.shopId,
+              appNameShopId: action.msg.appNameShopId,
+              agencyRole: action.msg.agencyRole,
+              senior: action.msg.senior,
             })
 
           case USER_LOGIN_SUCCESS:
-            
+          console.log(`成功`)
             return Object.assign({}, state, {
               loginStatus: "success",
               roles: action.msg.roles,
@@ -146,9 +154,10 @@ export default function AppUser(state={
               userId: action.msg.userId,
               user: action.msg.user,
               contactIsLoaded: action.msg.userContact? true: false,              
-              currentContact: action.msg.userContact
+              currentContact: action.msg.userContact,
             });
           case USER_LOGIN_FAIL:
+          console.log(`失败了`)
             return Object.assign({}, state, {
               loginStatus: "failed",
               loginFailReason: action.reason,
@@ -169,7 +178,7 @@ export default function AppUser(state={
           case USER_LOG_OUT_SUCCESS: 
             return Object.assign({}, state, {
               
-            })
+            })  
           case GET_BANKCARD_LIST_SUCCESS:
           return Object.assign({},state,{
             bankcardList:action.msg

@@ -3,12 +3,62 @@ import { dealWithError } from "./error_fail";
 import app from '../config/app.json'
 export const EXPECT_ONE_PRODUCT = "EXPECT_ONE_PRODUCT";
 export const LOAD_ONE_PRODUCT_SUCCESS = "LOAD_ONE_PRODUCT_SUCCESS";
+export const EXPECT_AGENCY_PRODUCTS = "EXPECT_AGENCY_PRODUCTS"
+export const  LOAD_AGENCY_PRODUCTS_FAILD = "LOAD_AGENCY_PRODUCTS_FAILD ";
+export const LOAD_AGENCY_PRODUCTS_SUCCESS = "LOAD_AGENCY_PRODUCTS_SUCCESS";
+export const SHARE_PRODUCT = "SHARE_PRODUCT"
+
+export function shareProduct(product) {
+    return {
+        type: SHARE_PRODUCT,
+        product
+    }
+}
+
+export function expectAgencyProducts(){
+    return {
+        type: EXPECT_ONE_PRODUCT,
+    }
+}
+export function loadAgencyProductsFaild(reason){
+    return {
+        type: LOAD_AGENCY_PRODUCTS_FAILD,
+        reason
+    }
+}
+
+export function loadAgencyProductsSuccess(msg){
+    return {
+        type: LOAD_AGENCY_PRODUCTS_SUCCESS,
+        msg
+    }
+}
+
+
+export function loadShareProdcut(id){
+    return (dispatch, getState) => {
+        dispatch(expectOneProduct(id))
+        return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.id", [id], shareProduct, dealWithError);
+    }
+}
+
+export function loadAgencyProducts(shopId){
+    return (dispatch, getState) => {
+        dispatch(expectAgencyProducts())
+        console.log(`开始了`)
+        console.log(`${shopId}`)
+        return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
+    }
+}
+
+
 export function expectOneProduct(id){
     return {
         type: EXPECT_ONE_PRODUCT,
         id,
     }
 }
+
 
 export function loadOneProductSuccess(product){
     return {
@@ -66,13 +116,13 @@ export function getShopProductsLimitSuccess(msg){
 
 
 
-export function getShopProductsLimit(shopId, page, pagesize){
+export function getShopProductsLimit(){
     return (dispatch, getState) => {
         dispatch(expectGetShopProductsLimit());
         return getRemoteMeteor(
             dispatch,getState, "products", 
             "app.get.products.shop.limit",
-            [shopId, page, pagesize],
+            [],
             getShopProductsLimitSuccess, getShopProductsLimitFail
         );
     }
@@ -99,18 +149,18 @@ export function agencyOneProductFail(reason){
         reason
     }
 }
-export function agencyOneProductSuccess(msg){
+export function agencyOneProductSuccess(products){
     return {
         type: AGENCY_ONE_PRODUCT_SUCCESS,
-        msg
+        products
     }
 }
-export function agencyOneProduct(product, userId){
+export function agencyOneProduct(product, userId,appNameShopId,shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyOneProduct());
         return getRemoteMeteor(dispatch, getState,
              "shops", "app.agency.one.product",
-                [product, userId], agencyOneProductSuccess, 
+                [product, userId,appNameShopId,shopId], agencyOneProductSuccess, 
                 agencyOneProductFail
             )
     }
