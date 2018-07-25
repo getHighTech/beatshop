@@ -44,6 +44,7 @@ import BlackcardHolder from './my/BlackcardHolder';
 import WechatChecker from './WechatChecker.js';
 import Team from '../routes/team/index';
 import Toast from '../routes/toast/index';
+import { getToken } from '../actions/token';
 
 
 const history = createHistory();
