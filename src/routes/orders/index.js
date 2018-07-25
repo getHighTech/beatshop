@@ -76,21 +76,12 @@ class Order extends React.Component {
   handlePayClick(){
     const { orderShow, user } = this.props;
     var urlencode = require('urlencode');
-    // var encodeUrl = require('encodeurl')
-            //  let data = {
-            //    "client": "web",
-            //    "data": {
-            //      out_trade_no: orderShow.order._id,
-            //      user_id: user.user._id,
-            //      super_agency_id: "abcdef",
-            //      version: 2
-            //    }
-            //  }
 
-    let from_url = `http://test2.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=wanchehui`;
+
+    let from_url = `http://xianzhi.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=wanchehui`;
     from_url = urlencode(from_url);
     console.log(from_url);
-    window.location.assign('http://test2.10000cars.cn/app/getopenid/'+from_url);
+    window.location.assign('http://xianzhi.10000cars.cn/app/getopenid/'+from_url);
   }
   render(){
     const { classes, orderShow } = this.props;
@@ -184,12 +175,16 @@ class Order extends React.Component {
             总计: <span style={{fontWeight: "bolder"}}>¥{orderShow.order.totalAmount/100}</span>
             </Typography>
             {custDivider()}
-            <Button onClick={()=> this.handlePayClick()}
-            className={classes.button}
-            disabled={orderShow.order.contact._id? false : true}
-            variant="raised" color="primary"
-             fullWidth={true}>确认订单并且支付
-             </Button>
+            {
+              orderShow.order.contact._id &&
+              <Button onClick={()=> this.handlePayClick()}
+              className={classes.button}
+              disabled={orderShow.order.contact._id? false : true}
+              variant="raised" color="primary"
+               fullWidth={true}>确认订单并且支付
+               </Button>
+            }
+
           </div>
 
       </div>
