@@ -77,8 +77,11 @@ class Order extends React.Component {
   async handlePayClick(){
     const { orderShow, user } = this.props;
     var urlencode = require('urlencode');
-    let uuid = getToken().uuid;
-    let token = getToken().token;
+    let key = await getToken()
+    let token = key.token;
+    let uuid = key.uuid
+    
+    
     let from_url = 
     `http://test2.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=xianzhi&order=${orderShow.order.orderCode}&uuid=${uuid}&token=${token}`;
 

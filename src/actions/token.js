@@ -9,8 +9,8 @@ export async function getToken(){
  
   if(getStore("token") && getStore("uuid")){
     return {
-      uuid: getStore("uuid"),
-      token: getStore("token")
+      uuid: await getStore("uuid"),
+      token: await getStore("token")
       
     }
   }else{
