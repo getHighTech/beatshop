@@ -15,6 +15,7 @@ import LoadingItem from '../../components/public/LoadingItem';
 import Button from '@material-ui/core/Button';
 import { isWeChat, logWechat } from '../../actions/wechat.js';
 import { getStore } from '../../tools/localStorage.js';
+import { getToken } from '../../actions/token';
 
 const styles = theme => ({
     flex: {
@@ -73,12 +74,14 @@ class Order extends React.Component {
     }
 
   }
-  handlePayClick(){
+  async handlePayClick(){
     const { orderShow, user } = this.props;
     var urlencode = require('urlencode');
+    let uuid = getToken().uuid;
+    let token = getToken().token;
+    let from_url = 
+    `http://test2.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=xianzhi&order=${orderShow.order.orderCode}&uuid=${uuid}&token=${token}`;
 
-
-    let from_url = `http://test2.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=xianzhi`;
     from_url = urlencode(from_url);
     console.log(from_url);
     window.location.assign('http://test2.10000cars.cn/app/getopenid/'+from_url);
