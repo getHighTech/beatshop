@@ -139,12 +139,12 @@ class Money extends React.Component{
    
    console.log(money.staticDone);
      
-    if(!money.staticDone && money.balance_incomes === "unloaded"){
+    // if(!money.staticDone && money.balance_incomes === "unloaded"){
        dispatch(loadMoneyPage(getStore('userId')));
        dispatch(getIncomeWithTime(1, getStore("userId"),"days"))
        dispatch(getIncomeWithTime(1, getStore("userId"),"weeks"))
        dispatch(getIncomeWithTime(1, getStore("userId"),"months"))
-    }
+    // }
 
     this.setState({
       page: 1

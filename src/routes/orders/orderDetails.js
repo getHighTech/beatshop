@@ -8,9 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import QRCode from 'qrcode-react'
 import { loadOneOrder } from '../../actions/orders' 
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
+import moment from 'moment/locale/zh-cn';
+
 
 
 const styles = {
