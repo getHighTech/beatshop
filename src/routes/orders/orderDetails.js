@@ -8,9 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import QRCode from 'qrcode-react'
 import { loadOneOrder } from '../../actions/orders' 
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
+import moment from 'moment/locale/zh-cn';
+
 
 
 const styles = {
@@ -135,7 +134,7 @@ class orderDetails extends React.Component {
             <Grid container spacing={24}>
               <Grid item xs={9} sm={9} style={{display:'flex'}}>
                 <img alt="店铺图标"  style={{height:17,marginRight:5}}  src={require('../../components/imgs/shop.svg')}/>
-                <div className={classes.shopName}>万人车汇自营店</div>
+                <div className={classes.shopName}>鲜至臻品自营店</div>
                 <img alt="店铺图标" style={{height:17}} src={require('../../components/imgs/right.svg')}/>
 
               </Grid>

@@ -42,6 +42,8 @@ import withdraw from './withdraw/withdraw';
 import Share from './share/share';
 import BlackcardHolder from './my/BlackcardHolder';
 import WechatChecker from './WechatChecker.js';
+import Team from '../routes/team/index';
+import Toast from '../routes/toast/index';
 
 
 const history = createHistory();
@@ -120,7 +122,7 @@ class App extends React.Component {
             <Route
               {...rest}
               render={props => {
-                if(user.shopId!==null){
+                if(user.agencyRole!==false){
                     return (
                         <Component {...props} />
                       )
@@ -190,6 +192,8 @@ class App extends React.Component {
                         <Route path="/password-login" component={AppLoginPassword} />
                         <Route path="/login/:msg" component={AppLogin} />
                         <Route exact path="/login" component={AppLogin} />
+                        <Route exact path="/toast" component={Toast} />
+                        <Route component={Team}  path="/my/team" exact/>
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>

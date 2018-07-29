@@ -25,6 +25,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
 
 
 
@@ -47,7 +48,7 @@ const styles = theme => ({
 class MyItems extends React.Component{
     state = { 
          open: false,
-         confirmContent: "开店需要万人车汇黑卡权限，是否立即购买黑卡？", 
+         confirmContent: "开店需要购买优选会员卡，是否立即购买？", 
          confirmOpen: false
         };
     handleClick = () => {
@@ -75,7 +76,7 @@ class MyItems extends React.Component{
         let shopId = user.shopId;
         
         
-        if(shopId!==null){
+        if(user.agencyRole!==false){
             console.log(`走这里`)
             history.push(my+"/products");
         }else{
@@ -115,7 +116,7 @@ class MyItems extends React.Component{
                     <ListItemIcon className={classes.listIcon}>
                         <Face />
                     </ListItemIcon>
-                    <ListItemText primary="黑卡尊享会员" />
+                    <ListItemText primary="鲜至店长" />
                     </ListItem>}
             </List>
             <Divider />
@@ -151,6 +152,24 @@ class MyItems extends React.Component{
          
        
             <List component="nav">
+            {
+                user.senior === true ? 
+                <div>
+                    <ListItem button component="a" href="#/my/team">
+                    <ListItemIcon className={classes.listIcon}>
+                        <PersonPinIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="我的团队" />
+                    </ListItem>
+
+                    <Divider />
+                </div>
+                :
+                null
+            
+            }
+              
+
                 <ListItem button component="a" href="#/my/orders">
                 <ListItemIcon className={classes.listIcon}>
                     <FeaturedPlayList />
@@ -159,6 +178,8 @@ class MyItems extends React.Component{
                 </ListItem>
 
                 <Divider />
+
+               
                 
                 <ListItem button component="a" href="#/my/bankcards_list">
                 <ListItemIcon className={classes.listIcon}>
@@ -172,7 +193,7 @@ class MyItems extends React.Component{
                 onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
                 >
-                <DialogTitle id="form-dialog-title">推荐购买黑卡</DialogTitle>
+                <DialogTitle id="form-dialog-title"></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                     {this.state.confirmContent}

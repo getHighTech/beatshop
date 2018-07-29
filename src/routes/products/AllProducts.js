@@ -63,12 +63,12 @@ class AllProducts extends React.Component{
   componentDidMount(){
     const { dispatch, layout, products } = this.props;
     
-    if(layout.title!=='万人车汇商品库'){
+    if(layout.title!=='鲜至臻品商品库'){
         dispatch(setAppLayout(
             {
                 isBack: true, 
                 backTo: "/my", 
-                title: "万人车汇商品库", 
+                title: "鲜至臻品商品库", 
                 hasCart: false, 
                 hasBottomNav: false, 
                 hasGeoLoc: false,

@@ -4,24 +4,23 @@ import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux';
-import Image from '../imgs/background3.jpg';
+import Image from '../imgs/WechatIMG620.jpeg';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
     background: 'url('+Image+')',
-    backgroundSize: '100%',
     width: '100%',
     height: '1200px',
     top: '10px',
     position: 'relative',
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
     flex: 1,
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
+    // backgroundPosition:"center",
     [theme.breakpoints.down('md')]: {
       backgroundSize: 'cover', 
       height: '351px',
@@ -37,11 +36,12 @@ const styles = theme => ({
     color: "white",
     backgroundColor: "rgba(77, 77, 78, 0.38)",
     // backgroundColor: "red",
+   
     top: '180px',
-    width: '60%',
+    width: '100%',
     position: 'relative',
     flexDirection: "column",
-    marginTop: "5px",        
+    marginTop: "-30px",        
     marginBottom: "5px", 
     paddingTop:23,
     paddingBottom: "30px",
@@ -63,11 +63,11 @@ const styles = theme => ({
     height: "80px",
     [theme.breakpoints.down('md')]: {
       height: "50px",
-       
-     
     },
+  },
+  text: {
+    textAlign: "center"
   }
- 
 });
 
 class AppBanner extends React.Component {
@@ -85,7 +85,7 @@ class AppBanner extends React.Component {
                       color="inherit"
                     
                     >
-                     万人车汇
+                     鲜至臻品
                     
                     </Typography>
                     <br/>
@@ -95,7 +95,8 @@ class AppBanner extends React.Component {
                       color="inherit"
                     
                     >
-                     享受精彩汽车生活
+                     <h1>鲜至臻品</h1>
+                     <h4  className={classes.text}>我们不一样</h4>
                     
                     </Typography>
                     <br/>

@@ -134,9 +134,8 @@ class Withdraw extends React.Component{
   }
   render(){
     const { classes, bankcards } = this.props;
-    console.log(this.state);
-    
-    if(bankcards === "unloaded" || !this.state.balanceLoad){
+    console.log(bankcards);
+    if(bankcards === "unloaded" ){
         return <LoadingItem />
     }
     return(

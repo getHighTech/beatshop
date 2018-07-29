@@ -40,49 +40,49 @@ class SellingProducts extends React.Component{
       { 
         id:'KxP7o3wWKjyfd3Cc7',
         img:'/imgs/b1.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356.11,
       },
       {
         id:2,
         img:'/imgs/b2.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
       {
         id:3,
         img:'/imgs/b3.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
       {
         id:4,
         img:'/imgs/b4.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
       {
         id:5,
         img:'/imgs/b5.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
       {
         id:6,
         img:'/imgs/b6.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
       {
         id:7,
         img:'/imgs/background3.jpg',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
       {
         id:8,
         img:'/imgs/webwxgetmsgimg.jpeg',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
     ]
@@ -93,19 +93,19 @@ class SellingProducts extends React.Component{
       {
         id:'KxP7o3wWKjyfd3Cc7',
         img:'/imgs/b1.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356.11,
       },
       {
         id:2,
         img:'/imgs/b2.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
       {
         id:3,
         img:'/imgs/b3.png',
-        title:'万人车汇黑卡',
+        title:'鲜至臻品黑卡',
         price:356,
       },
     ]
@@ -116,14 +116,14 @@ class SellingProducts extends React.Component{
 
   componentDidMount(){
     const { dispatch, layout,user  } = this.props;
-    if(layout.title!=='万人车汇商品库'){
+    if(layout.title!=='正在出售的商品'){
       dispatch(loadAgencyProducts(user.shopId))
 
         dispatch(setAppLayout(
             {
                 isBack: true, 
                 backTo: "/my", 
-                title: "万人车汇商品库", 
+                title: "正在出售的商品", 
                 hasCart: false, 
                 hasBottomNav: false, 
                 hasGeoLoc: false,

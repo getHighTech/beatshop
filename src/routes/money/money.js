@@ -139,12 +139,12 @@ class Money extends React.Component{
    
    console.log(money.staticDone);
      
-    if(!money.staticDone && money.balance_incomes === "unloaded"){
+    // if(!money.staticDone && money.balance_incomes === "unloaded"){
        dispatch(loadMoneyPage(getStore('userId')));
        dispatch(getIncomeWithTime(1, getStore("userId"),"days"))
        dispatch(getIncomeWithTime(1, getStore("userId"),"weeks"))
        dispatch(getIncomeWithTime(1, getStore("userId"),"months"))
-    }
+    // }
 
     this.setState({
       page: 1
@@ -183,7 +183,7 @@ class Money extends React.Component{
     return(
       <div>
         <Bankcard isBankcard={false} 
-        cardData={{title:user.user.username,subtitle:'已在万人车汇获得佣金',carNumber:'￥'+totalAmount}}/>
+        cardData={{title:user.user.username,subtitle:'已在鲜至臻品获得佣金',carNumber:'￥'+totalAmount}}/>
         <Card className={classes.card}>
           <CardContent>
             <Typography component="div" className={classes.title} color="textSecondary">

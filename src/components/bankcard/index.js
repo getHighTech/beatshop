@@ -70,7 +70,7 @@ class Bankcard extends React.Component{
   } 
 
   render(){
-    const { classes, cardData } = this.props;
+    const { classes, cardData, cardId } = this.props;
     return(
       <div>
         <Card className={classes.card}>
@@ -113,7 +113,7 @@ class Bankcard extends React.Component{
               <Button size="small" variant="raised" color="secondary" onClick={()=>this.removeBankcard(this.props.bankcardId)}>解除绑定</Button>
             </CardActions>:            
             <Typography component="p" className={classes.chips}>
-              用了万人车汇，赚钱就是这么简单
+              鲜至臻品,自用省钱，分享赚钱
             </Typography>
           }
 
