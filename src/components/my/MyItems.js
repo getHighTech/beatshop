@@ -48,7 +48,8 @@ const styles = theme => ({
 class MyItems extends React.Component{
     state = {
          open: false,
-         confirmContent: "开店需要鲜至臻品黑卡权限，是否立即购买黑卡？",
+
+         confirmContent: "开店需要购买优选会员卡，是否立即购买？",
          confirmOpen: false
         };
     handleClick = () => {
@@ -193,7 +194,7 @@ class MyItems extends React.Component{
                 onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
                 >
-                <DialogTitle id="form-dialog-title">推荐购买黑卡</DialogTitle>
+                <DialogTitle id="form-dialog-title"></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                     {this.state.confirmContent}

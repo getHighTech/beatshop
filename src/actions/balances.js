@@ -1,5 +1,6 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { getStore } from "../tools/localStorage";
+import axios from 'axios';
 
 export const  LOAD_MONEY_PAGE = "LOAD_MONEY_PAGE";
 export const  EXPECT_LOAD_MONEY_PAGE = "EXPECT_LOAD_MONEY_PAGE";
@@ -27,6 +28,16 @@ export function loadMoneyPageSuccess(msg){
 export function loadMoneyPage(userId){
     return (dispatch, getState) => {
         dispatch(expectLoadMoneyPage());
+        // return axios.get('http://localhost:1235/api/loadMoney',{
+        //     params: {
+        //     userId
+        //     }
+        // }).then((res)=>{
+        //     console.log(res)
+        //     dispatch(loadMoneyPageSuccess(res.data))
+        // }).catch((err)=>{
+        //     console.log(err)
+        // })
         return getRemoteMeteor(dispatch, getState, 'balances', "app.load.money.page",
     [userId], loadMoneyPageSuccess, loadMoneyPageFail);
     }
@@ -183,6 +194,20 @@ export function getIncomeWithTime(rangLength, userId, unit){
                 dispatch(getIncomesLimitFail("too many"))
             }
         dispatch(expectGetIncomesWithinTime(unit));
+        // axios.get('http://localhost:1235/api/shop',{
+        //     params: {
+        //           userId,
+        //           rangLength,
+        //           unit
+        //       }
+        //     }).then((res)=>{
+        //         console.log(res)
+        //         if(res){
+        //            return dispatch(getIncomeWithTimeSuccess(res.data))
+        //         }
+        //     }).catch((err)=>{
+        //         console.log(err)
+        //     })
         return getRemoteMeteor(
             dispatch,getState, "balances",
              "app.get.incomes.time.range",
