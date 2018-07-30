@@ -111,10 +111,6 @@ class NewContact extends React.Component {
     if (!address || !/^[\u4e00-\u9fa5]{1}\S/.test(address)) {
       errors.address = '地址输入格式错误'
     }
-    if (!carNumber || !/^[\u4e00-\u9fa5]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{3}/.test(carNumber)) {
-      errors.carNumber = '车牌号格式错误'
-    }
-    console.log(errors)
     return errors
   }
 
@@ -153,15 +149,6 @@ class NewContact extends React.Component {
           helperText={errors.address}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "address")}
         />
-        <TextField
-          id="full-width"
-          label="车牌号码(如购买黑卡，此项目必须填写)"
-          fullWidth  error={this.state.carNumberFeildError}
-          margin="normal"
-          value={this.state.carNumber}
-          helperText={errors.carNumber}
-          onChange={(e)=>this.handleInputChange.bind(this)(e, "carNumber")}
-        /><br/>
         <Button type="button" onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>        
         </form>
       </div>

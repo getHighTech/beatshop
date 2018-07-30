@@ -41,7 +41,7 @@ const styles = theme => ({
     color: "white",
   },
   root:{
-    backgroundColor:'#151313',
+    backgroundColor:'#A1C2B4',
     height:700
   },
 
@@ -203,7 +203,7 @@ class AppLoginPassword extends React.Component {
     return (
           <div className={classes.root}>
             <div className={classes.logo}>
-              <img style={{width:'70%',marginLeft:'15%'}}alt="LOGO" src={require('../../components/imgs/webwxgetmsgimg.jpeg')} />
+              <img style={{width:'100%'}}alt="LOGO" src={require('../../components/imgs/xianzhilogo.jpg')}  />
             </div>
             <Card className={classes.card}>
               <CardContent>

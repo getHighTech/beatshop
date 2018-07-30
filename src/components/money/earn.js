@@ -97,11 +97,11 @@ class Earn extends React.Component{
                 </TableRow>
               </TableHead>
               <TableBody>
-                {/* <TableRow className={classes.row}>
+                <TableRow className={classes.row}>
                   <TableCell className={classes.incomeNumber} numeric>{(money.todayTotalAmount/100).toString()}</TableCell>
                   <TableCell className={classes.incomeNumber} numeric>{(money.weekTotalAmount/100).toString()}</TableCell>
                   <TableCell className={classes.incomeNumber} numeric>{(money.monthTotalAmount/100).toString()}</TableCell>
-                </TableRow> */}
+                </TableRow>
               </TableBody>
             </Table>
           </Typography>
