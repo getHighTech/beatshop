@@ -98,14 +98,14 @@ class Shop extends React.Component{
 
     ]
   };
-   onClick() {
-    alert("跳转到商品详情")
+  Jump = (productId)  =>{
+      this.props.history.push(`/products/${productId}`)
   }
   handleChange = (event, value) => {
     this.setState({ value });
   };
-  share(){
-    alert("跳到分享页面")
+  Share = (productId) => {
+    this.props.history.push(`/share/${productId}`)
   }
 
   loadMoreProductData(){
@@ -162,7 +162,7 @@ class Shop extends React.Component{
           <Avatar className={classes.avatar}>{shop.name!==undefined? this.sub(shop.name):null}</Avatar>
           </div>
           <div  className={classes.title}>{shop.name}</div>
-          <div  className={classes.title}>我在猪八戒，服务全世界</div>
+          <div  className={classes.title}></div>
         </div>
           <Tabs value={value} 
           onChange={this.handleChange}
@@ -183,13 +183,13 @@ class Shop extends React.Component{
                     <img src={product.cover} alt={product.title} style={{height:60,width:60}}/>     
                   </Grid>
                   <Grid item xs={9} sm={9}>
-                    <a id={product.id} onClick={this.onClick.bind(this)} className={classes.a}>
+                    <a id={product.id} onClick={()=>this.Jump(product._id)} className={classes.a}>
                       <div className={classes.productName}>{product.name_zh}</div>
                     </a>      
                     <div className={classes.cardBottom}>
                       <div className={classes.productPrice}>价格:¥{product.price/100}</div>
                       <div className={classes.share}>
-                        <IconButton color="primary" onClick={this.share} className={classes.button} aria-label="Add an alarm">
+                        <IconButton color="primary" onClick={()=>this.Share(product._id)} className={classes.button} aria-label="Add an alarm">
                           <Icon>share</Icon>
                         </IconButton>
                       </div>
