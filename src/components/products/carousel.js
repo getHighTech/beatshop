@@ -20,11 +20,14 @@ function ProductCarousel(props) {
   return (
             <Carousel className={classes.root} showThumbs={false}>
                 {
+                  imgs!==undefined?
                     imgs.map((img, index)=>{
                         return <div key={index}>
                                 <img src={img} alt="产品图片，版权所有" />
                             </div>
                     })
+                    :
+                    null
                 }
                
             </Carousel>

@@ -1,5 +1,5 @@
 import { EXPECT_HOME_INDEX_PRODUCTS, LOAD_HOME_INDEX_PRODUCTS_SUCCESS } from "../actions/process/home_index";
-import { GET_SHOP_PRODUCTS_LIMIT_SUCCESS, EXPECT_GET_SHOP_PRODUCTS_LIMIT } from "../actions/products";
+import { GET_SHOP_PRODUCTS_LIMIT_SUCCESS, EXPECT_GET_SHOP_PRODUCTS_LIMIT,SHOP_PRODUCTS_PAGE } from "../actions/products";
 
 export default function ProductsList
 (
@@ -8,6 +8,7 @@ export default function ProductsList
         loading: "true",
         products: [],
         shopProducts: "unloaded",
+        page: 1,
     },
     action
 ){
@@ -35,7 +36,10 @@ export default function ProductsList
                 loading: false,
                 shopProducts: action.msg,
             })
-    
+        case SHOP_PRODUCTS_PAGE:
+            return Object.assign({}, state, {
+                page: action.page+=1
+            })
         default:
             return state;
     }
