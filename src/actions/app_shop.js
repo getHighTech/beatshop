@@ -5,7 +5,7 @@ import { dealWithError } from "./error_fail";
 export const EXPECT_SHOP_PRODUCTS_LIMIT = "EXPECT_SHOP_PRODUCTS_LIMIT";
 export const GET_SHOP_PRODUCTS_LIMIT_SUCCESS = "GET_SHOP_PRODUCTS_LIMIT_SUCCESS";
 export const GET_SHOP_PRODUCTS_LIMIT_FAIL = "GET_SHOP_PRODUCTS_LIMIT_FAIL";
-
+export const SHOP_PRODUCTS_PAGE = "SHOP_PRODUCTS_PAGE";
 
 
 export function expectShopProductsLimit(){
@@ -27,6 +27,14 @@ export function getShopProductsLimitSuccess(msg){
     return {
         type: GET_SHOP_PRODUCTS_LIMIT_SUCCESS,
         msg
+    }
+}
+
+export function getShopProductsPage(page) {
+    console.log(page)
+    return {
+        type: SHOP_PRODUCTS_PAGE,
+        page
     }
 }
 

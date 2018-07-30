@@ -2,6 +2,7 @@ import {
     EXPECT_SHOP_PRODUCTS_LIMIT,
     GET_SHOP_PRODUCTS_LIMIT_SUCCESS,
     GET_SHOP_PRODUCTS_LIMIT_FAIL,
+    SHOP_PRODUCTS_PAGE
 } from "../actions/app_shop";
 
 export default function  AppShop(
@@ -10,6 +11,7 @@ state={
    loadFailReason: "",
    shop: {},
    products: [],
+   page: 1,
 }, action
 ){
 switch (action.type) {
@@ -26,7 +28,13 @@ switch (action.type) {
             loading: false,
             shop: action.msg.shop,
             products: action.msg.products,
+            page: action.page*1+1
         })
+    case SHOP_PRODUCTS_PAGE:
+    console.log(action)
+    return Object.assign({}, state, {
+        page: action.page*1+1
+    })
     default:
         return state;
     }
