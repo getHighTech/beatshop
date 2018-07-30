@@ -46,9 +46,10 @@ const styles = theme => ({
   }
 });
 class MyItems extends React.Component{
-    state = { 
+    state = {
          open: false,
-         confirmContent: "开店需要鲜至臻品黑卡权限，是否立即购买黑卡？", 
+
+         confirmContent: "开店需要购买优选会员卡，是否立即购买？",
          confirmOpen: false
         };
     handleClick = () => {
@@ -72,10 +73,10 @@ class MyItems extends React.Component{
     handleGoToShop = (my='') => {
         const { user, history  } = this.props;
         console.log('my:'+ my);
-        
+
         let shopId = user.shopId;
-        
-        
+
+
         if(user.agencyRole!==false){
             console.log(`走这里`)
             history.push(my+"/products");
@@ -86,16 +87,16 @@ class MyItems extends React.Component{
                 confirmOpen: true,
             })
 
-            
-            
+
+
         }
-        
+
     }
 
     handleGoToMemeberCenter(){
-        
+
     }
-    
+
     render(){
         const { classes, user } = this.props;
     return (
@@ -107,11 +108,11 @@ class MyItems extends React.Component{
                             src={userImg}
                             className={classNames(classes.bigAvatar)}
                         />
-                <ListItemText primary={this.props.user.user.nickname} 
+                <ListItemText primary={this.props.user.user.nickname}
                 secondary={this.props.user.user.username} />
                 <ListItemText primary={this.props.user.user.dataAutograph}  />
                 </ListItem>
-                {this.props.user.roles.includes("blackcard_holder") && 
+                {this.props.user.roles.includes("blackcard_holder") &&
                     <ListItem button component="a" href="#/my/blackcard_holder">
                     <ListItemIcon className={classes.listIcon}>
                         <Face />
@@ -121,7 +122,7 @@ class MyItems extends React.Component{
             </List>
             <Divider />
             {
-                user.user.username !== "wanchehui" && 
+                user.user.username !== "wanchehui" &&
                 <div>
                     <ListItem button onClick={this.handleClick}>
                     <ListItemIcon className={classes.listIcon}>
@@ -146,14 +147,14 @@ class MyItems extends React.Component{
                         </ListItem>
                         </List>
                     </Collapse>
-                    <Divider />    
+                    <Divider />
                 </div>
         }
-         
-       
+
+
             <List component="nav">
             {
-                user.senior === true ? 
+                user.senior === true ?
                 <div>
                     <ListItem button component="a" href="#/my/team">
                     <ListItemIcon className={classes.listIcon}>
@@ -166,9 +167,9 @@ class MyItems extends React.Component{
                 </div>
                 :
                 null
-            
+
             }
-              
+
 
                 <ListItem button component="a" href="#/my/orders">
                 <ListItemIcon className={classes.listIcon}>
@@ -179,8 +180,8 @@ class MyItems extends React.Component{
 
                 <Divider />
 
-               
-                
+
+
                 <ListItem button component="a" href="#/my/bankcards_list">
                 <ListItemIcon className={classes.listIcon}>
                     <CreditCard />
@@ -193,12 +194,12 @@ class MyItems extends React.Component{
                 onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
                 >
-                <DialogTitle id="form-dialog-title">推荐购买黑卡</DialogTitle>
+                <DialogTitle id="form-dialog-title"></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                     {this.state.confirmContent}
                     </DialogContentText>
-                    
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handleConfirmCancel} color="primary">

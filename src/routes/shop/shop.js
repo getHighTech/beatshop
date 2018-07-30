@@ -14,6 +14,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { setAppLayout } from '../../actions/app';
+import { getShopProductsLimit } from '../../actions/app_shop'
 
 
 
@@ -90,6 +91,7 @@ class Shop extends React.Component{
   state = {
     value: 0,
     productsTotle:7,
+    page: 2,
     products:[
       {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
       {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
@@ -97,34 +99,46 @@ class Shop extends React.Component{
 
     ]
   };
-   onClick() {
-    alert("跳转到商品详情")
+  Jump = (productId)  =>{
+      this.props.history.push(`/products/${productId}`)
   }
   handleChange = (event, value) => {
     this.setState({ value });
   };
-  share(){
-    alert("跳到分享页面")
+  Share = (productId) => {
+    this.props.history.push(`/share/${productId}`)
   }
 
   loadMoreProductData(){
-    let products = [
-      {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
-      {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
-      {id:3,name:'超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示',price:1200,img:'/imgs/b3.png',title:'店铺图片'},
-      {id:4,name:'测试商品1',price:11,img:'/imgs/b1.png',title:'店铺图片'},
-      {id:5,name:'测试商品2',price:1.0021,img:'/imgs/b2.png',title:'店铺图片'},
-      {id:6,name:'测试商品3',price:1231,img:'/imgs/b3.png',title:'店铺图片'},
-      {id:7,name:'测试商品4',price:1233,img:'/imgs/b1.png',title:'店铺图片'},
+    const { dispatch, layout, match,shop } = this.props;
+    let shopId = match.params.id
+    this.props.dispatch(getShopProductsLimit(shopId,shop.page,4))
+    // let products = [
+    //   {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
+    //   {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
+    //   {id:3,name:'超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示',price:1200,img:'/imgs/b3.png',title:'店铺图片'},
+    //   {id:4,name:'测试商品1',price:11,img:'/imgs/b1.png',title:'店铺图片'},
+    //   {id:5,name:'测试商品2',price:1.0021,img:'/imgs/b2.png',title:'店铺图片'},
+    //   {id:6,name:'测试商品3',price:1231,img:'/imgs/b3.png',title:'店铺图片'},
+    //   {id:7,name:'测试商品4',price:1233,img:'/imgs/b1.png',title:'店铺图片'},
 
-    ]
-    this.setState({products:products})
+    // ]
+    // const  page = this.state.page+=1
+    // console.log(page)
+    // let shopId = this.props.match.params.id
+    // this.props.dispatch(getShopProductsLimit(shopId,page,4))
+    // this.setState({ 
+    //   page
+    // })
   }
   componentDidMount(){
-    const { dispatch, layout } = this.props;
-    console.log(this.props);
-    
+    const { dispatch, layout, match,shop } = this.props;
+    let shopId = match.params.id
+  
     if(layout.title!=='店铺详情'){
+      if(shopId){
+        dispatch(getShopProductsLimit(shopId,shop.page,4))
+      }
         dispatch(setAppLayout(
             {
                 isBack: true, 
@@ -139,8 +153,15 @@ class Shop extends React.Component{
         ));
     }
   }
+
+
+  sub = (name) => {
+    return name.substr(0,1)
+  }
   render(){
     const { classes } = this.props;
+    const { shop, products } = this.props.shop;
+
     const { value } = this.state;
   
 
@@ -149,10 +170,10 @@ class Shop extends React.Component{
       <div>
         <div className={classes.shopHeader}>
           <div className={classes.avatarBox}>
-          <Avatar className={classes.avatar}>H</Avatar>
+          <Avatar className={classes.avatar}>{shop.name!==undefined? this.sub(shop.name):null}</Avatar>
           </div>
-          <div  className={classes.title}>打码少年</div>
-          <div  className={classes.title}>我在猪八戒，服务全世界</div>
+          <div  className={classes.title}>{shop.name}</div>
+          <div  className={classes.title}></div>
         </div>
           <Tabs value={value} 
           onChange={this.handleChange}
@@ -164,22 +185,22 @@ class Shop extends React.Component{
           </Tabs>
         {value === 0 && 
         <TabContainer>
-        {this.state.products.map(product => {
+        {products.map(product => {
           return (
-            <Card className={classes.card} key={product.id}>
+            <Card className={classes.card} key={product._id}>
               <div className={classes.cardContent}>
                 <Grid container spacing={24}>
                   <Grid item xs={3} sm={3}>
-                    <img src={product.img} alt={product.title} style={{height:60,width:60}}/>     
+                    <img src={product.cover} alt={product.title} style={{height:60,width:60}}/>     
                   </Grid>
                   <Grid item xs={9} sm={9}>
-                    <a id={product.id} onClick={this.onClick.bind(this)} className={classes.a}>
-                      <div className={classes.productName}>{product.name}</div>
+                    <a id={product.id} onClick={()=>this.Jump(product._id)} className={classes.a}>
+                      <div className={classes.productName}>{product.name_zh}</div>
                     </a>      
                     <div className={classes.cardBottom}>
-                      <div className={classes.productPrice}>价格:¥{product.price}</div>
+                      <div className={classes.productPrice}>价格:¥{product.price/100}</div>
                       <div className={classes.share}>
-                        <IconButton color="primary" onClick={this.share} className={classes.button} aria-label="Add an alarm">
+                        <IconButton color="primary" onClick={()=>this.Share(product._id)} className={classes.button} aria-label="Add an alarm">
                           <Icon>share</Icon>
                         </IconButton>
                       </div>
@@ -203,7 +224,7 @@ class Shop extends React.Component{
         }
       </div>
         </TabContainer>}
-        {value === 1 && <TabContainer>敬请期待精彩的简介</TabContainer>}
+        {value === 1 && <TabContainer>{shop.description}</TabContainer>}
       </div>
     )
   }
@@ -212,7 +233,8 @@ function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    shop: state.AppShop,
   }
 }
 
