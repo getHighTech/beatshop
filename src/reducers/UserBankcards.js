@@ -6,7 +6,6 @@ import {
     DELETE_BANKCARD_SUCCESS,
     } from "../actions/bankcards";
 import { APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH } from "../actions/app";
-
 export default function UserBankcards(
     state={
         cards: "unloaded",
