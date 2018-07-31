@@ -45,8 +45,6 @@ export function loadShareProdcut(id){
 export function loadAgencyProducts(shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyProducts())
-        console.log(`开始了`)
-        console.log(`${shopId}`)
         return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
     }
 }
