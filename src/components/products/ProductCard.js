@@ -79,7 +79,7 @@ class ProductCard extends React.Component{
     console.log('------------------------------------');
   }
   render(){
-    const { classes, _id,name_zh,cover,endPrice,description, agencyLevelPrices } = this.props;
+    const { classes, _id,name_zh,cover,endPrice,description, agencyLevelPrices,brief } = this.props;
     console.log(`来了`)
     console.log(this.props)
     return(
@@ -92,7 +92,7 @@ class ProductCard extends React.Component{
               <div className={classes.rightContent}>
                 <a  onClick={this.onClick.bind(this)} className={classes.a}>
                   <div className={classes.productName}>{name_zh}</div>
-                  <div className={classes.subProductName}>{description}</div>
+                  <div className={classes.subProductName}>{brief}</div>
                 </a>      
                 <div className={classes.cardBottom}>
                   <div className={classes.productPrice}>
