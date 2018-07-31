@@ -74,7 +74,7 @@ class Share extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.header}>
-          <img alt='logo' src={require('../../components/imgs/WechatIMG171.png')} style={{height:160}}/>
+          <img alt='logo' src={require('../../components/imgs/WechatIMG171.png')} style={{height:200,marginTop: -56,}}/>
           <div className={classes.slogon}>与其在别处仰望，不如在这里并肩</div>
         </div>
         <div className={classes.cover}>

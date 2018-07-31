@@ -74,7 +74,6 @@ class MyItems extends React.Component{
         const { user, history  } = this.props;
         console.log('my:'+ my);
 
-        let shopId = user.shopId;
 
 
         if(user.agencyRole!==false){

@@ -77,7 +77,7 @@ class OrderCard extends React.Component{
   }
   render(){
     console.log(this.props)
-    const {classes,id, products,productCounts,totalAmount,count,status,_id,userId,orderId} = this.props
+    const {classes, products,productCounts,totalAmount,count,status,_id,userId,orderId} = this.props
     console.log(orderId)
     return(
       <div className={classes.root}>
