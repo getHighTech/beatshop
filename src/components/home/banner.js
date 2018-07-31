@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux';
-import Image from '../imgs/WechatIMG620.jpeg';
+import Image from '../imgs/wanrenchehui_banner.jpg';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 
@@ -85,7 +85,7 @@ class AppBanner extends React.Component {
                       color="inherit"
                     
                     >
-                     鲜至臻品
+                      万人车汇
                     
                     </Typography>
                     <br/>
@@ -95,8 +95,7 @@ class AppBanner extends React.Component {
                       color="inherit"
                     
                     >
-                     <h1>鲜至臻品</h1>
-                     <h4  className={classes.text}>我们不一样</h4>
+                     享受精彩汽车生活
                     
                     </Typography>
                     <br/>

@@ -54,7 +54,7 @@ function ProductGridList(props) {
     justify="center"
    >
       <div className={classes.solgon}>
-        <img alt="新品上市"  style={{width:'100%',height:'auto'}} src={require("../imgs/WechatIMG18.jpeg")}/>
+        <img alt="新品上市"  style={{width:'100%',height:'auto'}} src={require("../imgs/wanrenchehui_product_banner.jpeg")}/>
       </div>
     
       <GridList 
