@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setAppLayout } from '../../actions/app';
-import { loadUserProducts } from '../../actions/users';
-
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -14,6 +12,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import styled from 'styled-components';
 const styles = theme => ({
   root: {
     width: '100%',
@@ -63,7 +62,6 @@ class EditDatas extends Component {
                 hasSearch: false,
             }
         ));
-        dispatch(loadUserProducts());
     }
   }
   render(){

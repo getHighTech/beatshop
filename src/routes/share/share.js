@@ -17,7 +17,8 @@ const styles = theme => ({
   slogon:{
     fontSize:13,
     fontWeight:900,
-    paddingBottom:10
+    paddingBottom:10,
+    marginTop: -60
   },
   description:{
     fontSize:13,
@@ -73,7 +74,7 @@ class Share extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.header}>
-          <img alt='logo' src={require('../../components/imgs/xianzhilogo.jpg')} style={{height:60}}/>
+          <img alt='logo' src={require('../../components/imgs/WechatIMG171.png')} style={{height:160}}/>
           <div className={classes.slogon}>与其在别处仰望，不如在这里并肩</div>
         </div>
         <div className={classes.cover}>
@@ -85,7 +86,7 @@ class Share extends React.Component {
         </div>
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
         <div className={classes.qecode}>
-          <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo={require('../../components/imgs/xianzhilogo.jpg')}/>
+          <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo={require('../../components/imgs/WechatIMG171.png')}/>
         </div>
       </div>
      )
