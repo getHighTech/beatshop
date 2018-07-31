@@ -34,6 +34,7 @@ const styles = theme => ({
   },
   solgon:{
     width:'100%',
+    marginTop: -34
   }
 });
 
