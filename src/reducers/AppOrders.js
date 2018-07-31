@@ -2,11 +2,6 @@ import {
          EXPECT_ORDERS_LIMIT,
          GET_ORDERS_LIMIT_SUCCESS,
          GET_ORDERS_LIMIT_FAIL,
-
-         GET_ORDER_CANCEL_SUCCESS,
-         CHANGE_ORDER_STATUS,
-         EXPECT_CANCEL_ORDER,
-         CANCEL_ORDER_FAIL,
          CANCEL_ORDER_SUCCESS,
 
         } from "../actions/app_orders";

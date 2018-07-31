@@ -21,7 +21,7 @@ const styles = theme => ({
         padding:10
     },
     productBrief:{
-        fontSize:16
+        fontSize:14
     },
     productPrice:{
         display:'flex',
@@ -30,10 +30,13 @@ const styles = theme => ({
         paddingTop:10
     },
     send:{
-        fontSize:16
+        fontSize:14
     },
     price:{
         color:'#ff5722'
+    },
+    productName: {
+        fontSize: '20px'
     }
 
   });

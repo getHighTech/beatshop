@@ -10,7 +10,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import OrderCard from '../../components/orders/OrderCard'
-import { getOrdersLimit } from '../../actions/app_orders'
 import axios from 'axios';
 import { getStore } from '../../tools/localStorage';
 import serverConfig  from '../../config/server';
@@ -72,7 +71,7 @@ const styles = theme => ({
 
 })
 
-const hosturl = 'http://test2.10000cars.cn'
+
 
 class MyOrders extends React.Component{
   state = {
@@ -91,8 +90,6 @@ class MyOrders extends React.Component{
   };
 
   handleChange = (event, value) => {
-    const { dispatch
-     } = this.props;
      let userId = getStore("userId");
      var status;
      switch (value) {
@@ -149,6 +146,7 @@ class MyOrders extends React.Component{
             .catch((err)=>{
               console.log(err)
             })
+            break
        case 3:
         status = "cancel";
 
@@ -167,8 +165,10 @@ class MyOrders extends React.Component{
             .catch((err)=>{
               console.log(err)
             })
-       default:
-         break;
+          break
+        default: 
+            
+        
      }
     this.setState({ value });
   };
@@ -193,7 +193,7 @@ class MyOrders extends React.Component{
     this.setState({withdrawData:dataSource1})
   }
   componentDidMount(){
-    const { dispatch, layout, orders } = this.props;
+    const { dispatch, layout} = this.props;
 
     if(layout.title!=='我的订单'){
         dispatch(setAppLayout(
@@ -234,8 +234,8 @@ class MyOrders extends React.Component{
 
   }
   render (){
-    const { classes, orders, user} = this.props;
-    const { value,withdrawData, order_confirmed, order_paid, order_recevied,order_cancel} = this.state;
+    const { classes,  user} = this.props;
+    const { value, order_confirmed, order_paid, order_recevied,order_cancel} = this.state;
     return(
       <div>
         <Card className={classes.card}>

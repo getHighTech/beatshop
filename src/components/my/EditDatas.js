@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setAppLayout } from '../../actions/app';
-import { loadUserProducts } from '../../actions/users';
-
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -63,7 +61,6 @@ class EditDatas extends Component {
                 hasSearch: false,
             }
         ));
-        dispatch(loadUserProducts());
     }
   }
   render(){

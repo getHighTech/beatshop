@@ -45,8 +45,7 @@ export function loadShareProdcut(id){
 export function loadAgencyProducts(shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyProducts())
-        console.log(`开始了`)
-        console.log(`${shopId}`)
+        console.log(shopId)
         return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
     }
 }
@@ -85,8 +84,14 @@ export const GET_SHOP_PRODUCTS_LIMIT = "GET_SHOP_PRODUCTS_LIMIT";
 export const EXPECT_GET_SHOP_PRODUCTS_LIMIT = "EXPECT_GET_SHOP_PRODUCTS_LIMIT";
 export const GET_SHOP_PRODUCTS_LIMIT_FAIL = "GET_SHOP_PRODUCTS_LIMIT_FAIL";
 export const GET_SHOP_PRODUCTS_LIMIT_SUCCESS = "GET_SHOP_PRODUCTS_LIMIT_SUCCESS";
+export const SHOP_PRODUCTS_PAGE = "SHOP_PRODUCTS_PAGE";
 
-
+export function getShopProductsPage(page) {
+    return {
+        type: SHOP_PRODUCTS_PAGE,
+        page
+    }
+}
 
 export function expectGetShopProductsLimit(){
     return {

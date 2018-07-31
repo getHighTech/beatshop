@@ -91,6 +91,7 @@ class Shop extends React.Component{
   state = {
     value: 0,
     productsTotle:7,
+    page: 2,
     products:[
       {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
       {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
@@ -109,25 +110,34 @@ class Shop extends React.Component{
   }
 
   loadMoreProductData(){
-    let products = [
-      {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
-      {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
-      {id:3,name:'超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示',price:1200,img:'/imgs/b3.png',title:'店铺图片'},
-      {id:4,name:'测试商品1',price:11,img:'/imgs/b1.png',title:'店铺图片'},
-      {id:5,name:'测试商品2',price:1.0021,img:'/imgs/b2.png',title:'店铺图片'},
-      {id:6,name:'测试商品3',price:1231,img:'/imgs/b3.png',title:'店铺图片'},
-      {id:7,name:'测试商品4',price:1233,img:'/imgs/b1.png',title:'店铺图片'},
+    const {  match,shop } = this.props;
+    let shopId = match.params.id
+    this.props.dispatch(getShopProductsLimit(shopId,shop.page,4))
+    // let products = [
+    //   {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
+    //   {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
+    //   {id:3,name:'超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示',price:1200,img:'/imgs/b3.png',title:'店铺图片'},
+    //   {id:4,name:'测试商品1',price:11,img:'/imgs/b1.png',title:'店铺图片'},
+    //   {id:5,name:'测试商品2',price:1.0021,img:'/imgs/b2.png',title:'店铺图片'},
+    //   {id:6,name:'测试商品3',price:1231,img:'/imgs/b3.png',title:'店铺图片'},
+    //   {id:7,name:'测试商品4',price:1233,img:'/imgs/b1.png',title:'店铺图片'},
 
-    ]
-    this.setState({products:products})
+    // ]
+    // const  page = this.state.page+=1
+    // console.log(page)
+    // let shopId = this.props.match.params.id
+    // this.props.dispatch(getShopProductsLimit(shopId,page,4))
+    // this.setState({ 
+    //   page
+    // })
   }
   componentDidMount(){
-    const { dispatch, layout, match } = this.props;
+    const { dispatch, layout, match,shop } = this.props;
     let shopId = match.params.id
   
     if(layout.title!=='店铺详情'){
       if(shopId){
-        dispatch(getShopProductsLimit(shopId,1,4))
+        dispatch(getShopProductsLimit(shopId,shop.page,4))
       }
         dispatch(setAppLayout(
             {
@@ -151,6 +161,7 @@ class Shop extends React.Component{
   render(){
     const { classes } = this.props;
     const { shop, products } = this.props.shop;
+
     const { value } = this.state;
   
 

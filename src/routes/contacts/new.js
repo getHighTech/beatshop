@@ -26,7 +26,6 @@ class NewContact extends React.Component {
      name: "",
      mobile: "",
      address: "",
-     carNumber: "",
      nameFeildError: true,
      mobileFeildError: true,
      addressFeildError: true,
@@ -99,7 +98,7 @@ class NewContact extends React.Component {
 
 
   validate = () => {
-    const {name, mobile , address , carNumber} = this.state
+    const {name, mobile , address } = this.state
 
     const errors = {}
     if (!name || !/^[\u4e00-\u9fa5]{1}\S/.test(name)) {
