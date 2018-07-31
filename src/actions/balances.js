@@ -57,7 +57,7 @@ export function expectWithdrawMoney(){
 }
 export function withdrawMoneyFail(reason){
     console.log("提现失败了", reason);
-    
+
     return {
         type: WITHDRAW_MONEY_FAIL,
         reason,
@@ -72,13 +72,13 @@ export function withdrawMoneySuccess(msg){
 export function withdrawMoney(withdrawParams){
     return (dispatch, getState)=>{
         dispatch(expectWithdrawMoney());
-        return getRemoteMeteor(dispatch, getState, 
+        return getRemoteMeteor(dispatch, getState,
             "balances", 'app.withdraw.money',
-                [withdrawParams.userId, 
-                withdrawParams.amount, 
-                withdrawParams.bankId, 
-                withdrawParams.bank], 
-            withdrawMoneySuccess, 
+                [withdrawParams.userId,
+                withdrawParams.amount,
+                withdrawParams.bankId,
+                withdrawParams.bank],
+            withdrawMoneySuccess,
             withdrawMoneyFail);
     }
 }
@@ -160,7 +160,7 @@ export const GET_INCOMES_WITHIN_TIME_SUCCESS = "GET_INCOMES_WITHIN_TIME_SUCCESS"
 
 let sendTimes = 0;
 export function expectGetIncomesWithinTime(unit){
-    
+
     return {
         type: EXPECT_GET_INCOMES_WITHIN_TIME,
         unit
@@ -170,7 +170,7 @@ export function expectGetIncomesWithinTime(unit){
 
 export function getIncomeWithTimeSuccess(msg){
     sendTimes = 0;
-    
+
     return {
         type: GET_INCOMES_WITHIN_TIME_SUCCESS,
         msg
@@ -187,7 +187,7 @@ export function getIncomeWithTimeFail(reason){
 
 
 export function getIncomeWithTime(rangLength, userId, unit){
-    
+
     return (dispatch, getState) => {
             sendTimes = sendTimes + 1;
             if(sendTimes >1){
@@ -257,11 +257,10 @@ export function getIncomesLimit(page, pagesize){
         }
         dispatch(expectGetIncomeLimit());
         console.log("Tpage", Tpage);
-        
-        return getRemoteMeteor(dispatch, getState, "balances", 
+
+        return getRemoteMeteor(dispatch, getState, "balances",
         "app.get.incomes.limit", [getStore("userId"), Tpage, pagesize],
         getIncomesLimitSuccess, getIncomesLimitFail
     )
     }
 }
-
