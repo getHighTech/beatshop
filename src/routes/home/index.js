@@ -67,6 +67,7 @@ class Home extends React.Component {
       //   }
       // }
         const { dispatch } = this.props
+
         dispatch(loadHomeIndexProducts());
         dispatch(setAppLayout(
             {
