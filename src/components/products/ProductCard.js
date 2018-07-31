@@ -68,7 +68,7 @@ class ProductCard extends React.Component{
     console.log('------------------------------------');
   }
   share(id){
-    const { history,dispatch,cover } = this.props
+    const { history } = this.props
     console.log('------------------------------------');
     history.push('/share/'+id)
     console.log('------------------------------------');
@@ -79,7 +79,7 @@ class ProductCard extends React.Component{
     console.log('------------------------------------');
   }
   render(){
-    const { classes, _id,name_zh,cover,endPrice,description, agencyLevelPrices,brief } = this.props;
+    const { classes, _id,name_zh,cover,endPrice, agencyLevelPrices,brief } = this.props;
     console.log(`来了`)
     console.log(this.props)
     return(
