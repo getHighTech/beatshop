@@ -1,8 +1,6 @@
 import { 
     EXPECT_LOAD_USER_BANK_CARDS,
     LOAD_USER_BANK_CARDS_SUCCESS ,
-    EXPECT_DELETE_BANKCARD,
-    DELETE_BANKCARD_FAIL,
     DELETE_BANKCARD_SUCCESS,
     } from "../actions/bankcards";
 import { APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH } from "../actions/app";

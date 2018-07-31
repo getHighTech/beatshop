@@ -167,7 +167,6 @@ export function loadOneOrderFail(reason){
 
 export function loadOneOrderSuccess(msg){
     return dispatch => {
-        let carNumberNeed = false;
         return dispatch({
             type: LOAD_ONE_ORDER_SUCCESS,
             msg

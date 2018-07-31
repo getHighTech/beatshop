@@ -45,7 +45,6 @@ import EditData from './my/EditData'
 import WechatChecker from './WechatChecker.js';
 import Team from '../routes/team/index';
 import Toast from '../routes/toast/index';
-import { getToken } from '../actions/token';
 
 
 const history = createHistory();
@@ -84,7 +83,7 @@ class App extends React.Component {
         dispatch(syncRemoteUser());
         if(!appInfo.init){
 
-            dispatch(loadGeoAddress());
+            dispatch(loadGeoAddress());   
             dispatch(loadApp());
         }
 

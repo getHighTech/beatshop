@@ -110,7 +110,7 @@ class Shop extends React.Component{
   }
 
   loadMoreProductData(){
-    const { dispatch, layout, match,shop } = this.props;
+    const {  match,shop } = this.props;
     let shopId = match.params.id
     this.props.dispatch(getShopProductsLimit(shopId,shop.page,4))
     // let products = [

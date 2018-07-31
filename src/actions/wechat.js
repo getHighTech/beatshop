@@ -1,7 +1,7 @@
 import {setStore} from '../tools/localStorage.js';
 export function isWeChat(){
     var ua = navigator.userAgent.toLowerCase();
-    return ua.match(/MicroMessenger/i) == "micromessenger";
+    return ua.match(/MicroMessenger/i) === "micromessenger";
 }
 
 
