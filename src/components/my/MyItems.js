@@ -74,7 +74,6 @@ class MyItems extends React.Component{
         const { user, history  } = this.props;
         console.log('my:'+ my);
 
-        let shopId = user.shopId;
 
 
         if(user.agencyRole!==false){
@@ -102,7 +101,7 @@ class MyItems extends React.Component{
     return (
         <div className={classes.root}>
             <List component="nav">
-                <ListItem button>
+                <ListItem button component="a" href="#/my/edit_data">
                     <Avatar
                             alt="个人头像"
                             src={userImg}

@@ -29,6 +29,7 @@
     "react-swipeable-views": "latest",
     "redux": "latest",
     "redux-thunk": "latest",
+    "styled-components": "^3.3.3",
     "urlencode": "latest",
     "ws": "^5.2.0"
   },
