@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { removeAgencyProducts } from '../../actions/products'
 
 const styles = theme => ({
   cardContent:{
@@ -73,13 +74,14 @@ class ProductCard extends React.Component{
     history.push('/share/'+id)
     console.log('------------------------------------');
   }
-  delete(){
+  delete = (shopId,productId) =>{
     console.log('------------------------------------');
-    console.log('');
+    console.log(`shopId: ${shopId},productId: ${productId}`)
+    this.props.dispatch(removeAgencyProducts(shopId,productId))
     console.log('------------------------------------');
   }
   render(){
-    const { classes, _id,name_zh,cover,endPrice, agencyLevelPrices,brief } = this.props;
+    const { classes, _id,name_zh,cover,endPrice, agencyLevelPrices,brief,shopId } = this.props;
     console.log(`来了`)
     console.log(this.props)
     return(
@@ -100,7 +102,7 @@ class ProductCard extends React.Component{
                     <div>佣金:¥{agencyLevelPrices.length>0 ? agencyLevelPrices[0]/100 : 0}</div>
                   </div>
                   <div className={classes.share}>
-                  <IconButton className={classes.button} onClick={this.delete} aria-label="Delete"  color="secondary">
+                  <IconButton className={classes.button} onClick={()=>this.delete(shopId,_id)} aria-label="Delete"  color="secondary">
                       <DeleteIcon />
                     </IconButton>
                     <IconButton color="secondary"  onClick={() => this.share(_id)} className={classes.button} aria-label="Add an alarm">

@@ -7,6 +7,36 @@ export const EXPECT_AGENCY_PRODUCTS = "EXPECT_AGENCY_PRODUCTS"
 export const  LOAD_AGENCY_PRODUCTS_FAILD = "LOAD_AGENCY_PRODUCTS_FAILD ";
 export const LOAD_AGENCY_PRODUCTS_SUCCESS = "LOAD_AGENCY_PRODUCTS_SUCCESS";
 export const SHARE_PRODUCT = "SHARE_PRODUCT"
+export const REMOVE_AGENCY_PRODUCTS_SUCCESS = "REMOVE_AGENCY_PRODUCTS_SUCCESS"
+export const REMOVE_AGENCY_PRODUCTS_FAILD = "REMOVE_AGENCY_PRODUCTS_FAILD"
+export const EXPECT_REMOVE_AGENCY_PRODUCTS = "EXPECT_REMOVE_AGENCY_PRODUCTS"
+
+export function expectRemoveAgencyProducts() {
+    return {
+        type: EXPECT_REMOVE_AGENCY_PRODUCTS
+    }
+}
+export function removeAgencyProductsSuccess(msg) {
+    return {
+        type: REMOVE_AGENCY_PRODUCTS_SUCCESS,
+        msg
+    }
+}
+
+export function removeAgencyProductsFaild(reson) {
+    return {
+        type:  REMOVE_AGENCY_PRODUCTS_FAILD,
+        reson
+    }
+}
+
+export function removeAgencyProducts(shopId,productId) {
+    console.log(`shopId: ${shopId}, productId: ${productId}`)
+    return (dispatch, getState) => {
+        dispatch(expectRemoveAgencyProducts())
+        return getRemoteMeteor(dispatch, getState,"products", "app.cancel.agency.product", [shopId,productId], removeAgencyProductsSuccess, removeAgencyProductsFaild);
+    }
+}
 
 export function shareProduct(product) {
     return {
