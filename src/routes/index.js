@@ -186,7 +186,7 @@ class App extends React.Component {
 
 
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
-                        <PrivateRoute exact path="/share/:id" component={Share} />
+                        <Route exact path="/share/:id" component={Share} />
                         <PrivateRoute exact path="/shops/:id" component={Shop} />
                         <PrivateRoute exact path="/withdraw" component={withdraw} />
                         <PrivateRoute exact path="/cart" component={AppCart} />
