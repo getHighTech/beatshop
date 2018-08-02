@@ -95,7 +95,7 @@ class MyOrders extends React.Component{
      switch (value) {
        case 0:
          status = "confirmed";
-         axios.get(`${serverConfig.server_url}/api/order/status`,{
+         axios.get(`http://localhost:7001/api/order/status`,{
             params: {
                   userId,
                   status
@@ -166,9 +166,9 @@ class MyOrders extends React.Component{
               console.log(err)
             })
           break
-        default: 
-            
-        
+        default:
+
+
      }
     this.setState({ value });
   };
@@ -211,6 +211,8 @@ class MyOrders extends React.Component{
     }
     let userId = getStore("userId");
     let status = "confirmed";
+    let url = `${serverConfig.server_url}`;
+    console.log(url);
          axios.get(`${serverConfig.server_url}/api/order/status`,{
 
             params: {

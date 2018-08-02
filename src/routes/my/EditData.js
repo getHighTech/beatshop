@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+// import axios from 'axios';
 
 import EditDatas from '../../components/my/EditDatas';
 

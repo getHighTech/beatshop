@@ -1,4 +1,7 @@
 import getRemoteMeteor from "../services/meteor/methods";
+import axios from 'axios';
+
+
 export const EXPECT_SHOP_PRODUCTS_LIMIT = "EXPECT_SHOP_PRODUCTS_LIMIT";
 export const GET_SHOP_PRODUCTS_LIMIT_SUCCESS = "GET_SHOP_PRODUCTS_LIMIT_SUCCESS";
 export const GET_SHOP_PRODUCTS_LIMIT_FAIL = "GET_SHOP_PRODUCTS_LIMIT_FAIL";
@@ -41,21 +44,21 @@ export function getShopProductsPage(page) {
 export function getShopProductsLimit(shopId,page, pagesize){
     return (dispatch, getState) => {
         dispatch(expectShopProductsLimit())
-            return getRemoteMeteor(
-                dispatch,getState, "shops", 
-                "app.get.shop.products.limit",
-                [shopId,page, pagesize],
-                getShopProductsLimitSuccess, getShopProductsLimitFail
-            );
+        return axios.get('http://localhost:3001/shop_product',{
+          params:{
+            shopId,page,pagesize
+          }
+        }).then((res)=>{
+            console.log(res.data)
+            dispatch(getShopProductsLimitSuccess(res.data))
+        }).catch((err)=>{
+            console.log(err)
+        })
+            // return getRemoteMeteor(
+            //     dispatch,getState, "shops",
+            //     "app.get.shop.products.limit",
+            //     [shopId,page, pagesize],
+            //     getShopProductsLimitSuccess, getShopProductsLimitFail
+            // );
     }
 }
-
-
-
-
-
-
-
-
-
-
