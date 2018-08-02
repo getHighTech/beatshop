@@ -9,7 +9,6 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import createHistory from 'history/createHashHistory';
-
 import MainLayout from '../layouts/MainLayout.js';
 import Home from './home/index.js'
 import {connect} from 'react-redux';
