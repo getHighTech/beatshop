@@ -44,9 +44,11 @@ export function getShopProductsPage(page) {
 export function getShopProductsLimit(shopId,page, pagesize){
     return (dispatch, getState) => {
         dispatch(expectShopProductsLimit())
-        return axios.get('http://localhost:3001/shop_product',{
+        let uuid ='1';
+        let token = '2'
+        return axios.get('http://localhost:7001/api/products',{
           params:{
-            shopId,page,pagesize
+            shopId,page,pagesize,uuid,token
           }
         }).then((res)=>{
             console.log(res.data)

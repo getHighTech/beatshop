@@ -9,6 +9,40 @@ export const EXPECT_AGENCY_PRODUCTS = "EXPECT_AGENCY_PRODUCTS"
 export const  LOAD_AGENCY_PRODUCTS_FAILD = "LOAD_AGENCY_PRODUCTS_FAILD ";
 export const LOAD_AGENCY_PRODUCTS_SUCCESS = "LOAD_AGENCY_PRODUCTS_SUCCESS";
 export const SHARE_PRODUCT = "SHARE_PRODUCT"
+// <<<<<<< HEAD
+// =======
+export const REMOVE_AGENCY_PRODUCTS_SUCCESS = "REMOVE_AGENCY_PRODUCTS_SUCCESS"
+export const REMOVE_AGENCY_PRODUCTS_FAILD = "REMOVE_AGENCY_PRODUCTS_FAILD"
+export const EXPECT_REMOVE_AGENCY_PRODUCTS = "EXPECT_REMOVE_AGENCY_PRODUCTS"
+
+export function expectRemoveAgencyProducts() {
+    return {
+        type: EXPECT_REMOVE_AGENCY_PRODUCTS
+    }
+}
+export function removeAgencyProductsSuccess(msg) {
+    return {
+        type: REMOVE_AGENCY_PRODUCTS_SUCCESS,
+        msg
+    }
+}
+
+export function removeAgencyProductsFaild(reson) {
+    return {
+        type:  REMOVE_AGENCY_PRODUCTS_FAILD,
+        reson
+    }
+}
+
+export function removeAgencyProducts(shopId,productId) {
+    console.log(`shopId: ${shopId}, productId: ${productId}`)
+    return (dispatch, getState) => {
+        dispatch(expectRemoveAgencyProducts())
+        return getRemoteMeteor(dispatch, getState,"products", "app.cancel.agency.product", [shopId,productId], removeAgencyProductsSuccess, removeAgencyProductsFaild);
+    }
+}
+
+// >>>>>>> ea8c33d93aa7552fabe51cb5c8750d52ebe1af21
 export function shareProduct(product) {
     return {
         type: SHARE_PRODUCT,
@@ -47,8 +81,18 @@ export function loadAgencyProducts(shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyProducts())
         console.log(shopId)
-
-        return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
+        return axios.get('http://localhost:3001/selling_product',{
+          params:{
+            shopId
+          }
+        }).then((res)=>{
+            console.log(res)
+            dispatch(loadAgencyProductsSuccess(res.data))
+        }).catch((err)=>{
+            console.log(err)
+            dispatch(loadAgencyProductsFaild())
+        })
+        // return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
     }
 }
 

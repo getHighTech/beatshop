@@ -44,6 +44,7 @@ export function checkAccess(opera, product, accessName){
         });
         
         if(access){
+            console.log(accessName)
             return dispatch(passAccess(productRoleTemp+" PASS", product, accessName));
             
         }else{
@@ -55,6 +56,7 @@ export function checkAccess(opera, product, accessName){
 }
 
 export function passAccess(reason, product, accessName){
+    console.log(accessName)
     let action = switchActionNames(accessName);
     
     return dispatch => {
@@ -66,6 +68,7 @@ export function passAccess(reason, product, accessName){
                     accessName, "generate_order", 2230, product
                 ));
             default:
+            console.log(reason)
                 return {
                     type: PASS_ACCESS,
                     reason,
@@ -79,7 +82,7 @@ export function passAccess(reason, product, accessName){
 
 
 export function denyAccess(reason, product){
-    
+    console.log(reason)
     return dispatch=> {
         switch(reason){
             case "login_user MISSING":

@@ -13,7 +13,7 @@ export default function getRemoteMeteor(
           failAction){
     let loginToken = getStore("stampedToken");
     let endParams = [loginToken, App.name];
-    console.log(endParams);
+    console.log(params);
     params.forEach(element => {
         if(element){
             endParams.push(element);

@@ -37,7 +37,7 @@ class SellingProducts extends React.Component{
 
   loadMoreProductData(){
     let Products = [
-      { 
+      {
         id:'KxP7o3wWKjyfd3Cc7',
         img:'/imgs/b1.png',
         title:'鲜至臻品黑卡',
@@ -116,19 +116,20 @@ class SellingProducts extends React.Component{
 
   componentDidMount(){
     const { dispatch, layout,user  } = this.props;
+    console.log(this.props.user);
     if(layout.title!=='正在出售的商品'){
       console.log(user.shopId)
       dispatch(loadAgencyProducts(user.shopId))
 
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/my", 
-                title: "正在出售的商品", 
-                hasCart: false, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/my",
+                title: "正在出售的商品",
+                hasCart: false,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
