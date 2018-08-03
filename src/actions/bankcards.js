@@ -40,7 +40,7 @@ export function loadUserBankcards(){
         dispatch(expectLoadUserBankcards());
         let bankId=getStore("userId");
         console.log(bankId);
-        return axios.get('http://localhost:3001/my/bankcards',{
+        return axios.get('http://localhost:1235/api/my/bankcards',{
           params:{
             bankId
           }

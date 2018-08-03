@@ -95,7 +95,7 @@ class MyOrders extends React.Component{
      switch (value) {
        case 0:
          status = "confirmed";
-         axios.get(`http://localhost:7001/api/order/status`,{
+         axios.get(`${serverConfig.server_url}/api/order/status`,{
             params: {
                   userId,
                   status

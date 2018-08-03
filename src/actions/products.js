@@ -81,7 +81,7 @@ export function loadAgencyProducts(shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyProducts())
         console.log(shopId)
-        return axios.get('http://localhost:3001/selling_product',{
+        return axios.get('http://localhost:1235/api/selling_product',{
           params:{
             shopId
           }
