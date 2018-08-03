@@ -100,7 +100,10 @@ class AllProducts extends React.Component{
     return(
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
-          {products.map((tile, index) => {
+          { 
+            products!==undefined ?
+
+            products.map((tile, index) => {
             
             return (
             
@@ -151,8 +154,9 @@ class AllProducts extends React.Component{
               </Dialog>
             </GridListTile>
             )
-          }
-          )}
+          })
+          :null
+        }
         </GridList>
         <div className={classes.loadMore}>
           {productsLoading && <LoadingItem />}

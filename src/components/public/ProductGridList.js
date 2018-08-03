@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import ProductCard from './ProductCard';
@@ -56,8 +55,6 @@ const REGridList = styled(GridList)`
   margin-top:36;
 `
 
-ProductGridList.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+
 
 export default ProductGridList;
