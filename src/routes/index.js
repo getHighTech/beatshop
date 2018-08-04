@@ -50,8 +50,8 @@ import { getUserInfo } from '../actions/wechat_user.js';
 
 function generateGetCodeUrl(redirectURL) {
     return new URI("https://open.weixin.qq.com/connect/oauth2/authorize")
-        .addQuery("appid", "wxb202efbc9c76046a")
-        .addQuery("redirect_uri", "http://mdsdw3.natappfree.cc")
+        .addQuery("appid", "wx0564668ed5671740")
+        .addQuery("redirect_uri", redirectUR)
         .addQuery("response_type", "code")
         .addQuery("scope", "snsapi_userinfo")
         .addQuery("response_type", "code")
@@ -104,13 +104,12 @@ class App extends React.Component {
 
 
     wechatAuth = ()  => {
-        alert(123)
         const { dispatch} = this.props;
         const uri = new URI(document.location.href);
         const query = uri.query(true);
         const {code} = query;
         if(code) {
-           axios.get(`http://46piey.natappfree.cc/api/info?code=${code}`)
+           axios.get(`http://test1.10000.cards.cn//api/info?code=${code}`)
                 .then((res)=>{
                     dispatch(getUserInfo(res.data))
     
