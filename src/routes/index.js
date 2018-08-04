@@ -50,7 +50,7 @@ import { getUserInfo } from '../actions/wechat_user.js';
 
 function generateGetCodeUrl(redirectURL) {
     return new URI("https://open.weixin.qq.com/connect/oauth2/authorize")
-        .addQuery("appid", "wxb202efbc9c76046a")
+        .addQuery("appid", "wx0564668ed5671740")
         .addQuery("redirect_uri", redirectURL)
         .addQuery("response_type", "code")
         .addQuery("scope", "snsapi_userinfo")
