@@ -60,8 +60,7 @@ function generateGetCodeUrl(redirectURL) {
         .toString();
 };
 
-function wechatAuth() {
-    const { dispatch} = this.props;
+function wechatAuth(nextState, replace, next) {
     const uri = new URI(document.location.href);
     const query = uri.query(true);
     const {code} = query;
@@ -71,6 +70,7 @@ function wechatAuth() {
                 // dispatch(getUserInfo(res.data))
                 alert(JSON.stringify(res.data))
                 setStore("WechatProfile",res.data)
+                next();
             })
     } else {
 
@@ -133,8 +133,8 @@ class App extends React.Component {
             <Route
               {...rest}
               render={props => {
-               wechatAuth()
                 if(user.roles.includes("login_user")){
+                     wechatAuth()
                     return (
                         <Component {...props} />
                       )
