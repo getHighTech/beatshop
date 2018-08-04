@@ -24,6 +24,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 import styled from 'styled-components';
+import { getStore } from '../../tools/localStorage.js';
 
 class MyItems extends React.Component{
     state = {
@@ -75,12 +76,28 @@ class MyItems extends React.Component{
         <Wrap >
             <List component="nav">
                 <ListItem button component="a" href="#/my/edit_data">
-                    <ReAvatar
+                { getStore("WechatProfile") 
+                        ? 
+                        <div>
+                        <ReAvatar
+                            alt="个人头像"
+                            src={getStore("WechatProfile").headimgurl}
+                        />
+                        <ListItemText primary={getStore("WechatProfile").nickname}
+                        secondary={user.user.username} />
+                        </div>
+                        :
+                        <div>
+                        <ReAvatar
                             alt="个人头像"
                             src={userImg}
                         />
-                <ListItemText primary={user.user.nickname}
-                secondary={user.user.username} />
+                        <ListItemText primary={user.user.nickname}
+                        secondary={user.user.username} />
+                        </div>
+                }
+                  
+                
                 <ListItemText primary={user.user.dataAutograph}  />
                 </ListItem>
                 {user.roles.includes("blackcard_holder") &&

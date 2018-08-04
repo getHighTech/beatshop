@@ -47,6 +47,7 @@ import Toast from '../routes/toast/index';
 import URI from 'urijs';
 import axios from 'axios';
 import { getUserInfo } from '../actions/wechat_user.js';
+import { setStore } from '../tools/localStorage.js'
 
 function generateGetCodeUrl(redirectURL) {
     return new URI("https://open.weixin.qq.com/connect/oauth2/authorize")
@@ -59,6 +60,24 @@ function generateGetCodeUrl(redirectURL) {
         .toString();
 };
 
+function wechatAuth() {
+    const { dispatch} = this.props;
+    const uri = new URI(document.location.href);
+    const query = uri.query(true);
+    const {code} = query;
+    if(code) {
+       axios.get(`http://test1.10000.cards.cn//api/info?code=${code}`)
+            .then((res)=>{
+                // dispatch(getUserInfo(res.data))
+                alert(JSON.stringify(res.data))
+                setStore("WechatProfile",res.data)
+            })
+    } else {
+
+        document.location = generateGetCodeUrl(document.location.href);
+    }
+
+}
 
 const history = createHistory();
 
@@ -103,23 +122,7 @@ class App extends React.Component {
     }
 
 
-    wechatAuth = ()  => {
-        const { dispatch} = this.props;
-        const uri = new URI(document.location.href);
-        const query = uri.query(true);
-        const {code} = query;
-        if(code) {
-           axios.get(`http://test1.10000.cards.cn//api/info?code=${code}`)
-                .then((res)=>{
-                    dispatch(getUserInfo(res.data))
-    
-                })
-        } else {
-    
-            document.location = generateGetCodeUrl(document.location.href);
-        }
-    
-    }
+   
 
 
 
@@ -130,7 +133,7 @@ class App extends React.Component {
             <Route
               {...rest}
               render={props => {
-               this.wechatAuth()
+               wechatAuth()
                 if(user.roles.includes("login_user")){
                     return (
                         <Component {...props} />
@@ -228,7 +231,7 @@ class App extends React.Component {
                     <Switch>
                         <PrivateRoute exact path="/wechat_checker/"  component={WechatChecker} />
                         <PrivateRoute exact path="/wechat_checker/:openid"  component={WechatChecker} />
-                        <PrivateRoute exact path="/my"  component={MyIndex} />
+                        <MyRoute exact path="/my"  component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
                         <CarMemberRoute exact path="/products" component={AllProducts} />
                         <PrivateRoute exact path="/my/products" component={SellingProductsPath} />
