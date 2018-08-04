@@ -50,8 +50,8 @@ import { getUserInfo } from '../actions/wechat_user.js';
 
 function generateGetCodeUrl(redirectURL) {
     return new URI("https://open.weixin.qq.com/connect/oauth2/authorize")
-        .addQuery("appid", "wx0564668ed5671740")
-        .addQuery("redirect_uri", redirectURL)
+        .addQuery("appid", "wxb202efbc9c76046a")
+        .addQuery("redirect_uri", "http://mdsdw3.natappfree.cc")
         .addQuery("response_type", "code")
         .addQuery("scope", "snsapi_userinfo")
         .addQuery("response_type", "code")
@@ -59,24 +59,7 @@ function generateGetCodeUrl(redirectURL) {
         .toString();
 };
 
-function wechatAuth(nextState, replace, next) {
 
-    const uri = new URI(document.location.href);
-    const query = uri.query(true);
-    const {code} = query;
-    if(code) {
-       axios.get(`http://test2.10000cars.cn/api/info?code=${code}`)
-            .then((res)=>{
-                alert(JSON.stringify(res.data))
-                getUserInfo(res.data)
-
-            })
-    } else {
-
-        document.location = generateGetCodeUrl(document.location.href);
-    }
-
-}
 const history = createHistory();
 
 const styles = theme => ({
@@ -120,40 +103,35 @@ class App extends React.Component {
     }
 
 
+    wechatAuth = ()  => {
+        alert(123)
+        const { dispatch} = this.props;
+        const uri = new URI(document.location.href);
+        const query = uri.query(true);
+        const {code} = query;
+        if(code) {
+           axios.get(`http://46piey.natappfree.cc/api/info?code=${code}`)
+                .then((res)=>{
+                    dispatch(getUserInfo(res.data))
+    
+                })
+        } else {
+    
+            document.location = generateGetCodeUrl(document.location.href);
+        }
+    
+    }
+
+
 
 
     render(){
         const {classes, appInfo, order, msg, user} = this.props;
-        const MyRoute = ({ component: Component, ...rest }) => (
-            <Route
-              {...rest}
-              render={props => {
-                wechatAuth()
-                if(user.roles.includes("login_user")){
-                    return (
-                        <Component {...props} />
-                      )
-                }else{
-                    let msg = props.match.path;
-                    if(msg === '/my'){
-                        //在个人主页并不提醒需要先登录
-                        msg=""
-                    }
-                    return <Redirect
-                    to={{
-                      pathname: "/login"+msg,
-                      state: { from: props.location }
-                    }}
-                  />
-                }
-                }
-              }
-            />
-          );
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route
               {...rest}
               render={props => {
+               this.wechatAuth()
                 if(user.roles.includes("login_user")){
                     return (
                         <Component {...props} />
@@ -226,7 +204,7 @@ class App extends React.Component {
                     <Switch>
                         <PrivateRoute exact path="/wechat_checker/"  component={WechatChecker} />
                         <PrivateRoute exact path="/wechat_checker/:openid"  component={WechatChecker} />
-                        <MyRoute  exact path="/my"  component={MyIndex} />
+                        <PrivateRoute exact path="/my"  component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
                         <CarMemberRoute exact path="/products" component={AllProducts} />
                         <PrivateRoute exact path="/my/products" component={SellingProductsPath} />

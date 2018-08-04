@@ -8,6 +8,7 @@ export default function WechatUser(state={
 }, action){
     switch(action.type){
         case  GET_USERINFO_SUCCESS:
+        alert(action.user)
             return Object.assign({}, state, {
                    profile: action.user
             })
