@@ -63,7 +63,8 @@ class MyIndex extends React.Component{
 
   }
   render(){
-    const { classes, dispatch, user } = this.props;
+    const { classes, dispatch, user , wechat} = this.props;
+    alert(wechat)
     return (
       <Card className={classes.card}>
         <CardContent>
@@ -88,7 +89,8 @@ MyIndex.propTypes = {
 function mapUserToState(state){
   return {
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    wechat: state.WechatUser.profile
   }
 }
 

@@ -12,6 +12,7 @@ import UserMoney from '../reducers/UserMoney';
 import UserBankcards from '../reducers/UserBankcards';
 import AppOrders from '../reducers/AppOrders';
 import AppShop from '../reducers/AppShop';
+import WechatUser from '../reducers/WechatUser';
 export default function configureStore() {
   const enhancer = compose(
     applyMiddleware(thunk),
@@ -31,6 +32,7 @@ export default function configureStore() {
       UserBankcards,
       AppOrders,
       AppShop,
+      WechatUser,
     }),
     enhancer);
 }

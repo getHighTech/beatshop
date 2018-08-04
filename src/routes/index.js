@@ -126,11 +126,36 @@ class App extends React.Component {
 
     render(){
         const {classes, appInfo, order, msg, user} = this.props;
-        const PrivateRoute = ({ component: Component, ...rest }) => (
+        const MyRoute = ({ component: Component, ...rest }) => (
             <Route
               {...rest}
               render={props => {
                this.wechatAuth()
+                if(user.roles.includes("login_user")){
+                    return (
+                        <Component {...props} />
+                      )
+                }else{
+                    let msg = props.match.path;
+                    if(msg === '/my'){
+                        //在个人主页并不提醒需要先登录
+                        msg=""
+                    }
+                    return <Redirect
+                    to={{
+                      pathname: "/login"+msg,
+                      state: { from: props.location }
+                    }}
+                  />
+                }
+                }
+              }
+            />
+          );
+        const PrivateRoute = ({ component: Component, ...rest }) => (
+            <Route
+              {...rest}
+              render={props => {
                 if(user.roles.includes("login_user")){
                     return (
                         <Component {...props} />
