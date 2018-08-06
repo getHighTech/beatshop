@@ -47,10 +47,10 @@ import Toast from '../routes/toast/index';
 import URI from 'urijs';
 import axios from 'axios';
 import { getUserInfo } from '../actions/wechat_user.js';
-
+import { setStore } from '../tools/localStorage.js'
 function generateGetCodeUrl(redirectURL) {
     return new URI("https://open.weixin.qq.com/connect/oauth2/authorize")
-        .addQuery("appid", "wxb202efbc9c76046a")
+        .addQuery("appid", "wx0564668ed5671740")
         .addQuery("redirect_uri", redirectURL)
         .addQuery("response_type", "code")
         .addQuery("scope", "snsapi_userinfo")
@@ -67,7 +67,7 @@ function wechatAuth(nextState, replace, next) {
     if(code) {
        axios.get(`http://test2.10000cars.cn/api/info?code=${code}`)
             .then((res)=>{
-                alert(JSON.stringify(res.data))
+               setStore("WechatProfile",res.data)
                 getUserInfo(res.data)
 
             })
