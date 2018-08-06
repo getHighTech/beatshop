@@ -108,10 +108,12 @@ class Bankcard extends React.Component{
             </Typography>
   
           </CardContent>
-          {this.props.isBankcard===true?
+          {this.props.isBankcard===true
+              ?
             <CardActions style={{textAlign:'right',display:'list-item'}}>
               <Button size="small" variant="raised" color="secondary" onClick={()=>this.removeBankcard(this.props.bankcardId)}>解除绑定</Button>
-            </CardActions>:            
+            </CardActions>
+              :            
             <Typography component="p" className={classes.chips}>
               鲜至臻品,自用省钱，分享赚钱
             </Typography>

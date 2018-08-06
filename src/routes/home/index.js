@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AppBanner from '../../components/home/banner.js';
 import {connect} from 'react-redux';
 import ProductGridList from '../../components/public/ProductGridList';
@@ -77,7 +76,7 @@ class Home extends React.Component {
     render(){
 
 
-        const { classes, productsList} = this.props;
+        const {  productsList} = this.props;
 
         return (
             <Wrap>
@@ -117,9 +116,7 @@ const ShopContainer = styled.div`
     top: 50%;
     text-align: center
 `
-Home.propTypes = {
-    classes: PropTypes.object.isRequired
-};
+
 
 function mapUserState(state){
       return {

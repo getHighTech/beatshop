@@ -1,7 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -26,29 +23,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
+import styled from 'styled-components';
 
-
-
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 560,
-    // backgroundColor: theme.palette.background.paper,
-    // backgroundColor:'red'
-  },
-  bigAvatar: {
-    width: 60,
-    height: 60,
-  },
-  listIcon:{
-      color:'#ff5722'
-  }
-});
 class MyItems extends React.Component{
     state = {
          open: false,
-
          confirmContent: "开店需要购买优选会员卡，是否立即购买？",
          confirmOpen: false
         };
@@ -86,36 +65,29 @@ class MyItems extends React.Component{
                 confirmOpen: true,
             })
 
-
-
         }
 
     }
 
-    handleGoToMemeberCenter(){
-
-    }
-
     render(){
-        const { classes, user } = this.props;
+    const { user } = this.props;
     return (
-        <div className={classes.root}>
+        <Wrap >
             <List component="nav">
                 <ListItem button component="a" href="#/my/edit_data">
-                    <Avatar
+                    <ReAvatar
                             alt="个人头像"
                             src={userImg}
-                            className={classNames(classes.bigAvatar)}
                         />
-                <ListItemText primary={this.props.user.user.nickname}
-                secondary={this.props.user.user.username} />
-                <ListItemText primary={this.props.user.user.dataAutograph}  />
+                <ListItemText primary={user.user.nickname}
+                secondary={user.user.username} />
+                <ListItemText primary={user.user.dataAutograph}  />
                 </ListItem>
-                {this.props.user.roles.includes("blackcard_holder") &&
+                {user.roles.includes("blackcard_holder") &&
                     <ListItem button component="a" href="#/my/blackcard_holder">
-                    <ListItemIcon className={classes.listIcon}>
+                    <ReListItemIcon >
                         <Face />
-                    </ListItemIcon>
+                    </ReListItemIcon>
                     <ListItemText primary="鲜至店长" />
                     </ListItem>}
             </List>
@@ -124,24 +96,24 @@ class MyItems extends React.Component{
                 user.user.username !== "wanchehui" &&
                 <div>
                     <ListItem button onClick={this.handleClick}>
-                    <ListItemIcon className={classes.listIcon}>
+                    <ReListItemIcon >
                     <Shop  />
-                    </ListItemIcon>
+                    </ReListItemIcon>
                     <ListItemText inset primary="我的店铺" />
                     {this.state.open ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
                     <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                        <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop()} component="button">
-                            <ListItemIcon className={classes.listIcon}>
+                        <ListItem button  onClick={()=>this.handleGoToShop()} component="button">
+                            <ReListItemIcon >
                             <AddToQueue />
-                            </ListItemIcon>
+                            </ReListItemIcon>
                             <ListItemText inset primary="新加商品"  />
                         </ListItem>
-                        <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop("/my")}  component="button" href="#/my/products">
-                            <ListItemIcon className={classes.listIcon}>
+                        <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" href="#/my/products">
+                            <ReListItemIcon >
                             <Stars />
-                            </ListItemIcon>
+                            </ReListItemIcon>
                             <ListItemText inset primary="正在出售的商品" />
                         </ListItem>
                         </List>
@@ -156,9 +128,9 @@ class MyItems extends React.Component{
                 user.senior === true ?
                 <div>
                     <ListItem button component="a" href="#/my/team">
-                    <ListItemIcon className={classes.listIcon}>
+                    <ReListItemIcon >
                         <PersonPinIcon/>
-                    </ListItemIcon>
+                    </ReListItemIcon>
                     <ListItemText primary="我的团队" />
                     </ListItem>
 
@@ -171,9 +143,9 @@ class MyItems extends React.Component{
 
 
                 <ListItem button component="a" href="#/my/orders">
-                <ListItemIcon className={classes.listIcon}>
+                <ReListItemIcon >
                     <FeaturedPlayList />
-                </ListItemIcon>
+                </ReListItemIcon>
                 <ListItemText primary="我的订单" />
                 </ListItem>
 
@@ -182,9 +154,9 @@ class MyItems extends React.Component{
 
 
                 <ListItem button component="a" href="#/my/bankcards_list">
-                <ListItemIcon className={classes.listIcon}>
+                <ReListItemIcon >
                     <CreditCard />
-                </ListItemIcon>
+                </ReListItemIcon>
                 <ListItemText primary="我的银行卡" />
                 </ListItem>
             </List>
@@ -209,14 +181,28 @@ class MyItems extends React.Component{
                     </Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </Wrap>
             );
         }
 }
 
-MyItems.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+const Wrap = styled.div`
+    width: 100%,
+    max-width: 560,
+`
+
+const ReListItemIcon = styled(ListItemIcon)`
+   && {
+       color: #ff5722;
+   }
+`
+
+const ReAvatar = styled(Avatar)`
+    width: 60;
+    height: 60;
+`
+
+
 
 function mapUserToState(state){
     return {
@@ -224,4 +210,4 @@ function mapUserToState(state){
     }
 }
 
-export default connect(mapUserToState)(withStyles(styles)(MyItems));
+export default connect(mapUserToState)(MyItems);
