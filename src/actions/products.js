@@ -1,12 +1,16 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { dealWithError } from "./error_fail";
 import app from '../config/app.json'
+import axios from 'axios';
+
 export const EXPECT_ONE_PRODUCT = "EXPECT_ONE_PRODUCT";
 export const LOAD_ONE_PRODUCT_SUCCESS = "LOAD_ONE_PRODUCT_SUCCESS";
 export const EXPECT_AGENCY_PRODUCTS = "EXPECT_AGENCY_PRODUCTS"
 export const  LOAD_AGENCY_PRODUCTS_FAILD = "LOAD_AGENCY_PRODUCTS_FAILD ";
 export const LOAD_AGENCY_PRODUCTS_SUCCESS = "LOAD_AGENCY_PRODUCTS_SUCCESS";
 export const SHARE_PRODUCT = "SHARE_PRODUCT"
+// <<<<<<< HEAD
+// =======
 export const REMOVE_AGENCY_PRODUCTS_SUCCESS = "REMOVE_AGENCY_PRODUCTS_SUCCESS"
 export const REMOVE_AGENCY_PRODUCTS_FAILD = "REMOVE_AGENCY_PRODUCTS_FAILD"
 export const EXPECT_REMOVE_AGENCY_PRODUCTS = "EXPECT_REMOVE_AGENCY_PRODUCTS"
@@ -38,6 +42,7 @@ export function removeAgencyProducts(shopId,productId) {
     }
 }
 
+// >>>>>>> ea8c33d93aa7552fabe51cb5c8750d52ebe1af21
 export function shareProduct(product) {
     return {
         type: SHARE_PRODUCT,
@@ -76,7 +81,18 @@ export function loadAgencyProducts(shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyProducts())
         console.log(shopId)
-        return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
+        return axios.get('http://localhost:1235/api/selling_product',{
+          params:{
+            shopId
+          }
+        }).then((res)=>{
+            console.log(res)
+            dispatch(loadAgencyProductsSuccess(res.data))
+        }).catch((err)=>{
+            console.log(err)
+            dispatch(loadAgencyProductsFaild())
+        })
+        // return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
     }
 }
 
@@ -132,7 +148,7 @@ export function expectGetShopProductsLimit(){
 
 export function getShopProductsLimitFail(reason){
     console.log(reason);
-    
+
     return {
         type: GET_SHOP_PRODUCTS_LIMIT_FAIL,
         reason
@@ -142,7 +158,7 @@ export function getShopProductsLimitFail(reason){
 
 export function getShopProductsLimitSuccess(msg){
     console.log(msg);
-    
+
     return {
         type: GET_SHOP_PRODUCTS_LIMIT_SUCCESS,
         msg
@@ -151,22 +167,35 @@ export function getShopProductsLimitSuccess(msg){
 
 
 
-export function getShopProductsLimit(){
+export function getShopProductsLimit(shopId,page){
     return (dispatch, getState) => {
         dispatch(expectGetShopProductsLimit());
-        return getRemoteMeteor(
-            dispatch,getState, "products", 
-            "app.get.products.shop.limit",
-            [],
-            getShopProductsLimitSuccess, getShopProductsLimitFail
-        );
+        return axios.get('http://localhost:1235/api/products',{
+          params:{
+            shopId
+          }
+        }).then((res)=>{
+            console.log(res)
+            dispatch(getShopProductsLimitSuccess(res.data))
+        }).catch((err)=>{
+            console.log(err)
+            dispatch(getShopProductsLimitFail())
+        })
+
+
+        // return getRemoteMeteor(
+        //     dispatch,getState, "products",
+        //     "app.get.products.shop.limit",
+        //     [],
+        //     getShopProductsLimitSuccess, getShopProductsLimitFail
+        // );
     }
 }
 
 
 
 export function getMoreShopProducts(shopId, page, pagesize){
-    
+
 }
 
 export const EXPECT_AGENCY_ONE_PRODUCT = "EXPECT_AGENCY_ONE_PRODUCT"
@@ -195,7 +224,7 @@ export function agencyOneProduct(product, userId,appNameShopId,shopId){
         dispatch(expectAgencyOneProduct());
         return getRemoteMeteor(dispatch, getState,
              "shops", "app.agency.one.product",
-                [product, userId,appNameShopId,shopId], agencyOneProductSuccess, 
+                [product, userId,appNameShopId,shopId], agencyOneProductSuccess,
                 agencyOneProductFail
             )
     }

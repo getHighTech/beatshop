@@ -21,7 +21,7 @@ const styles = theme => ({
     position: "fixed",
     width: "100%",
     zIndex: '1000'
-    
+
   },
   appbar: {
     backgroundColor: grey[800],
@@ -56,7 +56,7 @@ const styles = theme => ({
     },
   },
 
- 
+
 });
 
 class MenuAppBar extends React.Component {
@@ -72,12 +72,12 @@ class MenuAppBar extends React.Component {
     handleClick = () => {
         this.setState({ open: !this.state.open });
       };
-    
+
       handleClose = () => {
         if (!this.state.open) {
           return;
         }
-    
+
         // setTimeout to ensure a close event comes after a target click event
         this.timeout = setTimeout(() => {
           this.setState({ open: false });
@@ -106,7 +106,7 @@ class MenuAppBar extends React.Component {
 
   componentWillReceiveProps(nextProps){
     const { address } = nextProps;
-    
+
     if(address.info === "SUCCESS"){
       if(address.addressComponent){
         this.setState({
@@ -116,9 +116,9 @@ class MenuAppBar extends React.Component {
         this.setState({
           currentCity: "北京市"
         })
-          
+
       }
-      
+
     }
     if(address.info==="FAILED"){
       this.setState({
@@ -143,18 +143,18 @@ class MenuAppBar extends React.Component {
       case "createNewBankcard":
       this.props.history.push("/my/new_bankcard");
       break;
-    
+
       default:
         break;
     }
-    
+
   }
 
   render() {
-    
+
     const { classes, layout } = this.props;
     const { currentCity,  } = this.state;
-    
+
     return (
       <div className={classes.root}>
         <AppBar position="static" className={classes.appbar} color="secondary">
@@ -163,7 +163,7 @@ class MenuAppBar extends React.Component {
                   layout.hasGeoLoc && <CitySelector currentCity={currentCity} color="secondary" />
                 }
                 {
-                  layout.isBack && 
+                  layout.isBack &&
                   <Button style={{
                     position: "relative",
                     left: -35
@@ -172,10 +172,10 @@ class MenuAppBar extends React.Component {
                     返回
                   </Button>
                 }
-                
-               
+
+
             <Typography variant="title" color="secondary" className={classes.flex}>
-                 
+
               <div>
                   <span>{layout.title} </span>
               </div>

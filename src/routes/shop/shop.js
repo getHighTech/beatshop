@@ -85,7 +85,7 @@ const styles = theme => ({
       marginBottom:20
     },
 
-  
+
 });
 class Shop extends React.Component{
   state = {
@@ -112,7 +112,7 @@ class Shop extends React.Component{
   loadMoreProductData(){
     const {  match,shop } = this.props;
     let shopId = match.params.id
-    this.props.dispatch(getShopProductsLimit(shopId,shop.page,4))
+    // this.props.dispatch(getShopProductsLimit(shopId,shop.page,4))
     // let products = [
     //   {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
     //   {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
@@ -127,27 +127,27 @@ class Shop extends React.Component{
     // console.log(page)
     // let shopId = this.props.match.params.id
     // this.props.dispatch(getShopProductsLimit(shopId,page,4))
-    // this.setState({ 
+    // this.setState({
     //   page
     // })
   }
   componentDidMount(){
     const { dispatch, layout, match,shop } = this.props;
     let shopId = match.params.id
-  
+
     if(layout.title!=='店铺详情'){
       if(shopId){
         dispatch(getShopProductsLimit(shopId,shop.page,4))
       }
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/", 
-                title: "店铺详情", 
-                hasCart: false, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/",
+                title: "店铺详情",
+                hasCart: false,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
@@ -163,7 +163,7 @@ class Shop extends React.Component{
     const { shop, products } = this.props.shop;
 
     const { value } = this.state;
-  
+
 
 
     return(
@@ -175,7 +175,7 @@ class Shop extends React.Component{
           <div  className={classes.title}>{shop.name}</div>
           <div  className={classes.title}></div>
         </div>
-          <Tabs value={value} 
+          <Tabs value={value}
           onChange={this.handleChange}
           indicatorColor="primary"
           textColor="primary"
@@ -183,7 +183,7 @@ class Shop extends React.Component{
             <Tab label="商品" />
             <Tab label="简介" />
           </Tabs>
-        {value === 0 && 
+        {value === 0 &&
         <TabContainer>
         {products.map(product => {
           return (
@@ -191,12 +191,12 @@ class Shop extends React.Component{
               <div className={classes.cardContent}>
                 <Grid container spacing={24}>
                   <Grid item xs={3} sm={3}>
-                    <img src={product.cover} alt={product.title} style={{height:60,width:60}}/>     
+                    <img src={product.cover} alt={product.title} style={{height:60,width:60}}/>
                   </Grid>
                   <Grid item xs={9} sm={9}>
                     <a id={product.id} onClick={()=>this.Jump(product._id)} className={classes.a}>
                       <div className={classes.productName}>{product.name_zh}</div>
-                    </a>      
+                    </a>
                     <div className={classes.cardBottom}>
                       <div className={classes.productPrice}>价格:¥{product.price/100}</div>
                       <div className={classes.share}>
@@ -204,7 +204,7 @@ class Shop extends React.Component{
                           <Icon>share</Icon>
                         </IconButton>
                       </div>
-                    </div>                        
+                    </div>
                   </Grid>
                 </Grid>
               </div>
