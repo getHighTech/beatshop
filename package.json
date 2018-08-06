@@ -30,6 +30,7 @@
     "redux": "latest",
     "redux-thunk": "latest",
     "styled-components": "^3.3.3",
+    "urijs": "^1.19.1",
     "urlencode": "latest",
     "ws": "^5.2.0"
   },
