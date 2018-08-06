@@ -128,7 +128,7 @@ class App extends React.Component {
             <Route
               {...rest}
               render={props => {
-                // wechatAuth()
+                wechatAuth()
                 if(user.roles.includes("login_user")){
                     return (
                         <Component {...props} />
