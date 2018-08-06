@@ -78,7 +78,7 @@ class MyItems extends React.Component{
     return (
         <Wrap >
         <List component="nav">
-        <ListItem button component="a" href="#/my/edit_data">
+        <ListItem>
         { profile 
           ? 
       <div>

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import { loadShareProdcut } from '../../actions/products'
 
+
 const styles = theme => ({
   header:{
     textAlign:'center'
@@ -34,12 +35,27 @@ const styles = theme => ({
     paddingBottom:20
   }
 })
+
+
 class Share extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
       url:''
      }
+  }
+
+  componentDidUpdate() {
+    const canvas = document.querySelector('.Share-qecode-30 canvas');
+    if(canvas){
+      const img = new Image();
+      console.log(canvas)
+      const imgSrc =  canvas.toDataURL()
+      console.log(imgSrc)
+      const wrap =  document.querySelector('.Share-qecode-30')
+      wrap.innerHTML = `<img src="${imgSrc}">`
+    }
+    
   }
   componentDidMount(){
     const { dispatch, layout,product } = this.props;
@@ -87,6 +103,7 @@ class Share extends React.Component {
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
         <div className={classes.qecode}>
           <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo={require('../../components/imgs/WechatIMG171.png')}/>
+
         </div>
       </div>
      )
