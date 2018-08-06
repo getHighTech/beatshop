@@ -7,6 +7,7 @@ import styled from 'styled-components';
 function ProductGridList(props) {
   const {  products, history } = props;
 
+
   return (
       <ReGrid
       container
@@ -19,7 +20,7 @@ function ProductGridList(props) {
       <Banner>
         <BannerImg alt="新品上市"   src={require("../imgs/WechatIMG18.jpeg")}/>
       </Banner>
-    
+
       <REGridList
         cellHeight={180} >
         {products.map((product,index) => (
