@@ -40,6 +40,8 @@ export function userLoginSuccess(msg){
     
 }
 export function userLogin(type, loginParams){
+    console.log("手机登录参数", loginParams);
+    
     return (dispatch, getState) => {
         dispatch(expectUserLogin());
         return getRemoteMeteor(

@@ -77,8 +77,15 @@ class MyIndex extends React.Component{
             dispatch(appShowMsgAndInjectDataReact("logout", "logout_success", 2360))
 
           }}  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>
+          <br/>
+        <br/>
+        <br/>
+        <br/> <br/>
+        <br/> <br/>
+        <br/>
         </div>
         </CardContent>
+        
       </Card>
     );
   }
