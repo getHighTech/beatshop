@@ -167,7 +167,7 @@ class MenuAppBar extends React.Component {
                   <Button style={{
                     position: "relative",
                     left: -35
-                  }} onClick={()=>this.props.history.goBack()} color="secondary" >
+                  }} onClick={()=>this.props.history.push(layout.backTo)} color="secondary" >
                     <ChevronLeft style={{ fontSize: 36 }}/>
                     返回
                   </Button>

@@ -54,6 +54,7 @@ const styles = {
 };
 class OrderCard extends React.Component{
   _CancelOrder = (orderId,userId)  => {
+    console.log(orderId)
       this.props.dispatch(cancelOrder(orderId,userId))
   }
 
@@ -148,7 +149,7 @@ class OrderCard extends React.Component{
                 <Button variant="outlined"  size="small" className={classes.button} onClick={()=>this._CancelOrder(orderId,userId)}>
                   取消订单
                 </Button>
-                <Button variant="outlined"  size="small" href={"#/my/orders/" + orderId}   className={classes.button}>
+                <Button variant="outlined"  size="small" href={`#/my/orders/${orderId}/confirmed`}   className={classes.button}>
                   查看详情
                 </Button>
                 <Button variant="raised"  size="small" color="secondary" className={classes.button} onClick={()=>this.handlePayClick(_id,userId)}>
@@ -165,7 +166,7 @@ class OrderCard extends React.Component{
                 {/* <Button variant="outlined"  size="small" className={classes.button}>
                   申请退款
                 </Button> */}
-                <Button variant="outlined"  size="small"  className={classes.button} href={"#/my/orders/" + orderId} >
+                <Button variant="outlined"  size="small"  className={classes.button} href={`#/my/orders/${orderId}/paid`} >
                   查看详情
                 </Button>
                 <Button variant="raised"  size="small" color="secondary" className={classes.button} >
