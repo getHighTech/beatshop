@@ -80,19 +80,19 @@ export function loadShareProdcut(id){
 export function loadAgencyProducts(shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyProducts())
-        console.log(shopId)
-        return axios.get(`${serverConfig.server_url}/api/selling_product`,{
-          params:{
-            shopId
-          }
-        }).then((res)=>{
-            console.log(res)
-            dispatch(loadAgencyProductsSuccess(res.data))
-        }).catch((err)=>{
-            console.log(err)
-            dispatch(loadAgencyProductsFaild())
-        })
-        // return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
+        // console.log(shopId)
+        // return axios.get(`${serverConfig.server_url}/api/selling_product`,{
+        //   params:{
+        //     shopId
+        //   }
+        // }).then((res)=>{
+        //     console.log(res)
+        //     dispatch(loadAgencyProductsSuccess(res.data))
+        // }).catch((err)=>{
+        //     console.log(err)
+        //     dispatch(loadAgencyProductsFaild())
+        // })
+        return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
     }
 }
 
@@ -170,25 +170,25 @@ export function getShopProductsLimitSuccess(msg){
 export function getShopProductsLimit(shopId,page){
     return (dispatch, getState) => {
         dispatch(expectGetShopProductsLimit());
-        return axios.get('http://localhost:1235/api/products',{
-          params:{
-            shopId
-          }
-        }).then((res)=>{
-            console.log(res)
-            dispatch(getShopProductsLimitSuccess(res.data))
-        }).catch((err)=>{
-            console.log(err)
-            dispatch(getShopProductsLimitFail())
-        })
+        // return axios.get('http://localhost:1235/api/products',{
+        //   params:{
+        //     shopId
+        //   }
+        // }).then((res)=>{
+        //     console.log(res)
+        //     dispatch(getShopProductsLimitSuccess(res.data))
+        // }).catch((err)=>{
+        //     console.log(err)
+        //     dispatch(getShopProductsLimitFail())
+        // })
 
 
-        // return getRemoteMeteor(
-        //     dispatch,getState, "products",
-        //     "app.get.products.shop.limit",
-        //     [],
-        //     getShopProductsLimitSuccess, getShopProductsLimitFail
-        // );
+        return getRemoteMeteor(
+            dispatch,getState, "products",
+            "app.get.products.shop.limit",
+            [],
+            getShopProductsLimitSuccess, getShopProductsLimitFail
+        );
     }
 }
 
