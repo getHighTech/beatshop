@@ -45,19 +45,15 @@ class Share extends React.Component {
      }
   }
 
+
   componentDidUpdate() {
-    const canvas = document.querySelector('.Share-qecode-30 canvas');
-    if(canvas){
-      const img = new Image();
-      console.log(canvas)
-      const imgSrc =  canvas.toDataURL()
-      console.log(imgSrc)
-      const wrap =  document.querySelector('.Share-qecode-30')
-      wrap.innerHTML = `<img src="${imgSrc}">`
-    }
-    
+    this.update()
+  }
+  componentWillMount(){
+    this.update()
   }
   componentDidMount(){
+    
     const { dispatch, layout,product } = this.props;
 
     if(layout.title!=='分享页面'){
@@ -84,6 +80,19 @@ class Share extends React.Component {
     //   url:'https://wanchehui/#/products/' + id
     // })
   }
+
+
+  update() {
+    const canvas = document.querySelector('.Share-qecode-30 canvas');
+    if(canvas){
+      const img = new Image();
+      console.log(canvas)
+      const imgSrc =  canvas.toDataURL()
+      console.log(imgSrc)
+      const wrap =  document.querySelector('.Share-qecode-30')
+      wrap.innerHTML = `<img src="${imgSrc}">`
+    }
+  }
   render() { 
     const { classes,product } = this.props
     console.log(product)
@@ -102,7 +111,9 @@ class Share extends React.Component {
         </div>
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
         <div className={classes.qecode}>
-          <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo={require('../../components/imgs/WechatIMG171.png')}/>
+          <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo={require('../../components/imgs/WechatIMG171.png')}
+
+          />
 
         </div>
       </div>

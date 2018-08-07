@@ -54,6 +54,7 @@ const styles = {
 };
 class OrderCard extends React.Component{
   _CancelOrder = (orderId,userId)  => {
+    console.log(orderId)
       this.props.dispatch(cancelOrder(orderId,userId))
   }
 
