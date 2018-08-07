@@ -108,6 +108,19 @@ class orderDetails extends React.Component {
 
   }
 
+  checkStatus = (status) => {
+    switch (status) {
+      case "confirmed":
+        return "待付款"
+      case "paid":
+        return "待收货"
+      case "recevied":
+        return "已完成"
+      default:
+        break;
+    }
+  } 
+
   render() { 
     const { classes, match } = this.props
     const { order } = this.props.order
@@ -139,7 +152,9 @@ class orderDetails extends React.Component {
 
               </Grid>
               <Grid item xs={3} sm={3} >
-                <div className={classes.orderStatus} >待付款</div>
+                <div className={classes.orderStatus} >
+                  {this.checkStatus(match.params.status)}
+                </div>
               </Grid>
             </Grid>
           </div>

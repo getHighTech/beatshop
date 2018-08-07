@@ -76,6 +76,21 @@ class OrderCard extends React.Component{
     let payUrl = "http://bills.10000cars.cn/order/s?pdata="+urlencode(JSON.stringify(data));
     window.location.assign(payUrl);
   }
+
+  checkStatus = (status) => {
+    switch (status) {
+      case "confirmed":
+        return "待付款"
+      case "paid":
+        return "待收货"
+      case "recevied":
+        return "已完成"
+      case "cancel":
+        return "已取消"
+      default:
+        break;
+    }
+  } 
   render(){
     console.log(this.props)
     const {classes, products,productCounts,totalAmount,count,status,_id,userId,orderId} = this.props
@@ -90,7 +105,7 @@ class OrderCard extends React.Component{
               <img alt="店铺图标" style={{height:17}} src={require('../../components/imgs/right.svg')}/>
             </Grid>
             <Grid item xs={3} sm={3} >
-              <div className={classes.orderStatus} >待付款</div>
+              <div className={classes.orderStatus} >{this.checkStatus(status)}</div>
             </Grid>
           </Grid>
         </div>
