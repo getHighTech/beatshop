@@ -231,7 +231,7 @@ class orderDetails extends React.Component {
             <img alt="二维码"   style={{height:17,marginRight:5}}  src={require('../../components/imgs/details.svg')} />
             <div>二维码</div>
           </div>
-          <div className={classes.qrcode}><QRCode value={`'/orders/order_details/${order._id}'`} logo='/imgs/webwxgetmsgimg.jpeg'/></div>
+          <div className={classes.qrcode}><QRCode value={`/orders/order_details/${order._id}`} logo={require('../../components/imgs/WechatIMG171.png')}/></div>
         </Card>
         <Card className={ classes.card}> 
           <div className={classes.cardTitle}>
