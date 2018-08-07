@@ -24,7 +24,7 @@ const styles = theme => ({
             zIndex: '1000',
             bottom: 50,
           },
-        
+
       },
       appbar: {
         backgroundColor: "rgba(4, 4, 4, 0.1)",
@@ -37,7 +37,7 @@ const styles = theme => ({
         flex: {
             flex: 1,
         },
-    
+
 });
 let timer = null;
 class ProductBottomBar extends React.Component{
@@ -58,13 +58,13 @@ class ProductBottomBar extends React.Component{
         const {dispatch} = this.props;
         dispatch(checkAccess("buy", product, "add_product_to_cart"))
       }
-    
+
     render(){
       const { classes, product, dispatch } = this.props;
-      
+
       return (
         <div className={classes.root}>
-        
+
         <AppBar position="static" className={classes.appbar} color="default">
           <Toolbar style={{backgroundColor: "rgba(4, 4, 4, 0.3)", color: "white"}}>
           {
@@ -74,18 +74,18 @@ class ProductBottomBar extends React.Component{
               </IconButton>
           }
 
-              
+
                <Button onClick={()=> dispatch(checkAccess("buy", product, "create_one_order_by_product"))}  color="inherit" className={classes.flex}>
                {this.props.isAppointment? '立即预约' : '立即购买'}
                </Button>
               <Button color="inherit" href={'#/shops/'+ product.shopId}>查看店铺</Button>
           </Toolbar>
         </AppBar>
-        
+
         </div>
-    );  
+    );
   }
-  
+
 }
 
 ProductBottomBar.propTypes = {
@@ -99,4 +99,3 @@ function mapToState(state){
   }
 
 export default connect(mapToState)(withStyles(styles)(ProductBottomBar))
-
