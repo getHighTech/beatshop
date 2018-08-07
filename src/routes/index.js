@@ -48,7 +48,6 @@ import URI from 'urijs';
 import axios from 'axios';
 import { getUserInfo } from '../actions/wechat_user.js';
 import { setStore } from '../tools/localStorage.js'
-
 function generateGetCodeUrl(redirectURL) {
     return new URI("https://open.weixin.qq.com/connect/oauth2/authorize")
         .addQuery("appid", "wx0564668ed5671740")
@@ -67,10 +66,9 @@ function wechatAuth(nextState, replace, next) {
     if(code) {
        axios.get(`http://test1.10000.cards.cn//api/info?code=${code}`)
             .then((res)=>{
-                // dispatch(getUserInfo(res.data))
-                alert(JSON.stringify(res.data))
-                setStore("WechatProfile",res.data)
-                next();
+               setStore("WechatProfile",res.data)
+                getUserInfo(res.data)
+
             })
     } else {
 
@@ -239,7 +237,7 @@ class App extends React.Component {
                         <PrivateRoute exact path="/money" component={Money} />
                         <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
-                        <PrivateRoute exact path="/my/orders/:id" component={orderDetails} />
+                        <PrivateRoute exact path="/my/orders/:id/:status" component={orderDetails} />
                         <PrivateRoute exact path="/my/blackcard_holder" component={BlackcardHolder} />
 
                         <PrivateRoute exact path="/my/edit_data" component={EditData} />

@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import QRCode from 'qrcode-react'
 import { loadOneOrder } from '../../actions/orders' 
-import moment from 'moment/locale/zh-cn';
+import moment from 'moment';
 
 
 
@@ -85,6 +85,7 @@ class orderDetails extends React.Component {
   componentDidMount() {
     const { dispatch, layout,match} = this.props;
     console.log(`去哪了`)
+    console.log(this.props)
     console.log('id'+match.params.id)
    
     if(layout.title!=='订单详情'){
@@ -107,9 +108,21 @@ class orderDetails extends React.Component {
 
   }
 
+  checkStatus = (status) => {
+    switch (status) {
+      case "confirmed":
+        return "待付款"
+      case "paid":
+        return "待收货"
+      case "recevied":
+        return "已完成"
+      default:
+        break;
+    }
+  } 
+
   render() { 
-    console.log(`见鬼了`)
-    const { classes } = this.props
+    const { classes, match } = this.props
     const { order } = this.props.order
     return (  
       <div className={ classes.root}>
@@ -139,7 +152,9 @@ class orderDetails extends React.Component {
 
               </Grid>
               <Grid item xs={3} sm={3} >
-                <div className={classes.orderStatus} >待付款</div>
+                <div className={classes.orderStatus} >
+                  {this.checkStatus(match.params.status)}
+                </div>
               </Grid>
             </Grid>
           </div>
@@ -189,12 +204,21 @@ class orderDetails extends React.Component {
               <Grid container spacing={24}>
                 <Grid item xs={12} sm={12}>
                   <div className={classes.orderButton}>
-                  <Button variant="outlined"  size="small" className={classes.button}>
-                    取消订单
-                  </Button>
-                  <Button variant="raised"  size="small" color="secondary" className={classes.button}>
-                    付款
-                  </Button>
+                  {
+                    match.params.status === "paid"
+                      ?
+                    null
+                      :
+                    <div>
+                      <Button variant="outlined"  size="small" className={classes.button}>
+                        取消订单
+                      </Button>
+                      <Button variant="raised"  size="small" color="secondary" className={classes.button}>
+                        付款
+                      </Button>
+                    </div>
+                  }
+                  
                   </div>
                 </Grid>
               </Grid>

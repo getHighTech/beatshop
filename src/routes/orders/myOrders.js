@@ -229,11 +229,6 @@ class MyOrders extends React.Component{
               .catch((err)=>{
                 console.log(err)
               })
-    // this.loadWithdrawFirstPageData()
-    // if(orders.orders_confirmed === "unloaded"){
-    //   dispatch(getOrdersLimit("confirmed",1,4))
-    // }
-
   }
   render (){
     const { classes,  user} = this.props;
