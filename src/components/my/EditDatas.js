@@ -81,14 +81,14 @@ class EditDatas extends Component {
 
 
 const Wrap = styled.div`
-  width: "100%" 
+  width: "100%"
 `
 
 const ReListItem = styled(ListItem)`
    &&{
      border-bottom: 1px solid #aaa;
    }
-` 
+`
 
 const ReAvatar = styled(Avatar)`
   width: 65;
