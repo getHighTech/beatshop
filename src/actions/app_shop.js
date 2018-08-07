@@ -1,6 +1,6 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import axios from 'axios';
-
+import serverConfig  from '../config/server';
 
 export const EXPECT_SHOP_PRODUCTS_LIMIT = "EXPECT_SHOP_PRODUCTS_LIMIT";
 export const GET_SHOP_PRODUCTS_LIMIT_SUCCESS = "GET_SHOP_PRODUCTS_LIMIT_SUCCESS";
@@ -44,7 +44,7 @@ export function getShopProductsPage(page) {
 export function getShopProductsLimit(shopId,page, pagesize){
     return (dispatch, getState) => {
         dispatch(expectShopProductsLimit())
-        return axios.get('http://localhost:1235/api/products',{
+        return axios.get(`${serverConfig.server_url}/api/products`,{
           params:{
             shopId,page,pagesize
           }

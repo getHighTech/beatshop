@@ -2,7 +2,7 @@ import getRemoteMeteor from "../services/meteor/methods";
 import { dealWithError } from "./error_fail";
 import app from '../config/app.json'
 import axios from 'axios';
-
+import serverConfig  from '../config/server';
 export const EXPECT_ONE_PRODUCT = "EXPECT_ONE_PRODUCT";
 export const LOAD_ONE_PRODUCT_SUCCESS = "LOAD_ONE_PRODUCT_SUCCESS";
 export const EXPECT_AGENCY_PRODUCTS = "EXPECT_AGENCY_PRODUCTS"
@@ -81,7 +81,7 @@ export function loadAgencyProducts(shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyProducts())
         console.log(shopId)
-        return axios.get('http://localhost:1235/api/selling_product',{
+        return axios.get(`${serverConfig.server_url}/api/selling_product`,{
           params:{
             shopId
           }

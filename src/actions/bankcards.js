@@ -1,7 +1,7 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { getStore } from "../tools/localStorage";
 import axios from 'axios';
-
+import serverConfig  from '../config/server';
 export const  EXPECT_LOAD_USER_BANK_CARDS = "LOAD_USER_BANK_CARDS";
 export const  LOAD_USER_BANK_CARDS_FAIL = "LOAD_USER_BANK_CARDS_FAIL";
 export const  LOAD_USER_BANK_CARDS_SUCCESS = "LOAD_USER_BANK_CARDS_SUCCESS";
@@ -40,7 +40,7 @@ export function loadUserBankcards(){
         dispatch(expectLoadUserBankcards());
         let bankId=getStore("userId");
         console.log(bankId);
-        return axios.get('http://localhost:1235/api/my/bankcards',{
+        return axios.get(`${serverConfig.server_url}/api/my/bankcards`,{
           params:{
             bankId
           }
