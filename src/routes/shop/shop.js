@@ -89,6 +89,7 @@ const styles = theme => ({
 });
 class Shop extends React.Component{
   state = {
+    
     value: 0,
     productsTotle:7,
     page: 2,
