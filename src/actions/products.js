@@ -9,8 +9,6 @@ export const EXPECT_AGENCY_PRODUCTS = "EXPECT_AGENCY_PRODUCTS"
 export const  LOAD_AGENCY_PRODUCTS_FAILD = "LOAD_AGENCY_PRODUCTS_FAILD ";
 export const LOAD_AGENCY_PRODUCTS_SUCCESS = "LOAD_AGENCY_PRODUCTS_SUCCESS";
 export const SHARE_PRODUCT = "SHARE_PRODUCT"
-// <<<<<<< HEAD
-// =======
 export const REMOVE_AGENCY_PRODUCTS_SUCCESS = "REMOVE_AGENCY_PRODUCTS_SUCCESS"
 export const REMOVE_AGENCY_PRODUCTS_FAILD = "REMOVE_AGENCY_PRODUCTS_FAILD"
 export const EXPECT_REMOVE_AGENCY_PRODUCTS = "EXPECT_REMOVE_AGENCY_PRODUCTS"
@@ -118,10 +116,11 @@ export function loadOneProduct(id){
         return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.id", [id, app.name], loadOneProductSuccess, dealWithError);
     }
 }
-export function loadOneProductByRolename(rolename){
+export function loadOneProductByRolename(rolename,shopId){
     return (dispatch, getState) => {
         dispatch(expectOneProduct(rolename))
-        return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.rolename", [rolename, app.name], loadOneProductSuccess, dealWithError);
+        console.log(shopId)
+        return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.rolename", [rolename, shopId], loadOneProductSuccess, dealWithError);
     }
 }
 
