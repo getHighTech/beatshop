@@ -168,20 +168,21 @@ export function getShopProductsLimitSuccess(msg){
 
 
 export function getShopProductsLimit(shopId,page){
+  const appName = app.name;
+  console.log(appName);
     return (dispatch, getState) => {
         dispatch(expectGetShopProductsLimit());
-        return axios.get('http://localhost:1235/api/products',{
+        return axios.get(`${serverConfig.server_url}/api/new_add_products`,{
           params:{
-            shopId
+            appName
           }
         }).then((res)=>{
             console.log(res)
-            dispatch(getShopProductsLimitSuccess(res.data))
+            dispatch(getShopProductsLimitSuccess(res.data.products))
         }).catch((err)=>{
             console.log(err)
             dispatch(getShopProductsLimitFail())
         })
-
 
         // return getRemoteMeteor(
         //     dispatch,getState, "products",
