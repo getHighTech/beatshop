@@ -258,7 +258,6 @@ class Money extends React.Component{
                       { this.props.money.balance_incomes.length===0 ?
                         <div style={{
                           width: 339,
-                          zIndex: 400,
                           height: 60,
                           top: -87,
                           position: "relative",
