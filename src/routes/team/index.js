@@ -1,53 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import { setAppLayout } from '../../actions/app';
 import { connect } from 'react-redux';
-
-const CustomTableCell = withStyles(theme => ({
-    head: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    body: {
-      fontSize: 14,
-    },
-  }))(TableCell);
-  
-  const styles = theme => ({
-    root: {
-      width: '100%',
-      marginTop: theme.spacing.unit * 3,
-      overflowX: 'auto',
-    },
-    table: {
-    },
-    row: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.background.default,
-      },
-    },
-  });
-
+import Badge from '@material-ui/core/Badge';
+import styled from 'styled-components';
 class Team extends React.Component{
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(setAppLayout(
         {
-            isBack: true,
-            backTo: "/",
-            title: "我的团队",
-            hasCart: false,
-            hasBottomNav: true,
-            hasGeoLoc: false,
-            hasEditor: false,
-            hasSearch: false,
+          isBack: true,
+          backTo: "/my",
+          title: "我的团队",
+          hasCart: false,
+          hasBottomNav: false,
+          hasGeoLoc: false,
+          hasEditor: false,
+          hasSearch: false,
         }
     ));
 
@@ -57,36 +25,108 @@ class Team extends React.Component{
 
 
   render() {
-      const { classes } = this.props;
       return(
-        <Paper className={classes.root}>
-            <Table className={classes.table}>
-                <TableHead>
-                <TableRow>
-                    <CustomTableCell>Dessert (100g serving)</CustomTableCell>
-                    <CustomTableCell numeric>Calories</CustomTableCell>
-                    <CustomTableCell numeric>Fat (g)</CustomTableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-              
-                    <TableRow className={classes.row} >
-                        <CustomTableCell component="th" scope="row">
-                        123
-                        </CustomTableCell>
-                        <CustomTableCell numeric>123</CustomTableCell>
-                        <CustomTableCell numeric>123</CustomTableCell>
-                    </TableRow>
-               
-                </TableBody>
-            </Table>
-        </Paper>
+       <Wrap>
+        <BgWrap>
+
+        </BgWrap>
+
+        <TitleWrap>
+            <Title>
+              我的下级
+              <ReBadge badgeContent={4} >
+              </ReBadge>
+            </Title>
+        </TitleWrap> 
+
+        <ListWrap>
+        <List>
+            <UserName>
+              名称
+            </UserName>
+            <JoinTime>
+             加入时间
+            </JoinTime>
+          </List>
+          <List>
+            <UserName>
+              李雷
+            </UserName>
+            <JoinTime>
+              2018-6-10
+            </JoinTime>
+          </List>
+          <List>
+            <UserName>
+              李雷
+            </UserName>
+            <JoinTime>
+              2018-6-10
+            </JoinTime>
+          </List>
+          <List>
+            <UserName>
+              李雷
+            </UserName>
+            <JoinTime>
+              2018-6-10
+            </JoinTime>
+          </List>
+        </ListWrap>
+       </Wrap>
       )
   }
 }
 
-Team.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+const Wrap = styled.div`
 
-export default connect()(withStyles(styles)(Team))
+`
+
+const BgWrap = styled.div`
+  height: 180px;
+  background: #1986B7;
+`
+
+const TitleWrap = styled.div`
+  background: #F4F8FB;
+`
+const Title = styled.div`
+  color: #4E8BA2;
+  padding: 5px 10px;
+  font-weight: 700;
+  font-size: 16px;
+`
+
+const ListWrap = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`
+
+const List = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+`
+
+const UserName = styled.div`
+  text-align: left;
+`
+
+const JoinTime = styled.div`
+  text-align: right;
+`
+
+const ReBadge = styled(Badge)`
+  margin-left: 16px;
+  margin-top: -2px;
+  .MuiBadge-badge-27 {
+    background: #2387B5;
+    color: #fff;
+  }
+`
+
+
+
+export default connect()(Team)

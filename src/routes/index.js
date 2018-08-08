@@ -239,12 +239,9 @@ class App extends React.Component {
                         <PrivateRoute exact path="/my/new_contact" component={NewContact} />
                         <PrivateRoute exact path="/my/orders/:id/:status" component={orderDetails} />
                         <PrivateRoute exact path="/my/blackcard_holder" component={BlackcardHolder} />
-
                         <PrivateRoute exact path="/my/edit_data" component={EditData} />
-
-
-
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
+                        <Route exact   path="/my/team" component={Team}/>
                         <Route exact path="/share/:id" component={Share} />
                         <PrivateRoute exact path="/shops/:id" component={Shop} />
                         <PrivateRoute exact path="/withdraw" component={withdraw} />
@@ -258,7 +255,6 @@ class App extends React.Component {
                         <Route path="/login/:msg" component={AppLogin} />
                         <Route exact path="/login" component={AppLogin} />
                         <Route exact path="/toast" component={Toast} />
-                        <Route component={Team}  path="/my/team" exact/>
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>
