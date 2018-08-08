@@ -240,6 +240,7 @@ export function appShowMsgAndInjectDataReactWithPath(
         dispatch(closeAppMsg(msgSurvive));
         history.push(path);
         //传入存活时间
+
         dispatch({
             type: APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH,
             msgParams,
