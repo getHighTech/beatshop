@@ -13,7 +13,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputAdornment from '@material-ui/core/InputAdornment';
-
+const crypto = require('crypto');
 
 
 const styles = theme => ({
@@ -211,7 +211,7 @@ class AppLogin extends React.Component {
     
   }
   handleLoginBtnClick(){
-    const { dispatch, location, currentCity } = this.props;
+    const { dispatch, location, currentCity, user } = this.props;
     this.setState({
       mobileError: false,
       mobileLabel: "手机号",
@@ -230,6 +230,16 @@ class AppLogin extends React.Component {
       this.setState({
         SMSError: true,
         SMSLabel: "验证码不得为空" 
+      })
+
+      return false;
+    }
+    let hash = crypto.createHash('sha256');
+    let cryptoCode = hash.update(this.state.SMSCode).digest('hex');
+    if(user.SMSCode !== cryptoCode){
+      this.setState({
+        SMSError: true,
+        SMSLabel: "验证码错误" 
       })
 
       return false;

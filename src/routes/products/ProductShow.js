@@ -54,14 +54,14 @@ const styles = theme => ({
    
     componentDidMount(){
         
-        const { dispatch, match } = this.props;
+        const { dispatch, match,user } = this.props;
         
         if(match.params.id && !match.params.rolename){
             dispatch(loadOneProduct(match.params.id));
             
         }
         if(match.params.rolename && !match.params.id){
-            dispatch(loadOneProductByRolename(match.params.rolename));
+            dispatch(loadOneProductByRolename(match.params.rolename,user.appNameShopId));
             
         }
         if(match.params.productname){
@@ -167,7 +167,8 @@ ProductShow.propTypes = {
   function mapToState(state){
       return {
           productShow: state.ProductShow,
-          appInfo: state.AppInfo
+          appInfo: state.AppInfo,
+          user: state.AppUser
       }
   }
 

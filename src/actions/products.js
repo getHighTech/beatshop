@@ -9,8 +9,6 @@ export const EXPECT_AGENCY_PRODUCTS = "EXPECT_AGENCY_PRODUCTS"
 export const  LOAD_AGENCY_PRODUCTS_FAILD = "LOAD_AGENCY_PRODUCTS_FAILD ";
 export const LOAD_AGENCY_PRODUCTS_SUCCESS = "LOAD_AGENCY_PRODUCTS_SUCCESS";
 export const SHARE_PRODUCT = "SHARE_PRODUCT"
-// <<<<<<< HEAD
-// =======
 export const REMOVE_AGENCY_PRODUCTS_SUCCESS = "REMOVE_AGENCY_PRODUCTS_SUCCESS"
 export const REMOVE_AGENCY_PRODUCTS_FAILD = "REMOVE_AGENCY_PRODUCTS_FAILD"
 export const EXPECT_REMOVE_AGENCY_PRODUCTS = "EXPECT_REMOVE_AGENCY_PRODUCTS"
@@ -80,19 +78,19 @@ export function loadShareProdcut(id){
 export function loadAgencyProducts(shopId){
     return (dispatch, getState) => {
         dispatch(expectAgencyProducts())
-        console.log(shopId)
-        return axios.get(`${serverConfig.server_url}/api/selling_product`,{
-          params:{
-            shopId
-          }
-        }).then((res)=>{
-            console.log(res)
-            dispatch(loadAgencyProductsSuccess(res.data))
-        }).catch((err)=>{
-            console.log(err)
-            dispatch(loadAgencyProductsFaild())
-        })
-        // return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
+        // console.log(shopId)
+        // return axios.get(`${serverConfig.server_url}/api/selling_product`,{
+        //   params:{
+        //     shopId
+        //   }
+        // }).then((res)=>{
+        //     console.log(res)
+        //     dispatch(loadAgencyProductsSuccess(res.data))
+        // }).catch((err)=>{
+        //     console.log(err)
+        //     dispatch(loadAgencyProductsFaild())
+        // })
+        return getRemoteMeteor(dispatch, getState,"products", "app.agency.products", [shopId], loadAgencyProductsSuccess, loadAgencyProductsFaild);
     }
 }
 
@@ -118,10 +116,11 @@ export function loadOneProduct(id){
         return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.id", [id, app.name], loadOneProductSuccess, dealWithError);
     }
 }
-export function loadOneProductByRolename(rolename){
+export function loadOneProductByRolename(rolename,shopId){
     return (dispatch, getState) => {
         dispatch(expectOneProduct(rolename))
-        return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.rolename", [rolename, app.name], loadOneProductSuccess, dealWithError);
+        console.log(shopId)
+        return getRemoteMeteor(dispatch, getState,"products", "app.get.one.product.rolename", [rolename, shopId], loadOneProductSuccess, dealWithError);
     }
 }
 
@@ -184,6 +183,8 @@ export function getShopProductsLimit(shopId,page){
             dispatch(getShopProductsLimitFail())
         })
 
+
+        // 
         // return getRemoteMeteor(
         //     dispatch,getState, "products",
         //     "app.get.products.shop.limit",

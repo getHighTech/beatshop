@@ -33,6 +33,7 @@ export function expectSMSCode(){
 
 export function getSMSCodeSuccess(code){
     let hash = crypto.createHash('sha256');
+    
     let cryptoCode = hash.update(code).digest('hex');
     return {
         type: GET_SMS_CODE_SUCCESS,

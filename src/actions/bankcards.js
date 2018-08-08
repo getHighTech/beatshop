@@ -40,21 +40,21 @@ export function loadUserBankcards(){
         dispatch(expectLoadUserBankcards());
         let bankId=getStore("userId");
         console.log(bankId);
-        return axios.get(`${serverConfig.server_url}/api/my/bankcards`,{
-          params:{
-            bankId
-          }
-        }).then((res)=>{
-            console.log(res.data)
-            dispatch(loadUserBankcardsSuccess(res.data.bankcards))
-        }).catch((err)=>{
-            console.log(err)
-            dispatch(loadUserBankcardsFail())
-        })
-        // return getRemoteMeteor(dispatch, getState,
-        //     "bankcards", "app.get.user.bankcards",
-        //     [getStore("userId")],
-        //     loadUserBankcardsSuccess, loadUserBankcardsFail)
+        // return axios.get(`${serverConfig.server_url}/api/my/bankcards`,{
+        //   params:{
+        //     bankId
+        //   }
+        // }).then((res)=>{
+        //     console.log(res.data)
+        //     dispatch(loadUserBankcardsSuccess(res.data.bankcards))
+        // }).catch((err)=>{
+        //     console.log(err)
+        //     dispatch(loadUserBankcardsFail())
+        // })
+        return getRemoteMeteor(dispatch, getState,
+            "bankcards", "app.get.user.bankcards",
+            [getStore("userId")],
+            loadUserBankcardsSuccess, loadUserBankcardsFail)
     }
 
 }
