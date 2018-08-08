@@ -138,6 +138,7 @@ const ReButton =styled(Button)`
     &&{
       margin-top:12px;
       margin-left:12px;
+      margin-bottom:10px
     }
 `
 const Total =styled.div`

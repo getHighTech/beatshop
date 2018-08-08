@@ -5,7 +5,6 @@ export const GET_ORDERS_LIMIT_SUCCESS = "GET_ORDERS_LIMIT_SUCCESS";
 export const GET_ORDERS_LIMIT_FAIL = "GET_ORDERS_LIMIT_FAIL";
 export const GET_ORDER_CANCEL_SUCCESS = "GET_ORDER_CANCEL_SUCCESS";
 
-
 export function expectGetOrdersLimit(){
     return {
         type: EXPECT_ORDERS_LIMIT,
@@ -43,7 +42,7 @@ export function getOrdersLimit(status,page, pagesize){
         dispatch(expectGetOrdersLimit());
         let userId = getStore("userId");
             return getRemoteMeteor(
-                dispatch,getState, "orders", 
+                dispatch,getState, "orders",
                 "app.get.orders.limit",
                 [userId, status,page, pagesize],
                 getOrdersLimitSuccess, getOrdersLimitFail
@@ -91,8 +90,38 @@ export function cancelOrder(orderId,userId,page, pagesize) {
 }
 
 
+export const EXPECT_COLLECT_ORDER="EXPECT_COLLECT_ORDER"
+export const COLLECT_ORDER_FAIL="COLLECT_ORDER_FAIL"
+export const COLLECT_ORDER_SUCCESS="COLLECT_ORDER_SUCCESS"
 
+export function expectCollectOrder(){
+  return {
+    type:EXPECT_COLLECT_ORDER
+  }
+}
 
+export function collectOrderFile(reason){
+  return{
+    type:COLLECT_ORDER_FAIL,
+    reason
+  }
+}
 
+export function collectOrderSuccess(msg){
+  return {
+    type:COLLECT_ORDER_SUCCESS,
+    msg
+  }
+}
 
-
+export function collectOrder(orderId,userId){
+  return (dispatch,getState) => {
+    dispatch(expectCollectOrder());
+    return getRemoteMeteor(
+      dispatch,getState,"orders","app.collect.one.order",
+      [orderId,userId],
+      collectOrderSuccess,
+      collectOrderFile
+    )
+  }
+}
