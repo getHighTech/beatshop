@@ -173,11 +173,12 @@ export default function AppUser(state={
               logOut: "done",
               stampedToken: null, 
               userId: null,
+              SMSCode: "",
             })
 
           case USER_LOG_OUT_SUCCESS: 
             return Object.assign({}, state, {
-              
+              SMSCode: "",
             })  
           case GET_BANKCARD_LIST_SUCCESS:
           return Object.assign({},state,{
