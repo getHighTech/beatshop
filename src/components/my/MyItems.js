@@ -209,7 +209,7 @@ width: 100%,
   max-width: 560,
   `
 
-  const ReListItemIcon = styled(ListItemIcon)`
+const ReListItemIcon = styled(ListItemIcon)`
   && {
     color: #ff5722;
   }
