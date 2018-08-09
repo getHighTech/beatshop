@@ -56,6 +56,7 @@ class Shop extends React.Component{
   loadMoreProductData(){
     const {  match,shop } = this.props;
     let shopId = match.params.id
+    console.log(shop.page);
     this.props.dispatch(getShopProductsLimit(shopId,shop.page,4))
   }
   componentDidMount(){
@@ -64,6 +65,7 @@ class Shop extends React.Component{
 
     if(layout.title!=='店铺详情'){
       if(shopId){
+        console.log(shop.page);
         dispatch(getShopProductsLimit(shopId,shop.page,4))
       }
         dispatch(setAppLayout(
