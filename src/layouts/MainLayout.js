@@ -41,7 +41,9 @@ class MainLayout extends React.Component{
             <MenuAppBar history={this.props.history} appInfo={AppInfo} />
             <div style={{
               position: "relative",
-              top: "50px"
+              top: "50px",
+              overflowY: "auto",
+              overflowX: "hidden"
             }}>
                 {this.props.children}
             </div>
