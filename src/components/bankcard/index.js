@@ -65,9 +65,10 @@ const styles = theme => ({
 class Bankcard extends React.Component{
 
   removeBankcard = (bankcardId) => {
+    console.log(bankcardId);
     console.log(this.props)
     this.props.dispatch(deleteBankCard(bankcardId))
-  } 
+  }
 
   render(){
     const { classes, cardData} = this.props;
@@ -84,7 +85,7 @@ class Bankcard extends React.Component{
                 <Grid item xs={8} sm={6}>
                   <div className={classes.cardTitle}>{this.props.cardData.title}</div>
                 </Grid>
-              </Grid>        
+              </Grid>
             </div>:
             <div className={classes.cardHead1}>
             <Grid container>
@@ -93,12 +94,12 @@ class Bankcard extends React.Component{
               </Grid>
               <Grid item xs={8} sm={6}>
                 <div className={classes.cardTitle}>{this.props.cardData.title}</div>
-              </Grid> 
-            </Grid>        
-          </div> 
+              </Grid>
+            </Grid>
+          </div>
         }
 
-      
+
           <CardContent>
             <Typography component="p" className={classes.subtitle}>
             {this.props.cardData.subtitle}
@@ -106,14 +107,14 @@ class Bankcard extends React.Component{
             <Typography component="p" className={classes.content} >
             {this.props.cardData.carNumber}
             </Typography>
-  
+
           </CardContent>
           {this.props.isBankcard===true
               ?
             <CardActions style={{textAlign:'right',display:'list-item'}}>
               <Button size="small" variant="raised" color="secondary" onClick={()=>this.removeBankcard(this.props.bankcardId)}>解除绑定</Button>
             </CardActions>
-              :            
+              :
             <Typography component="p" className={classes.chips}>
               鲜至臻品,自用省钱，分享赚钱
             </Typography>
