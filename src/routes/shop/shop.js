@@ -126,7 +126,7 @@ class Shop extends React.Component{
                       <ProductName >{product.name_zh}</ProductName>
                     </Alink>
                     <CardBottom >
-                      <ProductPrice >价格:¥{product.endPricee/100}</ProductPrice>
+                      <ProductPrice >价格:¥{product.endPrice/100}</ProductPrice>
                       <ProductShear >
                         <IconButton color="primary" onClick={()=>this.Share(product._id)} aria-label="Add an alarm">
                           <Icon>share</Icon>
