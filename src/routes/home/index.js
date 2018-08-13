@@ -107,7 +107,7 @@ const Wrap = styled.div`
     top: -50px;
     width: 100%;
     justify-content: space-between;
-    background-color:grey[100];
+    
 `
 
 const ShopContainer = styled.div`

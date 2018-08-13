@@ -83,11 +83,11 @@ class Order extends React.Component {
 
 
     let from_url =
-    `http://test2.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=xianzhi&order=${orderShow.order.orderCode}&uuid=${uuid}&token=${token}`;
+    `http://xianzhi.10000cars.cn/api/v1/wechat/payback/show?fee=${orderShow.order.totalAmount}&appname=xianzhi&order=${orderShow.order.orderCode}&uuid=${uuid}&token=${token}`;
 
     from_url = urlencode(from_url);
     console.log(from_url);
-    window.location.assign('http://test2.10000cars.cn/app/getopenid/'+from_url);
+    window.location.assign('http://xianzhi.10000cars.cn/app/getopenid/'+from_url);
   }
   render(){
     const { classes, orderShow } = this.props;

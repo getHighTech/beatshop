@@ -101,13 +101,13 @@ class MyItems extends React.Component{
         }
     <ListItemText primary={user.user.dataAutograph}  />
       </ListItem>
-      {user.roles.includes("blackcard_holder") &&
+      {/* {user.roles.includes("blackcard_holder") &&
         <ListItem button component="a" href="#/my/blackcard_holder">
           <ReListItemIcon >
           <Face />
           </ReListItemIcon>
           <ListItemText primary="鲜至店长" />
-          </ListItem>}
+          </ListItem>} */}
     </List>
       <Divider />
       {

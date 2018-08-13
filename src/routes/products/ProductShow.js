@@ -30,13 +30,19 @@ const styles = theme => ({
         paddingTop:10
     },
     send:{
-        fontSize:14
+      color:'rgb(156, 148, 148)',
+        fontSize:10
     },
     price:{
         color:'#ff5722'
     },
     productName: {
         fontSize: '20px'
+    },
+    sale:{
+      color:'rgb(156, 148, 148)',
+      fontSize:'10px',
+      marginLeft:'20px'
     }
 
   });
@@ -51,40 +57,40 @@ const styles = theme => ({
     handleSnackClose = () => {
         this.setState({ snackOpen: false });
       };
-   
+
     componentDidMount(){
-        
+
         const { dispatch, match,user } = this.props;
-        
+
         if(match.params.id && !match.params.rolename){
             dispatch(loadOneProduct(match.params.id));
-            
+
         }
         if(match.params.rolename && !match.params.id){
             dispatch(loadOneProductByRolename(match.params.rolename,user.appNameShopId));
-            
+
         }
         if(match.params.productname){
             if(match.params.productname === "openshop"){
                 dispatch(appShowMsg("open_shop_fail", 3000));
             }
-            
+
         }
-        
+
 
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/", 
-                title: "产品介绍", 
-                hasCart: true, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/",
+                title: "产品介绍",
+                hasCart: true,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
-        
+
     }
 
     render() {
@@ -94,7 +100,7 @@ const styles = theme => ({
                 <Grid  container
                 direction="column"
                 justify="space-between"
-                alignContent="center" 
+                alignContent="center"
                 alignItems="center"
                 style={{backgroundColor: "white"}}>
                     <h2>此商品已经下架，敬请期待</h2>
@@ -107,7 +113,7 @@ const styles = theme => ({
                     <Grid  container
                     direction="column"
                     justify="space-between"
-                    alignContent="center" 
+                    alignContent="center"
                     alignItems="center"
                     style={{backgroundColor: "white"}}>
                         <h2>服务器错误{appInfo.reason}，马上联系管理员</h2>
@@ -115,27 +121,27 @@ const styles = theme => ({
                     </Grid>
                 )
             }
-            
+
         }
         if(productShow.loading){
             return (
                 <Grid  container
                 direction="column"
                 justify="space-between"
-                alignContent="center" 
+                alignContent="center"
                 alignItems="center"
                 style={{backgroundColor: "white"}}>
                     <LoadingItem />
                 </Grid>
-               
+
             )
         }
-        
+
         return (
             <Grid  container
                 direction="column"
                 justify="space-between"
-                // alignContent="center" 
+                // alignContent="center"
                 // alignItems="center"
                 style={{backgroundColor: "white"}}>
                <ProductCarousel imgs={productShow.product.images}/>
@@ -144,6 +150,7 @@ const styles = theme => ({
                     <div className={classes.productBrief} >{productShow.product.brief}</div>
                     <div className={classes.productPrice}>
                         <div className={classes.price}>{"¥"+productShow.product.endPrice/100}</div>
+                        <span className={classes.sale}>销量:<span style={{color:'rgb(156, 148, 148)'}}>{productShow.product.sales_volume}笔</span></span>
                         <div className={classes.send}>
                             配送方式:包邮
                         </div>
@@ -152,7 +159,7 @@ const styles = theme => ({
                 </div>
                 <div style={{width: "100%",paddingBottom:50}}>
                     <ProductTabs des={productShow.product.detailsImage}/>
-                </div>                    
+                </div>
                 <ProductBottomBar isAppointment={productShow.product.isAppointment} product={productShow.product} history={history} url={match.url}/>
         </Grid>
 
@@ -173,4 +180,4 @@ ProductShow.propTypes = {
   }
 
 
-export default connect(mapToState)(withStyles(styles)(ProductShow)); 
+export default connect(mapToState)(withStyles(styles)(ProductShow));

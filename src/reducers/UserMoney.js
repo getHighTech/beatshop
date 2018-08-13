@@ -4,8 +4,8 @@ import { APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH } from '../actions/app.js'
 export default function UserMoney(state={
     loading: false,
     balance: {},
-    balance_incomes: "unloaded",
-    balance_charges: "unloaded",
+    balance_incomes: [],
+    balance_charges: [],
     todayTotalAmount: 0,
     weekTotalAmount: 0,
     monthTotalAmount: 0,
@@ -19,14 +19,16 @@ export default function UserMoney(state={
             return Object.assign({}, state, {
                     loading: false,
                     todayTotalAmount: NaN,
-                    balance_incomes: "unloaded",
+                    balance_incomes: [],
                     weekTotalAmount: NaN,
                     monthTotalAmount: NaN,
                     staticDone: false,
                     loadingMore: false,
             })
         case LOAD_MONEY_PAGE_SUCCESS:
+        console.log(action)
             return Object.assign({}, state, {
+                
                 loading: true,
                 balance: action.msg.balance,
                 balance_incomes: action.msg.balance_incomes,
@@ -39,8 +41,8 @@ export default function UserMoney(state={
             return Object.assign({}, state, {
                     loading: false,
                     balance: {},
-                    balance_incomes: "unloaded",
-                    balance_charges: "unloaded",
+                    balance_incomes: [],
+                    balance_charges: [],
                     todayTotalAmount: NaN,
                     weekTotalAmount: NaN,
                     monthTotalAmount: NaN,
@@ -103,7 +105,9 @@ export default function UserMoney(state={
             })
         case GET_INCOMES_LIMIT_SUCCESS:
             let incomes = state.balance_incomes;
+            console.log(incomes)
             incomes = incomes.concat(action.msg.incomes);
+            console.log(incomes)
             let users = state.users;
             users = users.concat(action.msg.users);
             return Object.assign({}, state, {

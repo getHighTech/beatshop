@@ -28,18 +28,19 @@ export function loadMoneyPageSuccess(msg){
 export function loadMoneyPage(userId){
     return (dispatch, getState) => {
         dispatch(expectLoadMoneyPage());
-        // return axios.get('http://localhost:1235/api/loadMoney',{
-        //     params: {
-        //     userId
-        //     }
-        // }).then((res)=>{
-        //     console.log(res)
-        //     dispatch(loadMoneyPageSuccess(res.data))
-        // }).catch((err)=>{
-        //     console.log(err)
-        // })
-        return getRemoteMeteor(dispatch, getState, 'balances', "app.load.money.page",
-    [userId], loadMoneyPageSuccess, loadMoneyPageFail);
+        return axios.get('http://localhost:1235/api/loadMoney',{
+            params: {
+            userId
+            }
+        }).then((res)=>{
+            console.log(11111)
+            console.log(res.data)
+            dispatch(loadMoneyPageSuccess(res.data))
+        }).catch((err)=>{
+            console.log(err)
+        })
+    //     return getRemoteMeteor(dispatch, getState, 'balances', "app.load.money.page",
+    // [userId], loadMoneyPageSuccess, loadMoneyPageFail);
     }
 }
 
@@ -194,24 +195,24 @@ export function getIncomeWithTime(rangLength, userId, unit){
                 dispatch(getIncomesLimitFail("too many"))
             }
         dispatch(expectGetIncomesWithinTime(unit));
-        // axios.get('http://localhost:1235/api/shop',{
-        //     params: {
-        //           userId,
-        //           rangLength,
-        //           unit
-        //       }
-        //     }).then((res)=>{
-        //         console.log(res)
-        //         if(res){
-        //            return dispatch(getIncomeWithTimeSuccess(res.data))
-        //         }
-        //     }).catch((err)=>{
-        //         console.log(err)
-        //     })
-        return getRemoteMeteor(
-            dispatch,getState, "balances",
-             "app.get.incomes.time.range",
-            [rangLength, userId, unit], getIncomeWithTimeSuccess, getIncomeWithTimeFail)
+        axios.get('http://localhost:1235/api/shop',{
+            params: {
+                  userId,
+                  rangLength,
+                  unit
+              }
+            }).then((res)=>{
+                console.log(res)
+                if(res){
+                   return dispatch(getIncomeWithTimeSuccess(res.data))
+                }
+            }).catch((err)=>{
+                console.log(err)
+            })
+    //     return getRemoteMeteor(
+    //         dispatch,getState, "balances",
+    //          "app.get.incomes.time.range",
+    //         [rangLength, userId, unit], getIncomeWithTimeSuccess, getIncomeWithTimeFail)
     }
 }
 
@@ -247,6 +248,7 @@ export function getIncomesLimitFail(reason){
 let Tpage = 1;
 export function getIncomesLimit(page, pagesize){
     return (dispatch, getState) => {
+        console.log(`没来`)
         fetchTimer++
         if(fetchTimer>1){
             return dispatch(getIncomesLimitFail("tooMany"));
@@ -257,7 +259,7 @@ export function getIncomesLimit(page, pagesize){
         }
         dispatch(expectGetIncomeLimit());
         console.log("Tpage", Tpage);
-
+        console.log(pagesize)
         return getRemoteMeteor(dispatch, getState, "balances",
         "app.get.incomes.limit", [getStore("userId"), Tpage, pagesize],
         getIncomesLimitSuccess, getIncomesLimitFail
