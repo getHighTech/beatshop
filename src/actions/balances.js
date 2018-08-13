@@ -1,6 +1,8 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { getStore } from "../tools/localStorage";
 import axios from 'axios';
+import  serverConfig  from '../config/server';
+
 
 export const  LOAD_MONEY_PAGE = "LOAD_MONEY_PAGE";
 export const  EXPECT_LOAD_MONEY_PAGE = "EXPECT_LOAD_MONEY_PAGE";
@@ -28,7 +30,7 @@ export function loadMoneyPageSuccess(msg){
 export function loadMoneyPage(userId){
     return (dispatch, getState) => {
         dispatch(expectLoadMoneyPage());
-        return axios.get('http://localhost:1235/api/loadMoney',{
+        return axios.get(`${serverConfig.server_url}/api/loadMoney`,{
             params: {
             userId
             }
@@ -195,7 +197,7 @@ export function getIncomeWithTime(rangLength, userId, unit){
                 dispatch(getIncomesLimitFail("too many"))
             }
         dispatch(expectGetIncomesWithinTime(unit));
-        axios.get('http://localhost:1235/api/shop',{
+        axios.get(`${serverConfig.server_url}/api/shop`,{
             params: {
                   userId,
                   rangLength,
