@@ -101,7 +101,7 @@ class AllProducts extends React.Component{
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
           { 
-            products==[] ?
+            products.length> 0?
 
             products.map((tile, index) => {
             
@@ -112,7 +112,7 @@ class AllProducts extends React.Component{
               <GridListTileBar
                 title={tile.title}
                 subtitle={<div style={{wordWrap: "break-all"}}><span>价: ¥{tile.endPrice/100}</span>&nbsp;
-                <span> 
+                <span>  
                   佣: ¥
                   
                   {tile.agencyLevelPrices.length> 0 ?tile.agencyLevelPrices[0]/100 : 0}
