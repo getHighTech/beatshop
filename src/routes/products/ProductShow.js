@@ -43,6 +43,12 @@ const styles = theme => ({
       color:'rgb(156, 148, 148)',
       fontSize:'10px',
       marginLeft:'20px'
+    },
+    firstPrice:{
+      marginLeft:'10px',
+      color:'rgb(156, 148, 148)',
+      fontSize:'12px',
+      textDecoration:'line-through'
     }
 
   });
@@ -149,7 +155,7 @@ const styles = theme => ({
                     <div className={classes.productName}>{productShow.product.name_zh}</div>
                     <div className={classes.productBrief} >{productShow.product.brief}</div>
                     <div className={classes.productPrice}>
-                        <div className={classes.price}>{"¥"+productShow.product.endPrice/100}</div>
+                        <div className={classes.price}>{"¥"+productShow.product.endPrice/100}<span  className={classes.firstPrice} >{"¥ "+productShow.product.price/100}</span></div>
                         <span className={classes.sale}>销量:<span style={{color:'rgb(156, 148, 148)'}}>{productShow.product.sales_volume}笔</span></span>
                         <div className={classes.send}>
                             配送方式:包邮

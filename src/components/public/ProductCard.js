@@ -124,10 +124,12 @@ class ProductCard extends React.Component {
               </div>
 
               <div className={classes.right}>
+
+
                 <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} />
-                <div  className={classes.productPriceNumber}>{product.price/100}</div>
                 <div  className={classes.productEndPriceNumber}>{product.endPrice/100}</div>
               </div>
+
             </div>
             <div>
               <div className={classes.productContain}>
