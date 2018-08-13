@@ -28,18 +28,19 @@ export function loadMoneyPageSuccess(msg){
 export function loadMoneyPage(userId){
     return (dispatch, getState) => {
         dispatch(expectLoadMoneyPage());
-        // return axios.get('http://localhost:1235/api/loadMoney',{
-        //     params: {
-        //     userId
-        //     }
-        // }).then((res)=>{
-        //     console.log(res)
-        //     dispatch(loadMoneyPageSuccess(res.data))
-        // }).catch((err)=>{
-        //     console.log(err)
-        // })
-        return getRemoteMeteor(dispatch, getState, 'balances', "app.load.money.page",
-    [userId], loadMoneyPageSuccess, loadMoneyPageFail);
+        return axios.get('http://localhost:1235/loadMoney',{
+            params: {
+            userId
+            }
+        }).then((res)=>{
+            console.log(11111)
+            console.log(res)
+            dispatch(loadMoneyPageSuccess(res.data))
+        }).catch((err)=>{
+            console.log(err)
+        })
+    //     return getRemoteMeteor(dispatch, getState, 'balances', "app.load.money.page",
+    // [userId], loadMoneyPageSuccess, loadMoneyPageFail);
     }
 }
 

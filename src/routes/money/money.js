@@ -110,10 +110,7 @@ class Money extends React.Component{
   }
 
   loadWithdrawFirstPageData(){
-    let dataSource1 = [
-      {id:1,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'}
-    ]
-    this.setState({withdrawData:dataSource1})
+   
   }
   componentDidMount(){
     const { dispatch, layout, money } = this.props;
@@ -140,10 +137,10 @@ class Money extends React.Component{
    console.log(money.staticDone);
      
     // if(!money.staticDone && money.balance_incomes === "unloaded"){
-    //    dispatch(loadMoneyPage(getStore('userId')));
-    //    dispatch(getIncomeWithTime(1, getStore("userId"),"days"))
-    //    dispatch(getIncomeWithTime(1, getStore("userId"),"weeks"))
-    //    dispatch(getIncomeWithTime(1, getStore("userId"),"months"))
+       dispatch(loadMoneyPage(getStore('userId')));
+       dispatch(getIncomeWithTime(1, getStore("userId"),"days"))
+       dispatch(getIncomeWithTime(1, getStore("userId"),"weeks"))
+       dispatch(getIncomeWithTime(1, getStore("userId"),"months"))
     // }
 
     this.setState({
