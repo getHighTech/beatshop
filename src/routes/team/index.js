@@ -1,11 +1,19 @@
 import React from 'react';
 import { setAppLayout } from '../../actions/app';
+import { getMyTeam} from '../../actions/my_team'
 import { connect } from 'react-redux';
 import Badge from '@material-ui/core/Badge';
 import styled from 'styled-components';
+import { getStore } from '../../tools/localStorage';
+
+
+
 class Team extends React.Component{
   componentDidMount() {
     const { dispatch } = this.props;
+    let userId = getStore("userId");
+    console.log(userId);
+    dispatch(getMyTeam(userId))
     dispatch(setAppLayout(
         {
           isBack: true,
@@ -18,9 +26,26 @@ class Team extends React.Component{
           hasSearch: false,
         }
     ));
+    console.log('先A');
+    var promise1 = new Promise(function(resolve, reject) {
+  // 2秒后置为接收状态
+  setTimeout(function() {
+    resolve('success');
+  }, 2000);
+    });
+
+    promise1.then(function(data) {
+      console.log(data); // success
+    }, function(err) {
+      console.log(err); // 不执行
+    }).then(function(data) {
+      // 上一步的then()方法没有返回值
+      console.log('链式调用：' + data); // 链式调用：undefined
+    }).then(function(data) {
+      // ....
+    });
 
 
-    
   }
 
 
@@ -37,7 +62,7 @@ class Team extends React.Component{
               <ReBadge badgeContent={4} >
               </ReBadge>
             </Title>
-        </TitleWrap> 
+        </TitleWrap>
 
         <ListWrap>
         <List>

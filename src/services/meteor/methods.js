@@ -13,7 +13,6 @@ export default function getRemoteMeteor(
           failAction){
     let loginToken = getStore("stampedToken");
     let endParams = [loginToken, App.name];
-    console.log(endParams);
     params.forEach(element => {
         if(element){
             endParams.push(element);
@@ -22,6 +21,7 @@ export default function getRemoteMeteor(
     let actionIsNew = true;
     let rltId = MClient.method(remoteMethodName, endParams);
     console.log(rltId);
+
         for (let index = 0; index< rltIds.length; index++) {
              if(rltIds[index] === rltId){
                  actionIsNew = false;

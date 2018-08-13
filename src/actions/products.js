@@ -40,7 +40,6 @@ export function removeAgencyProducts(shopId,productId) {
     }
 }
 
-// >>>>>>> ea8c33d93aa7552fabe51cb5c8750d52ebe1af21
 export function shareProduct(product) {
     return {
         type: SHARE_PRODUCT,

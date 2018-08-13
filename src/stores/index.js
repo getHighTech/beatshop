@@ -5,6 +5,7 @@ import AppInfo from '../reducers/AppInfo';
 import ProductsList from '../reducers/ProductsList';
 import ProductShow from '../reducers/ProductShow';
 import OrderShow from '../reducers/OrderShow';
+import MyTeam from '../reducers/MyTeam';
 import AppCart from '../reducers/AppCart';
 import AppMsg from '../reducers/AppMsg';
 import UserContacts from '../reducers/UserContacts';
@@ -13,6 +14,7 @@ import UserBankcards from '../reducers/UserBankcards';
 import AppOrders from '../reducers/AppOrders';
 import AppShop from '../reducers/AppShop';
 import WechatUser from '../reducers/WechatUser';
+
 export default function configureStore() {
   const enhancer = compose(
     applyMiddleware(thunk),
@@ -25,7 +27,7 @@ export default function configureStore() {
       AppUser,
       ProductShow,
       AppCart,
-      OrderShow, 
+      OrderShow,
       UserContacts,
       AppMsg,
       UserMoney,
@@ -33,6 +35,7 @@ export default function configureStore() {
       AppOrders,
       AppShop,
       WechatUser,
+      MyTeam
     }),
     enhancer);
 }
