@@ -101,7 +101,7 @@ class AllProducts extends React.Component{
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
           { 
-            products!==undefined ?
+            products==[] ?
 
             products.map((tile, index) => {
             
