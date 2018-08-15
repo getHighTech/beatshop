@@ -30,12 +30,12 @@ export function getMyTeamLimitFail(reason){
 }
 
 export function getMyTeam(userId){
-  console.log('先B');
 
   return (dispatch,getState) => {
     dispatch(expectGetMyteamLimit())
     //
     const SuserId = userId;
+    console.log(`${serverConfig.server_url}`);
     return axios.get(`${serverConfig.server_url}/api/myteam`,{
       params:{
         SuserId

@@ -14,7 +14,7 @@ const styles = theme => ({
   card: {
     maxWidth: 400,
     width: "100%",
-    margin: "10px",
+    margin: "15px",
     color:grey[800]
   },
   productImg:{
@@ -145,7 +145,7 @@ class ProductCard extends React.Component {
                   </IconButton>
                   <span className={classes.sale}>销量:<span style={{color:'rgb(156, 148, 148)'}}>{product.sales_volume}笔</span></span>
                 </div>
-                <Button variant="raised" color="secondary" onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
+                <Button variant="raised" color="secondary" style={{marginRight:10}} onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
                   立即购买
                 </Button>
               </div>

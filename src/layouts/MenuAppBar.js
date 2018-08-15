@@ -23,6 +23,10 @@ const styles = theme => ({
     zIndex: '1000'
 
   },
+  btn:{
+    padding:0
+  }
+  ,
   appbar: {
     backgroundColor: grey[800],
     color:theme.secondary,
@@ -158,56 +162,60 @@ class MenuAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static" className={classes.appbar} color="secondary">
-          <Toolbar>
+          <Toolbar style={{paddingRight:0,paddingLeft:0}}>
+            <div style={{width:'20%'}}>
                 {
-                  layout.hasGeoLoc && <CitySelector currentCity={currentCity} color="secondary" />
+                  layout.hasGeoLoc && <CitySelector currentCity={currentCity}  color="secondary" />
                 }
                 {
                   layout.isBack &&
                   <Button style={{
                     position: "relative",
-                    left: -35
+                    padding:5
                   }} onClick={()=>this.props.history.push(layout.backTo)} color="secondary" >
-                    <ChevronLeft style={{ fontSize: 36 }}/>
+                    <ChevronLeft style={{ fontSize: 20 }}/>
                     返回
                   </Button>
                 }
+              </div>
+            <div style={{width:'60%',textAlign:'center'}}>
 
-
-            <Typography variant="title" color="secondary" className={classes.flex}>
+            <Typography variant="title" color="secondary" >
 
               <div>
-                  <span>{layout.title} </span>
+                  <span style={{fontSize:24}}>{layout.title} </span>
               </div>
             </Typography>
+            </div>
+            <div style={{width:'20%',textAlign:'right',marginRight:5}}>
             {
-              layout.hasCart && <CartTop  history={this.props.history} color="secondary"/>
+              layout.hasCart && <CartTop  history={this.props.history} style={{marginRight:10}} color="secondary"/>
             }
             { layout.hasEditor &&
-              <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.btn} color="secondary">
                 编辑
                 <ModeEdit />
               </Button>
             }
             { layout.hasNewCreate &&
-              <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.btn} color="secondary">
                 新建
                 <OpenInNew />
               </Button>
             }
             { layout.hasWithdraw &&
-              <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.btn} color="secondary">
                 提现
                 <OpenInNew />
               </Button>
             }
             { layout.hasCreateBankcard &&
-              <Button onClick={()=>this.handleEditorClick(layout.editorType)} color="secondary">
+              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.btn} color="secondary">
                 新增
                 <OpenInNew />
               </Button>
             }
-
+            </div>
           </Toolbar>
         </AppBar>
       </div>
