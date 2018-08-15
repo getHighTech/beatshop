@@ -22,7 +22,7 @@ export default function MyTeam(
     console.log(action.msg);
     return Object.assign({}, state, {
         loading: false,
-        teams: action.msg,
+        teams: action.msg.myteams,
     })
     default:
         return state;

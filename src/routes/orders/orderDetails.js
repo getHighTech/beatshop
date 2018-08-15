@@ -15,7 +15,6 @@ class orderDetails extends React.Component {
       <div >
       <OrderDetailsPosition match={this.props.match}/>
       <OrderDetailsPay match={this.props.match}/>
-      <OrderDetailsQrcode />
       <OrderDetailsTime />
 
       </div>
