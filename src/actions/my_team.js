@@ -30,28 +30,28 @@ export function getMyTeamLimitFail(reason){
 }
 
 export function getMyTeam(userId){
-  console.log('先B');
 
   return (dispatch,getState) => {
     dispatch(expectGetMyteamLimit())
     //
-    // const SuserId = userId;
-    // return axios.get(`${serverConfig.server_url}/api/myteam`,{
-    //   params:{
-    //     SuserId
-    //   }
-    // }).then((res)=>{
-    //     console.log(res.data)
-    //     dispatch(getMyTeamLimitSuccess(res.data))
-    // }).catch((err)=>{
-    //     console.log(err)
-    // })
+    const SuserId = userId;
+    console.log(`${serverConfig.server_url}`);
+    return axios.get(`${serverConfig.server_url}/api/myteam`,{
+      params:{
+        SuserId
+      }
+    }).then((res)=>{
+        console.log(res.data)
+        dispatch(getMyTeamLimitSuccess(res.data))
+    }).catch((err)=>{
+        console.log(err)
+    })
 
-    return getRemoteMeteor(
-        dispatch,getState, "agency_relation",
-        "get.agency_relation.my.teams",
-        [userId],
-        getMyTeamLimitSuccess, getMyTeamLimitFail
-    );
+    // return getRemoteMeteor(
+    //     dispatch,getState, "agency_relation",
+    //     "get.agency_relation.my.teams",
+    //     [userId],
+    //     getMyTeamLimitSuccess, getMyTeamLimitFail
+    // );
   }
 }
