@@ -13,6 +13,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { getStore } from '../../tools/localStorage';
 const crypto = require('crypto');
 
 
@@ -253,9 +254,12 @@ class AppLogin extends React.Component {
       address,
       city,
     }
+    let Goto = getStore('Goto');
+    let url;
+    Goto ? url=`/products/${Goto}` : url="/"
     return dispatch(
       appShowMsgAndInjectDataReactWithPath(
-        "user_mobile_login", "mobile_login", 1200, loginParams, "/")
+        "user_mobile_login", "mobile_login", 1200, loginParams, url)
       )
   }
   render(){

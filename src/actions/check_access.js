@@ -1,5 +1,5 @@
 import { appShowMsgAndInjectDataReact, switchActionNames, APP_SHOW_MSG_AND_INJECT_DATA_REACT, appShowMsgAndRedirectPath, APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH, appShowMsgAndInjectDataReactWithPath } from "./app";
-
+import { setStore } from '../tools/localStorage';
 export const CHECK_ACCESS_BUY = "CHECK_ACCESS_BUY";
 export const PASS_ACCESS = "PASS_ACCESS";
 export const PASS_ACCESS_DONE = "PASS_ACCESS_DONE";
@@ -17,6 +17,8 @@ function expectCheckAccess(accessName){
 
 
 export function checkAccess(opera, product, accessName){
+    console.log(product)
+    setStore("Goto",`${product._id}`)
     let acl = product.acl;
 
     return (dispatch, getState) => {
