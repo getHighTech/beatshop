@@ -35,8 +35,6 @@ export function loadMoneyPage(userId){
             userId
             }
         }).then((res)=>{
-            console.log(11111)
-            console.log(res.data)
             dispatch(loadMoneyPageSuccess(res.data))
         }).catch((err)=>{
             console.log(err)

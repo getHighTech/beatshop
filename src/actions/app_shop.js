@@ -45,21 +45,21 @@ export function getShopProductsLimit(shopId,page, pagesize){
   console.log(page);
     return (dispatch, getState) => {
         dispatch(expectShopProductsLimit())
-        // return axios.get(`${serverConfig.server_url}/api/products`,{
-        //   params:{
-        //     shopId,page,pagesize
-        //   }
-        // }).then((res)=>{
-        //     console.log(res.data)
-        //     dispatch(getShopProductsLimitSuccess(res.data))
-        // }).catch((err)=>{
-        //     console.log(err)
-        // })
-            return getRemoteMeteor(
-                dispatch,getState, "shops",
-                "app.get.shop.products.limit",
-                [shopId,page, pagesize],
-                getShopProductsLimitSuccess, getShopProductsLimitFail
-            );
+        return axios.get(`${serverConfig.server_url}/api/products`,{
+          params:{
+            shopId,page,pagesize
+          }
+        }).then((res)=>{
+            console.log(res.data)
+            dispatch(getShopProductsLimitSuccess(res.data))
+        }).catch((err)=>{
+            console.log(err)
+        })
+            // return getRemoteMeteor(
+            //     dispatch,getState, "shops",
+            //     "app.get.shop.products.limit",
+            //     [shopId,page, pagesize],
+            //     getShopProductsLimitSuccess, getShopProductsLimitFail
+            // );
     }
 }
