@@ -152,8 +152,12 @@ const styles = theme => ({
 
 
        )
+<<<<<<< HEAD
     //    console.log(specs)
 
+=======
+        
+>>>>>>> 893bb69965a7555a974761cd6c946a67162ee669
     }
     renderItem = (spec,index) => {
         if (spec.spec) {
@@ -173,6 +177,7 @@ const styles = theme => ({
 
     render() {
         const {classes, appInfo, productShow, match, history} = this.props;
+<<<<<<< HEAD
         const {spec,price,endPrice,SelectProduct} = this.state;
         console.log(SelectProduct);
         // let  rst = {};
@@ -180,6 +185,9 @@ const styles = theme => ({
         //     rst[specs[i]] = false
         // }
         // console.log(rst)
+=======
+        const { specs } = this.state
+>>>>>>> 893bb69965a7555a974761cd6c946a67162ee669
         if(productShow.product === {}){
             return (
                 <Grid  container

@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import QRCode from 'qrcode-react';
 import styled from 'styled-components';
 
 

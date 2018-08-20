@@ -8,7 +8,6 @@ import { appShowMsgAndInjectDataReact } from '../../actions/app';
 import { setAppLayout } from '../../actions/app';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { getStore } from '../../tools/localStorage.js';
 // import {getMyOrder} from '../../services/http/axios.js';
 const styles = {
   row: {
@@ -64,7 +63,7 @@ class MyIndex extends React.Component{
 
   }
   render(){
-    const { classes, dispatch, user , wechat} = this.props;
+    const { classes, dispatch, user } = this.props;
    
     return (
       <Card className={classes.card}>

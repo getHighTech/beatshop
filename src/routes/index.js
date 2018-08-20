@@ -5,7 +5,6 @@ import {
     Route,
     Switch,Redirect
   } from 'react-router-dom';
-
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import createHistory from 'history/createHashHistory';
@@ -27,8 +26,6 @@ import NewContact from './contacts/new';
 import NewBankcard from './my/NewBankcard'
 import AllProducts from './products/AllProducts'
 import SellingProducts from './products/SellingProducts'
-
-
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import BankcardsList from './my/BankcardsList';
@@ -44,38 +41,8 @@ import EditData from './my/EditData'
 import WechatChecker from './WechatChecker.js';
 import Team from '../routes/team/index';
 import Toast from '../routes/toast/index';
-import URI from 'urijs';
-import axios from 'axios';
-import { getUserInfo } from '../actions/wechat_user.js';
-import { setStore } from '../tools/localStorage.js'
-function generateGetCodeUrl(redirectURL) {
-    return new URI("https://open.weixin.qq.com/connect/oauth2/authorize")
-        .addQuery("appid", "wx0564668ed5671740")
-        .addQuery("redirect_uri", redirectURL)
-        .addQuery("response_type", "code")
-        .addQuery("scope", "snsapi_userinfo")
-        .addQuery("response_type", "code")
-        .hash("wechat_redirect")
-        .toString();
-};
+import {  wechatAuth } from '../helper/wechatAuth.js';
 
-function wechatAuth(nextState, replace, next) {
-    const uri = new URI(document.location.href);
-    const query = uri.query(true);
-    const {code} = query;
-    if(code) {
-       axios.get(`http://test1.10000.cards.cn//api/info?code=${code}`)
-            .then((res)=>{
-               setStore("WechatProfile",res.data)
-                getUserInfo(res.data)
-
-            })
-    } else {
-
-        document.location = generateGetCodeUrl(document.location.href);
-    }
-
-}
 
 const history = createHistory();
 
@@ -132,8 +99,7 @@ class App extends React.Component {
               {...rest}
               render={props => {
                 if(user.roles.includes("login_user")){
-
-                      // wechatAuth()
+                    //   wechatAuth()
                     return (
                         <Component {...props} />
                       )
@@ -279,9 +245,9 @@ class App extends React.Component {
 }
 App.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
+};
 
-  function mapUserState(state){
+function mapUserState(state){
     return {
         msg: state.AppMsg,
         appInfo: state.AppInfo,
@@ -289,4 +255,5 @@ App.propTypes = {
         user: state.AppUser
     }
 }
+
 export default connect(mapUserState)(withRoot(withStyles(styles)(App)));

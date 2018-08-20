@@ -65,6 +65,10 @@ export default function ProductShow
                 loading: false,
                 products: action.msg.products
             });
+        case    REMOVE_AGENCY_PRODUCTS_FAILD:
+            return Object.assign({}, state, {
+                loading: false,
+            });
         case LOAD_AGENCY_PRODUCTS_FAILD:
             return Object.assign({}, state, {
                 loading: false,

@@ -54,7 +54,7 @@ class Share extends React.Component {
   }
   componentDidMount(){
     
-    const { dispatch, layout,product } = this.props;
+    const { dispatch, layout } = this.props;
 
     if(layout.title!=='分享页面'){
       console.log(this.props.match.params.id)
@@ -74,8 +74,6 @@ class Share extends React.Component {
           }
       ));
   }
-    console.log(this.props)
-    let id = this.props.match.params.id
     // this.setState({
     //   url:'https://wanchehui/#/products/' + id
     // })
@@ -83,15 +81,15 @@ class Share extends React.Component {
 
 
   update() {
-    const canvas = document.querySelector('.Share-qecode-30 canvas');
-    if(canvas){
-      const img = new Image();
-      console.log(canvas)
-      const imgSrc =  canvas.toDataURL()
-      console.log(imgSrc)
-      const wrap =  document.querySelector('.Share-qecode-30')
-      wrap.innerHTML = `<img src="${imgSrc}">`
-    }
+    // const canvas = document.querySelector('.Share-qecode-30 canvas');
+    // if(canvas){
+    //   const img = new Image();
+    //   console.log(canvas)
+    //   const imgSrc =  canvas.toDataURL()
+    //   console.log(imgSrc)
+    //   const wrap =  document.querySelector('.Share-qecode-30')
+    //   wrap.innerHTML = `<img src="${imgSrc}">`
+    // }
   }
   render() { 
     const { classes,product } = this.props
