@@ -108,9 +108,10 @@ class ProductCard extends React.Component {
 
 
   handleBuyOneProductBtnClick(product){
-    const {dispatch} = this.props;
-    dispatch(checkAccess("buy", product, "create_one_order_by_product"));
-
+    // const {dispatch} = this.props;
+    // dispatch(checkAccess("buy", product, "create_one_order_by_product"));
+    let productId = product._id;
+    this.props.history.push("/products/"+productId);
   }
 
 
@@ -131,7 +132,7 @@ class ProductCard extends React.Component {
 
 
                 <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} />
-                <div  className={classes.productEndPriceNumber}>{product.endPrice/100}</div>
+                <div  className={classes.productEndPriceNumber}>{product.endPrice/100}起!</div>
               </div>
 
             </div>
@@ -150,7 +151,7 @@ class ProductCard extends React.Component {
                   <span className={classes.sale}>销量:<span style={{color:'rgb(156, 148, 148)'}}>{product.sales_volume}笔</span></span>
                 </div>
                 <Button variant="raised" color="secondary" style={{marginRight:10}} onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
-                  立即购买
+                  进去看看
                 </Button>
               </div>
             </div>

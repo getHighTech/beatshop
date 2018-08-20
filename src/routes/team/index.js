@@ -40,7 +40,7 @@ class Team extends React.Component{
       return(
        <Wrap>
         <BgWrap>
-        <BannerImg alt=""   src={require("../../components/imgs/team.jpg")}/>
+        <BannerImg alt=""   src={require("../../components/imgs/teams.jpg")}/>
 
         </BgWrap>
 
@@ -89,11 +89,11 @@ const Wrap = styled.div`
 `
 const BannerImg = styled.img`
   width:100%;
-  height:180px;
+  height:20%;
   margin-top:7px;
 `
 const BgWrap = styled.div`
-  height: 180px;
+  height: 20%;
 `
 
 const TitleWrap = styled.div`

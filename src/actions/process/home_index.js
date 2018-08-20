@@ -11,6 +11,30 @@ export function expectHomeIndexProducts(){
 
 export function loadHomeIndexProductsSuccess(products){
     console.log(products);
+//     var map = {},
+//     dest = [];
+// for(var i = 0; i < products.length; i++){
+//     var ai = products[i];
+//     console.log('------------------');
+//     console.log(!map[ai.name]);
+//     if(!map[ai.name]){
+//         dest.push({
+//             id: ai.name,
+//             data: [ai]
+//         });
+//         map[ai.name] = ai;
+//     }else{
+//         for(var j = 0; j < dest.length; j++){
+//             var dj = dest[j];
+//             if(dj.name == ai.name){
+//                 dj.data.push(ai);
+//                 break;
+//             }
+//         }
+//     }
+// }
+//
+// console.log(dest);
     return {
         type: LOAD_HOME_INDEX_PRODUCTS_SUCCESS,
         products

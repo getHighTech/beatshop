@@ -61,7 +61,10 @@ const styles = theme => ({
             snackOpen: false,
             snackContent: "",
             specs: [{"金色": "true"}, {"银色": "false"}, {"灰色": "false"}],
-            spec:[]
+            spec:[],
+            price:0,
+            endPrice:0,
+            SelectProduct:''
         }
     }
     handleSnackClose = () => {
@@ -80,7 +83,10 @@ const styles = theme => ({
         }).then((res)=>{
           console.log(res.data.allproducts);
           this.setState({
-            spec:res.data.allproducts
+            spec:res.data.allproducts,
+            price:res.data.allproducts[0].price,
+            endPrice:res.data.allproducts[0].endPrice,
+            SelectProduct:res.data.allproducts[0].product
           })
         }).catch((err)=>{
           console.log(err);
@@ -120,39 +126,55 @@ const styles = theme => ({
 
     tabActive = (index) => {
         const { spec } =  this.state ;
-        console.log(spec.length)
+        console.log(index);
+        var price =this.state.price;
+        var endPrice=this.state.endPrice;
+        var selectproduct=this.state.product;
         for(let i=0;i<spec.length;i++){
-          for(let key in spec[i]){
               if(i===index){
-                spec[i][key] = "true"
+                spec[i].status='true';
+                price = spec[i].price;
+                endPrice= spec[i].endPrice
+                selectproduct=spec[i].product
               }else{
-                spec[i][key] = "false"
+                spec[i].status='false'
               }
-          }
 
         }
-       this.setState(
-         spec
+        console.log(spec);
+       this.setState({
+         spec,
+         price:price,
+         endPrice:endPrice,
+         SelectProduct:selectproduct
+
+       }
+
+
        )
     //    console.log(specs)
 
     }
     renderItem = (spec,index) => {
-        for(let key in spec){
-          console.log(spec.spec);
-            return(
-                <SpecBox onClick={()=>this.tabActive(index)} active={spec[key]}>
-                    {spec.spec}
-                </SpecBox >
-            )
+        if (spec.spec) {
+          return(
+              <SpecBox onClick={()=>this.tabActive(index)} key={index} active={spec.status}>
+                  <SpanText active={spec.status} key={index}>{spec.spec}</SpanText>
+              </SpecBox >
+          )
         }
+        else {
+          return(
+            <SpanText active={spec.status}></SpanText>
+          )
+        }
+
     }
 
     render() {
         const {classes, appInfo, productShow, match, history} = this.props;
-        const { specs } = this.state
-        // console.log(this.state.spec);
-        const {spec} = this.state;
+        const {spec,price,endPrice,SelectProduct} = this.state;
+        console.log(SelectProduct);
         // let  rst = {};
         // for(let i = 0; i < specs.length; i++){
         //     rst[specs[i]] = false
@@ -209,22 +231,22 @@ const styles = theme => ({
                 style={{backgroundColor: "white"}}>
                <ProductCarousel imgs={productShow.product.images}/>
                <div className={classes.productInfo}>
-                    <div className={classes.productName}>{productShow.product.name_zh}</div>
+                    <div className={classes.productName}>{SelectProduct.name_zh}</div>
                     <div className={classes.productBrief} >{productShow.product.brief}</div>
                     <div className={classes.productPrice}>
-                        <div className={classes.price}>{"¥"+productShow.product.endPrice/100}<span  className={classes.firstPrice} >{"¥ "+productShow.product.price/100}</span></div>
+                        <div className={classes.price}>{"¥"+this.state.endPrice/100}<span  className={classes.firstPrice} >{"¥ "+this.state.price/100}</span></div>
                         <span className={classes.sale}>销量:<span style={{color:'rgb(156, 148, 148)'}}>{productShow.product.sales_volume}笔</span></span>
                         <div className={classes.send}>
                             配送方式:包邮
                         </div>
                     </div>
+                    <LeftWrap>
+                        <SpecText>规格</SpecText>
+                    </LeftWrap>
                     <SpecWrap>
-                        <LeftWrap>
-                            <SpecText>规格:</SpecText>
-                        </LeftWrap>
+
                         <RightWrap>
                             {
-
                                 spec.map((spec,index)=>{
                                         return (
                                          <div>
@@ -240,7 +262,7 @@ const styles = theme => ({
                 <div style={{width: "100%",paddingBottom:50}}>
                     <ProductTabs des={productShow.product.detailsImage}/>
                 </div>
-                <ProductBottomBar isAppointment={productShow.product.isAppointment} product={productShow.product} history={history} url={match.url}/>
+                <ProductBottomBar isAppointment={productShow.product.isAppointment} product={this.state.SelectProduct} history={history} url={match.url}/>
         </Grid>
 
         );
@@ -251,9 +273,13 @@ const SpecWrap = styled.div`
     margin: 2px 0;
     display: flex;
 `
-
+const SpanText =styled.span`
+    color:${props => props.active==="true" ? "white" : "rgba(0, 0, 0, 0.73)" };;
+    font-size:10px
+`
 const LeftWrap  = styled.div`
     color: #999;
+    margin:0px 5px
 `
 
 const RightWrap = styled.div`
@@ -263,15 +289,18 @@ const RightWrap = styled.div`
 
 const SpecBox = styled.div`
     padding: 2px 6px;
-    margin: 5px 10px;
-    border: 1px solid  ${props => props.active==="true" ? "red" : "#ccc" };;
+    margin: 5px 5px;
+    color:${props => props.active==="true" ? "white" : "black" };;
+    background:${props => props.active==="true" ? "#fdcd69" : "rgba(179, 176, 163, 0.43)" };;
+    border-radius:7px;
     color: #666;
-    font-size: 16px;
+    font-size: 12px;
 
 `
 
 const SpecText = styled.div`
-    margin: 8px 0;
+    font-size:14px;
+    margin: 8px 0 0 0;
 `
 
 ProductShow.propTypes = {
