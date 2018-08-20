@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import ProductGridList from '../../components/public/ProductGridList';
 import { loadHomeIndexProducts } from '../../actions/process/home_index.js';
 import LoadingItem from '../../components/public/LoadingItem.js';
-import grey from '@material-ui/core/colors/grey'
 import { setAppLayout } from '../../actions/app';
 // import { isWeChat, logWechat } from '../../actions/wechat.js';
 import { getStore } from '../../tools/localStorage.js';

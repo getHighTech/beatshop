@@ -8,6 +8,7 @@ import { loadOneProduct } from './products';
 import { userLogin } from './process/login';
 import { createNewBankCard } from './bankcards';
 import { withdrawMoney } from './balances.js'
+import { removeStore } from '../tools/localStorage.js';
 export const history = createHistory();
 
 
@@ -221,6 +222,7 @@ export function appInjectDataReact(actionName, actionParams={}){
 export function appShowMsgAndInjectDataReact(actionName, reason, msgSurvive=2350, actionParams){
     let msgParams = msgSwitchByReason(reason);
     return dispatch => {
+        removeStore("Goto")
         dispatch(switchActionNames(actionName).action(actionParams));        
         dispatch(closeAppMsg(msgSurvive));
         //传入存活时间

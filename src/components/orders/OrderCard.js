@@ -118,7 +118,7 @@ class OrderCard extends React.Component{
   handleAgree = () =>{
     let orderId  = this.state.localOrder;
     let userId = this.state.localUserId;
-    if (orderId!='') {
+    if (orderId!=='') {
       this.props.dispatch(collectOrder(orderId,userId))
       this.setState({
         open:false,

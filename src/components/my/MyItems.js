@@ -15,7 +15,6 @@ import Collapse from '@material-ui/core/Collapse';
 import Shop from '@material-ui/icons/Shop';
 import Stars from '@material-ui/icons/Stars';
 import AddToQueue from '@material-ui/icons/AddToQueue';
-import Face from '@material-ui/icons/Face';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -205,9 +204,9 @@ class MyItems extends React.Component{
 }
 
 const Wrap = styled.div`
-width: 100%,
-  max-width: 560,
-  `
+    width: 100%,
+    max-width: 560,
+`
 
 const ReListItemIcon = styled(ListItemIcon)`
   && {
@@ -216,8 +215,8 @@ const ReListItemIcon = styled(ListItemIcon)`
 `
 
 const ReAvatar = styled(Avatar)`
-width: 60;
-height: 60;
+    width: 60;
+    height: 60;
 `
 
 

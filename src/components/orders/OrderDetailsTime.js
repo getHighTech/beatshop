@@ -5,9 +5,6 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 class OrderDetailsTime extends React.Component{
-    constructor(props) {
-      super(props);
-    }
     render(){
       const { order } = this.props.order
       return(

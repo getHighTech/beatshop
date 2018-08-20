@@ -1,4 +1,4 @@
-import getRemoteMeteor from "../services/meteor/methods";
+// import getRemoteMeteor from "../services/meteor/methods";
 import axios from 'axios';
 import serverConfig  from '../config/server';
 

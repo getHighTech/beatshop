@@ -5,15 +5,8 @@ import { loadOneOrder } from '../../actions/orders'
 import styled from 'styled-components';
 import { setAppLayout } from '../../actions/app';
 class OrderDetailsPosition extends Component{
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     const { dispatch, layout,match} = this.props;
-    console.log(`去哪了`)
-    console.log(this.props)
-    console.log('id'+match.params.id)
-
     if(layout.title!=='订单详情'){
       if(match.params.id){
         dispatch(loadOneOrder(match.params.id));
