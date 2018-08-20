@@ -117,7 +117,6 @@ const styles = theme => ({
        this.setState(
          specs
        )
-    //    console.log(specs)
         
     }
     renderItem = (spec,index) => {
@@ -133,12 +132,6 @@ const styles = theme => ({
     render() {
         const {classes, appInfo, productShow, match, history} = this.props;
         const { specs } = this.state
-       
-        // let  rst = {};
-        // for(let i = 0; i < specs.length; i++){
-        //     rst[specs[i]] = false
-        // }
-        // console.log(rst)
         if(productShow.product === {}){
             return (
                 <Grid  container
