@@ -166,13 +166,19 @@ class Money extends React.Component{
    
     
     let getUsername = function(income, index){
+      console.log(income)
+      console.log(index)
       if(income.shopCustomer){
+        console.log(1)
         return income.shopCustomer.username;
       }
       if(income.user){
+        console.log(2)
         return income.user.username;
       }
       if(income.userId){
+        console.log(3)
+        console.log(money.users[index].username)
         return money.users[index].username;
       }
     }
@@ -269,7 +275,7 @@ class Money extends React.Component{
                             </TableCell>
                             <TableCell className={classes.th} numeric>{getUsername(n, index)}</TableCell>
                             <TableCell className={classes.th} numeric>{"￥"+n.amount/100}</TableCell>
-                            <TableCell className={classes.th} numeric>{moment(n.createdAt["$date"]).fromNow()}</TableCell>
+                            <TableCell className={classes.th} numeric>{moment(n.createdAt).format("YYYY-MM-DD HH:mm:ss")}</TableCell>
                           </TableRow>
                         );
                       })}

@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import grey from '@material-ui/core/colors/grey';
 
+import axios from 'axios';
+import serverConfig  from '../../config/server';
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
@@ -89,6 +91,7 @@ class ProductCard extends React.Component {
   handleExpandClick = (productId) => {
    this.props.history.push("/products/"+productId);
 
+
   };
 
   handleAddToCart(product){
@@ -102,6 +105,7 @@ class ProductCard extends React.Component {
   componentWillReceiveProps(nextProps){
 
   }
+
 
   handleBuyOneProductBtnClick(product){
     const {dispatch} = this.props;

@@ -64,9 +64,7 @@ export function expectSyncRemoteUser(){
 export function syncRemoteUser(){
     
     let userId = getStore("userId");
-    console.log(`---`)
-    console.log(userId)
-    console.log(`---`)
+
 
     let stampedToken = getStore("stampedToken")
     let expiredTime = getStore("expiredTime");

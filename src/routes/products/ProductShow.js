@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {connect} from 'react-redux';
-
+import axios from 'axios';
+import serverConfig  from '../../config/server';
 import ProductCarousel from '../../components/products/carousel';
 import ProductTabs from '../../components/products/tabs';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +11,7 @@ import { loadOneProduct, loadOneProductByRolename } from '../../actions/products
 import LoadingItem from '../../components/public/LoadingItem'
 import { setAppLayout, appShowMsg } from '../../actions/app';
 import ProductBottomBar from '../../components/products/ProductBottomBar';
+import styled from 'styled-components';
 
 
 
@@ -57,7 +59,9 @@ const styles = theme => ({
         super(props);
         this.state ={
             snackOpen: false,
-            snackContent: ""
+            snackContent: "",
+            specs: [{"金色": "true"}, {"银色": "false"}, {"灰色": "false"}],
+            spec:[]
         }
     }
     handleSnackClose = () => {
@@ -67,6 +71,21 @@ const styles = theme => ({
     componentDidMount(){
 
         const { dispatch, match,user } = this.props;
+        const productId=match.params.id
+
+        axios.get(`${serverConfig.server_url}/api/findAllSpecProductByProductId`,{
+          params:{
+            productId
+          }
+        }).then((res)=>{
+          console.log(res.data.allproducts);
+          this.setState({
+            spec:res.data.allproducts
+          })
+        }).catch((err)=>{
+          console.log(err);
+        })
+
 
         if(match.params.id && !match.params.rolename){
             dispatch(loadOneProduct(match.params.id));
@@ -99,8 +118,46 @@ const styles = theme => ({
 
     }
 
+    tabActive = (index) => {
+        const { spec } =  this.state ;
+        console.log(spec.length)
+        for(let i=0;i<spec.length;i++){
+          for(let key in spec[i]){
+              if(i===index){
+                spec[i][key] = "true"
+              }else{
+                spec[i][key] = "false"
+              }
+          }
+
+        }
+       this.setState(
+         spec
+       )
+    //    console.log(specs)
+
+    }
+    renderItem = (spec,index) => {
+        for(let key in spec){
+          console.log(spec.spec);
+            return(
+                <SpecBox onClick={()=>this.tabActive(index)} active={spec[key]}>
+                    {spec.spec}
+                </SpecBox >
+            )
+        }
+    }
+
     render() {
         const {classes, appInfo, productShow, match, history} = this.props;
+        const { specs } = this.state
+        // console.log(this.state.spec);
+        const {spec} = this.state;
+        // let  rst = {};
+        // for(let i = 0; i < specs.length; i++){
+        //     rst[specs[i]] = false
+        // }
+        // console.log(rst)
         if(productShow.product === {}){
             return (
                 <Grid  container
@@ -161,7 +218,24 @@ const styles = theme => ({
                             配送方式:包邮
                         </div>
                     </div>
+                    <SpecWrap>
+                        <LeftWrap>
+                            <SpecText>规格:</SpecText>
+                        </LeftWrap>
+                        <RightWrap>
+                            {
 
+                                spec.map((spec,index)=>{
+                                        return (
+                                         <div>
+                                          { this.renderItem(spec,index)}
+                                          </div>
+                                        )
+
+                                })
+                            }
+                        </RightWrap>
+                    </SpecWrap>
                 </div>
                 <div style={{width: "100%",paddingBottom:50}}>
                     <ProductTabs des={productShow.product.detailsImage}/>
@@ -172,6 +246,33 @@ const styles = theme => ({
         );
     }
 }
+
+const SpecWrap = styled.div`
+    margin: 2px 0;
+    display: flex;
+`
+
+const LeftWrap  = styled.div`
+    color: #999;
+`
+
+const RightWrap = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`
+
+const SpecBox = styled.div`
+    padding: 2px 6px;
+    margin: 5px 10px;
+    border: 1px solid  ${props => props.active==="true" ? "red" : "#ccc" };;
+    color: #666;
+    font-size: 16px;
+
+`
+
+const SpecText = styled.div`
+    margin: 8px 0;
+`
 
 ProductShow.propTypes = {
     classes: PropTypes.object.isRequired,

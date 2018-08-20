@@ -13,6 +13,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Lock from '@material-ui/icons/Lock';
+import { getStore } from '../../tools/localStorage';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 
@@ -175,7 +176,9 @@ class AppLoginPassword extends React.Component {
         buttonText: "登录成功, 开始跳转",
       })
       return setTimeout(()=>{
-        history.push(user.urlBeforeLogined);
+        let Goto = getStore('Goto');
+        console.log(Goto)
+        Goto ?  history.push(`/products/${Goto}`) : history.push(user.urlBeforeLogined)
       },1000)
 
     }
