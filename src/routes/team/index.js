@@ -38,7 +38,7 @@ class Team extends React.Component{
       return(
        <Wrap>
         <BgWrap>
-        <BannerImg alt="新品上市"   src={require("../../components/imgs/team.jpg")}/>
+        <BannerImg alt=""   src={require("../../components/imgs/teams.jpg")}/>
 
         </BgWrap>
 
@@ -46,7 +46,7 @@ class Team extends React.Component{
 
         <TitleWrap>
             <Title>
-              我的下级
+              我的下级个数:
               <ReBadge badgeContent={count} >
               </ReBadge>
             </Title>
@@ -62,14 +62,14 @@ class Team extends React.Component{
             </JoinTime>
           </List>
 
-          {teams.map(team => {
+          {teams.map((team,key) => {
             return (
-              <List>
+              <List key={key}>
                 <UserName>
                   {team.name}
                 </UserName>
                 <JoinTime>
-                  {team.jointime!==undefined ? moment(team.jointime).format("YYYY-MM-DD HH:mm:ss"): null}
+                  {team.jointime!==undefined&&team.jointime!=='加入时间有误' ? moment(team.jointime).format("YYYY-MM-DD HH:mm:ss"): '未能获取其加入时间'}
                 </JoinTime>
               </List>
             )
@@ -87,13 +87,15 @@ const Wrap = styled.div`
 `
 const BannerImg = styled.img`
   width:100%;
-  height:180px;
+  height:20%;
+  margin-top:7px;
 `
 const BgWrap = styled.div`
-  height: 180px;
+  height: 20%;
 `
 
 const TitleWrap = styled.div`
+  margin-top:15px;
   background: #F4F8FB;
 `
 const Title = styled.div`
@@ -118,10 +120,12 @@ const List = styled.div`
 
 const UserName = styled.div`
   text-align: left;
+  font-size:14px
 `
 
 const JoinTime = styled.div`
   text-align: right;
+  font-size:14px
 `
 
 const ReBadge = styled(Badge)`

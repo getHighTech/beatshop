@@ -67,18 +67,23 @@ class ProductBottomBar extends React.Component{
 
         <AppBar position="static" className={classes.appbar} color="default">
           <Toolbar style={{backgroundColor: "rgba(4, 4, 4, 0.3)", color: "white"}}>
+          <div style={{width:'20%'}}>
           {
             this.props.isAppointment? "":
             <IconButton aria-label="加入购物车">
                 <AddShoppingCart onClick={()=> this.handleAddToCart(product, 1, product.shopId)} color="secondary" />
               </IconButton>
           }
+          </div>
 
-
+          <div style={{width:'60%',textAlign:'center'}}>
                <Button onClick={()=> dispatch(checkAccess("buy", product, "create_one_order_by_product"))}  color="inherit" className={classes.flex}>
                {this.props.isAppointment? '立即预约' : '立即购买'}
                </Button>
-              <Button color="inherit" href={'#/shops/'+ product.shopId}>查看店铺</Button>
+            </div>
+            <div style={{width:'20%',textAlign:'right'}}>
+              <Button style={{padding:0}} color="inherit" href={'#/shops/'+ product.shopId}>查看店铺</Button>
+            </div>
           </Toolbar>
         </AppBar>
 

@@ -32,9 +32,9 @@ export function checkAccess(opera, product, accessName){
             if(!acl){
                 return dispatch(denyAccess(role+" MISSING"));
             }
-            
+
             acl[opera].roles.forEach((productRole)=>{
-                
+
                 if (productRole===role) {
                     productRoleTemp = productRole;
                     access = true;
@@ -42,17 +42,17 @@ export function checkAccess(opera, product, accessName){
                     productRoleTemp = productRole;
                 }
             })
-           
+
         });
-        
+
         if(access){
             console.log(accessName)
             return dispatch(passAccess(productRoleTemp+" PASS", product, accessName));
-            
+
         }else{
-            
+
             return dispatch(denyAccess(productRoleTemp+" MISSING", product));
-            
+
         }
     }
 }
@@ -60,11 +60,11 @@ export function checkAccess(opera, product, accessName){
 export function passAccess(reason, product, accessName){
     console.log(accessName)
     let action = switchActionNames(accessName);
-    
+
     return dispatch => {
         switch (action.type) {
             case APP_SHOW_MSG_AND_INJECT_DATA_REACT:
-               return dispatch(appShowMsgAndInjectDataReact(accessName, "add_cart_success", 2360, product)); 
+               return dispatch(appShowMsgAndInjectDataReact(accessName, "add_cart_success", 2360, product));
             case APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH:
                 return dispatch(appShowMsgAndInjectDataReactWithPath(
                     accessName, "generate_order", 2230, product
@@ -78,7 +78,7 @@ export function passAccess(reason, product, accessName){
                 }
         }
     }
-    
+
 }
 
 
@@ -92,17 +92,16 @@ export function denyAccess(reason, product){
 
             case "blackcard_holder MISSING":
                 return dispatch(appShowMsgAndRedirectPath(
-                    "/products_by_rolename/blackcard/"+product.name, 
+                    "/products_by_rolename/blackcard/"+product.name,
                     reason, 2560, product));
-            
+
             default:
                 return {
                     type: DENY_ACCESS,
                     reason,
                 }
-                
+
         }
     }
-    
-}
 
+}

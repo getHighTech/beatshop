@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import grey from '@material-ui/core/colors/grey';
 
+import axios from 'axios';
+import serverConfig  from '../../config/server';
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
@@ -89,6 +91,7 @@ class ProductCard extends React.Component {
   handleExpandClick = (productId) => {
    this.props.history.push("/products/"+productId);
 
+
   };
 
   handleAddToCart(product){
@@ -103,10 +106,12 @@ class ProductCard extends React.Component {
 
   }
 
-  handleBuyOneProductBtnClick(product){
-    const {dispatch} = this.props;
-    dispatch(checkAccess("buy", product, "create_one_order_by_product"));
 
+  handleBuyOneProductBtnClick(product){
+    // const {dispatch} = this.props;
+    // dispatch(checkAccess("buy", product, "create_one_order_by_product"));
+    let productId = product._id;
+    this.props.history.push("/products/"+productId);
   }
 
 
@@ -127,7 +132,7 @@ class ProductCard extends React.Component {
 
 
                 <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} />
-                <div  className={classes.productEndPriceNumber}>{product.endPrice/100}</div>
+                <div  className={classes.productEndPriceNumber}>{product.endPrice/100}<span style={{fontSize:12}}>起!</span></div>
               </div>
 
             </div>
@@ -146,7 +151,7 @@ class ProductCard extends React.Component {
                   <span className={classes.sale}>销量:<span style={{color:'rgb(156, 148, 148)'}}>{product.sales_volume}笔</span></span>
                 </div>
                 <Button variant="raised" color="secondary" style={{marginRight:10}} onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
-                  立即购买
+                  进去看看
                 </Button>
               </div>
             </div>

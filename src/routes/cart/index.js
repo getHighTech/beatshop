@@ -27,23 +27,23 @@ class AppCart extends React.Component {
     this.setState({
       productChecks: []
     })
-   
+
     if(layout.title !== "购物车"){
       dispatch(setAppLayout(
         {
-            isBack: true, 
-            backTo: "/", 
-            title: "购物车", 
-            hasCart: false, 
-            hasBottomNav: false, 
+            isBack: true,
+            backTo: "/",
+            title: "购物车",
+            hasCart: false,
+            hasBottomNav: false,
             hasGeoLoc: false,
-            editorType: "cart", 
+            editorType: "cart",
             hasSearch: false,
         }
       ));
     }
-   
-    
+
+
   }
   componentWillMount(){
     const { cart, dispatch } = this.props;
@@ -53,22 +53,22 @@ class AppCart extends React.Component {
     dispatch(repeatSyncLocalCartRemote());
   }
   handleProductShow(id){
-    
+
     this.props.history.push("/products/"+id)
   }
   render(){
     const { classes, cart, dispatch } = this.props;
 
-    
+
     return (
       <div className={classes.root}>
            <List className={classes.root} style={{width: "100%"}}>
                {
                  cart.products.length === 0? <ListItem key="0" component="a" href="#/">
-                
+
                       <ListItemText style={{width: "auto", flex: 0.4, textAlign: "center"}}  primary="空空如也,再去逛逛" />
-               
-        
+
+
                   </ListItem> :
                    cart.products.map((product, index)=>{
                     return <ListItem key={index}>
@@ -80,24 +80,28 @@ class AppCart extends React.Component {
                         <Avatar onClick={this.handleProductShow.bind(this, product._id)}>
                             <img style={{width: "100%"}} src={product.cover} alt={product.name_zh} />
                         </Avatar>
-                        <ListItemText style={{width: "auto", flex: 0.4}} onClick={this.handleProductShow.bind(this, product._id)} primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
+                        <div style={{marginLeft:'8%'}}>
+
+                        <ListItemText style={{width: "100%", flex: 0.4,fontSize:12}} onClick={this.handleProductShow.bind(this, product._id)} primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
+                        <div style={{display: 'flex',flexFlow:'row',width:'100%'}}>
                         <NumberInput productId={product._id} initNumber={cart.productCounts[product._id]}/>
-                        <div  style={{width: "auto", textAlign: "center", flex: 0.25}}>
+                        <div  style={{width: "auto", textAlign: "center",marginLeft:'20%',paddingTop:5}} >
                           <Clear onClick={()=>dispatch(deleteProductFromCart(index))} />
                         </div>
-               
+                        </div>
+                        </div>
                     </ListItem>
                    })
-                   
+
                }
-               
-                
+
+
             </List>
             <CartBottom />
       </div>
     );
   }
-  
+
 }
 
 AppCart.propTypes = {

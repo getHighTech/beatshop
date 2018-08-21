@@ -43,7 +43,7 @@ export function getShopProductsPage(page) {
 export function getShopProductsLimit(shopId,page, pagesize){
     return (dispatch, getState) => {
         dispatch(expectShopProductsLimit())
-        return axios.get(`${serverConfig.server_url}/api/products`,{
+        return axios.get(`${serverConfig.server_url}/api/shopdetails/products`,{
           params:{
             shopId,
             page,
@@ -61,5 +61,6 @@ export function getShopProductsLimit(shopId,page, pagesize){
             //     [shopId,page, pagesize],
             //     getShopProductsLimitSuccess, getShopProductsLimitFail
             // );
+
     }
 }

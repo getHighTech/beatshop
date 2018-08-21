@@ -36,11 +36,11 @@ class Home extends React.Component {
         dispatch(setAppLayout(
             {
 
-                isBack: false, 
-                backTo: "/", 
-                title: "鲜至臻品", 
-                hasCart: true, 
-                hasBottomNav: true, 
+                isBack: false,
+                backTo: "/",
+                title: "鲜至臻品",
+                hasCart: true,
+                hasBottomNav: true,
                 hasGeoLoc: true,
                 hasEditor: false,
                 hasSearch: false,
@@ -60,11 +60,11 @@ class Home extends React.Component {
             dispatch(setAppLayout(
                 {
 
-                    isBack: false, 
-                    backTo: "/", 
-                    title: "鲜至臻品", 
-                    hasCart: true, 
-                    hasBottomNav: true, 
+                    isBack: false,
+                    backTo: "/",
+                    title: "鲜至臻品",
+                    hasCart: true,
+                    hasBottomNav: true,
                     hasGeoLoc: true,
                     hasEditor: false,
                     hasSearch: false,
@@ -80,8 +80,8 @@ class Home extends React.Component {
         return (
             <Wrap>
                 {getStore("userId")? null : <AppBanner />}
-                { 
-                productsList.loading ? 
+                {
+                productsList.loading ?
                     <LoadingItem/>
                         :
                     <Wrap  style={{height: "auto", top: getStore("userId")? "60px": "inherit"}}>
@@ -106,7 +106,7 @@ const Wrap = styled.div`
     top: -50px;
     width: 100%;
     justify-content: space-between;
-    
+
 `
 
 const ShopContainer = styled.div`

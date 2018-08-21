@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {connect} from 'react-redux';
-
+import axios from 'axios';
+import serverConfig  from '../../config/server';
 import ProductCarousel from '../../components/products/carousel';
 import ProductTabs from '../../components/products/tabs';
 import Grid from '@material-ui/core/Grid';
@@ -59,7 +60,11 @@ const styles = theme => ({
         this.state ={
             snackOpen: false,
             snackContent: "",
-            specs: [{"金色": "true"}, {"银色": "false"}, {"灰色": "false"}]
+            specs: [{"金色": "true"}, {"银色": "false"}, {"灰色": "false"}],
+            spec:[],
+            price:0,
+            endPrice:0,
+            SelectProduct:''
         }
     }
     handleSnackClose = () => {
@@ -69,6 +74,25 @@ const styles = theme => ({
     componentDidMount(){
 
         const { dispatch, match,user } = this.props;
+        const productId=match.params.id
+        console.log(productId);
+        console.log(`${serverConfig.server_url}`);
+        axios.get(`${serverConfig.server_url}/api/findAllSpecProductByProductId`,{
+          params:{
+            productId
+          }
+        }).then((res)=>{
+          console.log(res.data.allproducts);
+          this.setState({
+            spec:res.data.allproducts,
+            price:res.data.allproducts[0].price,
+            endPrice:res.data.allproducts[0].endPrice,
+            SelectProduct:res.data.allproducts[0].product
+          })
+        }).catch((err)=>{
+          console.log(err);
+        })
+
 
         if(match.params.id && !match.params.rolename){
             dispatch(loadOneProduct(match.params.id));
@@ -102,36 +126,61 @@ const styles = theme => ({
     }
 
     tabActive = (index) => {
-        const { specs } =  this.state ;
-        console.log(specs.length)
-        for(let i=0;i<specs.length;i++){
-          for(let key in specs[i]){
+        const { spec } =  this.state ;
+        console.log(index);
+        var price =this.state.price;
+        var endPrice=this.state.endPrice;
+        var selectproduct=this.state.product;
+        for(let i=0;i<spec.length;i++){
               if(i===index){
-                specs[i][key] = "true"
+                spec[i].status='true';
+                price = spec[i].price;
+                endPrice= spec[i].endPrice
+                selectproduct=spec[i].product
               }else{
-                specs[i][key] = "false"
+                spec[i].status='false'
               }
-          }
-         
+
         }
-       this.setState(
-         specs
+        console.log(spec);
+       this.setState({
+         spec,
+         price:price,
+         endPrice:endPrice,
+         SelectProduct:selectproduct
+
+       }
+
+
        )
-        
+
+
     }
     renderItem = (spec,index) => {
-        for(let key in spec){
-            return(
-                <SpecBox onClick={()=>this.tabActive(index)} active={spec[key]}>
-                    {key}
-                </SpecBox >
-            ) 
+        if (spec.spec) {
+          return(
+              <SpecBox onClick={()=>this.tabActive(index)} key={index} active={spec.status}>
+                  <SpanText active={spec.status} key={index}>{spec.spec}</SpanText>
+              </SpecBox >
+          )
         }
+        else {
+          return(
+            <SpanText active={spec.status}></SpanText>
+          )
+        }
+
     }
 
     render() {
         const {classes, appInfo, productShow, match, history} = this.props;
-        const { specs } = this.state
+        const {spec,price,endPrice,SelectProduct} = this.state;
+        console.log(SelectProduct);
+        // let  rst = {};
+        // for(let i = 0; i < specs.length; i++){
+        //     rst[specs[i]] = false
+        // }
+        // console.log(rst)
         if(productShow.product === {}){
             return (
                 <Grid  container
@@ -183,23 +232,23 @@ const styles = theme => ({
                 style={{backgroundColor: "white"}}>
                <ProductCarousel imgs={productShow.product.images}/>
                <div className={classes.productInfo}>
-                    <div className={classes.productName}>{productShow.product.name_zh}</div>
+                    <div className={classes.productName}>{SelectProduct.name_zh}</div>
                     <div className={classes.productBrief} >{productShow.product.brief}</div>
                     <div className={classes.productPrice}>
-                        <div className={classes.price}>{"¥"+productShow.product.endPrice/100}<span  className={classes.firstPrice} >{"¥ "+productShow.product.price/100}</span></div>
+                        <div className={classes.price}>{"¥"+this.state.endPrice/100}<span  className={classes.firstPrice} >{"¥ "+this.state.price/100}</span></div>
                         <span className={classes.sale}>销量:<span style={{color:'rgb(156, 148, 148)'}}>{productShow.product.sales_volume}笔</span></span>
                         <div className={classes.send}>
                             配送方式:包邮
                         </div>
                     </div>
+                    <LeftWrap>
+                        <SpecText>规格</SpecText>
+                    </LeftWrap>
                     <SpecWrap>
-                        <LeftWrap>
-                            <SpecText>颜色:</SpecText>
-                        </LeftWrap>
+
                         <RightWrap>
-                            {   
-                                
-                                specs.map((spec,index)=>{     
+                            {
+                                spec.map((spec,index)=>{
                                         return (
                                          <div>
                                           { this.renderItem(spec,index)}
@@ -214,7 +263,7 @@ const styles = theme => ({
                 <div style={{width: "100%",paddingBottom:50}}>
                     <ProductTabs des={productShow.product.detailsImage}/>
                 </div>
-                <ProductBottomBar isAppointment={productShow.product.isAppointment} product={productShow.product} history={history} url={match.url}/>
+                <ProductBottomBar isAppointment={productShow.product.isAppointment} product={this.state.SelectProduct} history={history} url={match.url}/>
         </Grid>
 
         );
@@ -225,9 +274,13 @@ const SpecWrap = styled.div`
     margin: 2px 0;
     display: flex;
 `
-
+const SpanText =styled.span`
+    color:${props => props.active==="true" ? "white" : "rgba(0, 0, 0, 0.73)" };;
+    font-size:10px
+`
 const LeftWrap  = styled.div`
     color: #999;
+    margin:0px 5px
 `
 
 const RightWrap = styled.div`
@@ -237,15 +290,18 @@ const RightWrap = styled.div`
 
 const SpecBox = styled.div`
     padding: 2px 6px;
-    margin: 5px 10px;
-    border: 1px solid  ${props => props.active==="true" ? "red" : "#ccc" };;
+    margin: 5px 5px;
+    color:${props => props.active==="true" ? "white" : "black" };;
+    background:${props => props.active==="true" ? "#fdcd69" : "rgba(179, 176, 163, 0.43)" };;
+    border-radius:7px;
     color: #666;
-    font-size: 16px;
-  
+    font-size: 12px;
+
 `
 
 const SpecText = styled.div`
-    margin: 8px 0;
+    font-size:14px;
+    margin: 8px 0 0 0;
 `
 
 ProductShow.propTypes = {
