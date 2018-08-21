@@ -209,10 +209,7 @@ export function getIncomeWithTime(rangLength, userId, unit){
             }).catch((err)=>{
                 console.log(err)
             })
-    //     return getRemoteMeteor(
-    //         dispatch,getState, "balances",
-    //          "app.get.incomes.time.range",
-    //         [rangLength, userId, unit], getIncomeWithTimeSuccess, getIncomeWithTimeFail)
+   
     }
 }
 
