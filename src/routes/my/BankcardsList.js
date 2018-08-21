@@ -50,9 +50,7 @@ class BankcardsList extends React.Component{
     }
 
     if(bankcards === "unloaded"){
-
       dispatch(loadUserBankcards());
-
     }
 
 

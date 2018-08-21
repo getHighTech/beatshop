@@ -88,7 +88,6 @@ class AllProducts extends React.Component{
   }
   render(){
     const { classes, productsLoading, products } = this.props;
-    console.log("render once");
     if (products === "unloaded") {
       return (
         <div className={classes.root}>
@@ -99,6 +98,7 @@ class AllProducts extends React.Component{
     
     return(
       <div className={classes.root}>
+      { productsLoading ? <LoadingItem /> : null }
         <GridList cellHeight={180} className={classes.gridList}>
           { 
             products.length> 0?
