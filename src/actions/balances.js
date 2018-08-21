@@ -244,6 +244,7 @@ export function getIncomesLimitFail(reason){
 }
 let Tpage = 1;
 export function getIncomesLimit(page, pagesize){
+    console.log(page,pagesize);
     return (dispatch, getState) => {
         console.log(`没来`)
         fetchTimer++

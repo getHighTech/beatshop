@@ -183,7 +183,7 @@ class MenuAppBar extends React.Component {
             <Typography variant="title" color="secondary" >
 
               <div>
-                  <span style={{fontSize:24}}>{layout.title} </span>
+                  <span style={{fontSize:18}}>{layout.title} </span>
               </div>
             </Typography>
             </div>
