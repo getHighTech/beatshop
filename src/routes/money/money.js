@@ -3,23 +3,20 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAppLayout } from '../../actions/app';
 import { withStyles } from '@material-ui/core/styles';
-import Bankcard from '../../components/bankcard/'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import { loadMoneyPage, getIncomeWithTime, getIncomesLimit } from '../../actions/balances';
 import { getStore } from '../../tools/localStorage';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import Withdrawals from '../../components/money/Withdrawals';
+import TotalShow from './TotalShow';
+import Statics from './Statics';
+import Incomes from './Incomes';
 moment.locale('zh-cn');
 
 function TabContainer(props) {
@@ -131,17 +128,6 @@ class Money extends React.Component{
             }
         ));
     }
-    this.loadFirstPageData()
-    this.loadWithdrawFirstPageData()
-   
-   console.log(money.staticDone);
-     
-    // if(!money.staticDone && money.balance_incomes === "unloaded"){
-       dispatch(loadMoneyPage(getStore('userId')));
-       dispatch(getIncomeWithTime(1, getStore("userId"),"days"))
-       dispatch(getIncomeWithTime(1, getStore("userId"),"weeks"))
-       dispatch(getIncomeWithTime(1, getStore("userId"),"months"))
-    // }
 
     this.setState({
       page: 1
@@ -182,11 +168,12 @@ class Money extends React.Component{
         return money.users[index].username;
       }
     }
-    let totalAmount = ((money.balance.amount!==undefined) ? parseInt(money.balance.amount, 10)/100: "载入中");
     return(
       <div>
-        <Bankcard isBankcard={false} 
-        cardData={{title:user.user.username,subtitle:'已在鲜至臻品获得佣金',carNumber:'￥'+totalAmount}}/>
+       
+        <TotalShow isBankcard={false} 
+        cardData={{subtitle:'已在鲜至臻品获得佣金'}}/>
+       
         <Card className={classes.card}>
           <CardContent>
             <Typography component="div" className={classes.title} color="textSecondary">
@@ -199,24 +186,7 @@ class Money extends React.Component{
                 </div>
               </div> 
             </Typography>
-            <Typography variant="headline" component="div">
-              <Table className={classes.table}>
-                <TableHead className={classes.tableHeader}>
-                  <TableRow>
-                    <TableCell className={classes.time} >今日</TableCell>
-                    <TableCell className={classes.time} >一周</TableCell>
-                    <TableCell  className={classes.time} >30天</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow className={classes.row}>
-                    <TableCell className={classes.incomeNumber} numeric>{(money.todayTotalAmount/100).toString()}</TableCell>
-                    <TableCell className={classes.incomeNumber} numeric>{(money.weekTotalAmount/100).toString()}</TableCell>
-                    <TableCell className={classes.incomeNumber} numeric>{(money.monthTotalAmount/100).toString()}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </Typography>
+           <Statics />
 
           </CardContent>
         </Card>
@@ -245,53 +215,8 @@ class Money extends React.Component{
                   <Tab label="提现记录"  />
                 </Tabs>
               </div>
-              {value === 0 && this.props.money.balance_incomes !== "unloaded" &&
-              <TabContainer >
-                <div className={classes.root}>
-                  <Table className={classes.table}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell className={classes.thName} >商品名称</TableCell>
-                        <TableCell  className={classes.th} numeric>购买者</TableCell>
-                        <TableCell  className={classes.th} numeric>我的收入</TableCell>
-                        <TableCell  className={classes.th} numeric>时间</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      { this.props.money.balance_incomes.length===0 ?
-                        <div style={{
-                          width: 339,
-                          height: 60,
-                          top: -87,
-                          position: "relative",
-                          background: "white"
-                        }}> 暂无数据 </div> :
-                        this.props.money.balance_incomes.map((n, index) => {
-                        
-                        return (
-                          <TableRow key={index}>
-                            <TableCell className={classes.thName} component="th" scope="row">
-                              {!n.product? "老黑卡会员卡分享": n.product.name_zh}
-                            </TableCell>
-                            <TableCell className={classes.th} numeric>{getUsername(n, index)}</TableCell>
-                            <TableCell className={classes.th} numeric>{"￥"+n.amount/100}</TableCell>
-                            <TableCell className={classes.th} numeric>{moment(n.createdAt).format("YYYY-MM-DD HH:mm:ss")}</TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-
-                  </Table>
-                  <div className={classes.loadMore}>
-                 
-                    
-                    <Button disabled={this.props.money.loadingMore} color="primary" className={classes.button} onClick={this.loadMore.bind(this)}>
-                    {this.props.money.loadingMore? "正在加载" : "加载更多"}
-                    </Button>
-                  
-                  </div>
-                </div>
-              </TabContainer>}
+              {value === 0 && <Incomes />
+             }
               {value === 1 && <TabContainer>
                   <Withdrawals withdrawData={withdrawData}/>
                 <div className={classes.loadMore}>
