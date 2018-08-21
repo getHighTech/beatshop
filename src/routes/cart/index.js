@@ -72,6 +72,8 @@ class AppCart extends React.Component {
                   </ListItem> :
                    cart.products.map((product, index)=>{
                     return <ListItem key={index}>
+                      <div style={{display: 'flex',flexFlow:'row',width:'100%'}}>
+                        <div style={{display: 'flex',flexFlow:'row',width:'20%'}}>
                         <Checkbox
                             checked={cart.productChecks[product._id]}
                             onClick={()=>dispatch(changeProductFromCartChecked(product._id))}
@@ -80,7 +82,8 @@ class AppCart extends React.Component {
                         <Avatar onClick={this.handleProductShow.bind(this, product._id)}>
                             <img style={{width: "100%"}} src={product.cover} alt={product.name_zh} />
                         </Avatar>
-                        <div style={{marginLeft:'8%'}}>
+                        </div>
+                        <div style={{marginLeft:'11%',width:'70%'}}>
 
                         <ListItemText style={{width: "100%", flex: 0.4,fontSize:12}} onClick={this.handleProductShow.bind(this, product._id)} primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
                         <div style={{display: 'flex',flexFlow:'row',width:'100%'}}>
@@ -90,6 +93,7 @@ class AppCart extends React.Component {
                         </div>
                         </div>
                         </div>
+                      </div>
                     </ListItem>
                    })
 

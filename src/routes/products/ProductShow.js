@@ -158,8 +158,9 @@ const styles = theme => ({
     }
     renderItem = (spec,index) => {
         if (spec.spec) {
+          console.log(spec.status);
           return(
-              <SpecBox onClick={()=>this.tabActive(index)} key={index} active={spec.status}>
+              <SpecBox onClick={()=>this.tabActive(index)} key={index} active={spec.status.toString()}>
                   <SpanText active={spec.status} key={index}>{spec.spec}</SpanText>
               </SpecBox >
           )
