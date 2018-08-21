@@ -35,8 +35,6 @@ class Team extends React.Component{
   render() {
     const { teams } = this.props;
     const count = teams.length;
-    console.log(this.props.teams);
-    console.log(count);
       return(
        <Wrap>
         <BgWrap>

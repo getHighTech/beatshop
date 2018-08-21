@@ -57,8 +57,6 @@ export function expectWithdrawMoney(){
     }
 }
 export function withdrawMoneyFail(reason){
-    console.log("提现失败了", reason);
-
     return {
         type: WITHDRAW_MONEY_FAIL,
         reason,

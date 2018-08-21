@@ -116,9 +116,7 @@ class SellingProducts extends React.Component{
 
   componentDidMount(){
     const { dispatch, layout,user  } = this.props;
-    console.log(this.props.user);
     if(layout.title!=='正在出售的商品'){
-      console.log(user.shopId)
       dispatch(loadAgencyProducts(user.shopId))
 
         dispatch(setAppLayout(
@@ -138,7 +136,7 @@ class SellingProducts extends React.Component{
   }
   render(){
     const { classes,products,dispatch } = this.props;
-    console.log(products)
+
 
     return(
       <div className={classes.root}>

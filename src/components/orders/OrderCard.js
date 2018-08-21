@@ -11,6 +11,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { getStore } from '../../tools/localStorage.js';
+import { getToken } from '../../actions/token';
 
 
 
@@ -67,38 +69,31 @@ class OrderCard extends React.Component{
     localUserId:''
   }
 
-  _CancelOrder = (orderId,userId)  => {
-    console.log(orderId)
+  cancelOrder = (orderId,userId)  => {
       this.props.dispatch(cancelOrder(orderId,userId))
   }
 
   _confirmOrder = (orderId,userId) => {
 
   }
-  handlePayClick = (orderId,userId) => {
+  handlePayClick = async(orderId,userId,totalAmount,orderCode) => {
     var urlencode = require('urlencode');
-             let data = {
-               "client": "web",
-               "data": {
-                 out_trade_no: orderId,
-                 user_id: userId,
-                 super_agency_id: "abcdef",
-                 version: 2
-               }
-          }
+    let key = await getToken()
+    let token = key.token;
+    let uuid = key.uuid
+    let from_url =
+    `http://xianzhi.10000cars.cn/api/v1/wechat/payback/show?fee=${totalAmount}&appname=xianzhi&order=${orderCode}&uuid=${uuid}&token=${token}`;
 
-
-    let payUrl = "http://bills.10000cars.cn/order/s?pdata="+urlencode(JSON.stringify(data));
-    window.location.assign(payUrl);
+    from_url = urlencode(from_url);
+    console.log(from_url);
+    window.location.assign('http://xianzhi.10000cars.cn/app/getopenid/'+from_url);
   }
+ 
 
 
 
 
   handleCollect = (orderId,userId) => {
-    console.log(orderId);
-    console.log(userId);
-    console.log('确认收货');
     this.setState({
       open:true,
       localOrder:orderId,
@@ -153,7 +148,7 @@ class OrderCard extends React.Component{
   }
   render(){
     console.log(this.props)
-    const {classes, products,productCounts,totalAmount,count,status,_id,userId,orderId} = this.props
+    const {classes, products,productCounts,totalAmount,count,status,_id,userId,orderId,orderCode} = this.props
     console.log(orderId)
     return(
       <div className={classes.root}>
@@ -221,13 +216,13 @@ class OrderCard extends React.Component{
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12}>
                 <div className={classes.orderButton}>
-                <Button variant="outlined"  size="small" className={classes.button} onClick={()=>this._CancelOrder(orderId,userId)}>
+                <Button variant="outlined"  size="small" className={classes.button} onClick={()=>this.cancelOrder(orderId,userId)}>
                   取消订单
                 </Button>
                 <Button variant="outlined"  size="small" href={`#/my/orders/${orderId}/confirmed`}   className={classes.button}>
                   查看详情
                 </Button>
-                <Button variant="raised"  size="small" color="secondary" className={classes.button} onClick={()=>this.handlePayClick(_id,userId)}>
+                <Button variant="raised"  size="small" color="secondary" className={classes.button} onClick={()=>this.handlePayClick(_id,userId,totalAmount,orderCode)}>
                   付款
                 </Button>
                 </div>

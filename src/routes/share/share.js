@@ -57,7 +57,6 @@ class Share extends React.Component {
     const { dispatch, layout } = this.props;
 
     if(layout.title!=='分享页面'){
-      console.log(this.props.match.params.id)
       if(this.props.match.params.id){
         dispatch(loadShareProdcut(this.props.match.params.id))
       }

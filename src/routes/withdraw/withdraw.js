@@ -125,16 +125,11 @@ class Withdraw extends React.Component{
   ableToWithDrawAmount= () =>{
     const { money } = this.props;
     let amount = money.balance.amount;
-    console.log(amount);
-    
     amount = amount - (amount%10000);
-    console.log(amount);
-    
     return amount/100
   }
   render(){
     const { classes, bankcards } = this.props;
-    console.log(bankcards);
     if(bankcards === "unloaded" ){
         return <LoadingItem />
     }
