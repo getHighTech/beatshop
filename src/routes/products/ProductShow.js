@@ -33,23 +33,25 @@ const styles = theme => ({
     },
     send:{
       color:'rgb(156, 148, 148)',
-        fontSize:10
+        fontSize:12
     },
     price:{
-        color:'#ff5722'
+        paddingLeft:'15px',
+        color:'#ff5722',
+        fontSize:'24px'
     },
     productName: {
         fontSize: '20px'
     },
     sale:{
       color:'rgb(156, 148, 148)',
-      fontSize:'10px',
-      marginLeft:'20px'
+      fontSize:'12px',
+      marginLeft:'-30px'
     },
     firstPrice:{
-      marginLeft:'10px',
+      marginLeft:'5px',
       color:'rgb(156, 148, 148)',
-      fontSize:'12px',
+      fontSize:'14px',
       textDecoration:'line-through'
     }
 
@@ -277,7 +279,7 @@ const SpecWrap = styled.div`
 `
 const SpanText =styled.span`
     color:${props => props.active==="true" ? "white" : "rgba(0, 0, 0, 0.73)" };;
-    font-size:10px
+    font-size:16px
 `
 const LeftWrap  = styled.div`
     color: #999;
