@@ -19,6 +19,7 @@ export default class TotalShow extends React.Component{
     componentWillMount(){
         let userId = getStore("userId");
         Axios.get(serverConfig.server_url+"/api/v0/my_balance?userId="+userId).then(rlt=>{
+            console.log(rlt)
             this.setState({
                 totalAmount: rlt.data.amount/100,
                 username: rlt.data.userId.username,
