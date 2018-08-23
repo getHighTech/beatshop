@@ -145,7 +145,14 @@ function msgSwitchByReason(reason, option={}){
             return {
                 content: "若您需要开店， 需要先购买会员卡，一旦成为黑卡会员后可以立刻开店咯"
             }
-
+        case "agency_one_product_success":
+            return {
+                content: "成功代理此商品"
+            }
+        case "agency_one_product_existed":
+            return {
+                content: "此商品已经代理"
+            }
         case "save_bankcard_success":
             return {
                 content: "绑定银行卡成功"
@@ -163,14 +170,7 @@ function msgSwitchByReason(reason, option={}){
             return {
                 content: "提现金额必须是100元的倍数"
             }
-        case "agency_one_product_success":
-            return {
-                content: "成功代理此商品"
-            }
-        case "agency_one_product_existed":
-            return {
-                content: "此商品已经代理"
-            }
+
 
         default:
             break;

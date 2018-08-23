@@ -264,7 +264,7 @@ const styles = theme => ({
                     </SpecWrap>
                 </div>
                 <div style={{width: "100%",paddingBottom:50}}>
-                    <ProductTabs des={productShow.product.detailsImage}/>
+                    <ProductTabs des={productShow.product.detailsImage} parameterlists={productShow.product.parameterlist}/>
                 </div>
                 <ProductBottomBar isAppointment={productShow.product.isAppointment} product={this.state.SelectProduct} history={history} url={match.url}/>
         </Grid>
