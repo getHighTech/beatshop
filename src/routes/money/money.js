@@ -173,7 +173,6 @@ class Money extends React.Component{
        
         <TotalShow isBankcard={false} 
         cardData={{subtitle:'已在鲜至臻品获得佣金'}}/>
-       
         <Card className={classes.card}>
           <CardContent>
             <Typography component="div" className={classes.title} color="textSecondary">

@@ -53,7 +53,7 @@ class Share extends React.Component {
     this.update()
   }
   componentDidMount(){
-    
+    this.update()
     const { dispatch, layout } = this.props;
 
     if(layout.title!=='分享页面'){
@@ -80,15 +80,15 @@ class Share extends React.Component {
 
 
   update() {
-    // const canvas = document.querySelector('.Share-qecode-30 canvas');
-    // if(canvas){
-    //   const img = new Image();
-    //   console.log(canvas)
-    //   const imgSrc =  canvas.toDataURL()
-    //   console.log(imgSrc)
-    //   const wrap =  document.querySelector('.Share-qecode-30')
-    //   wrap.innerHTML = `<img src="${imgSrc}">`
-    // }
+    const canvas = document.querySelector('.qrCode canvas');
+    if(canvas){
+      const img = new Image();
+      console.log(canvas)
+      const imgSrc =  canvas.toDataURL()
+      console.log(imgSrc)
+      const wrap =  document.querySelector('.qrCode')
+      wrap.innerHTML = `<img src="${imgSrc}">`
+    }
   }
   render() { 
     const { classes,product } = this.props
@@ -107,7 +107,7 @@ class Share extends React.Component {
           <div>有人购买该商品即可获得相应推分享佣金</div>
         </div>
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
-        <div className={classes.qecode}>
+        <div className={`qrCode ${classes.qecode}`}>
           <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo={require('../../components/imgs/WechatIMG171.png')}
 
           />
