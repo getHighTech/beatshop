@@ -42,6 +42,7 @@ import WechatChecker from './WechatChecker.js';
 import Team from '../routes/team/index';
 import Toast from '../routes/toast/index';
 import {  wechatAuth } from '../helper/wechatAuth.js';
+import styled from 'styled-components'
 
 
 const history = createHistory();
@@ -225,8 +226,8 @@ class App extends React.Component {
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>
-                    <Snackbar
-                        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                    <ReSnackbar
+                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         className={classes.snackbar}
 
                         open={msg.open}
@@ -243,6 +244,11 @@ class App extends React.Component {
         )
     }
 }
+
+const ReSnackbar = styled(Snackbar)`
+    margin-top: 100px;
+    z-index: 999
+`
 App.propTypes = {
     classes: PropTypes.object.isRequired,
 };
