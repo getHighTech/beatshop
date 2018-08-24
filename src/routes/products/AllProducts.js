@@ -52,8 +52,7 @@ class AllProducts extends React.Component{
 
   beginToAgency = (index) => {
     const { dispatch, products,user } = this.props;
-    console.log("one product", products[index]);
-    dispatch(agencyOneProduct(products[index], getStore("userId")),user.appNameShopId,user.shopId)
+    dispatch(agencyOneProduct(products[index], getStore("userId"),user.appNameShopId,user.shopId))
     this.handleClose(index)
   }
 
