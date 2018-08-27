@@ -78,7 +78,7 @@ class Withdraw extends React.Component{
       dispatch(appShowMsg("withdraw_mustbe_persent", 1200));
       return false
     }
-    if(amount/100 < 0 ) {
+    if(amount/100 <= 0 ) {
       dispatch(appShowMsg("withdraw_must", 1200));
       return false
     }
