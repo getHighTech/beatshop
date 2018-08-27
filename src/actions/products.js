@@ -104,6 +104,7 @@ export function expectOneProduct(id){
 
 
 export function loadOneProductSuccess(product){
+  console.log(product);
     return {
         type: LOAD_ONE_PRODUCT_SUCCESS,
         product
