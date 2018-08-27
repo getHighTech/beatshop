@@ -22,7 +22,7 @@ const styles = theme => ({
     display:'flex',
     justifyContent:'space-between',
     paddingRight:'4%',
-    fontSize:1
+    fontSize: 14
    },
    card:{
      marginTop:10,
@@ -53,7 +53,7 @@ const styles = theme => ({
       paddingTop:10
     },
     subProductName:{
-      fontSize:1,
+      fontSize:14,
       color:'#9E9E9E'
     }
 });
