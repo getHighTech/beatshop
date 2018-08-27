@@ -209,32 +209,32 @@ export function expectAgencyOneProduct(){
 export function agencyOneProductFail(reason){
   console.log('false');
   console.log(reason);
-    return {
-        type: AGENCY_ONE_PRODUCT_FAIL,
-        reason
-    }
-
-    // return dispatch => {
-    //   dispatch(appShowMsg('agency_one_product_existed',1200))
-    //   return dispatch({
+    // return {
     //     type: AGENCY_ONE_PRODUCT_FAIL,
     //     reason
-    //   })
     // }
+
+    return dispatch => {
+      dispatch(appShowMsg('agency_one_product_existed',1200))
+      return dispatch({
+        type: AGENCY_ONE_PRODUCT_FAIL,
+        reason
+      })
+    }
 }
 export function agencyOneProductSuccess(products){
   console.log('success');
-  // return dispatch => {
-  //   dispatch(appShowMsg('agency_one_product_success',1200))
-  //   return dispatch({
-  //       type: AGENCY_ONE_PRODUCT_SUCCESS,
-  //       products
-  //   })
-  // }
-  return {
-      type: AGENCY_ONE_PRODUCT_SUCCESS,
-      products
+  return dispatch => {
+    dispatch(appShowMsg('agency_one_product_success',1200))
+    return dispatch({
+        type: AGENCY_ONE_PRODUCT_SUCCESS,
+        products
+    })
   }
+  // return {
+  //     type: AGENCY_ONE_PRODUCT_SUCCESS,
+  //     products
+  // }
 
 }
 export function agencyOneProduct(product, userId,appNameShopId,shopId){
