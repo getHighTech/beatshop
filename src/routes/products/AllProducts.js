@@ -52,8 +52,7 @@ class AllProducts extends React.Component{
 
   beginToAgency = (index) => {
     const { dispatch, products,user } = this.props;
-    console.log("one product", products[index]);
-    dispatch(agencyOneProduct(products[index], getStore("userId")),user.appNameShopId,user.shopId)
+    dispatch(agencyOneProduct(products[index], getStore("userId"),user.appNameShopId,user.shopId))
     this.handleClose(index)
   }
 
@@ -111,7 +110,7 @@ class AllProducts extends React.Component{
               <img src={tile.cover? tile.cover : '/imgs/b5.png'} alt={tile.endPrice} />
               <GridListTileBar
                 title={tile.title}
-                subtitle={<div style={{wordWrap: "break-all"}}><span>价: ¥{tile.endPrice/100}</span>&nbsp;
+                subtitle={<div style={{wordWrap: "break-all"}}><span>{tile.newSpecGroups[0].spec_value}</span><br/><br/><span>{tile.name_zh}</span><br/><br/><span>价: ¥{tile.endPrice/100}</span>&nbsp;
                 <span>
                   佣: ¥
 

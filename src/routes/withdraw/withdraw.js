@@ -58,7 +58,8 @@ class Withdraw extends React.Component{
       [name]: event.target.value,
     });
   };
-  withdraw = () => {
+  withdraw = (e) => {
+    e.preventDefault();
     const {dispatch, bankcards} = this.props;
     console.log(bankcards);
     
@@ -75,6 +76,17 @@ class Withdraw extends React.Component{
 
     if(amount%100 !== 0) {
       dispatch(appShowMsg("withdraw_mustbe_persent", 1200));
+      return false
+    }
+
+    if(amount%100 < 0 ) {
+      dispatch(appShowMsg("withdraw_must", 1200));
+      return false
+    }
+
+   
+    if(amount===''){
+      dispatch(appShowMsg("withdraw_must",1200));
       return false
     }
 
@@ -179,7 +191,7 @@ class Withdraw extends React.Component{
                 </option>
               ))}
             </TextField>
-            <Button onClick={this.withdraw} variant="raised" color="primary" className={classes.button}>
+            <Button onClick={(e)=>this.withdraw(e)} variant="raised" color="primary" className={classes.button}>
               提现
             </Button>
           </form>

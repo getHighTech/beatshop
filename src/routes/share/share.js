@@ -87,7 +87,7 @@ class Share extends React.Component {
       const imgSrc =  canvas.toDataURL()
       console.log(imgSrc)
       const wrap =  document.querySelector('.qrCode')
-      wrap.innerHTML = `<img src="${imgSrc}">`
+      wrap.innerHTML = `<img src="${imgSrc}" width="100px" height="100px">`
     }
   }
   render() { 

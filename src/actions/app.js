@@ -170,6 +170,10 @@ function msgSwitchByReason(reason, option={}){
             return {
                 content: "提现金额必须是100元的倍数"
             }
+        case "withdraw_must":
+            return {
+                content: "必须填写正确金额"
+            }
 
 
         default:

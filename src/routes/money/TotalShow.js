@@ -36,7 +36,6 @@ export default class TotalShow extends React.Component{
     render(){
         const {totalAmount, username } = this.state;
         return (
-            
             <div>
                 <Bankcard  isBankcard={false} 
         cardData={{...this.props.cardData,title: username, carNumber:'￥'+totalAmount}} />

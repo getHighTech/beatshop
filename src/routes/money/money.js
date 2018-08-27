@@ -152,19 +152,13 @@ class Money extends React.Component{
    
     
     let getUsername = function(income, index){
-      console.log(income)
-      console.log(index)
       if(income.shopCustomer){
-        console.log(1)
         return income.shopCustomer.username;
       }
       if(income.user){
-        console.log(2)
         return income.user.username;
       }
       if(income.userId){
-        console.log(3)
-        console.log(money.users[index].username)
         return money.users[index].username;
       }
     }
