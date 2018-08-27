@@ -15,7 +15,7 @@ const styles = theme => ({
     maxWidth: 450,
     backgroundColor: "white",
     flexDirection: "column"
-  },  
+  },
 });
 
 
@@ -40,25 +40,30 @@ class NewBankcard extends React.Component {
     if(layout.title!=="新建银行卡"){
       dispatch(setAppLayout(
         {
-            isBack: true, 
-            backTo: "/my/bankcards_list", 
-            title: "新建银行卡", 
-            hasCart: false, 
-            hasBottomNav: false, 
+            isBack: true,
+            backTo: "/my/bankcards_list",
+            title: "新建银行卡",
+            hasCart: false,
+            hasBottomNav: false,
             hasGeoLoc: false,
             hasSearch: false,
             hasNewCreate: false,
         }
       ));
     }
-   
+
   }
 
   handleSubmitBtn(){
        let contact = this.state;
        const { dispatch } = this.props;
-       
- 
+       let regname=/^([\u4e00-\u9fa5]){2,7}$/;
+       let cardnumber = contact.cardNumber.replace(/\s/g,'');
+       console.log(cardnumber);
+       let num =/^\d*$/;
+       let address = /^[\u2E80-\u9FFF]+$/;
+       let strBin = "10,18,30,35,37,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,60,62,65,68,69,84,87,88,94,95,98,99";
+
       if(!contact.name){
        this.setState({
          nameHelperText: "此处为必须项",
@@ -66,16 +71,53 @@ class NewBankcard extends React.Component {
         });
        return false;
      }
+     if (!regname.test(contact.name)) {
+       this.setState({
+         nameHelperText: "只能输入2-7位中文",
+         nameFeildError: true,
+        });
+       return false;
+     }
      if(!contact.cardNumber){
       this.setState({
-        nameHelperText: "此处为必须项",
+        cardNumberHelperText: "此处为必须项",
         cardNumberFeildError: true,
        });
       return false;
     }
+    if (cardnumber.length < 16 || cardnumber.length>19) {
+      this.setState({
+        cardNumberHelperText: "银行卡号长度必须在16到19之间",
+        cardNumberFeildError: true,
+       });
+      return false;
+
+    }
+    if (!num.exec(cardnumber)) {
+      this.setState({
+        cardNumberHelperText: "银行卡号必须全为数字",
+        cardNumberFeildError: true,
+       });
+      return false;
+    }
+    if (strBin.indexOf(cardnumber.substring(0,2))== -1) {
+      this.setState({
+        cardNumberHelperText: "银行卡号开头6位不符合规范",
+        cardNumberFeildError: true,
+       });
+      return false;
+
+    }
     if(!contact.address){
       this.setState({
         addressHelperText: "此处为必须项",
+        addressFeildError: true,
+       });
+      return false;
+    }
+    if(!address.test(contact.address)){
+      this.setState({
+        addressHelperText: "只能输入中文",
         addressFeildError: true,
        });
       return false;
@@ -86,7 +128,7 @@ class NewBankcard extends React.Component {
       bankAddress: contact.address,
       userId: getStore("userId"),
     }
-    
+
     dispatch(appShowMsgAndInjectDataReactWithPath(
       "save_user_bankcard", "save_bankcard_success",1350, bankCardParams, "/my/bankcards_list"));
       this.setState({
@@ -117,7 +159,7 @@ class NewBankcard extends React.Component {
           value={this.state.name}
           helperText={this.state.nameHelperText}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "name")}
-          
+
         />
         <TextField
           id="full-width"
@@ -127,7 +169,7 @@ class NewBankcard extends React.Component {
           value={this.state.cardNumber}
           helperText={this.state.cardNumberHelperText}
           onChange={(e)=>this.handleInputChange.bind(this)(e, "cardNumber")}
-          
+
         />
         <TextField
           id="full-width"
@@ -139,12 +181,12 @@ class NewBankcard extends React.Component {
           onChange={(e)=>this.handleInputChange.bind(this)(e, "address")}
         />
         <br/>
-        <Button type="button" onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>        
+        <Button type="button" onClick={this.handleSubmitBtn.bind(this)} variant="raised" fullWidth={true}>保存</Button>
         </form>
       </div>
     )
   }
-  
+
 }
 
 NewBankcard.propTypes = {

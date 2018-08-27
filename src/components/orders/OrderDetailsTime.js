@@ -18,6 +18,7 @@ class OrderDetailsTime extends React.Component{
             :
             <div>订单编号：{order.transactionId}</div>
           }
+          {order.tracking_number!==undefined ? <div>快递单号：{order.tracking_number}</div> : <div>快递单号：该订单还未发货</div>}
           <div>创建时间：{order.createdAt!==undefined ? moment(order.createdAt["$date"]).format("YYYY-MM-DD HH:mm:ss"): null}</div>
         </ReCard>
 

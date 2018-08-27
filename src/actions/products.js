@@ -1,5 +1,6 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { dealWithError } from "./error_fail";
+import { appShowMsg } from './app.js'
 import app from '../config/app.json'
 import axios from 'axios';
 import serverConfig  from '../config/server';
@@ -200,23 +201,44 @@ export const AGENCY_ONE_PRODUCT_FAIL = "AGENCY_ONE_PRODUCT_FAIL"
 export const AGENCY_ONE_PRODUCT_SUCCESS = "AGENCY_ONE_PRODUCT_SUCCESS";
 
 export function expectAgencyOneProduct(){
+  console.log('11111');
     return {
         type: EXPECT_AGENCY_ONE_PRODUCT
     }
 }
 export function agencyOneProductFail(reason){
-    return {
+  console.log('false');
+  console.log(reason);
+    // return {
+    //     type: AGENCY_ONE_PRODUCT_FAIL,
+    //     reason
+    // }
+
+    return dispatch => {
+      dispatch(appShowMsg('agency_one_product_existed',1200))
+      return dispatch({
         type: AGENCY_ONE_PRODUCT_FAIL,
         reason
+      })
     }
 }
 export function agencyOneProductSuccess(products){
-    return {
+  console.log('success');
+  return dispatch => {
+    dispatch(appShowMsg('agency_one_product_success',1200))
+    return dispatch({
         type: AGENCY_ONE_PRODUCT_SUCCESS,
         products
-    }
+    })
+  }
+  // return {
+  //     type: AGENCY_ONE_PRODUCT_SUCCESS,
+  //     products
+  // }
+
 }
 export function agencyOneProduct(product, userId,appNameShopId,shopId){
+  console.log(product);
     return (dispatch, getState) => {
         dispatch(expectAgencyOneProduct());
         return getRemoteMeteor(dispatch, getState,

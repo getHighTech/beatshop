@@ -33,23 +33,25 @@ const styles = theme => ({
     },
     send:{
       color:'rgb(156, 148, 148)',
-        fontSize:10
+        fontSize:12
     },
     price:{
-        color:'#ff5722'
+        paddingLeft:'15px',
+        color:'#ff5722',
+        fontSize:'24px'
     },
     productName: {
         fontSize: '20px'
     },
     sale:{
       color:'rgb(156, 148, 148)',
-      fontSize:'10px',
-      marginLeft:'20px'
+      fontSize:'12px',
+      marginLeft:'-30px'
     },
     firstPrice:{
-      marginLeft:'10px',
+      marginLeft:'5px',
       color:'rgb(156, 148, 148)',
-      fontSize:'12px',
+      fontSize:'14px',
       textDecoration:'line-through'
     }
 
@@ -77,32 +79,47 @@ const styles = theme => ({
         const productId=match.params.id
         console.log(productId);
         console.log(`${serverConfig.server_url}`);
-        axios.get(`${serverConfig.server_url}/api/findAllSpecProductByProductId`,{
-          params:{
-            productId
-          }
-        }).then((res)=>{
-          console.log(res.data.allproducts);
-          this.setState({
-            spec:res.data.allproducts,
-            price:res.data.allproducts[0].price,
-            endPrice:res.data.allproducts[0].endPrice,
-            SelectProduct:res.data.allproducts[0].product
-          })
-        }).catch((err)=>{
-          console.log(err);
-        })
-
+        // axios.get(`${serverConfig.server_url}/api/findAllSpecProductByProductId`,{
+        //   params:{
+        //     productId
+        //   }
+        // }).then((res)=>{
+        //   console.log(res.data.allproducts);
+        //   this.setState({
+        //     spec:res.data.allproducts,
+        //     price:res.data.allproducts[0].price,
+        //     endPrice:res.data.allproducts[0].endPrice,
+        //     SelectProduct:res.data.allproducts[0].product
+        //   })
+        // }).catch((err)=>{
+        //   console.log(err);
+        // })
+        console.log(match.params);
 
         if(match.params.id && !match.params.rolename){
+          console.log('1');
             dispatch(loadOneProduct(match.params.id));
 
         }
         if(match.params.rolename && !match.params.id){
-            dispatch(loadOneProductByRolename(match.params.rolename,user.appNameShopId));
+          // console.log('2');
+          //   dispatch(loadOneProductByRolename(match.params.rolename,user.appNameShopId));
+
+          let shopId = user.appNameShopId
+          let rolename = match.params.rolename
+          console.log(shopId);
+          console.log(rolename);
+            axios.get(`${serverConfig.server_url}/api/buyCard`,{
+              params:{
+                rolename,shopId
+              }
+            }).then((res)=>{
+              console.log(res);
+            })
 
         }
         if(match.params.productname){
+          console.log('3');
             if(match.params.productname === "openshop"){
                 dispatch(appShowMsg("open_shop_fail", 3000));
             }
@@ -262,7 +279,7 @@ const styles = theme => ({
                     </SpecWrap>
                 </div>
                 <div style={{width: "100%",paddingBottom:50}}>
-                    <ProductTabs des={productShow.product.detailsImage}/>
+                    <ProductTabs des={productShow.product.detailsImage} parameterlists={productShow.product.parameterlist}/>
                 </div>
                 <ProductBottomBar isAppointment={productShow.product.isAppointment} product={this.state.SelectProduct} history={history} url={match.url}/>
         </Grid>
@@ -277,7 +294,7 @@ const SpecWrap = styled.div`
 `
 const SpanText =styled.span`
     color:${props => props.active==="true" ? "white" : "rgba(0, 0, 0, 0.73)" };;
-    font-size:10px
+    font-size:16px
 `
 const LeftWrap  = styled.div`
     color: #999;

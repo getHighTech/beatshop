@@ -24,7 +24,7 @@ const styles = theme => ({
   button:{
     marginRight:5,
     height:10,
-  },  
+  },
   loadMore:{
     textAlign:'center',
     marginTop:20,
@@ -56,34 +56,34 @@ class AllProducts extends React.Component{
     this.handleClose(index)
   }
 
-  
-  
+
+
 
   componentDidMount(){
     const { dispatch, layout, products } = this.props;
-    
+
     if(layout.title!=='鲜至臻品商品库'){
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/my", 
-                title: "鲜至臻品商品库", 
-                hasCart: false, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/my",
+                title: "鲜至臻品商品库",
+                hasCart: false,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
     }
-    
+
     if(products === "unloaded"){
-      
+
       dispatch(getShopProductsLimit());
     }
-    
-    
-  
+
+
+
   }
   render(){
     const { classes, productsLoading, products } = this.props;
@@ -94,32 +94,32 @@ class AllProducts extends React.Component{
         </div>
       )
     }
-    
+
     return(
       <div className={classes.root}>
       { productsLoading ? <LoadingItem /> : null }
         <GridList cellHeight={180} className={classes.gridList}>
-          { 
+          {
             products.length> 0?
 
             products.map((tile, index) => {
-            
+
             return (
-            
+
             <GridListTile key={index}>
               <img src={tile.cover? tile.cover : '/imgs/b5.png'} alt={tile.endPrice} />
               <GridListTileBar
                 title={tile.title}
-                subtitle={<div style={{wordWrap: "break-all"}}><span>价: ¥{tile.endPrice/100}</span>&nbsp;
-                <span>  
+                subtitle={<div style={{wordWrap: "break-all"}}><span>{tile.newSpecGroups[0].spec_value}</span><br/><br/><span>{tile.name_zh}</span><br/><br/><span>价: ¥{tile.endPrice/100}</span>&nbsp;
+                <span>
                   佣: ¥
-                  
+
                   {tile.agencyLevelPrices.length> 0 ?tile.agencyLevelPrices[0]/100 : 0}
                   </span></div>}
                 actionIcon={
-                  <Button variant="fab" 
-                  mini color="primary" 
-                  onClick={() => this.handleClickOpen(index)} 
+                  <Button variant="fab"
+                  mini color="primary"
+                  onClick={() => this.handleClickOpen(index)}
                   aria-label="add" className={classes.button}>
                   <AddIcon />
                 </Button>
@@ -135,7 +135,7 @@ class AllProducts extends React.Component{
                 <DialogTitle id="alert-dialog-title">{"确定代理这件商品吗?"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    选择代理销售{tile.name_zh},每卖出一件， 
+                    选择代理销售{tile.name_zh},每卖出一件，
                     可以获得
                     { tile.agencyLevelPrices.length> 0 ? tile.agencyLevelPrices[0]/100 : 0}
 
