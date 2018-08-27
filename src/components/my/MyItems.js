@@ -52,7 +52,7 @@ class MyItems extends React.Component{
     const { user, history  } = this.props;
     console.log('my:'+ my);
 
-
+    console.log(123)
 
     if(user.agencyRole!==false){
       console.log(`走这里`)
@@ -127,7 +127,7 @@ class MyItems extends React.Component{
           </ReListItemIcon>
           <ListItemText inset primary="新加商品"  />
           </ListItem>
-          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" href="#/my/products">
+          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" >
           <ReListItemIcon >
           <Stars />
           </ReListItemIcon>

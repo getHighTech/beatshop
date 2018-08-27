@@ -105,7 +105,7 @@ class Bankcard extends React.Component{
             {this.props.cardData.subtitle}
             </Typography>
             <Typography component="p" className={classes.content} >
-            {this.props.cardData.carNumber}
+            {isNaN(this.props.cardData.carNumber) ? 0 : this.props.cardData.carNumber}
             </Typography>
 
           </CardContent>

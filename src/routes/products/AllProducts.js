@@ -77,10 +77,8 @@ class AllProducts extends React.Component{
         ));
     }
 
-    if(products === "unloaded"){
 
       dispatch(getShopProductsLimit());
-    }
 
 
 
