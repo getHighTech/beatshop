@@ -40,7 +40,7 @@ class ProductTabs extends React.Component {
   };
 
   render() {
-    const { classes, theme ,parameterlists} = this.props;
+    const { classes, theme ,parameterlists,des} = this.props;
 
     return (
       <div className={classes.root}>
@@ -69,14 +69,14 @@ class ProductTabs extends React.Component {
              flexDirection: "column"}}>
           { htmlToReactParser.parse(this.props.des)}
           </div> */}
-          <img src={this.props.des} style={{width: "100%"}} alt=''/>
 
+          {typeof(des)!='undefined'? <img src={this.props.des} style={{width: "100%"}} alt=''/> :'暂无图片' }
           </TabContainer>
           <TabContainer dir={theme.direction}>
           <div style={{width:'100%'}}>
 
 
-            {parameterlists.map((parameterlist,key) => {
+            {typeof(parameterlists.length)!='undefined'?  parameterlists.map((parameterlist,key) => {
               return (
                 <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around',padding:'10px',borderBottom:'1px solid #ccc'}} key={key}>
                 <div style={{width:'30%',textAlign:'center'}}>
@@ -92,7 +92,7 @@ class ProductTabs extends React.Component {
                   </div>
                 </div>
               )
-            })}
+            } ): '暂无售后'}
 
 
           </div>

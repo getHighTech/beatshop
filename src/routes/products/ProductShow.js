@@ -115,7 +115,7 @@ const styles = theme => ({
               }
             }).then((res)=>{
               console.log(res.data.product);
-              dispatch(loadOneProductSuccess((res.data.product)))
+              dispatch(loadOneProductSuccess(res.data.product))
                this.setState({
                 price:res.data.product.price,
                 endPrice:res.data.product.endPrice,
