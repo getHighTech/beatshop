@@ -7,7 +7,7 @@ import serverConfig  from '../../config/server';
 import ProductCarousel from '../../components/products/carousel';
 import ProductTabs from '../../components/products/tabs';
 import Grid from '@material-ui/core/Grid';
-import { loadOneProduct, loadOneProductByRolename } from '../../actions/products';
+import { loadOneProduct, loadOneProductByRolename,loadOneProductSuccess } from '../../actions/products';
 import LoadingItem from '../../components/public/LoadingItem'
 import { setAppLayout, appShowMsg } from '../../actions/app';
 import ProductBottomBar from '../../components/products/ProductBottomBar';
@@ -114,9 +114,33 @@ const styles = theme => ({
                 rolename,shopId
               }
             }).then((res)=>{
-              console.log(res);
+              console.log(res.data.product);
+              dispatch(loadOneProductSuccess((res.data.product)))
+               this.setState({
+                price:res.data.product.price,
+                endPrice:res.data.product.endPrice,
+                SelectProduct:res.data.product
+              })
+
             })
 
+        }
+        else {
+          axios.get(`${serverConfig.server_url}/api/findAllSpecProductByProductId`,{
+            params:{
+              productId
+            }
+          }).then((res)=>{
+            console.log(res.data.allproducts);
+            this.setState({
+              spec:res.data.allproducts,
+              price:res.data.allproducts[0].price,
+              endPrice:res.data.allproducts[0].endPrice,
+              SelectProduct:res.data.allproducts[0].product
+            })
+          }).catch((err)=>{
+            console.log(err);
+          })
         }
         if(match.params.productname){
           console.log('3');
@@ -194,6 +218,7 @@ const styles = theme => ({
         const {classes, appInfo, productShow, match, history} = this.props;
         const {spec,price,endPrice,SelectProduct} = this.state;
         console.log(SelectProduct);
+        console.log(this.props.productShow);
         // let  rst = {};
         // for(let i = 0; i < specs.length; i++){
         //     rst[specs[i]] = false
