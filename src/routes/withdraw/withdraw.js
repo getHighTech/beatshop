@@ -79,14 +79,12 @@ class Withdraw extends React.Component{
       return false
     }
     if(amount/100 < 0 ) {
-      console.log(1111)
       dispatch(appShowMsg("withdraw_must", 1200));
       return false
     }
 
    
     if(amount===''){
-      console.log(2222)
       dispatch(appShowMsg("withdraw_must",1200));
       return false
     }
