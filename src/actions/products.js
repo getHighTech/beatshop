@@ -169,16 +169,17 @@ export function getShopProductsLimitSuccess(msg){
 
 export function getShopProductsLimit(shopId,page){
   const appName = app.name;
-  console.log(appName);
-    return async (dispatch, getState) => {
+  console.log(page);
+    return  (dispatch, getState) => {
         dispatch(expectGetShopProductsLimit());
         try{
-           const result = await axios.get(`${serverConfig.server_url}/api/new_add_products`,{
+           return axios.get(`${serverConfig.server_url}/api/new_add_products`,{
                 params:{
                   appName
                 }
+              }).then((res)=>{
+                dispatch(getShopProductsLimitSuccess(res.data.products))
               })
-            return dispatch(getShopProductsLimitSuccess(result.data.products))
         } catch( err) {
             return dispatch(getShopProductsLimitFail())
         }
