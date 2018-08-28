@@ -12,13 +12,13 @@ import CartTop from './CartTop';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
 import ModeEdit from "@material-ui/icons/ModeEdit";
-import OpenInNew from "@material-ui/icons/OpenInNew"
-import grey from '@material-ui/core/colors/grey'
+import OpenInNew from "@material-ui/icons/OpenInNew";
+import grey from '@material-ui/core/colors/grey';
+import styled from 'styled-components';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    position: "fixed",
     width: "100%",
     zIndex: '1000'
 
