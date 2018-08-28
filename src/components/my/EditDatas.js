@@ -14,10 +14,17 @@ import styled from 'styled-components';
 class EditDatas extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: false  }
+    this.state = { 
+                  userOpen: false, 
+                  signOpen: false, 
+                  passwordOpen: false
+                 }
   }
-  handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
+  handleClick = (key) => {
+    console.log(key)
+    console.log(this.state)
+    console.log(this.state[key])
+    this.setState(state => ({ [key]: !state[key] }));
   };
   changeCover = () => {
     console.log('上传头像方法在此');
@@ -50,14 +57,15 @@ class EditDatas extends Component {
             src="http://img05.tooopen.com/images/20150820/tooopen_sy_139205349641.jpg"
           />
         </ReListItem>
-        <ReListItem  button onClick={this.handleClick}>
-          <ListItemText primary="姓名"  />
+        <ReListItem  button onClick={()=> this.handleClick('userOpen')}>
+          <ListItemText primary="用户名"  />
           周世雄
-          {this.state.open ? <ExpandLess /> : <ExpandMore />}
+          {this.state.userOpen? <ExpandLess /> : <ExpandMore />}
         </ReListItem>
 
 
-          <ReCollapse in={this.state.open} timeout="auto" unmountOnExit >
+
+          <ReCollapse in={this.state.userOpen} timeout="auto" unmountOnExit >
             <ReList component="div" disablePadding >
             <TextField
                 id="with-placeholder"
@@ -65,6 +73,54 @@ class EditDatas extends Component {
                 placeholder="长度不要大于10个字符"
                 margin="normal"
               />
+              <ReButton variant="contained" color="primary" >
+                确认
+              </ReButton>
+            </ReList>
+
+          </ReCollapse>
+
+          <ReListItem  button onClick={() => this.handleClick("signOpen")}>
+          <ListItemText primary="签名"  />
+          周世雄
+          {this.state.signOpen ? <ExpandLess /> : <ExpandMore />}
+        </ReListItem>
+          <ReCollapse in={this.state.signOpen} timeout="auto" unmountOnExit >
+            <ReList component="div" disablePadding >
+            <TextField
+                id="with-placeholder"
+                label="设置新名字"
+                placeholder="长度不要大于10个字符"
+                margin="normal"
+              />
+              <ReButton variant="contained" color="primary" >
+                确认
+              </ReButton>
+            </ReList>
+
+          </ReCollapse>
+
+          <ReListItem  button onClick={()=> this.handleClick('passwordOpen')}>
+          <ListItemText primary="修改密码"  />
+          周世雄
+          {this.state.passwordOpen ? <ExpandLess /> : <ExpandMore />}
+        </ReListItem>
+          <ReCollapse in={this.state.passwordOpen} timeout="auto" unmountOnExit >
+            <ReList component="div" disablePadding >
+            <TextField
+                id="with-placeholder"
+                label="设置新名字"
+                placeholder="长度不要大于10个字符"
+                margin="normal"
+              />
+              <br />
+               <TextField
+                id="with-placeholder"
+                label="设置新名字"
+                placeholder="长度不要大于10个字符"
+                margin="normal"
+              />
+                <br />
               <ReButton variant="contained" color="primary" >
                 确认
               </ReButton>

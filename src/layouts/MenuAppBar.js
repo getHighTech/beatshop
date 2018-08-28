@@ -107,33 +107,33 @@ class MenuAppBar extends React.Component {
   };
 
 
-  componentWillReceiveProps(nextProps){
-    const { address } = nextProps;
+  // componentWillReceiveProps(nextProps){
+  //   const { address } = nextProps;
 
-    if(address.info === "SUCCESS"){
-      if(address.addressComponent){
-        this.setState({
-          currentCity: address.addressComponent.city
-        })
-      }else{
-        this.setState({
-          currentCity: "北京市"
-        })
+  //   if(address.info === "SUCCESS"){
+  //     if(address.addressComponent){
+  //       this.setState({
+  //         currentCity: address.addressComponent.city
+  //       })
+  //     }else{
+  //       this.setState({
+  //         currentCity: "北京市"
+  //       })
 
-      }
+  //     }
 
-    }
-    if(address.info==="FAILED"){
-      this.setState({
-        currentCity: "定位失败"
-      })
-      setTimeout(() => {
-        this.setState({
-          currentCity: "北京市"
-        })
-      }, 1230);
-    }
-  }
+  //   }
+  //   if(address.info==="FAILED"){
+  //     this.setState({
+  //       currentCity: "定位失败"
+  //     })
+  //     setTimeout(() => {
+  //       this.setState({
+  //         currentCity: "北京市"
+  //       })
+  //     }, 1230);
+  //   }
+  // }
   handleEditorClick(type){
     switch (type) {
       case "new_contact":
