@@ -12,11 +12,8 @@ import brown from '@material-ui/core/colors/brown';
 import { connect } from 'react-redux'
 const styles = {
   root: {
-    width: "100%",
-    position: "fixed",
     backgroundColor: "rgba(0, 0, 0, 0.78)",
-    bottom: 0
-
+    flexShrink: 0
   }
 };
 

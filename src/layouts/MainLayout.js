@@ -6,8 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import MenuAppBar from './MenuAppBar';
 import BottemMav from './BottemNav';
-
 import AppInfo from '../config/app.json';
+import styled from 'styled-components';
 const styles = theme => ({
 
   child: {
@@ -29,7 +29,6 @@ class MainLayout extends React.Component{
 
   componentDidMount(){
     document.title =AppInfo.name_zh;
-
   }
   
 
@@ -37,26 +36,36 @@ class MainLayout extends React.Component{
   render(){
     const { classes } = this.props;
       return(
-        <div className={classes.root}> 
+        <Wrap>
             <MenuAppBar history={this.props.history} appInfo={AppInfo} />
-            <div style={{
-              position: "relative",
-              top: "50px",
-              overflowY: "auto",
-              overflowX: "hidden"
-            }}>
+            <Content>
                 {this.props.children}
-            </div>
+            </Content>
             <BottemMav history={this.props.history} />
-
-        </div>
-  
+      </Wrap>
       )
     
   
     
   }
 }
+const Wrap = styled.div`
+   display: flex;
+  flex-direction: column;
+  height: 100vh;
+`
+const Content = styled.div`
+   flex-grow: 1;
+   overflow-y: scroll;
+   -webkit-overflow-scrolling: touch;
+   overflow-x: hidden;
+   &:after {
+      min-height: calc(100% + 1px)
+   }
+`
+
+
+
 MainLayout.propTypes = {
     classes: PropTypes.object.isRequired,
   };
