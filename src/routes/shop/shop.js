@@ -16,8 +16,8 @@ import Button from '@material-ui/core/Button';
 import { setAppLayout } from '../../actions/app';
 import { getShopProductsLimit } from '../../actions/app_shop'
 import styled from 'styled-components';
-
-
+import axios from 'axios';
+import serverConfig  from '../../config/server';
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -32,14 +32,17 @@ TabContainer.propTypes = {
 
 
 class Shop extends React.Component{
+  constructor(props){
+      super(props);
+
+}
   state = {
+    loading:true,
     value: 0,
-    productsTotle:7,
-    page: 2,
+    productsTotle:1000,
+    page: 1,
+    shop:'',
     products:[
-      {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
-      {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
-      {id:3,name:'超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示',price:1200,img:'/imgs/b3.png',title:'店铺图片'},
 
     ]
   };
@@ -54,18 +57,39 @@ class Shop extends React.Component{
   }
 
   loadMoreProductData(){
-    const {  match,shop } = this.props;
+    const {page,products} = this.state;
+    const {  match } = this.props;
     let shopId = match.params.id
-    this.props.dispatch(getShopProductsLimit(shopId,shop.page,4))
+    let pages= page+1;
+    let pagesize = 5
+    // this.props.dispatch(getShopProductsLimit(shopId,newpages,5))
+    axios.get(`${serverConfig.server_url}/api/shop/products`,{
+      params:{
+        shopId,pages,pagesize
+      }
+    }).then((res)=>{
+      console.log(res.data.products);
+      this.setState({
+        loading:false,
+        page:pages,
+        products:products.concat(res.data.products),
+      })
+    }).catch((err)=>{
+      this.setState({
+          loading: true,
+          page: 1,
+          products: [],
+      })
+    })
+
   }
   componentDidMount(){
-    const { dispatch, layout, match,shop } = this.props;
+    const { dispatch, layout, match,shop,products } = this.props;
     let shopId = match.params.id
-
+    let pagesize = 5
+    const {page} = this.state;
     if(layout.title!=='店铺详情'){
-      if(shopId){
-        dispatch(getShopProductsLimit(shopId,shop.page,4))
-      }
+
         dispatch(setAppLayout(
             {
                 isBack: true,
@@ -79,6 +103,29 @@ class Shop extends React.Component{
             }
         ));
     }
+    if(shopId){
+      // dispatch(getShopProductsLimit(shopId,pages,5))
+      axios.get(`${serverConfig.server_url}/api/shop/products`,{
+        params:{
+          shopId,page,pagesize
+        }
+      }).then((res)=>{
+        console.log(res.data.products);
+        this.setState({
+          loading:false,
+          page:1,
+          products:res.data.products,
+          shop:res.data.shop
+        })
+      }).catch((err)=>{
+        this.setState({
+            loading: true,
+            page: 1,
+            products: [],
+        })
+      })
+
+    }
   }
 
 
@@ -86,10 +133,10 @@ class Shop extends React.Component{
     return name.substr(0,1)
   }
   render(){
-    const { shop, products } = this.props.shop;
 
-    const { value } = this.state;
-
+    const { value,shop,products } = this.state;
+    console.log(shop);
+    console.log(products);
 
 
     return(
@@ -139,15 +186,17 @@ class Shop extends React.Component{
           }
         )}
       <LoadMore >
-        {this.state.products.length === this.state.productsTotle?
 
-          <Button color="primary"  >
-          没有数据啦
-          </Button>:
-          <Button color="primary"  onClick={this.loadMoreProductData.bind(this)}>
-          加载更多
-          </Button>
-        }
+      {this.state.products.length === this.state.productsTotle?
+
+        <Button color="primary"  >
+        没有数据啦
+        </Button>:
+        <Button color="primary"  onClick={this.loadMoreProductData.bind(this)}>
+        加载更多
+        </Button>
+      }
+
       </LoadMore>
         </TabContainer>}
         {value === 1 && <TabContainer>{shop.description}</TabContainer>}

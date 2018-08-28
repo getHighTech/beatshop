@@ -76,7 +76,7 @@ class ProductTabs extends React.Component {
           <div style={{width:'100%'}}>
 
 
-            {typeof(parameterlists.length)!='undefined'?  parameterlists.map((parameterlist,key) => {
+            {typeof(parameterlists)!='undefined'?  parameterlists.map((parameterlist,key) => {
               return (
                 <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around',padding:'10px',borderBottom:'1px solid #ccc'}} key={key}>
                 <div style={{width:'30%',textAlign:'center'}}>
