@@ -18,7 +18,6 @@ import styled from 'styled-components';
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
     width: "100%",
     zIndex: '1000'
 
