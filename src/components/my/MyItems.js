@@ -125,13 +125,13 @@ class MyItems extends React.Component{
           <ReListItemIcon >
           <AddToQueue />
           </ReListItemIcon>
-          <ListItemText inset primary="新加商品"  />
+          <ListItemText inset primary="商品库房"  />
           </ListItem>
           <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" >
           <ReListItemIcon >
           <Stars />
           </ReListItemIcon>
-          <ListItemText inset primary="正在出售的商品" />
+          <ListItemText inset primary="我的橱窗" />
           </ListItem>
           </List>
           </Collapse>
