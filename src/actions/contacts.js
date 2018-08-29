@@ -1,6 +1,7 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { userUpdateOrder } from "./orders";
-
+import axios from 'axios';
+import serverConfig  from '../config/server';
 export const EXPECT_CREATE_NEW_CONTACT = "EXPECT_CREATE_NEW_CONTACT";
 export const CREATE_NEW_CONTACT = "CREATE_NEW_CONTACT";
 export const CREATE_NEW_CONTACT_FAIL = "CREATE_NEW_CONTACT_FAIL";
@@ -15,13 +16,13 @@ export function expectCreateNewContact(){
 
 export function createNewContact(contact){
     return (dispatch, getState) => {
-        
+
         dispatch(expectCreateNewContact());
         return getRemoteMeteor(
             dispatch,
-            getState, 
-            "user_contact", 
-            "app.create.user.contact", 
+            getState,
+            "user_contact",
+            "app.create.user.contact",
             [getState().AppUser.userId, contact],
             createNewContactSuccess,
             createNewContactFail,
@@ -37,7 +38,7 @@ export function createNewContactFail(reason){
 }
 
 export function createNewContactSuccess(msg){
-    
+
     return {
         type: CREATE_NEW_CONTACT_SUCCESS,
         msg
@@ -52,14 +53,28 @@ export const DELETE_USER_CONTACT_SUCCESS = "DELETE_USER_CONTACT_SUCCESS";
 
 
 export function deleteUserContact(contactId){
+  console.log(contactId);
     return (dispatch, getState) => {
-        return getRemoteMeteor(
-            dispatch,
-            getState,
-            "contacts",
-            "app.delete.user.contact",
-            [contactId]
-        );
+      try{
+        return axios.get(`${serverConfig.server_url}/api/delete_user_contact`,{
+          params:{
+            contactId
+          }
+        }).then((res)=>{
+          console.log(res);
+        })
+      }
+      catch(err){
+        console.log(err);
+      }
+        // return getRemoteMeteor(
+        //     dispatch,
+        //     getState,
+        //     "contacts",
+        //     "app.delete.user.contact",
+        //     [contactId]
+        // );
+
     }
 }
 export function expectDeleteUserContact(){
@@ -81,7 +96,7 @@ export function deleteUserContactSuccess(msg){
             msg
         })
     }
-    
+
 }
 
 
@@ -97,7 +112,7 @@ export function expectSetDefaultContact(){
     }
 }
 export function setDefaultContactFail(reason){
-    
+
     return {
         type: SET_DEFAULT_CONTACT_FAIL,
         reason
@@ -111,12 +126,12 @@ export function setDefaultContactSuccess(msg){
             msg
         })
     }
-    
+
 }
 export function setDefaultContact(contactId){
     return (dispatch, getState) => {
         dispatch(expectSetDefaultContact());
-        return getRemoteMeteor(dispatch, getState, "user_contact", 
+        return getRemoteMeteor(dispatch, getState, "user_contact",
         "app.set.user.contact,default", [contactId],
         setDefaultContactSuccess, setDefaultContactFail
     )
@@ -136,15 +151,15 @@ export function expectGetUserContacts(){
     }
 }
 export function getUserContactsFail(reason){
-    
-    
+
+
     return {
         type: GET_USER_CONTACTS_FAIL,
         reason
     }
 }
 export function getUserContactsSuccess(msg){
-    
+
     return {
         type: GET_USER_CONTACTS_SUCCESS,
         msg
@@ -153,7 +168,7 @@ export function getUserContactsSuccess(msg){
 export function getUserContacts(userId){
     return (dispatch, getState) => {
         dispatch(expectGetUserContacts());
-        return getRemoteMeteor(dispatch, getState, 
+        return getRemoteMeteor(dispatch, getState,
             "user_contact", "app.get.user.contacts", [userId],
             getUserContactsSuccess, getUserContactsFail,
         )
