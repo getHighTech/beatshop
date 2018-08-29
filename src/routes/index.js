@@ -192,8 +192,8 @@ class App extends React.Component {
             )
         }
         return (
-            <Router  className={classes.root} history={history}>
-                <MainLayout history={history}>
+            <Router  className={classes.root} >
+                <MainLayout history={history} store={this.props.store}>
                     <Switch>
                         <PrivateRoute exact path="/wechat_checker/"  component={WechatChecker} />
                         <PrivateRoute exact path="/wechat_checker/:openid"  component={WechatChecker} />
