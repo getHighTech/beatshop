@@ -80,8 +80,7 @@ class App extends React.Component {
 
         dispatch(syncRemoteUser());
         if(!appInfo.init){
-
-            dispatch(loadGeoAddress());
+            // dispatch(loadGeoAddress());
             dispatch(loadApp());
         }
 

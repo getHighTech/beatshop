@@ -212,17 +212,6 @@ class Money extends React.Component{
              }
               {value === 1 && <TabContainer>
                   <Withdrawals withdrawData={withdrawData}/>
-                <div className={classes.loadMore}>
-                  {this.state.withdrawData.length === this.state.withdrawTotle?
-
-                    <Button color="primary" className={classes.button} >
-                    没有数据啦
-                    </Button>:
-                    <Button color="primary" className={classes.button} onClick={this.loadMoreWithdrawData.bind(this)}>
-                    加载更多
-                    </Button>
-                  }
-                  </div>
               </TabContainer>}
             </Typography>
           </CardContent>
