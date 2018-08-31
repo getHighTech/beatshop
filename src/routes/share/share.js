@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import { loadShareProdcut } from '../../actions/products'
-
+import {wechatShare} from '../../helper/wechatShare.js'
 
 const styles = theme => ({
   header:{
@@ -40,7 +40,7 @@ const styles = theme => ({
 class Share extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       url:''
      }
   }
@@ -50,6 +50,8 @@ class Share extends React.Component {
     this.update()
   }
   componentWillMount(){
+    // wechatShare();
+
     this.update()
   }
   componentDidMount(){
@@ -62,13 +64,13 @@ class Share extends React.Component {
       }
       dispatch(setAppLayout(
           {
-              isBack: true, 
-              backTo: "/my/products", 
-              title: "分享页面", 
-              hasCart: false, 
-              hasBottomNav: false, 
+              isBack: true,
+              backTo: "/my/products",
+              title: "分享页面",
+              hasCart: false,
+              hasBottomNav: false,
               hasGeoLoc: false,
-              hasEditor: false, 
+              hasEditor: false,
               hasSearch: false,
           }
       ));
@@ -76,6 +78,7 @@ class Share extends React.Component {
     // this.setState({
     //   url:'https://wanchehui/#/products/' + id
     // })
+
   }
 
 
@@ -85,12 +88,11 @@ class Share extends React.Component {
       const img = new Image();
       console.log(canvas)
       const imgSrc =  canvas.toDataURL()
-      console.log(imgSrc)
       const wrap =  document.querySelector('.qrCode')
       wrap.innerHTML = `<img src="${imgSrc}" width="100px" height="100px">`
     }
   }
-  render() { 
+  render() {
     const { classes,product } = this.props
     console.log(product)
     return (
@@ -117,7 +119,7 @@ class Share extends React.Component {
      )
   }
 }
- 
+
 
 function mapToState(state){
   return {
