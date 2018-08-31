@@ -24,7 +24,7 @@ export default class TotalShow extends React.Component{
             this.setState({
                 totalAmount: rlt.data.amount/100,
                 username: rlt.data.userId.username,
-                loading: false,
+                loading: false
             })
             
         }).catch(err=>{

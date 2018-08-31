@@ -30,6 +30,7 @@ class EditDatas extends Component {
     console.log('上传头像方法在此');
   };
   componentDidMount(){
+    console.log(this.props)
     const { dispatch, layout } = this.props;
     if(layout.title!=='编辑资料'){
         dispatch(setAppLayout(
@@ -47,6 +48,7 @@ class EditDatas extends Component {
     }
   }
   render(){
+    const { user } = this.props;
     return(
       <Wrap>
       <List>
@@ -54,12 +56,12 @@ class EditDatas extends Component {
           <ListItemText primary="头像"  />
           <ReAvatar
             alt="Adelle Charles"
-            src="http://img05.tooopen.com/images/20150820/tooopen_sy_139205349641.jpg"
+            src={user.headurl}
           />
         </ReListItem>
         <ReListItem  button onClick={()=> this.handleClick('userOpen')}>
           <ListItemText primary="用户名"  />
-          周世雄
+          {user.username}
           {this.state.userOpen? <ExpandLess /> : <ExpandMore />}
         </ReListItem>
 
@@ -121,6 +123,14 @@ class EditDatas extends Component {
                 margin="normal"
               />
                 <br />
+               <TextField
+                id="with-placeholder"
+                label="设置新名字"
+                placeholder="长度不要大于10个字符"
+                margin="normal"
+              />
+                <br />
+            
               <ReButton variant="contained" color="primary" >
                 确认
               </ReButton>
@@ -167,13 +177,13 @@ const ReButton = styled(Button)`
  }
 
 `
-function mapToState(state){
+/* function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
     layout: state.AppInfo.layout
   }
-}
+} */
 
 
-export default connect(mapToState)(EditDatas);
+export default EditDatas;

@@ -15,6 +15,7 @@ const styles = theme => ({
         position: "fixed",
         width: "100%",
         zIndex: '1000',
+        left: 0,
         bottom: 0,
         display: "flex",
         flexDirection: "column",

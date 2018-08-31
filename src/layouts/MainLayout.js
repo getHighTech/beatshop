@@ -52,16 +52,17 @@ class MainLayout extends React.Component{
 const Wrap = styled.div`
    display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 101vh;
 `
 const Content = styled.div`
    flex-grow: 1;
-   overflow-y: scroll;
+   overflow-y: auto;
    -webkit-overflow-scrolling: touch;
-   overflow-x: hidden;
-   &:after {
-      min-height: calc(100% + 1px)
-   }
+   touch-action: pan-y;
+   overflow-x: hidden
+   &&:after {
+    min-height: calc(100% + 1px)
+}
 `
 
 

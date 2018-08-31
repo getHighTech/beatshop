@@ -90,10 +90,12 @@ class MyItems extends React.Component{
       </div>
       :
       <div>
-      <ReAvatar
-      alt="个人头像"
-      src={userImg}
-    />
+      <a href="#/my/edit_data">
+          <ReAvatar
+          alt="个人头像"
+          src={userImg}
+        />
+      </a>
       <ListItemText primary={user.user.nickname}
     secondary={user.user.username} />
       </div>
