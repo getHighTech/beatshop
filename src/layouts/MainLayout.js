@@ -59,7 +59,7 @@ const Content = styled.div`
    overflow-y: auto;
    -webkit-overflow-scrolling: touch;
    touch-action: pan-y;
-   overflow-x: hidden
+   overflow-x: hidden;
    &&:after {
     min-height: calc(100% + 1px)
 }

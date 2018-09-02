@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import moment from 'moment';
 import serverConfig from '../../config/server';
+import App from '../../config/app.json';
 
 const styles = theme => ({
     card:{
@@ -83,8 +84,16 @@ class Incomes extends React.Component{
         })
         let incomes = this.state.incomes;
         let userId = getStore("userId");
+        let appName = App.name;
         Axios.get(
-            serverConfig.server_url+"/api/v0/my_incomes?userId="+userId+"&page="+(this.state.page+1)+"&pagesize=10"
+            `${serverConfig.server_url}/api/v0/my_incomes`,{
+              params: {
+                userId,
+                page: this.state.page+1,
+                pagesize: 10,
+                appName
+              }
+            }
         ).then(rlt=>{
             console.log("请求收入数据", rlt.data);
             
@@ -107,9 +116,16 @@ class Incomes extends React.Component{
 
     componentWillMount(){
         let userId = getStore("userId");
-        Axios.get(serverConfig.server_url+"/api/v0/my_incomes?userId="+userId).then(rlt=>{
+        let appName = App.name;
+        Axios.get(`${serverConfig.server_url}/api/v0/my_incomes`,
+          {
+            params: {
+              userId,
+              appName
+            }
+          }  
+        ).then(rlt=>{
             console.log("请求收入数据", rlt.data);
-            
             this.setState({
                 loading: false,
                 page: 1,
