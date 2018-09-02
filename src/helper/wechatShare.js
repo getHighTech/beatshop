@@ -5,15 +5,14 @@ import serverConfig  from '../config/server';
 import wx from 'weixin-js-sdk'
 
 export const wechatShare =()=>{
-  const url = document.location.href
-const urll=  'http://mp.weixin.qq.com?params=value'
+  // const url = document.location.href
+  const uri = new URI(document.location.href);
+  const url =document.location.href.split('#')[0];
+  alert(url)
 // const urll=window.location.href.split('#').toString();
-  console.log(url);
-  console.log(urll);
-
   axios.get(`${serverConfig.server_url}/api/wechatShare`,{
       params: {
-           urll
+           url
        }
      }).then((res)=>{
     console.log(res.data);
