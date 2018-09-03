@@ -99,7 +99,7 @@ class App extends React.Component {
               {...rest}
               render={props => {
                 if(user.roles.includes("login_user")){
-                      wechatAuth()
+                      // wechatAuth()
                     return (
                         <Component {...props} />
                       )
