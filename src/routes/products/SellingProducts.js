@@ -117,7 +117,6 @@ class SellingProducts extends React.Component{
   componentDidMount(){
     const { dispatch, layout,user  } = this.props;
     if(layout.title!=='正在出售的商品'){
-      dispatch(loadAgencyProducts(user.shopId))
 
         dispatch(setAppLayout(
             {
@@ -131,6 +130,8 @@ class SellingProducts extends React.Component{
                 hasSearch: false,
             }
         ));
+        dispatch(loadAgencyProducts(user.shopId))
+        
     }
     this.loadFirstPageData()
   }
