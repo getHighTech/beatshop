@@ -41,15 +41,18 @@ class NumberInput extends React.Component {
 
   handleOnChange(e){
     const {dispatch, productId} = this.props;
+    console.log(e.target.value)
     if(e.target.value>99){
-      return this.setState({
+      this.setState({
         number: 99 
       }) 
+     return  dispatch(changeProductCountFromCart(productId, 99));
     }
     if(e.target.value < 1){
-      return this.setState({
+       this.setState({
         number: 1
       })
+      return dispatch(changeProductCountFromCart(productId, 1));
     }else{
       dispatch(changeProductCountFromCart(productId, e.target.value));
     }

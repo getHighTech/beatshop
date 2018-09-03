@@ -60,7 +60,7 @@ class Withdrawals extends React.Component{
   checkStatus = (status) => {
     switch (status) {
       case "revoke":
-        return "发起"
+        return "撤销"
       case "unpaid":
         return "未支付"
       case "paid":
@@ -91,7 +91,7 @@ class Withdrawals extends React.Component{
                             {n.money/100}
                           </TableCell>
                           <TableCell className={classes.th} numeric>
-                              { n.status ==="paid" ? n.money : "未到账"}
+                              { n.status ==="paid" ? n.money/100 : "未到账"}
                           </TableCell>
                           <TableCell className={classes.th} numeric>{moment(n.createdAt).fromNow()}</TableCell>
                           <TableCell className={classes.th} numeric>{this.checkStatus(n.status)}</TableCell>
