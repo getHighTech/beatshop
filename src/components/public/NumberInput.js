@@ -19,7 +19,7 @@ const styles = theme => ({
     marginLeft:'40%'
   },
   input: {
-      width: "40px",
+      width: "60px",
       fontSize: "1rem",
       textAlign: "center",
   }
@@ -41,7 +41,11 @@ class NumberInput extends React.Component {
 
   handleOnChange(e){
     const {dispatch, productId} = this.props;
-
+    if(e.target.value>99){
+      return this.setState({
+        number: 99 
+      }) 
+    }
     if(e.target.value < 1){
       return this.setState({
         number: 1
@@ -81,6 +85,11 @@ class NumberInput extends React.Component {
       return this.setState({
         number: 1
       })
+    }
+    if(number> 99){
+      return this.setState({
+        number: 99 
+      }) 
     }
     return this.setState({
       number

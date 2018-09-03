@@ -85,10 +85,10 @@ class AppCart extends React.Component {
                         </div>
                         <div style={{marginLeft:'11%',width:'70%'}}>
 
-                        <ListItemText style={{width: "100%", flex: 0.4,fontSize:12}} onClick={this.handleProductShow.bind(this, product._id)} primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
+                        <ListItemText style={{width: "100%", flex: 0.1,fontSize:12}} onClick={this.handleProductShow.bind(this, product._id)} primary={product.name_zh} secondary={"¥"+product.endPrice/100} />
                         <div style={{display: 'flex',flexFlow:'row',width:'100%'}}>
                         <NumberInput productId={product._id} initNumber={cart.productCounts[product._id]}/>
-                        <div  style={{width: "auto", textAlign: "center",marginLeft:'20%',paddingTop:5}} >
+                        <div  style={{ textAlign: "center",marginLeft:'30%',paddingTop:5}} >
                           <Clear onClick={()=>dispatch(deleteProductFromCart(index))} />
                         </div>
                         </div>

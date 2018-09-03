@@ -279,3 +279,34 @@ export function loadBlackCardSuccess(msg){
 //         return getRemoteMeteor();
 //     }
 // }
+
+
+export const EXPECT_GET_USER = ' EXPECT_GET_USER '
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
+export const GET_USER_FAIL = 'GET_USER_FAIL'
+
+export function expectGetUser(){
+    return {
+        type:EXPECT_GET_USER 
+    }
+}
+export function getUserScccess(reason){
+    return {
+        type:  GET_USER_FAIL,
+        reason
+    }
+}
+export function getUserFail(msg){
+    return {
+        type: GET_USER_SUCCESS,
+        msg
+    }
+}
+
+export function changePassword(){
+    return (dispatch, getState) => {
+        dispatch(expectGetUser());
+        return getRemoteMeteor(dispatch, getState, "users", 
+         'app.change.password', [getStore('userId')], GET_USER_SUCCESS,GET_USER_FAIL);
+    }
+}
