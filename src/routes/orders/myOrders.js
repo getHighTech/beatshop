@@ -13,6 +13,7 @@ import OrderCard from '../../components/orders/OrderCard'
 import axios from 'axios';
 import { getStore } from '../../tools/localStorage';
 import serverConfig  from '../../config/server';
+import App from '../../config/app.json';
 
 function TabContainer(props) {
   return (
@@ -91,6 +92,7 @@ class MyOrders extends React.Component{
 
   handleChange = (event, value) => {
      let userId = getStore("userId");
+     let appName = App.name;
      var status;
      switch (value) {
        case 0:
@@ -98,7 +100,8 @@ class MyOrders extends React.Component{
          axios.get(`${serverConfig.server_url}/api/order/status`,{
             params: {
                   userId,
-                  status
+                  status,
+                  appName
               }
             }
           ).then((res)=>{
@@ -116,7 +119,8 @@ class MyOrders extends React.Component{
         axios.get(`${serverConfig.server_url}/api/order/status`,{
             params: {
                   userId,
-                  status
+                  status,
+                  appName
               }
             }
           ).then((res)=>{
@@ -135,7 +139,8 @@ class MyOrders extends React.Component{
 
             params: {
                   userId,
-                  status
+                  status,
+                  appName
               }
             }
           ).then((res)=>{
@@ -154,7 +159,8 @@ class MyOrders extends React.Component{
 
             params: {
                   userId,
-                  status
+                  status,
+                  appName
               }
             }
           ).then((res)=>{
