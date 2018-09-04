@@ -70,6 +70,8 @@ class OrderCard extends React.Component{
   }
 
   cancelOrder = (orderId,userId)  => {
+    console.log(orderId)
+    console.log(userId)
       this.props.dispatch(cancelOrder(orderId,userId))
   }
 
