@@ -62,8 +62,7 @@ export default function getRemoteMeteor(
                }
             }else{
                 console.log(message);
-
-                return dispatch(failAction(message.error));
+                // return dispatch(failAction(message.error));
             }
         })
 

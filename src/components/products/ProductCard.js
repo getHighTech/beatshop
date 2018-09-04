@@ -6,7 +6,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { removeAgencyProducts } from '../../actions/products'
-
+import {wechatShare} from '../../helper/wechatShare.js'
 const styles = theme => ({
   cardContent:{
     padding:8,
@@ -30,7 +30,7 @@ const styles = theme => ({
     share:{
       display:'flex',
       justifyContent:'space-between',
-      paddingRight:'4%',    
+      paddingRight:'4%',
     },
     a:{
       textDecoration:'none',
@@ -70,6 +70,7 @@ class ProductCard extends React.Component{
   }
   share(id){
     const { history } = this.props
+      wechatShare();
     console.log('------------------------------------');
     history.push('/share/'+id)
     console.log('------------------------------------');
@@ -89,13 +90,13 @@ class ProductCard extends React.Component{
         <Card className={classes.card}>
           <div className={classes.cardContent}>
               <div className={classes.leftContent}>
-                  <img src={cover} alt='商品图片'style={{height:80,width:80}}/>       
+                  <img src={cover} alt='商品图片'style={{height:80,width:80}}/>
               </div>
               <div className={classes.rightContent}>
                 <a  onClick={this.onClick.bind(this)} className={classes.a}>
                   <div className={classes.productName}>{name_zh}</div>
                   <div className={classes.subProductName}>{brief}</div>
-                </a>      
+                </a>
                 <div className={classes.cardBottom}>
                   <div className={classes.productPrice}>
                     <div>价格:¥{endPrice/100}</div>
@@ -109,7 +110,7 @@ class ProductCard extends React.Component{
                       <Icon>share</Icon>
                     </IconButton>
                   </div>
-                </div>                        
+                </div>
               </div>
           </div>
         </Card>

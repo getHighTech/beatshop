@@ -11,9 +11,7 @@ import moment from 'moment';
 class Team extends React.Component{
   componentDidMount() {
     const { dispatch } = this.props;
-    let userId = getStore("userId");
-    console.log(userId);
-    dispatch(getMyTeam(userId))
+
     dispatch(setAppLayout(
         {
           isBack: true,
@@ -26,7 +24,9 @@ class Team extends React.Component{
           hasSearch: false,
         }
     ));
-
+    let userId = getStore("userId");
+    console.log(userId);
+    dispatch(getMyTeam(userId))
 
 
   }
