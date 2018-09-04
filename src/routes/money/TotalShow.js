@@ -3,6 +3,7 @@ import Bankcard from '../../components/bankcard/';
 import Axios from 'axios';
 import { getStore } from '../../tools/localStorage';
 import serverConfig from '../../config/server';
+import App from '../../config/app.json';
 
 
 
@@ -15,11 +16,16 @@ export default class TotalShow extends React.Component{
             username: ""
         }
     }
-
     componentWillMount(){
         let userId = getStore("userId");
+        let appName = App.name;
         console.log(`111`)
-        Axios.get(serverConfig.server_url+"/api/v0/my_balance?userId="+userId).then(rlt=>{
+        Axios.get(`${serverConfig.server_url}/api/v0/my_balance`,{
+            params: {
+                userId,
+                appName
+            }
+        }).then(rlt=>{
             console.log(rlt)
             this.setState({
                 totalAmount: rlt.data.amount/100,

@@ -17,7 +17,7 @@ export const  wechatAuth = () =>{
     const query = uri.query(true);
     const {code} = query;
     if(code) {
-       axios.get(`http://test1.10000.cards.cn//api/info?code=${code}`)
+       axios.get(`http://test1.10000.cards.cn/api/info?code=${code}`)
             .then((res)=>{
                setStore("WechatProfile",res.data)
             })
