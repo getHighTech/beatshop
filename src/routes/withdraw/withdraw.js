@@ -13,6 +13,7 @@ import { loadMoneyPage } from '../../actions/balances';
 import App from '../../config/app.json';
 import Axios from 'axios';
 import serverConfig from '../../config/server.js';
+import {  testMoney } from '../../tools/regValid.js'
 
 
 const styles = theme => ({
@@ -71,7 +72,10 @@ class Withdraw extends React.Component{
       bankcard = bankcards[0];
     }
     let amount = this.state.number;
-
+    if(!testMoney(amount)){
+      dispatch(appShowMsg("withdraw_must",1200));
+      return false;
+    }
     if(amount > this.state.ableToWithDrawAmount){
       dispatch(appShowMsg("too_monay_withdraw_allow", 1200));
       return false;
@@ -132,7 +136,6 @@ class Withdraw extends React.Component{
     }
     let userId = getStore("userId");
     let appName = App.name;
-    console.log(`111`)
     Axios.get(`${serverConfig.server_url}/api/v0/my_balance`,{
         params: {
             userId,
