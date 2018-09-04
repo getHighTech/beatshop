@@ -70,7 +70,7 @@ class ProductCard extends React.Component{
   }
   share(id){
     const { history } = this.props
-      // wechatShare();
+      wechatShare();
     console.log('------------------------------------');
     history.push('/share/'+id)
     console.log('------------------------------------');

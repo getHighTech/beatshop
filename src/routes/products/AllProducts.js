@@ -75,10 +75,11 @@ class AllProducts extends React.Component{
                 hasSearch: false,
             }
         ));
+        dispatch(getShopProductsLimit());
+        
     }
 
 
-      dispatch(getShopProductsLimit());
 
 
 

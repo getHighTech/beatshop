@@ -7,6 +7,7 @@ import wx from 'weixin-js-sdk'
 export const wechatShare =()=>{
   // const url = document.location.href
   const uri = new URI(document.location.href);
+  // let aaa ='https://www.baidu.com/';
   const url =encodeURIComponent(document.location.href.split('#')[0]);
   alert(url)
 // const urll=window.location.href.split('#').toString();
@@ -31,7 +32,6 @@ export const wechatShare =()=>{
               'onMenuShareWeibo',
               'onMenuShareQZone']// 必填，需要使用的JS接口列表
       });
-      alert('时间戳'+result.timestamp)
       wx.error(function(res){
         alert('错误信息'+res.errMsg)
       });
