@@ -10,6 +10,10 @@ import { loadUserBankcards } from '../../actions/bankcards';
 import LoadingItem from '../../components/public/LoadingItem';
 import { getStore } from '../../tools/localStorage';
 import { loadMoneyPage } from '../../actions/balances';
+import App from '../../config/app.json';
+import Axios from 'axios';
+import serverConfig from '../../config/server.js';
+import {  testMoney } from '../../tools/regValid.js'
 
 
 const styles = theme => ({
@@ -68,7 +72,10 @@ class Withdraw extends React.Component{
       bankcard = bankcards[0];
     }
     let amount = this.state.number;
-
+    if(!testMoney(amount)){
+      dispatch(appShowMsg("withdraw_must",1200));
+      return false;
+    }
     if(amount > this.state.ableToWithDrawAmount){
       dispatch(appShowMsg("too_monay_withdraw_allow", 1200));
       return false;
@@ -127,14 +134,32 @@ class Withdraw extends React.Component{
         ableToWithDrawAmount: this.ableToWithDrawAmount()
       })
     }
+    let userId = getStore("userId");
+    let appName = App.name;
+    Axios.get(`${serverConfig.server_url}/api/v0/my_balance`,{
+        params: {
+            userId,
+            appName
+        }
+    }).then(rlt=>{
+        console.log(rlt)
+        this.setState({
+          ableToWithDrawAmount: rlt.data.amount/100,
+        })
+        
+    }).catch(err=>{
+        console.log(err);
+        
+    })
     if(bankcards === "unloaded" && !this.state.balanceLoad){
-        dispatch(loadMoneyPage(getStore('userId')));
+        // dispatch(loadMoneyPage(getStore('userId')));
         dispatch(loadUserBankcards());
         
       }
   }
   ableToWithDrawAmount= () =>{
     const { money } = this.props;
+    const { ableToWithDrawAmount } = this.state;
     let amount = money.balance.amount;
     amount = amount - (amount%10000);
     return amount/100

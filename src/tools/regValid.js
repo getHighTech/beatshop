@@ -28,3 +28,15 @@ export function testUser(user){
         return false;
     }
 }
+
+
+//金额验证
+export function testMoney(money) {
+    let reg = /^[1-9\+]\d+$/; 
+    if(reg.test(money)){
+        return true
+    }else {
+        return false
+    }
+    
+}

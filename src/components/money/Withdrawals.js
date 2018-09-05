@@ -10,6 +10,7 @@ import  axios  from 'axios';
 import { getStore } from '../../tools/localStorage';
 import moment from 'moment';
 import Button from '@material-ui/core/Button';
+import App from '../../config/app.json';
 
 
 const styles = theme => ({
@@ -41,10 +42,12 @@ class Withdrawals extends React.Component{
     loading: true
   }
   componentDidMount(){
-    const userId = getStore('userId')
+    const userId = getStore('userId');
+    const appName = App.name;
     axios.get(`${serverConfig.server_url}/api/withdraw`,{
       params: {
-            userId
+            userId,
+            appName
         }
       }
     ).then((res)=>{

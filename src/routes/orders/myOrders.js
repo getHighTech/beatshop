@@ -217,13 +217,13 @@ class MyOrders extends React.Component{
     }
     let userId = getStore("userId");
     let status = "confirmed";
-    let url = `${serverConfig.server_url}`;
-    console.log(url);
+    let appName = App.name;
          axios.get(`${serverConfig.server_url}/api/order/status`,{
 
             params: {
                   userId,
-                  status
+                  status,
+                  appName
               }
             }
           ).then((res)=>{
