@@ -1,6 +1,7 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { dealWithError } from "./error_fail";
 import { appShowMsg } from './app.js'
+import {wechatShare} from '../helper/wechatShare.js'
 import app from '../config/app.json'
 import axios from 'axios';
 import serverConfig  from '../config/server';
@@ -42,6 +43,7 @@ export function removeAgencyProducts(shopId,productId) {
 }
 
 export function shareProduct(product) {
+  wechatShare(product);
     return {
         type: SHARE_PRODUCT,
         product

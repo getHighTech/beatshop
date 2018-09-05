@@ -50,7 +50,6 @@ class Share extends React.Component {
     this.update()
   }
   componentWillMount(){
-    // wechatShare();
 
     this.update()
   }
@@ -61,6 +60,8 @@ class Share extends React.Component {
     if(layout.title!=='分享页面'){
       if(this.props.match.params.id){
         dispatch(loadShareProdcut(this.props.match.params.id))
+        // console.log(this.props.product);
+        // wechatShare();
       }
       dispatch(setAppLayout(
           {
@@ -74,10 +75,12 @@ class Share extends React.Component {
               hasSearch: false,
           }
       ));
+
   }
     // this.setState({
     //   url:'https://wanchehui/#/products/' + id
     // })
+
 
   }
 
