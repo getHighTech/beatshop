@@ -77,7 +77,10 @@ const styles = theme => ({
 class MyOrders extends React.Component{
   state = {
     value: 0,
-    page: 0,
+    confirmed_page: 1,
+    paid_page: 1,
+    recevied_page: 1,
+    cancel_page: 1,
     rowsPerPage: 5,
     count:100,
     incomeSource:[],
@@ -180,16 +183,31 @@ class MyOrders extends React.Component{
   };
 
 
-  loadMoreWithdrawData(){
-    let dataSource2 = [
-      {id:1,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:2,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:3,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:4,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:5,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'},
-      {id:6,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'}
-    ]
-    this.setState({withdrawData:dataSource2})
+  loadMoreWithdrawData(key){
+    console.log(key)
+     let  page = this.state[key+'_page']+1
+     let userId = getStore("userId");
+     let appName = App.name;
+     let status = key
+    axios.get(`${serverConfig.server_url}/api/order/status`,{
+      params: {
+            userId,
+            status,
+            appName,
+            page
+        }
+      }
+    ).then((res)=>{
+      console.log(res)
+       console.log( this.state.order_confirmed.concat(res.data.order))
+          this.setState({
+            ['order_'+key]:   this.state['order_'+key].concat(res.data.order),
+            page
+          })
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
   }
 
   loadWithdrawFirstPageData(){
@@ -212,18 +230,21 @@ class MyOrders extends React.Component{
                 hasGeoLoc: false,
                 hasEditor: false,
                 hasSearch: false,
+                page: 1,
             }
         ));
     }
     let userId = getStore("userId");
-    let status = "confirmed";
+    let status = "confirmed"
+    let page = this.state.page;
     let appName = App.name;
          axios.get(`${serverConfig.server_url}/api/order/status`,{
 
             params: {
                   userId,
                   status,
-                  appName
+                  appName,
+                  page
               }
             }
           ).then((res)=>{
@@ -283,7 +304,7 @@ class MyOrders extends React.Component{
                     <Button color="primary" className={classes.button} >
                     没有数据啦
                     </Button>:
-                    <Button color="primary" className={classes.button} onClick={this.loadMoreWithdrawData.bind(this)}>
+                    <Button color="primary" className={classes.button} onClick={()=> this.loadMoreWithdrawData("confirmed")}>
                     加载更多
                     </Button>
                   }
@@ -303,7 +324,7 @@ class MyOrders extends React.Component{
                     <Button color="primary" className={classes.button} >
                     没有数据啦
                     </Button>:
-                    <Button color="primary" className={classes.button} onClick={this.loadMoreWithdrawData.bind(this)}>
+                    <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('paid')}>
                     加载更多
                     </Button>
                   }
@@ -323,7 +344,7 @@ class MyOrders extends React.Component{
                     <Button color="primary" className={classes.button} >
                     没有数据啦
                     </Button>:
-                    <Button color="primary" className={classes.button} onClick={this.loadMoreWithdrawData.bind(this)}>
+                    <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('recevied')}>
                     加载更多
                     </Button>
                   }
@@ -344,7 +365,7 @@ class MyOrders extends React.Component{
                     <Button color="primary" className={classes.button} >
                     没有数据啦
                     </Button>:
-                    <Button color="primary" className={classes.button} onClick={this.loadMoreWithdrawData.bind(this)}>
+                    <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('cancel')}>
                     加载更多
                     </Button>
                   }
