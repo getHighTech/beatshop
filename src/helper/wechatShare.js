@@ -15,13 +15,13 @@ export const wechatShare =(product)=>{
            url
        }
      }).then((res)=>{
-    setStore('ticket',res.data.ticket);
-    setStore('access_token',res.data.access_token)
-    let result = res.data.ticket;
+    // setStore('ticket',res.data.ticket);
+    // setStore('access_token',res.data.access_token)
+    let result = res.data.parameter;
     console.log(result);
     wx.config({
           debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-          appId: 'wx412cc1c5e02a292e',
+          appId: 'wx0564668ed5671740',
           timestamp: result.timestamp, // 必填，生成签名的时间戳
           nonceStr: result.nonceStr, // 必填，生成签名的随机串
           signature: result.signature,// 必填，签名
@@ -41,7 +41,7 @@ export const wechatShare =(product)=>{
              link:url+'#'+document.location.href.split('#')[1], // 分享链接
              imgUrl: product.cover, // 分享图标
              success: function () {
-               alert('success')
+               alert('分享成功')
              },
              cancel: function () {
                alert('failAction')
@@ -52,7 +52,7 @@ export const wechatShare =(product)=>{
              link: url+'#'+document.location.href.split('#')[1], // 分享链接
              imgUrl: product.cover, // 分享图标
              success: function () {
-               alert('success')
+               alert('分享成功')
              },
              cancel: function () {
                alert('failAction')
@@ -75,7 +75,7 @@ export const wechatShare =(product)=>{
   });
 
   })
-  let ticket = getStore("ticket");
+  // let ticket = getStore("ticket");
 
     wx.checkJsApi({
     jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
