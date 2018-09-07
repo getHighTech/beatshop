@@ -18,7 +18,7 @@ function ProductGridList(props) {
     >
 
       <Banner>
-        <BannerImg alt="新品上市"   src={require("../imgs/WechatIMG959.jpeg")}/>
+        <BannerImg alt="新品上市"   src={require("../imgs/WechatIMG249.jpeg")}/>
       </Banner>
 
       <REGridList
