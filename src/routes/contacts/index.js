@@ -155,7 +155,7 @@ class Contacts extends React.Component {
     }
     
     if(orderShow.order){
-      dispatch(useOneContact(value, orderShow.id));
+      dispatch(useOneContact(value,match.params.orderId));
     }
 
     this.props.history.push(`/orders/${match.params.orderId}`);

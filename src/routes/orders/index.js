@@ -169,7 +169,7 @@ class Order extends React.Component {
                         </ListItem>
                     </List>
                     <Button   style={{maxHeight: "80px", maxWidth: "100px"}}
-                        className={classes.button} component="a" href="#/my/contacts/orderuse"
+                        className={classes.button} component="a" href={`#/my/contacts/orderuse/${match.params.id}`}
                         variant="raised" color="secondary"
                     >更改左边信息
                     </Button>
