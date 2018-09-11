@@ -35,12 +35,12 @@ class NewContact extends React.Component {
   }
 
   componentDidMount(){
-    const { dispatch, layout } = this.props;
+    const { dispatch, layout,match } = this.props;
     if(layout.title!=="新建联系方式"){
       dispatch(setAppLayout(
         {
             isBack: true, 
-            backTo: "/my/contacts/orderuse", 
+            backTo: `/my/contacts/orderuse/${match.params.orderId}`, 
             title: "新建联系方式", 
             hasCart: false, 
             hasBottomNav: false, 

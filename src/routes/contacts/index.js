@@ -80,7 +80,7 @@ class Contacts extends React.Component {
     let title = "我的地址";
     if(match.params.backaction === "orderuse"){
         title = "选择地址";
-        backPath="/orders/"+orderShow.id;
+        backPath="/orders/"+match.params.orderId;
     }
    
     
@@ -95,7 +95,8 @@ class Contacts extends React.Component {
             hasGeoLoc: false,
             hasSearch: false,
             hasNewCreate: true,
-            editorType: "new_contact"
+            editorType: "new_contact",
+            orderId: match.params.orderId
         }
         
       ));
