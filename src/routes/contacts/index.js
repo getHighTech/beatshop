@@ -144,7 +144,7 @@ class Contacts extends React.Component {
     
   };
   handleItemClick(e, value){
-    const { dispatch, orderShow } = this.props;
+    const { dispatch, orderShow, match } = this.props;
     // return 
     
     if(!value.carNumber){
@@ -158,19 +158,19 @@ class Contacts extends React.Component {
       dispatch(useOneContact(value, orderShow.id));
     }
 
-    this.props.history.push("/orders/"+orderShow.id);
+    this.props.history.push(`/orders/${match.params.orderId}`);
     
   }
   render(){
-    const { classes, userContacts } = this.props;
-
+    const { classes, userContacts,match } = this.props;
+    console.log(match)
     return (
       <div className={classes.row}>
         {
           userContacts.contacts.length === 0? 
           <div>
             <h3>您还没有联系方式</h3>
-            <Button component="a" href="/#/my/new_contact"
+            <Button component="a" href={`/#/my/new_contact/${match.params.orderId}`}
             variant="raised" color="primary" 
              fullWidth={true}>立刻添加一个
              </Button>

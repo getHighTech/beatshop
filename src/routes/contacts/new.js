@@ -57,8 +57,8 @@ class NewContact extends React.Component {
     e.preventDefault()
     let contact = this.state;
     console.log(contact);
-    const { dispatch } = this.props;
-
+    const { dispatch,match } = this.props;
+    console.log(match)
     const errors = this.validate()
     if (!isEmpty(errors)) {
       this.setState({
@@ -77,7 +77,7 @@ class NewContact extends React.Component {
     }
     
     dispatch(appShowMsgAndInjectDataReactWithPath(
-      "save_user_contact", "save_contact_success",1350, contactParams, "/my/contacts/orderuse"));
+      "save_user_contact", "save_contact_success",1350, contactParams, `/my/contacts/orderuse/${match.params.orderId}`));
       this.setState({
         name: "",
         mobile: "",

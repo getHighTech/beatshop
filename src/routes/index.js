@@ -203,8 +203,8 @@ class App extends React.Component {
                         <PrivateRoute exact path="/my/products" component={SellingProductsPath} />
                         <PrivateRoute exact path="/pay/:status" component={PayResult} />
                         <PrivateRoute exact path="/money" component={Money} />
-                        <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
-                        <PrivateRoute exact path="/my/new_contact" component={NewContact} />
+                        <PrivateRoute exact path="/my/contacts/:backaction/:orderId" component={Contacts} />
+                        <PrivateRoute exact path="/my/new_contact/:orderId" component={NewContact} />
                         <PrivateRoute exact path="/my/orders/:id/:status" component={orderDetails} />
                         <PrivateRoute exact path="/my/blackcard_holder" component={BlackcardHolder} />
                         <PrivateRoute exact path="/my/edit_data" component={EditData} />
