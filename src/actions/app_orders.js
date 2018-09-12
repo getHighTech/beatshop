@@ -4,7 +4,10 @@ export const EXPECT_ORDERS_LIMIT = "EXPECT_ORDERS_LIMIT";
 export const GET_ORDERS_LIMIT_SUCCESS = "GET_ORDERS_LIMIT_SUCCESS";
 export const GET_ORDERS_LIMIT_FAIL = "GET_ORDERS_LIMIT_FAIL";
 export const GET_ORDER_CANCEL_SUCCESS = "GET_ORDER_CANCEL_SUCCESS";
-
+export const GET_CONFIRMED_ORDER="GET_CONFIRMED_ORDER";
+export const GET_PAID_ORDER="GET_PAID_ORDER";
+export const GET_RECEVIED_ORDER="GET_RECEVIED_ORDER"
+export const GET_CANCEL_ORDER="GET_CANCEL_ORDER"
 export function expectGetOrdersLimit(){
     return {
         type: EXPECT_ORDERS_LIMIT,
@@ -71,6 +74,7 @@ export function cancelOrderFail(reason){
 
 
 export function cancelOrderSuccess(msg){
+  console.log(msg);
     return {
         type: CANCEL_ORDER_SUCCESS,
         msg
@@ -108,6 +112,7 @@ export function collectOrderFile(reason){
 }
 
 export function collectOrderSuccess(msg){
+  console.log(msg);
   return {
     type:COLLECT_ORDER_SUCCESS,
     msg
@@ -115,6 +120,7 @@ export function collectOrderSuccess(msg){
 }
 
 export function collectOrder(orderId,userId){
+  console.log(orderId,userId);
   return (dispatch,getState) => {
     dispatch(expectCollectOrder());
     return getRemoteMeteor(
@@ -123,5 +129,34 @@ export function collectOrder(orderId,userId){
       collectOrderSuccess,
       collectOrderFile
     )
+  }
+}
+
+
+
+
+export function getConfirmedOrder(result){
+  return{
+    type:GET_CONFIRMED_ORDER,
+    result
+  }
+}
+
+export function getPaidOrder(result){
+  return{
+    type:GET_PAID_ORDER,
+    result
+  }
+}
+export function getReceviedOrder(result){
+  return{
+    type:GET_RECEVIED_ORDER,
+    result
+  }
+}
+export function getCancelOrder(result){
+  return{
+    type:GET_CANCEL_ORDER,
+    result
   }
 }

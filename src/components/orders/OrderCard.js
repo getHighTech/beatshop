@@ -90,7 +90,7 @@ class OrderCard extends React.Component{
     console.log(from_url);
     window.location.assign('http://xianzhi.10000cars.cn/app/getopenid/'+from_url);
   }
- 
+
 
 
 
@@ -149,9 +149,7 @@ class OrderCard extends React.Component{
     }
   }
   render(){
-    console.log(this.props)
     const {classes, products,productCounts,totalAmount,count,status,_id,userId,orderId,orderCode} = this.props
-    console.log(orderId)
     return(
       <div className={classes.root}>
         <div className={classes.cardTitle}>

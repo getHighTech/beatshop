@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
-
+import { cancelOrder } from '../../actions/app_orders'
+import {loadOneOrder} from '../../actions/orders'
+import { getToken } from '../../actions/token';
 
 class OrderDetailsPay extends React.Component {
     constructor(props) {
@@ -23,9 +25,29 @@ class OrderDetailsPay extends React.Component {
           break;
       }
     }
+    cancelOrder = (orderId,userId)  => {
+
+        this.props.dispatch(cancelOrder(orderId,userId))
+        this.props.dispatch(loadOneOrder(orderId))
+    }
+    handlePayClick = async(orderId,userId,totalAmount,orderCode) => {
+      var urlencode = require('urlencode');
+      let key = await getToken()
+      let token = key.token;
+      let uuid = key.uuid
+      let from_url =
+      `http://xianzhi.10000cars.cn/api/v1/wechat/payback/show?fee=${totalAmount}&appname=xianzhi&order=${orderCode}&uuid=${uuid}&token=${token}`;
+
+      from_url = urlencode(from_url);
+      console.log(from_url);
+      window.location.assign('http://xianzhi.10000cars.cn/app/getopenid/'+from_url);
+    }
+
+
 
     render(){
       const {order} = this.props.order;
+      console.log(order);
       const {  match } = this.props;
       return(
         <ReCard>
@@ -92,15 +114,30 @@ class OrderDetailsPay extends React.Component {
                   {
                     match.params.status === "paid"
                       ?
-                    null
+
+                      null
                       :
+
                     <div>
-                      <ReButton variant="outlined"  size="small" >
-                        取消订单
-                      </ReButton>
-                      <ReButton variant="raised"  size="small" color="secondary">
-                        付款
-                      </ReButton>
+                      {
+                        order.status==='cancel'?
+                        <div>
+                        <ReButton variant="outlined"  size="small"  >
+                          订单已取消
+                        </ReButton>
+                        </div>
+                        :
+                        <div>
+                        <ReButton variant="outlined"  size="small"  onClick={()=>this.cancelOrder(order.orderId,order.userId)} >
+                          取消订单
+                        </ReButton>
+                        <ReButton variant="raised"  size="small" color="secondary" onClick={()=>this.handlePayClick(order.orderId,order.userId,order.totalAmount,order.orderCode)} >
+                          付款
+                        </ReButton>
+                        </div>
+                      }
+
+
                     </div>
                   }
 
@@ -217,7 +254,7 @@ function mapToState(state){
   return {
     order: state.OrderShow,
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
   }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import { setAppLayout } from '../../actions/app';
+import {getConfirmedOrder,getPaidOrder,getReceviedOrder,getCancelOrder} from '../../actions/app_orders'
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -94,6 +95,7 @@ class MyOrders extends React.Component{
   };
 
   handleChange = (event, value) => {
+    const { dispatch, layout} = this.props;
      let userId = getStore("userId");
      let appName = App.name;
      var status;
@@ -108,10 +110,7 @@ class MyOrders extends React.Component{
               }
             }
           ).then((res)=>{
-            console.log(res)
-                this.setState({
-                  order_confirmed: res.data.order
-                })
+          dispatch(getConfirmedOrder(res.data.order))
               })
               .catch((err)=>{
                 console.log(err)
@@ -127,9 +126,7 @@ class MyOrders extends React.Component{
               }
             }
           ).then((res)=>{
-              this.setState({
-                order_paid: res.data.order
-              })
+            dispatch(getPaidOrder(res.data.order))
             })
             .catch((err)=>{
               console.log(err)
@@ -147,9 +144,7 @@ class MyOrders extends React.Component{
               }
             }
           ).then((res)=>{
-              this.setState({
-                order_recevied: res.data.order
-              })
+              dispatch(getReceviedOrder(res.data.order))
             })
             .catch((err)=>{
               console.log(err)
@@ -167,9 +162,7 @@ class MyOrders extends React.Component{
               }
             }
           ).then((res)=>{
-              this.setState({
-                order_cancel: res.data.order
-              })
+            dispatch(getCancelOrder(res.data.order))
             })
             .catch((err)=>{
               console.log(err)
@@ -248,18 +241,25 @@ class MyOrders extends React.Component{
               }
             }
           ).then((res)=>{
-            console.log(res)
-                this.setState({
-                  order_confirmed: res.data.order
-                })
+            // console.log(res)
+            //     this.setState({
+            //       order_confirmed: res.data.order
+            //     })
+
+              dispatch(getConfirmedOrder(res.data.order))
+
               })
               .catch((err)=>{
                 console.log(err)
               })
   }
   render (){
-    const { classes,  user} = this.props;
-    const { value, order_confirmed, order_paid, order_recevied,order_cancel} = this.state;
+    const { classes, orders, user} = this.props;
+    const order_confirmed = orders.orders_confirmed
+    const order_paid=orders.orders_paid;
+    const order_recevied=orders.orders_recevied;
+    const order_cancel=orders.orders_cancel;
+    const { value} = this.state;
     return(
       <div>
         <Card className={classes.card}>
