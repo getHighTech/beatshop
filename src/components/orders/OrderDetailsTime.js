@@ -7,6 +7,7 @@ import moment from 'moment';
 class OrderDetailsTime extends React.Component{
     render(){
       const { order } = this.props.order
+      console.log(order);
       return(
         <ReCard>
           <CardTitle>
@@ -16,9 +17,12 @@ class OrderDetailsTime extends React.Component{
           { order.products!==undefined ?
             <div>订单编号：{order.orderCode}</div>
             :
-            <div>订单编号：{order.transactionId}</div>
+            <div>
+            订单编号：{order.transactionId}</div>
           }
-          {order.tracking_number!==undefined ? <div>快递单号：{order.tracking_number}</div> : <div>快递单号：该订单还未发货</div>}
+          {order.tracking_number!==undefined ? <div>快递单号：{order.tracking_number}</div> : <div>{
+            order.status==='paid'?<div>快递单号：该订单还未发货</div>:<div>快递单号：暂无</div>
+          }</div>}
           <div>创建时间：{order.createdAt!==undefined ? moment(order.createdAt["$date"]).format("YYYY-MM-DD HH:mm:ss"): null}</div>
         </ReCard>
 

@@ -87,7 +87,7 @@ class Shop extends React.Component{
     const { dispatch, layout, match,shop,products } = this.props;
     let shopId = match.params.id
     let pagesize = 5
-    const {page} = this.state;
+    var pages = this.state.page;
     if(layout.title!=='店铺详情'){
 
         dispatch(setAppLayout(
@@ -107,7 +107,7 @@ class Shop extends React.Component{
       // dispatch(getShopProductsLimit(shopId,pages,5))
       axios.get(`${serverConfig.server_url}/api/shop/products`,{
         params:{
-          shopId,page,pagesize
+          shopId,pages,pagesize
         }
       }).then((res)=>{
         console.log(res.data.products);
@@ -209,154 +209,72 @@ class Shop extends React.Component{
 }
 
 const ReImg = styled.img`
-    &&{
-      width:60px;
-      heigth:60px;
-    }
+    width: 60px;
+    heigth: 60px;
 `
 
 const Title =styled.div`
-&&{
   color:#fff;
   margin-top:10px;
   font-size:14px;
-}
 `
 const ShopHeader =styled.div`
-  &&{
     background-image:url('${Image}');
     height:200px;
     text-align:center;
     padding-top:50px;
-  }
 `
 const AvatarBox = styled.div`
-    &&{
     display: flex;
     justify-content: center;
-  }
 `
 const ReAvatar =styled(Avatar)`
-    &&{
-      width: 60px;
-      height: 60px;
-      background-color:#ff5722;
-    }
+     &&{
+        width: 60px;
+        height: 60px;
+        background-color:#ff5722;
+      }
 `
 const ReCard =styled(Card)`
-    &&{
       margin-top:10px;
-    }
 `
 const CardContent=styled.div`
-    &&{
       padding:16px;
       padding-bottom:0px;
-    }
 `
 const Alink = styled.a`
-    &&{
       text-decoration:none;
-      color:none
-    }
+      color:none;
 `
 const ProductName =styled.div`
-    &&{
-      font-size:14px
-    }
+      font-size:14px;
 `
 const CardBottom = styled.div`
-    &&{
       display:flex;
       margin-top:10px;
       padding:0px;
-    }
+      justify-content: space-around;
+      margin-right: 20px;
 `
 const ProductPrice = styled.div`
-    &&{
       margin-top:14px;
       color:#ff5722;
       font-weight:500px;
-    }
+    
 `
 const ProductShear = styled.div`
-    &&{
-      margin-left:36%
-    }
+      margin-left:36%;
 `
-// const ReIconButton = styled(IconButton)`
-//     &&{
-//
-//     }
-// `
 
 const LoadMore = styled.div`
-    &&{
       text-align:center;
       margin-top:20px;
       margin-bottom:20px;
-    }
 `
 
 
 
-// const styles = theme => ({
-//   shopHeader:{
-//     background:'url('+Image+')',
-//     height:200,
-//     textAlign:'center',
-//     paddingTop:50,
-//
-//   },
-//   avatarBox:{
-//     display: 'flex',
-//     justifyContent: 'center',
-//   },
-//   avatar:{
-//     width: 60,
-//     height: 60,
-//     backgroundColor:'#ff5722'
-//   },
-//   title:{
-//     color:'#fff',
-//     marginTop:10,
-//     fontSize:14
-//   },
-//   cardBottom:{
-//     display:'flex',
-//     marginTop:10,
-//     padding:0
-//   },
-//   cardContent:{
-//     padding:16,
-//     paddingBottom:0,
-//    },
-//    productName:{
-//      fontSize:14
-//    },
-//    productPrice:{
-//     marginTop:14,
-//     color:'#ff5722',
-//     fontWeight:500,
-//    },
-//    card:{
-//      marginTop:10,
-//     },
-//     share:{
-//       marginLeft:'36%'
-//     },
-//     a:{
-//       textDecoration:'none',
-//       color:'none'
-//     },
-//     loadMore:{
-//       textAlign:'center',
-//       marginTop:20,
-//       marginBottom:20
-//     },
-//
-//
-// });
+
 
 function mapToState(state){
   return {

@@ -47,6 +47,7 @@ class AppCart extends React.Component {
   }
   componentWillMount(){
     const { cart, dispatch } = this.props;
+    console.log(cart);
     this.setState({
       productChecks: cart.productChecks
     });
