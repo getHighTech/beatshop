@@ -1,6 +1,7 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { getStore } from "../tools/localStorage";
-
+import axios from 'axios';
+import serverConfig  from '../config/server';
 export const  EXPECT_LOAD_USER_BANK_CARDS = "LOAD_USER_BANK_CARDS";
 export const  LOAD_USER_BANK_CARDS_FAIL = "LOAD_USER_BANK_CARDS_FAIL";
 export const  LOAD_USER_BANK_CARDS_SUCCESS = "LOAD_USER_BANK_CARDS_SUCCESS";
@@ -14,7 +15,7 @@ export function expectLoadUserBankcards(){
 }
 export function loadUserBankcardsFail(reason){
     console.log(reason);
-    
+
     return {
         type: LOAD_USER_BANK_CARDS_FAIL,
         reason
@@ -23,23 +24,35 @@ export function loadUserBankcardsFail(reason){
 export function loadUserBankcardsSuccess(msg){
     sendTimer = 0;
     console.log("bankcards", msg);
-    
+
     return {
         type: LOAD_USER_BANK_CARDS_SUCCESS,
         msg
     }
 }
 export function loadUserBankcards(){
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
         sendTimer ++;
         if(sendTimer>1){
             return dispatch(loadUserBankcardsFail())
         }
-        
         dispatch(expectLoadUserBankcards());
-        return getRemoteMeteor(dispatch, getState, 
-            "bankcards", "app.get.user.bankcards", 
-            [getStore("userId")], 
+        let bankId=getStore("userId");
+        // console.log(bankId);
+        // try{
+        //     const result = await axios.get(`${serverConfig.server_url}/api/my/bankcards`,{
+        //         params:{
+        //                 bankId
+        //         }
+        //     })
+        //     console.log(result)
+        //     return dispatch(loadUserBankcardsSuccess(result.data.bankcards))
+        // } catch (err) {
+        //     return dispatch(loadUserBankcardsFail())
+        // }
+        return getRemoteMeteor(dispatch, getState,
+            "bankcards", "app.get.user.bankcards",
+            [getStore("userId")],
             loadUserBankcardsSuccess, loadUserBankcardsFail)
     }
 
@@ -71,8 +84,8 @@ export function createNewBankCard(bankCardParams){
     return (dispatch, getState) => {
         dispatch(expectCreateNewBankCard());
         return getRemoteMeteor(dispatch, getState, 'bankcards',
-         "app.user.create.bankcard", 
-         [bankCardParams.userId, 
+         "app.user.create.bankcard",
+         [bankCardParams.userId,
             bankCardParams.realName,
             bankCardParams.accountNumber,
             bankCardParams.bankAddress], createNewBankCardSuccess, createNewBankCardFail)
@@ -108,10 +121,7 @@ export function deleteBankCard(bankcardId){
     return (dispatch, getState) => {
         dispatch(expectDeleteNewBankCard());
         return getRemoteMeteor(dispatch, getState, 'bankcards',
-         "app.user.remove.bankcardpp.user.remove.bankcard", 
+         "app.user.remove.bankcardpp.user.remove.bankcard",
          [getStore("userId"),bankcardId], deleteBankCardSuccess, deleteBankCardFail)
     }
 }
-
-
-

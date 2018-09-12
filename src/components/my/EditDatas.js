@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setAppLayout } from '../../actions/app';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,41 +10,44 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-const styles = theme => ({
-  root: {
-    width: '100%',
-  },
-  avatar: {
-    width: 65,
-    height: 65,
-  },
-  item:{
-    borderBottom:'1px solid #aaa'
-  },
-  textField: {
-   marginLeft: theme.spacing.unit,
-   marginRight: theme.spacing.unit,
-   width: 200,
-   },
-   button: {
-     margin: theme.spacing.unit,
-   },
-   aa:{
-     textAlign:'center'
-   }
-});
+import styled from 'styled-components';
+import {  changePassword } from '../../actions/users.js';
 class EditDatas extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: false  }
+    this.state = { 
+                  userOpen: false, 
+                  signOpen: false, 
+                  passwordOpen: false,
+                  username: "",
+                  password: "",
+                  repassword: "",
+                  agpassword: ""
+                 }
   }
-  handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
+  handelChange =  (event, key ) => {
+    console.log(event.target.value)
+     this.setState({
+       [key]: event.target.value
+     })
+  }
+  handleClick = (key) => {
+    this.setState(state => ({ [key]: !state[key] }));
   };
+  resetPassword = () => {
+    console.log(this.props)
+    const { password , repassword, agpassword } = this.state
+    this.props.dispatch(changePassword(password,repassword,agpassword))
+  }
   changeCover = () => {
     console.log('上传头像方法在此');
   };
+
+  resetUser = () => {
+
+  }
   componentDidMount(){
+    console.log(this.props)
     const { dispatch, layout } = this.props;
     if(layout.title!=='编辑资料'){
         dispatch(setAppLayout(
@@ -64,56 +65,145 @@ class EditDatas extends Component {
     }
   }
   render(){
-    const { classes } = this.props;
+    const { user } = this.props;
     return(
-      <div className={classes.root}>
+      <Wrap>
       <List>
-        <ListItem className={classes.item} button onClick={this.changeCover}>
+        <ReListItem  button onClick={this.changeCover}>
           <ListItemText primary="头像"  />
-          <Avatar
+          <ReAvatar
             alt="Adelle Charles"
-            src="http://img05.tooopen.com/images/20150820/tooopen_sy_139205349641.jpg"
-            className={classes.avatar}
+            src={user.headurl}
           />
-        </ListItem>
-        <ListItem className={classes.item} button onClick={this.handleClick}>
-          <ListItemText primary="姓名"  />
-          周世雄
-          {this.state.open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
+        </ReListItem>
+        <ReListItem  button onClick={()=> this.handleClick('userOpen')}>
+          <ListItemText primary="用户名"  />
+          {user.username}
+          {this.state.userOpen? <ExpandLess /> : <ExpandMore />}
+        </ReListItem>
 
 
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit className={classes.item}>
-            <List component="div" disablePadding className={classes.aa}>
+
+          <ReCollapse in={this.state.userOpen} timeout="auto" unmountOnExit >
+            <ReList component="div" disablePadding >
             <TextField
                 id="with-placeholder"
                 label="设置新名字"
                 placeholder="长度不要大于10个字符"
-                className={classes.textField}
+                margin="normal"
+                onChange={(e)=>this.handelChange(e,'nickname')}
+              />
+              <ReButton variant="contained" color="primary" onClick={()=> this.resetUser}>
+                确认
+              </ReButton>
+            </ReList>
+
+          </ReCollapse>
+
+          <ReListItem  button onClick={() => this.handleClick("signOpen")}>
+          <ListItemText primary="签名"  />
+          周世雄
+          {this.state.signOpen ? <ExpandLess /> : <ExpandMore />}
+        </ReListItem>
+          <ReCollapse in={this.state.signOpen} timeout="auto" unmountOnExit >
+            <ReList component="div" disablePadding >
+            <TextField
+                id="with-placeholder"
+                label="设置新名字"
+                placeholder="长度不要大于10个字符"
                 margin="normal"
               />
-              <Button variant="contained" color="primary" className={classes.button}>
+              <ReButton variant="contained" color="primary" >
                 确认
-              </Button>
-            </List>
+              </ReButton>
+            </ReList>
 
-          </Collapse>
+          </ReCollapse>
+
+          <ReListItem  button onClick={()=> this.handleClick('passwordOpen')}>
+          <ListItemText primary="修改密码"  />
+          {this.state.passwordOpen ? <ExpandLess /> : <ExpandMore />}
+        </ReListItem>
+          <ReCollapse in={this.state.passwordOpen} timeout="auto" unmountOnExit >
+            <ReList component="div" disablePadding >
+            <TextField
+                id="with-placeholder"
+                label="请输入旧密码"
+                placeholder="长度不要大于10个字符"
+                margin="normal"
+                onChange={(e)=>this.handelChange(e,'passowrd') }
+              />
+              <br />
+               <TextField
+                id="with-placeholder"
+                label="请输入密码"
+                placeholder="长度不要大于10个字符"
+                margin="normal"
+                onChange={(e)=>this.handelChange(e,'repassowrd') }
+              />
+                <br />
+               <TextField
+                id="with-placeholder"
+                label="请确认密码"
+                placeholder="长度不要大于10个字符"
+                margin="normal"
+                onChange={(e)=>this.handelChange(e,'agpassowrd') }
+              />
+                <br />
+            
+              <ReButton variant="contained" color="primary" onClick={()=>this.resetPassword()}>
+                确认
+              </ReButton>
+            </ReList>
+
+          </ReCollapse>
 
 
       </List>
-      </div>
+      </Wrap>
     )
   }
 }
-function mapToState(state){
+
+
+const Wrap = styled.div`
+  width: "100%"
+`
+
+const ReListItem = styled(ListItem)`
+   &&{
+     border-bottom: 1px solid #aaa;
+   }
+`
+
+const ReAvatar = styled(Avatar)`
+  width: 65;
+  height: 65;
+`
+
+const ReCollapse = styled(Collapse)`
+  &&{
+    border-bottom: 1px solid #aaa;
+  }
+`
+
+const ReList = styled(List)`
+  text-align: center;
+`
+
+const ReButton = styled(Button)`
+ && {
+   margin-left: 20px;
+ }
+
+`
+/* function mapToState(state){
   return {
     orderShow: state.OrderShow,
     user: state.AppUser,
     layout: state.AppInfo.layout
   }
-}
-EditDatas.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+} */
 
-export default connect(mapToState)(withStyles(styles)(EditDatas));
+
+export default EditDatas;

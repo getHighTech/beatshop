@@ -15,10 +15,12 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "baseline",
+    width:30,
+    marginLeft:'40%'
   },
   input: {
-      width: "40px",
-      fontSize: "1.8rem",
+      width: "60px",
+      fontSize: "1rem",
       textAlign: "center",
   }
 });
@@ -39,20 +41,27 @@ class NumberInput extends React.Component {
 
   handleOnChange(e){
     const {dispatch, productId} = this.props;
-    
+    console.log(e.target.value)
+    if(e.target.value>99){
+      this.setState({
+        number: 99 
+      }) 
+     return  dispatch(changeProductCountFromCart(productId, 99));
+    }
     if(e.target.value < 1){
-      return this.setState({
+       this.setState({
         number: 1
       })
+      return dispatch(changeProductCountFromCart(productId, 1));
     }else{
       dispatch(changeProductCountFromCart(productId, e.target.value));
     }
     return this.setState({
       number: e.target.value
     })
-    
-    
-    
+
+
+
   }
 
   onRemoveClick(){
@@ -80,6 +89,11 @@ class NumberInput extends React.Component {
         number: 1
       })
     }
+    if(number> 99){
+      return this.setState({
+        number: 99 
+      }) 
+    }
     return this.setState({
       number
     })
@@ -89,26 +103,27 @@ class NumberInput extends React.Component {
       const {classes} = this.props;
     return (
       <div className={classes.root}>
-          <Remove onClick={this.onRemoveClick}/>
+          <Remove style={{fontSize:12}} onClick={this.onRemoveClick}/>
           <Input
             id="number"
-            
+
             value={this.state.number}
             type="number"
             min="1"
             onChange={(e)=>{this.handleOnChange(e)}}
             classes = {{input:classes.input}}
             style={{
+                width:100,
                 textAlign: "center",
                 flex: 1
             }}
-          
+
         />
-        <Add onClick={this.onAddClick}/>
+        <Add style={{fontSize:12}} onClick={this.onAddClick}/>
       </div>
     );
   }
-  
+
 }
 
 NumberInput.propTypes = {

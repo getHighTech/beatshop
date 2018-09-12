@@ -31,28 +31,26 @@ class BankcardsList extends React.Component{
 
   componentDidMount(){
     const { dispatch, layout, bankcards } = this.props;
-    
+
     if(layout.title!=='我的银行卡'){
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/my", 
-                title: "我的银行卡", 
-                hasCart: false, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/my",
+                title: "我的银行卡",
+                hasCart: false,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
                 hasCreateBankcard: true,
                 editorType: "createNewBankcard"
             }
         ));
     }
-    
+
     if(bankcards === "unloaded"){
-      
       dispatch(loadUserBankcards());
-      
     }
 
 
@@ -61,7 +59,7 @@ class BankcardsList extends React.Component{
     const {  bankcards } = this.props;
     if(bankcards === "unloaded"){
       return <h3>加载中</h3>
-      
+
     }
     if(bankcards.length === 0){
       return <h3>您还没有绑定银行卡</h3>
@@ -69,19 +67,19 @@ class BankcardsList extends React.Component{
 
     return(
         <div>
-          
+
           {
             bankcards.map((card, index)=> {
-              
-               
+              console.log(card);
+
               return <Bankcard key={index} isBankcard={true} bankcardId={card._id}
               dispatch={this.props.dispatch}
               cardData={{title:card.realName, subtitle: card.bankAddress, carNumber: card.accountNumber,}}/>
             })
           }
-          
+
         <div>
-        
+
       </div>
       </div>
     )

@@ -5,11 +5,9 @@ import {
     Route,
     Switch,Redirect
   } from 'react-router-dom';
-
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import createHistory from 'history/createHashHistory';
-
 import MainLayout from '../layouts/MainLayout.js';
 import Home from './home/index.js'
 import {connect} from 'react-redux';
@@ -28,8 +26,6 @@ import NewContact from './contacts/new';
 import NewBankcard from './my/NewBankcard'
 import AllProducts from './products/AllProducts'
 import SellingProducts from './products/SellingProducts'
-
-
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import BankcardsList from './my/BankcardsList';
@@ -45,6 +41,8 @@ import EditData from './my/EditData'
 import WechatChecker from './WechatChecker.js';
 import Team from '../routes/team/index';
 import Toast from '../routes/toast/index';
+import {  wechatAuth } from '../helper/wechatAuth.js';
+import styled from 'styled-components'
 
 
 const history = createHistory();
@@ -82,8 +80,7 @@ class App extends React.Component {
 
         dispatch(syncRemoteUser());
         if(!appInfo.init){
-
-            dispatch(loadGeoAddress());   
+            // dispatch(loadGeoAddress());
             dispatch(loadApp());
         }
 
@@ -92,8 +89,38 @@ class App extends React.Component {
 
 
 
+
+
+
     render(){
         const {classes, appInfo, order, msg, user} = this.props;
+        const MyRoute = ({ component: Component, ...rest }) => (
+            <Route
+              {...rest}
+              render={props => {
+                if(user.roles.includes("login_user")){
+
+                      // wechatAuth()
+                    return (
+                        <Component {...props} />
+                      )
+                }else{
+                    let msg = props.match.path;
+                    if(msg === '/my'){
+                        //在个人主页并不提醒需要先登录
+                        msg=""
+                    }
+                    return <Redirect
+                    to={{
+                      pathname: "/login"+msg,
+                      state: { from: props.location }
+                    }}
+                  />
+                }
+                }
+              }
+            />
+          );
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route
               {...rest}
@@ -170,23 +197,20 @@ class App extends React.Component {
                     <Switch>
                         <PrivateRoute exact path="/wechat_checker/"  component={WechatChecker} />
                         <PrivateRoute exact path="/wechat_checker/:openid"  component={WechatChecker} />
-                        <PrivateRoute exact path="/my"  component={MyIndex} />
+                        <MyRoute exact path="/my"  component={MyIndex} />
                         <PrivateRoute exact path="/my/orders" component={MyOrders} />
                         <CarMemberRoute exact path="/products" component={AllProducts} />
                         <PrivateRoute exact path="/my/products" component={SellingProductsPath} />
                         <PrivateRoute exact path="/pay/:status" component={PayResult} />
                         <PrivateRoute exact path="/money" component={Money} />
-                        <PrivateRoute exact path="/my/contacts/:backaction" component={Contacts} />
-                        <PrivateRoute exact path="/my/new_contact" component={NewContact} />
-                        <PrivateRoute exact path="/my/orders/:id" component={orderDetails} />
+                        <PrivateRoute exact path="/my/contacts/:backaction/:orderId" component={Contacts} />
+                        <PrivateRoute exact path="/my/new_contact/:orderId" component={NewContact} />
+                        <PrivateRoute exact path="/my/orders/:id/:status" component={orderDetails} />
                         <PrivateRoute exact path="/my/blackcard_holder" component={BlackcardHolder} />
-
                         <PrivateRoute exact path="/my/edit_data" component={EditData} />
-
-
-
                         <PrivateRoute exact path="/orders/:id" component={OrderWithPath} />
-                        <PrivateRoute exact path="/share/:id" component={Share} />
+                        <Route exact   path="/my/team" component={Team}/>
+                        <Route exact path="/share/:id" component={Share} />
                         <PrivateRoute exact path="/shops/:id" component={Shop} />
                         <PrivateRoute exact path="/withdraw" component={withdraw} />
                         <PrivateRoute exact path="/cart" component={AppCart} />
@@ -199,12 +223,11 @@ class App extends React.Component {
                         <Route path="/login/:msg" component={AppLogin} />
                         <Route exact path="/login" component={AppLogin} />
                         <Route exact path="/toast" component={Toast} />
-                        <Route component={Team}  path="/my/team" exact/>
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>
-                    <Snackbar
-                        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                    <ReSnackbar
+                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
                         className={classes.snackbar}
 
                         open={msg.open}
@@ -221,11 +244,16 @@ class App extends React.Component {
         )
     }
 }
+
+const ReSnackbar = styled(Snackbar)`
+    margin-top: 100px;
+    z-index: 999
+`
 App.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
+};
 
-  function mapUserState(state){
+function mapUserState(state){
     return {
         msg: state.AppMsg,
         appInfo: state.AppInfo,
@@ -233,4 +261,5 @@ App.propTypes = {
         user: state.AppUser
     }
 }
+
 export default connect(mapUserState)(withRoot(withStyles(styles)(App)));

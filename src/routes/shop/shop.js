@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+// import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 
@@ -15,9 +15,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { setAppLayout } from '../../actions/app';
 import { getShopProductsLimit } from '../../actions/app_shop'
-
-
-
+import styled from 'styled-components';
+import axios from 'axios';
+import serverConfig  from '../../config/server';
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -30,72 +30,19 @@ TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const styles = theme => ({
-  shopHeader:{
-    background:'url('+Image+')',
-    height:200,
-    textAlign:'center',
-    paddingTop:50,
 
-  },
-  avatarBox:{
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  avatar:{
-    width: 60,
-    height: 60,
-    backgroundColor:'#ff5722'
-  },
-  title:{
-    color:'#fff',
-    marginTop:10,
-    fontSize:14
-  },
-  cardBottom:{
-    display:'flex',
-    marginTop:10,
-    padding:0
-  },
-  cardContent:{
-    padding:16,
-    paddingBottom:0,
-   },
-   productName:{
-     fontSize:14
-   },
-   productPrice:{
-    marginTop:14,
-    color:'#ff5722',
-    fontWeight:500,
-   },
-   card:{
-     marginTop:10,
-    },
-    share:{
-      marginLeft:'36%'
-    },
-    a:{
-      textDecoration:'none',
-      color:'none'
-    },
-    loadMore:{
-      textAlign:'center',
-      marginTop:20,
-      marginBottom:20
-    },
-
-  
-});
 class Shop extends React.Component{
+  constructor(props){
+      super(props);
+
+}
   state = {
+    loading:true,
     value: 0,
-    productsTotle:7,
-    page: 2,
+    productsTotle:1000,
+    page: 1,
+    shop:'',
     products:[
-      {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
-      {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
-      {id:3,name:'超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示',price:1200,img:'/imgs/b3.png',title:'店铺图片'},
 
     ]
   };
@@ -110,47 +57,74 @@ class Shop extends React.Component{
   }
 
   loadMoreProductData(){
-    const {  match,shop } = this.props;
+    const {page,products} = this.state;
+    const {  match } = this.props;
     let shopId = match.params.id
-    this.props.dispatch(getShopProductsLimit(shopId,shop.page,4))
-    // let products = [
-    //   {id:1,name:'看看你一行名字到底能有多长',price:100,img:'/imgs/b1.png',title:'店铺图片'},
-    //   {id:2,name:'短名字显示',price:123,img:'/imgs/b2.png',title:'店铺图片'},
-    //   {id:3,name:'超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示超长名字显示',price:1200,img:'/imgs/b3.png',title:'店铺图片'},
-    //   {id:4,name:'测试商品1',price:11,img:'/imgs/b1.png',title:'店铺图片'},
-    //   {id:5,name:'测试商品2',price:1.0021,img:'/imgs/b2.png',title:'店铺图片'},
-    //   {id:6,name:'测试商品3',price:1231,img:'/imgs/b3.png',title:'店铺图片'},
-    //   {id:7,name:'测试商品4',price:1233,img:'/imgs/b1.png',title:'店铺图片'},
+    let pages= page+1;
+    let pagesize = 5
+    // this.props.dispatch(getShopProductsLimit(shopId,newpages,5))
+    axios.get(`${serverConfig.server_url}/api/shop/products`,{
+      params:{
+        shopId,pages,pagesize
+      }
+    }).then((res)=>{
+      console.log(res.data.products);
+      this.setState({
+        loading:false,
+        page:pages,
+        products:products.concat(res.data.products),
+      })
+    }).catch((err)=>{
+      this.setState({
+          loading: true,
+          page: 1,
+          products: [],
+      })
+    })
 
-    // ]
-    // const  page = this.state.page+=1
-    // console.log(page)
-    // let shopId = this.props.match.params.id
-    // this.props.dispatch(getShopProductsLimit(shopId,page,4))
-    // this.setState({ 
-    //   page
-    // })
   }
   componentDidMount(){
-    const { dispatch, layout, match,shop } = this.props;
+    const { dispatch, layout, match,shop,products } = this.props;
     let shopId = match.params.id
-  
+    let pagesize = 5
+    const {page} = this.state;
     if(layout.title!=='店铺详情'){
-      if(shopId){
-        dispatch(getShopProductsLimit(shopId,shop.page,4))
-      }
+
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/", 
-                title: "店铺详情", 
-                hasCart: false, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/",
+                title: "店铺详情",
+                hasCart: false,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
+    }
+    if(shopId){
+      // dispatch(getShopProductsLimit(shopId,pages,5))
+      axios.get(`${serverConfig.server_url}/api/shop/products`,{
+        params:{
+          shopId,page,pagesize
+        }
+      }).then((res)=>{
+        console.log(res.data.products);
+        this.setState({
+          loading:false,
+          page:1,
+          products:res.data.products,
+          shop:res.data.shop
+        })
+      }).catch((err)=>{
+        this.setState({
+            loading: true,
+            page: 1,
+            products: [],
+        })
+      })
+
     }
   }
 
@@ -159,76 +133,231 @@ class Shop extends React.Component{
     return name.substr(0,1)
   }
   render(){
-    const { classes } = this.props;
-    const { shop, products } = this.props.shop;
 
-    const { value } = this.state;
-  
+    const { value,shop,products } = this.state;
+    console.log(shop);
+    console.log(products);
 
 
     return(
       <div>
-        <div className={classes.shopHeader}>
-          <div className={classes.avatarBox}>
-          <Avatar className={classes.avatar}>{shop.name!==undefined? this.sub(shop.name):null}</Avatar>
-          </div>
-          <div  className={classes.title}>{shop.name}</div>
-          <div  className={classes.title}></div>
-        </div>
-          <Tabs value={value} 
-          onChange={this.handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          fullWidth>
-            <Tab label="商品" />
-            <Tab label="简介" />
-          </Tabs>
-        {value === 0 && 
+        <ShopHeader >
+          <AvatarBox >
+          <ReAvatar >{shop.name!==undefined? this.sub(shop.name):null}</ReAvatar>
+          </AvatarBox>
+          <Title  >{shop.name}</Title>
+          <Title  ></Title>
+        </ShopHeader>
+        <Tabs value={value}
+        onChange={this.handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        fullWidth>
+          <Tab label="商品" />
+          <Tab label="简介" />
+        </Tabs>
+        {value === 0 &&
         <TabContainer>
         {products.map(product => {
           return (
-            <Card className={classes.card} key={product._id}>
-              <div className={classes.cardContent}>
+            <ReCard  key={product._id}>
+              <CardContent >
                 <Grid container spacing={24}>
                   <Grid item xs={3} sm={3}>
-                    <img src={product.cover} alt={product.title} style={{height:60,width:60}}/>     
+                    <ReImg src={product.cover} alt={product.title} />
                   </Grid>
                   <Grid item xs={9} sm={9}>
-                    <a id={product.id} onClick={()=>this.Jump(product._id)} className={classes.a}>
-                      <div className={classes.productName}>{product.name_zh}</div>
-                    </a>      
-                    <div className={classes.cardBottom}>
-                      <div className={classes.productPrice}>价格:¥{product.price/100}</div>
-                      <div className={classes.share}>
-                        <IconButton color="primary" onClick={()=>this.Share(product._id)} className={classes.button} aria-label="Add an alarm">
+                    <Alink id={product.id} onClick={()=>this.Jump(product._id)} >
+                      <ProductName >{product.name_zh}</ProductName>
+                    </Alink>
+                    <CardBottom >
+                      <ProductPrice >价格:¥{product.endPrice/100}</ProductPrice>
+                      <ProductShear >
+                        <IconButton color="primary" onClick={()=>this.Share(product._id)} aria-label="Add an alarm">
                           <Icon>share</Icon>
                         </IconButton>
-                      </div>
-                    </div>                        
+                      </ProductShear>
+                    </CardBottom>
                   </Grid>
                 </Grid>
-              </div>
-            </Card>
+              </CardContent>
+            </ReCard>
           )
           }
         )}
-      <div className={classes.loadMore}>
-        {this.state.products.length === this.state.productsTotle?
+      <LoadMore >
 
-          <Button color="primary" className={classes.button} >
-          没有数据啦
-          </Button>:
-          <Button color="primary" className={classes.button} onClick={this.loadMoreProductData.bind(this)}>
-          加载更多
-          </Button>
-        }
-      </div>
+      {this.state.products.length === this.state.productsTotle?
+
+        <Button color="primary"  >
+        没有数据啦
+        </Button>:
+        <Button color="primary"  onClick={this.loadMoreProductData.bind(this)}>
+        加载更多
+        </Button>
+      }
+
+      </LoadMore>
         </TabContainer>}
         {value === 1 && <TabContainer>{shop.description}</TabContainer>}
+
+
+
       </div>
     )
   }
 }
+
+const ReImg = styled.img`
+    &&{
+      width:60px;
+      heigth:60px;
+    }
+`
+
+const Title =styled.div`
+&&{
+  color:#fff;
+  margin-top:10px;
+  font-size:14px;
+}
+`
+const ShopHeader =styled.div`
+  &&{
+    background-image:url('${Image}');
+    height:200px;
+    text-align:center;
+    padding-top:50px;
+  }
+`
+const AvatarBox = styled.div`
+    &&{
+    display: flex;
+    justify-content: center;
+  }
+`
+const ReAvatar =styled(Avatar)`
+    &&{
+      width: 60px;
+      height: 60px;
+      background-color:#ff5722;
+    }
+`
+const ReCard =styled(Card)`
+    &&{
+      margin-top:10px;
+    }
+`
+const CardContent=styled.div`
+    &&{
+      padding:16px;
+      padding-bottom:0px;
+    }
+`
+const Alink = styled.a`
+    &&{
+      text-decoration:none;
+      color:none
+    }
+`
+const ProductName =styled.div`
+    &&{
+      font-size:14px
+    }
+`
+const CardBottom = styled.div`
+    &&{
+      display:flex;
+      margin-top:10px;
+      padding:0px;
+    }
+`
+const ProductPrice = styled.div`
+    &&{
+      margin-top:14px;
+      color:#ff5722;
+      font-weight:500px;
+    }
+`
+const ProductShear = styled.div`
+    &&{
+      margin-left:36%
+    }
+`
+// const ReIconButton = styled(IconButton)`
+//     &&{
+//
+//     }
+// `
+
+const LoadMore = styled.div`
+    &&{
+      text-align:center;
+      margin-top:20px;
+      margin-bottom:20px;
+    }
+`
+
+
+
+// const styles = theme => ({
+//   shopHeader:{
+//     background:'url('+Image+')',
+//     height:200,
+//     textAlign:'center',
+//     paddingTop:50,
+//
+//   },
+//   avatarBox:{
+//     display: 'flex',
+//     justifyContent: 'center',
+//   },
+//   avatar:{
+//     width: 60,
+//     height: 60,
+//     backgroundColor:'#ff5722'
+//   },
+//   title:{
+//     color:'#fff',
+//     marginTop:10,
+//     fontSize:14
+//   },
+//   cardBottom:{
+//     display:'flex',
+//     marginTop:10,
+//     padding:0
+//   },
+//   cardContent:{
+//     padding:16,
+//     paddingBottom:0,
+//    },
+//    productName:{
+//      fontSize:14
+//    },
+//    productPrice:{
+//     marginTop:14,
+//     color:'#ff5722',
+//     fontWeight:500,
+//    },
+//    card:{
+//      marginTop:10,
+//     },
+//     share:{
+//       marginLeft:'36%'
+//     },
+//     a:{
+//       textDecoration:'none',
+//       color:'none'
+//     },
+//     loadMore:{
+//       textAlign:'center',
+//       marginTop:20,
+//       marginBottom:20
+//     },
+//
+//
+// });
+
 function mapToState(state){
   return {
     orderShow: state.OrderShow,
@@ -238,9 +367,9 @@ function mapToState(state){
   }
 }
 
-Shop.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// Shop.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 
-export default connect(mapToState)(withStyles(styles)(Shop))
+export default connect(mapToState)(Shop)

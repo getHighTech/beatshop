@@ -10,6 +10,7 @@ export function expectHomeIndexProducts(){
 }
 
 export function loadHomeIndexProductsSuccess(products){
+    console.log(products);
     return {
         type: LOAD_HOME_INDEX_PRODUCTS_SUCCESS,
         products

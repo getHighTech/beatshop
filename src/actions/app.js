@@ -8,6 +8,7 @@ import { loadOneProduct } from './products';
 import { userLogin } from './process/login';
 import { createNewBankCard } from './bankcards';
 import { withdrawMoney } from './balances.js'
+import { removeStore } from '../tools/localStorage.js';
 export const history = createHistory();
 
 
@@ -76,9 +77,9 @@ export function switchActionNames(actionName){
             return {
                 action: withdrawMoney
             }
-        
-      
-        
+
+
+
         default:
             return;
     }
@@ -87,7 +88,7 @@ export function switchActionNames(actionName){
 function msgSwitchByReason(reason, option={}){
     switch (reason) {
         case "login_user MISSING":
-            
+
             return {
                 content: "需要先登录",
                 actionText: "",
@@ -101,7 +102,7 @@ function msgSwitchByReason(reason, option={}){
             }
         case "add_cart_success":
             return {
-                content: "加入购物成功！",
+                content: "加入购物车成功！",
                 actionText: "立刻查看",
                 href: "#/cart"
             }
@@ -144,7 +145,14 @@ function msgSwitchByReason(reason, option={}){
             return {
                 content: "若您需要开店， 需要先购买会员卡，一旦成为黑卡会员后可以立刻开店咯"
             }
-
+        case "agency_one_product_success":
+            return {
+                content: "成功代理此商品"
+            }
+        case "agency_one_product_existed":
+            return {
+                content: "此商品已经代理"
+            }
         case "save_bankcard_success":
             return {
                 content: "绑定银行卡成功"
@@ -162,8 +170,12 @@ function msgSwitchByReason(reason, option={}){
             return {
                 content: "提现金额必须是100元的倍数"
             }
+        case "withdraw_must":
+            return {
+                content: "必须填写正确金额"
+            }
 
-    
+
         default:
             break;
     }
@@ -173,6 +185,8 @@ function msgSwitchByReason(reason, option={}){
 
 
 export function appShowMsg(reason, msgSurvive){
+    console.log(reason);
+    console.log(msgSurvive);
     let msgParams = msgSwitchByReason(reason);
     return dispatch => {
         dispatch(closeAppMsg(msgSurvive));
@@ -221,7 +235,8 @@ export function appInjectDataReact(actionName, actionParams={}){
 export function appShowMsgAndInjectDataReact(actionName, reason, msgSurvive=2350, actionParams){
     let msgParams = msgSwitchByReason(reason);
     return dispatch => {
-        dispatch(switchActionNames(actionName).action(actionParams));        
+        removeStore("Goto")
+        dispatch(switchActionNames(actionName).action(actionParams));
         dispatch(closeAppMsg(msgSurvive));
         //传入存活时间
         dispatch({
@@ -233,13 +248,14 @@ export function appShowMsgAndInjectDataReact(actionName, reason, msgSurvive=2350
 
 export function appShowMsgAndInjectDataReactWithPath(
     actionName, reason, msgSurvive=2350, actionParams, path="/"){
-        
+
         let msgParams = msgSwitchByReason(reason)
     return dispatch => {
-        dispatch(switchActionNames(actionName).action(actionParams));        
+        dispatch(switchActionNames(actionName).action(actionParams));
         dispatch(closeAppMsg(msgSurvive));
         history.push(path);
         //传入存活时间
+
         dispatch({
             type: APP_SHOW_MSG_AND_INJECT_DATA_REACT_WITH_PATH,
             msgParams,

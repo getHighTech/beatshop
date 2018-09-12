@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -13,7 +12,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputAdornment from '@material-ui/core/InputAdornment';
-
+import { getStore } from '../../tools/localStorage';
+const crypto = require('crypto');
 
 
 const styles = theme => ({
@@ -39,7 +39,7 @@ const styles = theme => ({
     color: "white",
   },
   root:{
-    backgroundColor:'#151313',
+    backgroundColor:'#A1C2B4',
     height:700
   },
 
@@ -67,23 +67,23 @@ class AppLogin extends React.Component {
     }
   }
 
-  
+
   componentDidMount(){
     const { dispatch } = this.props;
     if (this.props.match.params.msg) {
       dispatch(openAppMsg("NEED TO LOGIN", 1200))
-      
-      
+
+
     }
     dispatch(setAppLayout(
       {
-          isBack: true, 
-          backTo: "/", 
-          title: "手机验证码登录", 
-          hasCart: false, 
-          hasBottomNav: false, 
+          isBack: true,
+          backTo: "/",
+          title: "手机验证码登录",
+          hasCart: false,
+          hasBottomNav: false,
           hasGeoLoc: false,
-          hasEditor: false, 
+          hasEditor: false,
           hasSearch: false,
           snackContent: "",
           snackOpen: false
@@ -97,7 +97,7 @@ class AppLogin extends React.Component {
     if(!testPhone(this.state.mobile)){
       this.setState({
         mobileError: true,
-        mobileLabel: "手机号格式错误" 
+        mobileLabel: "手机号格式错误"
       })
 
       return false;
@@ -119,7 +119,7 @@ class AppLogin extends React.Component {
       this.setState({
         currentTime: 60-countBack,
       })
-     
+
     }
     timer = setInterval(()=>{
       exeLoop();
@@ -139,7 +139,7 @@ class AppLogin extends React.Component {
         snackOpen: true,
         snackContent: "正在发送验证码"
       })
-      
+
     }
     if(user.SMSCodeStatus === "success"){
       return this.setState({
@@ -177,25 +177,25 @@ class AppLogin extends React.Component {
       if(user.loginFailReason === "USER NOT FOUND"){
         return this.setState({
           usernameError: true,
-          usernameLabel: "用户不存在" 
+          usernameLabel: "用户不存在"
         })
       }
       if(user.loginFailReason === "LOGIN PASS WRONG"){
         return this.setState({
           passwordError: true,
-          passwordLabel: "密码错误" 
+          passwordLabel: "密码错误"
         })
       }
     }
 
-    
+
   }
   handleOnChange(e, item){
     this.setState({
       mobileError: false,
       mobileLabel: "手机号",
       SMSError: false,
-      SMSLabel: "验证码" 
+      SMSLabel: "验证码"
     })
     if(item === "mobile"){
       this.setState({
@@ -207,21 +207,21 @@ class AppLogin extends React.Component {
         SMSCode: e.target.value
       })
     }
-    
-    
+
+
   }
   handleLoginBtnClick(){
-    const { dispatch, location, currentCity } = this.props;
+    const { dispatch, location, currentCity, user } = this.props;
     this.setState({
       mobileError: false,
       mobileLabel: "手机号",
       SMSError: false,
-      SMSLabel: "验证码" 
+      SMSLabel: "验证码"
     })
     if(!testPhone(this.state.mobile)){
       this.setState({
         mobileError: true,
-        mobileLabel: "手机号格式错误" 
+        mobileLabel: "手机号格式错误"
       })
 
       return false;
@@ -229,7 +229,17 @@ class AppLogin extends React.Component {
     if(this.state.SMSCode===""){
       this.setState({
         SMSError: true,
-        SMSLabel: "验证码不得为空" 
+        SMSLabel: "验证码不得为空"
+      })
+
+      return false;
+    }
+    let hash = crypto.createHash('sha256');
+    let cryptoCode = hash.update(this.state.SMSCode).digest('hex');
+    if(user.SMSCode !== cryptoCode){
+      this.setState({
+        SMSError: true,
+        SMSLabel: "验证码错误"
       })
 
       return false;
@@ -243,20 +253,23 @@ class AppLogin extends React.Component {
       address,
       city,
     }
+    let Goto = getStore('Goto');
+    let url;
+    Goto ? url=`/products/${Goto}` : url="/"
     return dispatch(
       appShowMsgAndInjectDataReactWithPath(
-        "user_mobile_login", "mobile_login", 1200, loginParams, "/")
+        "user_mobile_login", "mobile_login", 1200, loginParams, url)
       )
   }
   render(){
     const { classes, history } = this.props;
-    const { 
+    const {
       validDisabled, currentTime, mobileError,
        SMSError, mobileLabel, SMSLabel } = this.state;
     return (
       <div className={classes.root}>
         <div className={classes.logo}>
-          <img style={{width:'100%'}}alt="LOGO" src={require('../../components/imgs/wanrenchehui_bg.jpeg')} />
+          <img style={{width:'100%'}}alt="LOGO" src={require('../../components/imgs/xianzhilogo.jpg')} />
         </div>
         <Card className={classes.card}>
           <CardContent>
@@ -294,7 +307,7 @@ class AppLogin extends React.Component {
                   autoComplete="current-password"
                   onChange={(e)=>this.handleOnChange.bind(this)(e, "SMS")}
                 />
-                  <Button style={{color: validDisabled? "black": "white"}} 
+                  <Button style={{color: validDisabled? "black": "white"}}
                   disabled={validDisabled} variant="raised" color="secondary" size="small"
                   className={classes.button} onClick={()=>this.startValidtimeOut()}>
                   {validDisabled? currentTime+"秒后重新获取": "获取验证码"}
@@ -304,17 +317,17 @@ class AppLogin extends React.Component {
               {this.state.buttonText}
               </Button>
               <div><br/>密码用户名登录?<Button onClick={()=>history.push("/password-login")}  color="secondary">前往</Button></div>
-              
-                
+
+
                 </form>
-                
+
               </div>
           </CardContent>
         </Card>
       </div>
     );
   }
-  
+
 }
 
 AppLogin.propTypes = {

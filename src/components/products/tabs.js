@@ -40,7 +40,7 @@ class ProductTabs extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme ,parameterlists,des} = this.props;
 
     return (
       <div className={classes.root}>
@@ -52,8 +52,8 @@ class ProductTabs extends React.Component {
             textColor="primary"
             centered
           >
-            <Tab label="详情" />
-            <Tab label="参数" />
+            <Tab label="宝贝详情" />
+            <Tab label="售后说明" />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -63,17 +63,39 @@ class ProductTabs extends React.Component {
         >
           <TabContainer dir={theme.direction}>
           {/* <div style={
-            {textAlign: "center", 
+            {textAlign: "center",
             marginBottom: "15%",
-             display: "flex", 
+             display: "flex",
              flexDirection: "column"}}>
           { htmlToReactParser.parse(this.props.des)}
           </div> */}
-          <img src={this.props.des} style={{width: "100%"}} alt=''/>
-          
+
+          {typeof(des)!='undefined'? <img src={this.props.des} style={{width: "100%"}} alt=''/> :'暂无图片' }
           </TabContainer>
           <TabContainer dir={theme.direction}>
-          暂无参数
+          <div style={{width:'100%'}}>
+
+
+            {typeof(parameterlists)!='undefined'?  parameterlists.map((parameterlist,key) => {
+              return (
+                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around',padding:'10px',borderBottom:'1px solid #ccc'}} key={key}>
+                <div style={{width:'30%',textAlign:'center'}}>
+                  <span style={{textAlign:'center'}}>
+                    {parameterlist.parameter_name}
+                  </span>
+                </div>
+                <div style={{width:'10%'}}></div>
+                <div style={{width:'60%',textAlign:'left'}}>
+                  <span style={{textAlign:'center'}}>
+                    {parameterlist.parameter_value}
+                  </span>
+                  </div>
+                </div>
+              )
+            } ): '暂无售后'}
+
+
+          </div>
           </TabContainer>
         </SwipeableViews>
       </div>
@@ -81,10 +103,11 @@ class ProductTabs extends React.Component {
   }
 }
 
+
+
 ProductTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(ProductTabs);
-

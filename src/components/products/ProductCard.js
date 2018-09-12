@@ -5,7 +5,8 @@ import Card from '@material-ui/core/Card';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import { removeAgencyProducts } from '../../actions/products'
+import {wechatShare} from '../../helper/wechatShare.js'
 const styles = theme => ({
   cardContent:{
     padding:8,
@@ -21,7 +22,7 @@ const styles = theme => ({
     display:'flex',
     justifyContent:'space-between',
     paddingRight:'4%',
-    fontSize:1
+    fontSize: 14
    },
    card:{
      marginTop:10,
@@ -29,7 +30,7 @@ const styles = theme => ({
     share:{
       display:'flex',
       justifyContent:'space-between',
-      paddingRight:'4%',    
+      paddingRight:'4%',
     },
     a:{
       textDecoration:'none',
@@ -52,7 +53,7 @@ const styles = theme => ({
       paddingTop:10
     },
     subProductName:{
-      fontSize:1,
+      fontSize:14,
       color:'#9E9E9E'
     }
 });
@@ -73,13 +74,14 @@ class ProductCard extends React.Component{
     history.push('/share/'+id)
     console.log('------------------------------------');
   }
-  delete(){
+  delete = (shopId,productId) =>{
     console.log('------------------------------------');
-    console.log('');
+    console.log(`shopId: ${shopId},productId: ${productId}`)
+    this.props.dispatch(removeAgencyProducts(shopId,productId))
     console.log('------------------------------------');
   }
   render(){
-    const { classes, _id,name_zh,cover,endPrice, agencyLevelPrices,brief } = this.props;
+    const { classes, _id,name_zh,cover,endPrice, agencyLevelPrices,brief,shopId } = this.props;
     console.log(`来了`)
     console.log(this.props)
     return(
@@ -87,27 +89,27 @@ class ProductCard extends React.Component{
         <Card className={classes.card}>
           <div className={classes.cardContent}>
               <div className={classes.leftContent}>
-                  <img src={cover} alt='商品图片'style={{height:80,width:80}}/>       
+                  <img src={cover} alt='商品图片'style={{height:80,width:80}}/>
               </div>
               <div className={classes.rightContent}>
                 <a  onClick={this.onClick.bind(this)} className={classes.a}>
                   <div className={classes.productName}>{name_zh}</div>
                   <div className={classes.subProductName}>{brief}</div>
-                </a>      
+                </a>
                 <div className={classes.cardBottom}>
                   <div className={classes.productPrice}>
                     <div>价格:¥{endPrice/100}</div>
                     <div>佣金:¥{agencyLevelPrices.length>0 ? agencyLevelPrices[0]/100 : 0}</div>
                   </div>
                   <div className={classes.share}>
-                  <IconButton className={classes.button} onClick={this.delete} aria-label="Delete"  color="secondary">
+                  <IconButton className={classes.button} onClick={()=>this.delete(shopId,_id)} aria-label="Delete"  color="secondary">
                       <DeleteIcon />
                     </IconButton>
                     <IconButton color="secondary"  onClick={() => this.share(_id)} className={classes.button} aria-label="Add an alarm">
                       <Icon>share</Icon>
                     </IconButton>
                   </div>
-                </div>                        
+                </div>
               </div>
           </div>
         </Card>

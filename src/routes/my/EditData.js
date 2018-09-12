@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-
 import EditDatas from '../../components/my/EditDatas';
+import { connect } from 'react-redux';
 
 class EditData extends Component {
   render(){
+    console.log(this.props)
     return(
-      <EditDatas/>
+      <EditDatas {...this.props}/>
     )
   }
 }
-function mapToState(state){
+
+
+
+
+const mapUserToState = state => {
   return {
-    orderShow: state.OrderShow,
-    user: state.AppUser,
+    user: state.AppUser.user,
     layout: state.AppInfo.layout
   }
-}
+} 
 
-
-export default connect(mapToState)(EditData);
+export default connect(mapUserToState)(EditData);

@@ -1,6 +1,8 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { getStore } from "../tools/localStorage";
 import axios from 'axios';
+import  serverConfig  from '../config/server';
+
 
 export const  LOAD_MONEY_PAGE = "LOAD_MONEY_PAGE";
 export const  EXPECT_LOAD_MONEY_PAGE = "EXPECT_LOAD_MONEY_PAGE";
@@ -28,18 +30,17 @@ export function loadMoneyPageSuccess(msg){
 export function loadMoneyPage(userId){
     return (dispatch, getState) => {
         dispatch(expectLoadMoneyPage());
-        // return axios.get('http://localhost:1235/api/loadMoney',{
-        //     params: {
-        //     userId
-        //     }
-        // }).then((res)=>{
-        //     console.log(res)
-        //     dispatch(loadMoneyPageSuccess(res.data))
-        // }).catch((err)=>{
-        //     console.log(err)
-        // })
-        return getRemoteMeteor(dispatch, getState, 'balances', "app.load.money.page",
-    [userId], loadMoneyPageSuccess, loadMoneyPageFail);
+        return axios.get(`${serverConfig.server_url}/api/loadMoney`,{
+            params: {
+            userId
+            }
+        }).then((res)=>{
+            dispatch(loadMoneyPageSuccess(res.data))
+        }).catch((err)=>{
+            console.log(err)
+        })
+    //     return getRemoteMeteor(dispatch, getState, 'balances', "app.load.money.page",
+    // [userId], loadMoneyPageSuccess, loadMoneyPageFail);
     }
 }
 
@@ -56,8 +57,6 @@ export function expectWithdrawMoney(){
     }
 }
 export function withdrawMoneyFail(reason){
-    console.log("提现失败了", reason);
-    
     return {
         type: WITHDRAW_MONEY_FAIL,
         reason,
@@ -72,13 +71,13 @@ export function withdrawMoneySuccess(msg){
 export function withdrawMoney(withdrawParams){
     return (dispatch, getState)=>{
         dispatch(expectWithdrawMoney());
-        return getRemoteMeteor(dispatch, getState, 
+        return getRemoteMeteor(dispatch, getState,
             "balances", 'app.withdraw.money',
-                [withdrawParams.userId, 
-                withdrawParams.amount, 
-                withdrawParams.bankId, 
-                withdrawParams.bank], 
-            withdrawMoneySuccess, 
+                [withdrawParams.userId,
+                withdrawParams.amount,
+                withdrawParams.bankId,
+                withdrawParams.bank],
+            withdrawMoneySuccess,
             withdrawMoneyFail);
     }
 }
@@ -160,7 +159,7 @@ export const GET_INCOMES_WITHIN_TIME_SUCCESS = "GET_INCOMES_WITHIN_TIME_SUCCESS"
 
 let sendTimes = 0;
 export function expectGetIncomesWithinTime(unit){
-    
+
     return {
         type: EXPECT_GET_INCOMES_WITHIN_TIME,
         unit
@@ -170,7 +169,7 @@ export function expectGetIncomesWithinTime(unit){
 
 export function getIncomeWithTimeSuccess(msg){
     sendTimes = 0;
-    
+
     return {
         type: GET_INCOMES_WITHIN_TIME_SUCCESS,
         msg
@@ -187,31 +186,28 @@ export function getIncomeWithTimeFail(reason){
 
 
 export function getIncomeWithTime(rangLength, userId, unit){
-    
+
     return (dispatch, getState) => {
             sendTimes = sendTimes + 1;
             if(sendTimes >1){
                 dispatch(getIncomesLimitFail("too many"))
             }
         dispatch(expectGetIncomesWithinTime(unit));
-        // axios.get('http://localhost:1235/api/shop',{
-        //     params: {
-        //           userId,
-        //           rangLength,
-        //           unit
-        //       }
-        //     }).then((res)=>{
-        //         console.log(res)
-        //         if(res){
-        //            return dispatch(getIncomeWithTimeSuccess(res.data))
-        //         }
-        //     }).catch((err)=>{
-        //         console.log(err)
-        //     })
-        return getRemoteMeteor(
-            dispatch,getState, "balances",
-             "app.get.incomes.time.range",
-            [rangLength, userId, unit], getIncomeWithTimeSuccess, getIncomeWithTimeFail)
+        axios.get(`${serverConfig.server_url}/api/shop`,{
+            params: {
+                  userId,
+                  rangLength,
+                  unit
+              }
+            }).then((res)=>{
+                console.log(res)
+                if(res){
+                   return dispatch(getIncomeWithTimeSuccess(res.data))
+                }
+            }).catch((err)=>{
+                console.log(err)
+            })
+   
     }
 }
 
@@ -246,7 +242,9 @@ export function getIncomesLimitFail(reason){
 }
 let Tpage = 1;
 export function getIncomesLimit(page, pagesize){
+    console.log(page,pagesize);
     return (dispatch, getState) => {
+        console.log(`没来`)
         fetchTimer++
         if(fetchTimer>1){
             return dispatch(getIncomesLimitFail("tooMany"));
@@ -257,11 +255,10 @@ export function getIncomesLimit(page, pagesize){
         }
         dispatch(expectGetIncomeLimit());
         console.log("Tpage", Tpage);
-        
-        return getRemoteMeteor(dispatch, getState, "balances", 
+        console.log(pagesize)
+        return getRemoteMeteor(dispatch, getState, "balances",
         "app.get.incomes.limit", [getStore("userId"), Tpage, pagesize],
         getIncomesLimitSuccess, getIncomesLimitFail
     )
     }
 }
-

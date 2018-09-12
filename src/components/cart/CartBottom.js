@@ -54,6 +54,17 @@ class CartBottom extends React.Component{
         const {dispatch } = this.props;
         dispatch(checkAccess("buty", product, "add_product_to_cart"))
       }
+    checkSelect = () => {
+      const {  cart } = this.props;
+      cart.status==="all-unselected"? true : false 
+      if(cart.status==="all-unselected" || cart.products.length===0 ) {
+        console.log(111)
+        return true
+      }else {
+        console.log(222)
+        return false
+      }
+    }
     
     render(){
       const { classes, cart, dispatch } = this.props;
@@ -78,7 +89,9 @@ class CartBottom extends React.Component{
           }
         />
                <Button color="inherit" className={classes.flex}>合计: ￥{cart.totalAmount/100}</Button>
-              <Button onClick={()=>dispatch(createOneOrder(cart))} disabled={cart.status==="all-unselected"? true : false} color="inherit">结算</Button>
+              <Button onClick={()=>dispatch(createOneOrder(cart))} 
+                disabled={
+                this.checkSelect()} color="inherit">结算</Button>
           </Toolbar>
         </AppBar>
         

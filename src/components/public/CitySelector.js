@@ -15,7 +15,7 @@ class CitySelector extends React.Component {
   };
 
   handleClose = (event, city) => {
-      
+
       const { dispatch } = this.props;
       if(!city){
         dispatch(setAppCity("北京市"));
@@ -31,9 +31,9 @@ class CitySelector extends React.Component {
     return (
       <div style={{
         position: "relative",
-        left: -22
       }}>
         <Button
+          style={{padding:0}}
           color='secondary'
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
@@ -52,7 +52,7 @@ class CitySelector extends React.Component {
         >
           <MenuItem color="secondary"
            onClick={(event)=>this.handleClose(event, "成都市")}>成都市</MenuItem>
-          <MenuItem 
+          <MenuItem
            onClick={(event)=>this.handleClose(event, "北京市")}>北京市</MenuItem>
         </Menu>
       </div>

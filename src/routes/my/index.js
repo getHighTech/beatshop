@@ -64,6 +64,7 @@ class MyIndex extends React.Component{
   }
   render(){
     const { classes, dispatch, user } = this.props;
+   
     return (
       <Card className={classes.card}>
         <CardContent>
@@ -75,8 +76,15 @@ class MyIndex extends React.Component{
             dispatch(appShowMsgAndInjectDataReact("logout", "logout_success", 2360))
 
           }}  variant="raised" color="primary" className={classes.button} fullWidth={true}>退出登录</Button>
+          <br/>
+        <br/>
+        <br/>
+        <br/> <br/>
+        <br/> <br/>
+        <br/>
         </div>
         </CardContent>
+        
       </Card>
     );
   }
@@ -88,7 +96,8 @@ MyIndex.propTypes = {
 function mapUserToState(state){
   return {
     user: state.AppUser,
-    layout: state.AppInfo.layout
+    layout: state.AppInfo.layout,
+    wechat: state.WechatUser.profile
   }
 }
 

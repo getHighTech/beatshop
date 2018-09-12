@@ -1,92 +1,150 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import { setAppLayout } from '../../actions/app';
+import { getMyTeam} from '../../actions/my_team'
 import { connect } from 'react-redux';
+import Badge from '@material-ui/core/Badge';
+import styled from 'styled-components';
+import { getStore } from '../../tools/localStorage';
+import moment from 'moment';
 
-const CustomTableCell = withStyles(theme => ({
-    head: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    body: {
-      fontSize: 14,
-    },
-  }))(TableCell);
-  
-  const styles = theme => ({
-    root: {
-      width: '100%',
-      marginTop: theme.spacing.unit * 3,
-      overflowX: 'auto',
-    },
-    table: {
-    },
-    row: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.background.default,
-      },
-    },
-  });
 
 class Team extends React.Component{
   componentDidMount() {
     const { dispatch } = this.props;
+
     dispatch(setAppLayout(
         {
-            isBack: true,
-            backTo: "/",
-            title: "我的团队",
-            hasCart: false,
-            hasBottomNav: true,
-            hasGeoLoc: false,
-            hasEditor: false,
-            hasSearch: false,
+          isBack: true,
+          backTo: "/my",
+          title: "我的团队",
+          hasCart: false,
+          hasBottomNav: false,
+          hasGeoLoc: false,
+          hasEditor: false,
+          hasSearch: false,
         }
     ));
+    let userId = getStore("userId");
+    console.log(userId);
+    dispatch(getMyTeam(userId))
 
 
-    
   }
 
 
   render() {
-      const { classes } = this.props;
+    const { teams } = this.props;
+    const count = teams.length;
       return(
-        <Paper className={classes.root}>
-            <Table className={classes.table}>
-                <TableHead>
-                <TableRow>
-                    <CustomTableCell>Dessert (100g serving)</CustomTableCell>
-                    <CustomTableCell numeric>Calories</CustomTableCell>
-                    <CustomTableCell numeric>Fat (g)</CustomTableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-              
-                    <TableRow className={classes.row} >
-                        <CustomTableCell component="th" scope="row">
-                        123
-                        </CustomTableCell>
-                        <CustomTableCell numeric>123</CustomTableCell>
-                        <CustomTableCell numeric>123</CustomTableCell>
-                    </TableRow>
-               
-                </TableBody>
-            </Table>
-        </Paper>
+       <Wrap>
+        <BgWrap>
+        <BannerImg alt=""   src={require("../../components/imgs/teams.jpg")}/>
+
+        </BgWrap>
+
+
+
+        <TitleWrap>
+            <Title>
+              我的下级个数:
+              <ReBadge badgeContent={count} >
+              </ReBadge>
+            </Title>
+        </TitleWrap>
+
+        <ListWrap>
+        <List>
+            <UserName>
+              用户名
+            </UserName>
+            <JoinTime>
+             加入时间
+            </JoinTime>
+          </List>
+
+          {teams.map((team,key) => {
+            return (
+              <List key={key}>
+                <UserName>
+                  {team.name}
+                </UserName>
+                <JoinTime>
+                  {team.jointime!==undefined&&team.jointime!=='加入时间有误' ? moment(team.jointime).format("YYYY-MM-DD HH:mm:ss"): '未能获取其加入时间'}
+                </JoinTime>
+              </List>
+            )
+          })}
+
+
+        </ListWrap>
+       </Wrap>
       )
   }
 }
 
-Team.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+const Wrap = styled.div`
 
-export default connect()(withStyles(styles)(Team))
+`
+const BannerImg = styled.img`
+  width:100%;
+  height:20%;
+  margin-top:7px;
+`
+const BgWrap = styled.div`
+  height: 20%;
+`
+
+const TitleWrap = styled.div`
+  margin-top:15px;
+  background: #F4F8FB;
+`
+const Title = styled.div`
+  color: #4E8BA2;
+  padding: 5px 10px;
+  font-weight: 700;
+  font-size: 16px;
+`
+
+const ListWrap = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`
+
+const List = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+`
+
+const UserName = styled.div`
+  text-align: left;
+  font-size:14px
+`
+
+const JoinTime = styled.div`
+  text-align: right;
+  font-size:14px
+`
+
+const ReBadge = styled(Badge)`
+  margin-left: 16px;
+  margin-top: -2px;
+  .MuiBadge-badge-27 {
+    background: #2387B5;
+    color: #fff;
+  }
+`
+function mapToState(state){
+  return {
+    orderShow: state.OrderShow,
+    user: state.AppUser,
+    layout: state.AppInfo.layout,
+    shop: state.AppShop,
+    teams:state.MyTeam.teams
+  }
+}
+
+
+export default connect(mapToState)(Team)

@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux';
-import Image from '../imgs/wanrenchehui_banner.jpg';
+import Image from '../imgs/WechatIMG620.jpeg';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 
@@ -22,39 +22,39 @@ const styles = theme => ({
     flexDirection: 'column',
     // backgroundPosition:"center",
     [theme.breakpoints.down('md')]: {
-      backgroundSize: 'cover', 
+      backgroundSize: 'cover',
       height: '351px',
       top: "-4px"
     },
-    
+
   },
   logoImage: {
     width: "35%",
-    
+
   },
   slogan: {
     color: "white",
     backgroundColor: "rgba(77, 77, 78, 0.38)",
     // backgroundColor: "red",
-   
+
     top: '180px',
     width: '100%',
     position: 'relative',
     flexDirection: "column",
-    marginTop: "-30px",        
-    marginBottom: "5px", 
+    marginTop: "-30px",
+    marginBottom: "5px",
     paddingTop:23,
     paddingBottom: "30px",
    alignItems: "center",
    display: "flex",
-  
+
     [theme.breakpoints.down('md')]: {
       display: "flex",
       top: '90px',
       flexDirection: "column",
       alignItems: "center",
-     justifyContent: "center",       
-     
+     justifyContent: "center",
+
     },
   },
 
@@ -75,7 +75,7 @@ class AppBanner extends React.Component {
 
   render() {
     const { classes } = this.props;
-   
+
     return (
       <div className={classes.root}  >
             <div className={classes.slogan} color="red">
@@ -83,32 +83,33 @@ class AppBanner extends React.Component {
                 <Typography
                       variant="display1"
                       color="inherit"
-                    
+
                     >
-                      万人车汇
-                    
+                     鲜至臻品
+
                     </Typography>
                     <br/>
                 </Hidden>
                 <Typography
                       variant="title"
                       color="inherit"
-                    
+
                     >
-                     享受精彩汽车生活
-                    
+                     <h1>鲜至臻品</h1>
+                     <h4  className={classes.text}>我们不一样</h4>
+
                     </Typography>
                     <br/>
                 <Button variant="raised" size="small" color="secondary"  component={Link} to="/login" >
-                  
+
                     <Hidden mdUp>
                     <Typography
                       variant="subheading"
                       color="inherit"
-                    
+
                     >
                      立即加入
-                    
+
                     </Typography>
                     </Hidden>
                     <Hidden mdDown>
@@ -117,15 +118,15 @@ class AppBanner extends React.Component {
                     <Typography
                       variant="title"
                       color="inherit"
-                    
+
                     >
                      立即加入
-                    
+
                     </Typography>
                     </Hidden>
-        
+
               </Button>
-                
+
             </div>
       </div>
     );

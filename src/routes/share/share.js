@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import { loadShareProdcut } from '../../actions/products'
+import {wechatShare} from '../../helper/wechatShare.js'
 
 const styles = theme => ({
   header:{
@@ -34,41 +35,67 @@ const styles = theme => ({
     paddingBottom:20
   }
 })
+
+
 class Share extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       url:''
      }
   }
+
+
+  componentDidUpdate() {
+    this.update()
+  }
+  componentWillMount(){
+
+    this.update()
+  }
   componentDidMount(){
-    const { dispatch, layout,product } = this.props;
+    this.update()
+    const { dispatch, layout } = this.props;
 
     if(layout.title!=='分享页面'){
-      console.log(this.props.match.params.id)
       if(this.props.match.params.id){
         dispatch(loadShareProdcut(this.props.match.params.id))
+        // console.log(this.props.product);
+        // wechatShare();
       }
       dispatch(setAppLayout(
           {
-              isBack: true, 
-              backTo: "/my/products", 
-              title: "分享页面", 
-              hasCart: false, 
-              hasBottomNav: false, 
+              isBack: true,
+              backTo: "/my/products",
+              title: "分享页面",
+              hasCart: false,
+              hasBottomNav: false,
               hasGeoLoc: false,
-              hasEditor: false, 
+              hasEditor: false,
               hasSearch: false,
           }
       ));
+
   }
-    console.log(this.props)
-    let id = this.props.match.params.id
     // this.setState({
     //   url:'https://wanchehui/#/products/' + id
     // })
+
+
   }
-  render() { 
+
+
+  update() {
+    const canvas = document.querySelector('.qrCode canvas');
+    if(canvas){
+      const img = new Image();
+      console.log(canvas)
+      const imgSrc =  canvas.toDataURL()
+      const wrap =  document.querySelector('.qrCode')
+      wrap.innerHTML = `<img src="${imgSrc}" width="100px" height="100px">`
+    }
+  }
+  render() {
     const { classes,product } = this.props
     console.log(product)
     return (
@@ -85,14 +112,17 @@ class Share extends React.Component {
           <div>有人购买该商品即可获得相应推分享佣金</div>
         </div>
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
-        <div className={classes.qecode}>
-          <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo={require('../../components/imgs/WechatIMG171.png')}/>
+        <div className={`qrCode ${classes.qecode}`}>
+          <QRCode value={ 'http://'+window.location.host +'/#/products/'+  this.props.match.params.id} logo={require('../../components/imgs/WechatIMG171.png')}
+
+          />
+
         </div>
       </div>
      )
   }
 }
- 
+
 
 function mapToState(state){
   return {

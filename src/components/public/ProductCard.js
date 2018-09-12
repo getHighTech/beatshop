@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import grey from '@material-ui/core/colors/grey';
 
+import axios from 'axios';
+import serverConfig  from '../../config/server';
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
@@ -14,7 +16,7 @@ const styles = theme => ({
   card: {
     maxWidth: 400,
     width: "100%",
-    margin: "10px",
+    margin: "15px",
     color:grey[800]
   },
   productImg:{
@@ -33,6 +35,13 @@ const styles = theme => ({
     fontWeight:300
   },
   productPriceNumber:{
+    textDecoration:'line-through',
+    marginLeft:2,
+    marginTop:4,
+    fontSize:14,
+    color:'rgb(156, 148, 148)'
+  },
+  productEndPriceNumber:{
     marginLeft:2,
     marginTop:4,
     fontSize:16,
@@ -64,6 +73,10 @@ const styles = theme => ({
     justifyContent:'space-between',
     alignItems:'center',
     marginLeft:10
+  },
+  sale:{
+    color:'rgb(156, 148, 148)',
+    fontSize:'10px',
   }
 });
 let timer = null;
@@ -77,25 +90,28 @@ class ProductCard extends React.Component {
 
   handleExpandClick = (productId) => {
    this.props.history.push("/products/"+productId);
-   
+
+
   };
 
   handleAddToCart(product){
     const {dispatch} = this.props;
     dispatch(checkAccess("buy", product, "add_product_to_cart"))
-    
+
   }
   componentWillUnMount(){
     clearTimeout(timer);
   }
   componentWillReceiveProps(nextProps){
-    
+
   }
 
+
   handleBuyOneProductBtnClick(product){
-    const {dispatch} = this.props;
-    dispatch(checkAccess("buy", product, "create_one_order_by_product"));
-    
+    // const {dispatch} = this.props;
+    // dispatch(checkAccess("buy", product, "create_one_order_by_product"));
+    let productId = product._id;
+    this.props.history.push("/products/"+productId);
   }
 
 
@@ -103,7 +119,7 @@ class ProductCard extends React.Component {
   render() {
     const { classes, product } = this.props;
     return (
-        <Card className={classes.card} 
+        <Card className={classes.card}
           aria-expanded={this.state.expanded}
           aria-label="产品详情">
             <div className={classes.productHeader}>
@@ -113,9 +129,12 @@ class ProductCard extends React.Component {
               </div>
 
               <div className={classes.right}>
-                <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} /> 
-                <div  className={classes.productPriceNumber}>{product.endPrice/100}</div>
+
+
+                <img style={{height:24}} alt="价钱ICON"  src={require('../imgs/money_icon.svg')} />
+                <div  className={classes.productEndPriceNumber}>{product.endPrice/100}<span style={{fontSize:12}}>起!</span></div>
               </div>
+
             </div>
             <div>
               <div className={classes.productContain}>
@@ -125,13 +144,14 @@ class ProductCard extends React.Component {
             <div>
               <div className={classes.ButtonContain}>
                 <div className={classes.recommend}>
-                  <img style={{height:24}} alt="推荐"  src={require('../imgs/recommend.svg')} /> 
+                  <img style={{height:24}} alt="推荐"  src={require('../imgs/recommend.svg')} />
                   <IconButton aria-label="加入购物车">
                   <AddShoppingCart onClick={()=> this.handleAddToCart(product, 1, product.shopId)} color="primary" />
                   </IconButton>
+                  <span className={classes.sale}>销量:<span style={{color:'rgb(156, 148, 148)'}}>{product.sales_volume}笔</span></span>
                 </div>
-                <Button variant="raised" color="secondary" onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
-                  立即购买
+                <Button variant="raised" color="secondary" style={{marginRight:10}} onClick={()=>this.handleBuyOneProductBtnClick(this.props.product)}>
+                  进去看看
                 </Button>
               </div>
             </div>
@@ -148,7 +168,7 @@ function mapToState(state){
   return {
     cart: state.AppCart,
     user: state.AppUser,
-    orderShow: state.OrderShow 
+    orderShow: state.OrderShow
   }
 }
 

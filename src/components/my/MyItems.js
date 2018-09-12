@@ -1,7 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -18,7 +15,6 @@ import Collapse from '@material-ui/core/Collapse';
 import Shop from '@material-ui/icons/Shop';
 import Stars from '@material-ui/icons/Stars';
 import AddToQueue from '@material-ui/icons/AddToQueue';
-import Face from '@material-ui/icons/Face';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -26,202 +22,211 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
-
-
-
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 560,
-    // backgroundColor: theme.palette.background.paper,
-    // backgroundColor:'red'
-  },
-  bigAvatar: {
-    width: 60,
-    height: 60,
-  },
-  listIcon:{
-      color:'#ff5722'
-  }
-});
+import styled from 'styled-components';
+import { getStore } from '../../tools/localStorage.js';
 class MyItems extends React.Component{
-    state = {
-         open: false,
-
-         confirmContent: "开店需要购买优选会员卡，是否立即购买？",
-         confirmOpen: false
-        };
-    handleClick = () => {
-        this.setState({ open: !this.state.open });
-      };
-
-
-    handleConfirmCancel = () => {
-        this.setState({
-            confirmOpen: false,
-        })
-    }
-
-    handleConfirm = () => {
-        this.props.history.push('/products_by_rolename/blackcard/open');
-        this.setState({
-            confirmOpen: false,
-        })
-    }
-
-    handleGoToShop = (my='') => {
-        const { user, history  } = this.props;
-        console.log('my:'+ my);
+  state = {
+    open: false,
+    confirmContent: "开店需要购买优选会员卡，是否立即购买？",
+    confirmOpen: false
+  };
+  handleClick = () => {
+    this.setState({ open: !this.state.open });
+  };
 
 
+  handleConfirmCancel = () => {
+    this.setState({
+      confirmOpen: false,
+    })
+  }
 
-        if(user.agencyRole!==false){
-            console.log(`走这里`)
-            history.push(my+"/products");
-        }else{
-            console.log("no access");
+  handleConfirm = () => {
+    this.props.history.push('/products_by_rolename/blackcard/open');
+    this.setState({
+      confirmOpen: false,
+    })
+  }
 
-            this.setState({
-                confirmOpen: true,
-            })
+  handleGoToShop = (my='') => {
+    const { user, history  } = this.props;
+    console.log('my:'+ my);
 
+    console.log(123)
 
+    if(user.agencyRole!==false){
+      console.log(`走这里`)
+        history.push(my+"/products");
+    }else{
+      console.log("no access");
 
-        }
+      this.setState({
+        confirmOpen: true,
+      })
 
     }
 
-    handleGoToMemeberCenter(){
+  }
 
+  render(){
+    const { user } = this.props;
+    let  profile = getStore("WechatProfile");
+    if(profile){
+      profile = JSON.parse(profile).userInfo
     }
-
-    render(){
-        const { classes, user } = this.props;
     return (
-        <div className={classes.root}>
-            <List component="nav">
-                <ListItem button component="a" href="#/my/edit_data">
-                    <Avatar
-                            alt="个人头像"
-                            src={userImg}
-                            className={classNames(classes.bigAvatar)}
-                        />
-                <ListItemText primary={this.props.user.user.nickname}
-                secondary={this.props.user.user.username} />
-                <ListItemText primary={this.props.user.user.dataAutograph}  />
-                </ListItem>
-                {this.props.user.roles.includes("blackcard_holder") &&
-                    <ListItem button component="a" href="#/my/blackcard_holder">
-                    <ListItemIcon className={classes.listIcon}>
-                        <Face />
-                    </ListItemIcon>
-                    <ListItemText primary="鲜至店长" />
-                    </ListItem>}
-            </List>
-            <Divider />
-            {
-                user.user.username !== "wanchehui" &&
-                <div>
-                    <ListItem button onClick={this.handleClick}>
-                    <ListItemIcon className={classes.listIcon}>
-                    <Shop  />
-                    </ListItemIcon>
-                    <ListItemText inset primary="我的店铺" />
-                    {this.state.open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                        <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop()} component="button">
-                            <ListItemIcon className={classes.listIcon}>
-                            <AddToQueue />
-                            </ListItemIcon>
-                            <ListItemText inset primary="新加商品"  />
-                        </ListItem>
-                        <ListItem button className={classes.nested} onClick={()=>this.handleGoToShop("/my")}  component="button" href="#/my/products">
-                            <ListItemIcon className={classes.listIcon}>
-                            <Stars />
-                            </ListItemIcon>
-                            <ListItemText inset primary="正在出售的商品" />
-                        </ListItem>
-                        </List>
-                    </Collapse>
-                    <Divider />
-                </div>
+        <Wrap >
+        <List component="nav">
+        <ListItem>
+        { profile 
+          ? 
+      <div>
+      <ReAvatar
+      alt="个人头像"
+      src={profile.headimgurl}
+    />
+      <ListItemText primary={profile.nickname}
+    secondary={user.user.username} />
+      </div>
+      :
+      <div>
+      <a href="#/my/edit_data">
+          <ReAvatar
+          alt="个人头像"
+          src={userImg}
+        />
+      </a>
+      <ListItemText primary={user.user.nickname}
+    secondary={user.user.username} />
+      </div>
         }
+    <ListItemText primary={user.user.dataAutograph}  />
+      </ListItem>
+      {/* {user.roles.includes("blackcard_holder") &&
+        <ListItem button component="a" href="#/my/blackcard_holder">
+          <ReListItemIcon >
+          <Face />
+          </ReListItemIcon>
+          <ListItemText primary="鲜至店长" />
+          </ListItem>} */}
+    </List>
+      <Divider />
+      {
+        user.user.username !== "wanchehui" &&
+          <div>
+          <ListItem button onClick={this.handleClick}>
+          <ReListItemIcon >
+          <Shop  />
+          </ReListItemIcon>
+          <ListItemText inset primary="我的店铺" />
+          {this.state.open ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+          <ListItem button  onClick={()=>this.handleGoToShop()} component="button">
+          <ReListItemIcon >
+          <AddToQueue />
+          </ReListItemIcon>
+          <ListItemText inset primary="商品库房"  />
+          </ListItem>
+          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" >
+          <ReListItemIcon >
+          <Stars />
+          </ReListItemIcon>
+          <ListItemText inset primary="我的橱窗" />
+          </ListItem>
+          </List>
+          </Collapse>
+          <Divider />
+          </div>
+      }
 
 
-            <List component="nav">
-            {
-                user.senior === true ?
-                <div>
-                    <ListItem button component="a" href="#/my/team">
-                    <ListItemIcon className={classes.listIcon}>
-                        <PersonPinIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="我的团队" />
-                    </ListItem>
+    <List component="nav">
+    {
+      user.senior === true ?
+        <div>
+        <ListItem button component="a" href="#/my/team">
+        <ReListItemIcon >
+        <PersonPinIcon/>
+        </ReListItemIcon>
+        <ListItemText primary="我的团队" />
+        </ListItem>
 
-                    <Divider />
-                </div>
-                :
-                null
-
-            }
-
-
-                <ListItem button component="a" href="#/my/orders">
-                <ListItemIcon className={classes.listIcon}>
-                    <FeaturedPlayList />
-                </ListItemIcon>
-                <ListItemText primary="我的订单" />
-                </ListItem>
-
-                <Divider />
-
-
-
-                <ListItem button component="a" href="#/my/bankcards_list">
-                <ListItemIcon className={classes.listIcon}>
-                    <CreditCard />
-                </ListItemIcon>
-                <ListItemText primary="我的银行卡" />
-                </ListItem>
-            </List>
-            <Dialog
-                open={this.state.confirmOpen}
-                onClose={this.handleClose}
-                aria-labelledby="form-dialog-title"
-                >
-                <DialogTitle id="form-dialog-title"></DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                    {this.state.confirmContent}
-                    </DialogContentText>
-
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.handleConfirmCancel} color="primary">
-                    残忍拒绝
-                    </Button>
-                    <Button onClick={this.handleConfirm} color="primary">
-                    立即购买
-                    </Button>
-                </DialogActions>
-            </Dialog>
+        <Divider />
         </div>
-            );
-        }
+        :
+        null
+
+    }
+
+
+    <ListItem button component="a" href="#/my/orders">
+      <ReListItemIcon >
+      <FeaturedPlayList />
+      </ReListItemIcon>
+      <ListItemText primary="我的订单" />
+      </ListItem>
+
+      <Divider />
+
+
+
+      <ListItem button component="a" href="#/my/bankcards_list">
+      <ReListItemIcon >
+      <CreditCard />
+      </ReListItemIcon>
+      <ListItemText primary="我的银行卡" />
+      </ListItem>
+      </List>
+      <Dialog
+      open={this.state.confirmOpen}
+    onClose={this.handleClose}
+    aria-labelledby="form-dialog-title"
+      >
+      <DialogTitle id="form-dialog-title"></DialogTitle>
+      <DialogContent>
+      <DialogContentText>
+      {this.state.confirmContent}
+    </DialogContentText>
+
+      </DialogContent>
+      <DialogActions>
+      <Button onClick={this.handleConfirmCancel} color="primary">
+      残忍拒绝
+      </Button>
+      <Button onClick={this.handleConfirm} color="primary">
+      立即购买
+      </Button>
+      </DialogActions>
+      </Dialog>
+      </Wrap>
+      );
+  }
 }
 
-MyItems.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+const Wrap = styled.div`
+    width: 100%,
+    max-width: 560,
+`
+
+const ReListItemIcon = styled(ListItemIcon)`
+  && {
+    color: #ff5722;
+  }
+`
+
+const ReAvatar = styled(Avatar)`
+    width: 60;
+    height: 60;
+`
+
+
 
 function mapUserToState(state){
-    return {
-        user: state.AppUser
-    }
+  return {
+    user: state.AppUser
+  }
 }
 
-export default connect(mapUserToState)(withStyles(styles)(MyItems));
+export default connect(mapUserToState)(MyItems);
