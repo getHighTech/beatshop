@@ -13,6 +13,7 @@ export default function getRemoteMeteor(
           failAction){
     let loginToken = getStore("stampedToken");
     let endParams = [loginToken, App.name];
+    console.log(remoteMethodName);
     params.forEach(element => {
         if(element){
             endParams.push(element);
@@ -37,7 +38,7 @@ export default function getRemoteMeteor(
 
 
         return MClient.on("result", message => {
-          console.log(message);
+          // console.log(message);
             if (message.id === rltId && !message.error && message.result && rltIds.includes(message.id)) {
                 console.log("message", message);
 
@@ -61,7 +62,7 @@ export default function getRemoteMeteor(
                    return dispatch(failAction(message.result.reason));
                }
             }else{
-                console.log(message);
+                // console.log(message);
                 // return dispatch(failAction(message.error));
             }
         })

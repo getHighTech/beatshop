@@ -1,5 +1,7 @@
 import getRemoteMeteor from "../services/meteor/methods";
 import { getStore, setStore } from "../tools/localStorage";
+import axios from 'axios';
+import serverConfig  from '../config/server';
 
 export const ADD_PRODUCTS_TO_APP_CART ="ADD_PRODUCTS_TO_APP_CART";
 export const CHANGE_PRODUCT_FROM_CART_CHECKED="CHANGE_PRODUCT_FROM_CART_CHECKED";
@@ -17,7 +19,7 @@ export function repeatSyncLocalCartRemote(){
         if(!cartId){cartId = "000";}
         let intervalTimer = setInterval(()=>{
             dispatch(syncLocalCartRemote(cartId, getState().AppCart));
-        }, 2000)      
+        }, 2000)
         intervalTimers.push(intervalTimer);
         dispatch({
             type: "REAPT_SYNC_LOCAL_CART_REMOTE"
@@ -35,7 +37,7 @@ export function addProductsToAppCart(product, count=1, shopName=product.shopName
             userId: getState().AppUser.userId
         });
     }
-    
+
 }
 
 export function changeProductFromCartChecked(productId){
@@ -46,7 +48,7 @@ export function changeProductFromCartChecked(productId){
             productId,
         }  )
     }
-            
+
 }
 
 export const SYNC_REMOTE_CART_LOCAL = "SYNC_REMOTE_CART_LOCAL";
@@ -74,11 +76,27 @@ export function syncRemoteCartlocalSuccess(msg){
     }
 }
 export function syncRemoteCartlocal(userId, cartId){
-    return (dispatch, getState) => {
+    console.log(userId, cartId);
+    return async (dispatch, getState) => {
         dispatch(expectSyncRemoteCartlocal());
-        return getRemoteMeteor(dispatch, getState, "app_carts",
-    "app.sync.remote.cart.local", [userId, cartId], syncRemoteCartlocalSuccess,
-    syncRemoteCartlocalFail);
+    //     return getRemoteMeteor(dispatch, getState, "app_carts",
+    // "app.sync.remote.cart.local", [userId, cartId], syncRemoteCartlocalSuccess,
+    // syncRemoteCartlocalFail);
+    try{
+        const result =  await axios.get(`${serverConfig.server_url}/api/shopCart`,{
+            params:{
+              userId,
+              cartId
+            }
+          })
+          console.log(result);
+        return  dispatch(syncRemoteCartlocalSuccess(result.data.cart[0]))
+    } catch(err) {
+        dispatch(syncRemoteCartlocalFail(err))
+    }
+
+
+
     }
 }
 
@@ -113,6 +131,7 @@ export function syncLocalCartRemoteSuccess(msg){
 }
 
 export function syncLocalCartRemote(cartId, cartParams){
+  console.log(cartId,cartParams);
     return (dispatch, getState) => {
         dispatch(expectSyncLocalCartRemote());
         return getRemoteMeteor(dispatch, getState, "app_carts",
@@ -122,7 +141,7 @@ syncLocalCartRemoteFail);
 }
 
 export const MINUS_PRODUCT_FROM_CART = "MINUS_PRODUCT_FROM_CART";
-export const PLUS_PRODUCT_FROM_CART = "PLUS_PRODUCT_FROM_CART"; 
+export const PLUS_PRODUCT_FROM_CART = "PLUS_PRODUCT_FROM_CART";
 export const DELETE_PRODUCT_FROM_CART = "DELETE_PRODUCT_FROM_CART";
 export const CHANGE_PRODUCT_COUNT_FROM_CART = "CHANGE_PRODUCT_COUNT_FROM_CART";
 

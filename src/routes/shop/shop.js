@@ -87,7 +87,7 @@ class Shop extends React.Component{
     const { dispatch, layout, match,shop,products } = this.props;
     let shopId = match.params.id
     let pagesize = 5
-    const {page} = this.state;
+    var pages = this.state.page;
     if(layout.title!=='店铺详情'){
 
         dispatch(setAppLayout(
@@ -107,7 +107,7 @@ class Shop extends React.Component{
       // dispatch(getShopProductsLimit(shopId,pages,5))
       axios.get(`${serverConfig.server_url}/api/shop/products`,{
         params:{
-          shopId,page,pagesize
+          shopId,pages,pagesize
         }
       }).then((res)=>{
         console.log(res.data.products);

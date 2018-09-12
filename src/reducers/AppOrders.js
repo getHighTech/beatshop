@@ -3,7 +3,11 @@ import {
          GET_ORDERS_LIMIT_SUCCESS,
          GET_ORDERS_LIMIT_FAIL,
          CANCEL_ORDER_SUCCESS,
-
+         COLLECT_ORDER_SUCCESS,
+         GET_CONFIRMED_ORDER,
+         GET_PAID_ORDER,
+         GET_RECEVIED_ORDER,
+         GET_CANCEL_ORDER
         } from "../actions/app_orders";
 
 export default function  AppOrders(
@@ -14,9 +18,9 @@ export default function  AppOrders(
             { products: []}
         ],
         orders_cancel: [],
-        orders_paid: "unloaded",
-        orders_confirmed: "unloaded",
-        orders_recevied: "unloaded",
+        orders_paid: [],
+        orders_confirmed: [],
+        orders_recevied: [],
         order: {},
         orderStatus: "unloaded",
     }, action
@@ -42,6 +46,28 @@ export default function  AppOrders(
         case CANCEL_ORDER_SUCCESS:
             return Object.assign({}, state, {
                 orders_confirmed: action.msg.orders_confirmed,
+                loading:false
+            })
+        case COLLECT_ORDER_SUCCESS:
+            return Object.assign({},state,{
+                orders_paid: action.msg.orders_paid,
+                loading:false
+            })
+        case GET_CONFIRMED_ORDER:
+            return Object.assign({},state,{
+              orders_confirmed:action.result
+            })
+        case GET_PAID_ORDER:
+            return Object.assign({},state,{
+              orders_paid:action.result
+            })
+        case GET_RECEVIED_ORDER:
+            return Object.assign({},state,{
+              orders_recevied:action.result
+            })
+        case GET_CANCEL_ORDER:
+            return Object.assign({},state,{
+              orders_cancel:action.result
             })
         default:
             return state;
