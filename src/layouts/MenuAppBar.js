@@ -134,10 +134,10 @@ class MenuAppBar extends React.Component {
   //     }, 1230);
   //   }
   // }
-  handleEditorClick(type){
+  handleEditorClick(type,orderId){
     switch (type) {
       case "new_contact":
-        this.props.history.push("/my/new_contact")
+        this.props.history.push(`/my/new_contact/${orderId}`)
         break;
       case "withdraw":
         this.props.history.push("/withdraw")
@@ -197,7 +197,7 @@ class MenuAppBar extends React.Component {
               </Button>
             }
             { layout.hasNewCreate &&
-              <Button onClick={()=>this.handleEditorClick(layout.editorType)} className={classes.btn} color="secondary">
+              <Button onClick={()=>this.handleEditorClick(layout.editorType,layout.orderId)} className={classes.btn} color="secondary">
                 新建
                 <OpenInNew />
               </Button>

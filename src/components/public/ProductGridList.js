@@ -52,7 +52,7 @@ const BannerImg = styled.img`
 const REGridList = styled(GridList)`
   width: 100%;
   height: auto;
-  justify-tontent: center;
+  justify-content: center;
   margin-top:36;
 `
 

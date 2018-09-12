@@ -90,7 +90,7 @@ class Order extends React.Component {
     window.location.assign('http://xianzhi.10000cars.cn/app/getopenid/'+from_url);
   }
   render(){
-    const { classes, orderShow } = this.props;
+    const { classes, orderShow, match } = this.props;
     const custDivider = () => {
         return (
             <div style={{
@@ -143,7 +143,7 @@ class Order extends React.Component {
 
             </Typography>
                 <Button
-                    className={classes.button} component="a" href="#/my/contacts/orderuse"
+                    className={classes.button} component="a" href={`#/my/contacts/orderuse/${match.params.id}`}
                     variant="raised" color="secondary"
                     >请填写您的联系方式
                 </Button>
@@ -169,7 +169,7 @@ class Order extends React.Component {
                         </ListItem>
                     </List>
                     <Button   style={{maxHeight: "80px", maxWidth: "100px"}}
-                        className={classes.button} component="a" href="#/my/contacts/orderuse"
+                        className={classes.button} component="a" href={`#/my/contacts/orderuse/${match.params.id}`}
                         variant="raised" color="secondary"
                     >更改左边信息
                     </Button>

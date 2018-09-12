@@ -67,6 +67,7 @@ class Statics extends React.Component{
     componentWillMount(){
         let userId = getStore("userId");
         Axios.get(serverConfig.server_url+"/api/v0/my_statics?userId="+userId).then(rlt=>{
+            console.log(rlt.data)
             this.setState({
                 today: rlt.data.yestodayTotalAmount/100,
                 week: rlt.data.weekTotalAmount/100,
@@ -97,9 +98,9 @@ class Statics extends React.Component{
               </TableHead>
               <TableBody>
                 <TableRow className={classes.row}>
-                  <TableCell className={classes.incomeNumber} numeric>{(today/100).toString()}</TableCell>
-                  <TableCell className={classes.incomeNumber} numeric>{(week/100).toString()}</TableCell>
-                  <TableCell className={classes.incomeNumber} numeric>{(month/100).toString()}</TableCell>
+                  <TableCell className={classes.incomeNumber} numeric>{today}</TableCell>
+                  <TableCell className={classes.incomeNumber} numeric>{week}</TableCell>
+                  <TableCell className={classes.incomeNumber} numeric>{month}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
