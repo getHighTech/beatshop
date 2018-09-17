@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -70,18 +69,18 @@ class AppLoginPassword extends React.Component {
     this.handleLoginBtnClick = this.handleLoginBtnClick.bind(this);
   }
 
-  
+
   componentDidMount(){
     const { dispatch } = this.props;
     dispatch(setAppLayout(
       {
-          isBack: true, 
-          backTo: "/", 
-          title: "密码登录", 
-          hasCart: false, 
-          hasBottomNav: false, 
+          isBack: true,
+          backTo: "/",
+          title: "密码登录",
+          hasCart: false,
+          hasBottomNav: false,
           hasGeoLoc: false,
-          hasEditor: false, 
+          hasEditor: false,
           hasSearch: false,
           snackContent: "",
           snackOpen: false,
@@ -92,7 +91,7 @@ class AppLoginPassword extends React.Component {
   handleSnackClose = () => {
     this.setState({ snackOpen: false });
   };
-  
+
   componentWillUnmount(){
     timers.forEach(timer => {
       clearTimeout(timer);
@@ -104,7 +103,7 @@ class AppLoginPassword extends React.Component {
       usernameError: false,
       usernameLabel: "用户名/手机号",
       PasswordError: false,
-      PasswordLabel: "密码" 
+      PasswordLabel: "密码"
     })
     if(item === "username"){
       this.setState({
@@ -116,8 +115,8 @@ class AppLoginPassword extends React.Component {
         password: e.target.value
       })
     }
-    
-    
+
+
   }
   handleLoginBtnClick(){
     const {location, currentCity} = this.props
@@ -125,12 +124,12 @@ class AppLoginPassword extends React.Component {
       usernameError: false,
       usernameLabel: "用户名/手机号",
       passwordError: false,
-      passwordLabel: "密码" 
+      passwordLabel: "密码"
     })
     if(this.state.username===""){
       this.setState({
         usernameError: true,
-        usernameLabel: "此项不得为空" 
+        usernameLabel: "此项不得为空"
       })
 
       return false;
@@ -138,7 +137,7 @@ class AppLoginPassword extends React.Component {
     if(this.state.password===""){
       this.setState({
         passwordError: true,
-        passwordLabel: "密码不得为空" 
+        passwordLabel: "密码不得为空"
       })
 
       return false;
@@ -153,11 +152,11 @@ class AppLoginPassword extends React.Component {
       address,
       city,
     }
-    
+
     const { dispatch } = this.props;
-    
+
     return dispatch(userLogin("password", loginParams));
-    
+
   }
   componentWillReceiveProps(nextProps){
     const {user, history} = nextProps;
@@ -187,20 +186,20 @@ class AppLoginPassword extends React.Component {
       if(user.loginFailReason === "USER NOT FOUND"){
         return this.setState({
           usernameError: true,
-          usernameLabel: "用户不存在" 
+          usernameLabel: "用户不存在"
         })
       }
       if(user.loginFailReason === "LOGIN PASS WRONG"){
         return this.setState({
           passwordError: true,
-          passwordLabel: "密码错误" 
+          passwordLabel: "密码错误"
         })
       }
     }
   }
   render(){
     const { classes, history, user } = this.props;
-    const { 
+    const {
        usernameError,
        passwordError, usernameLabel, passwordLabel, snackOpen, snackContent } = this.state;
     return (
@@ -225,7 +224,7 @@ class AppLoginPassword extends React.Component {
                     className={classes.textField}
                     type="text"
                     autoComplete="current-password"
-                    onChange={(e)=>this.handleOnChange.bind(this)(e, "username")}                      
+                    onChange={(e)=>this.handleOnChange.bind(this)(e, "username")}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -233,7 +232,7 @@ class AppLoginPassword extends React.Component {
                         </InputAdornment>
                       ),
                     }}
-                    
+
                   /><br/>
                   <TextField required={!passwordError} error={passwordError}
                       id="password-input"
@@ -253,19 +252,19 @@ class AppLoginPassword extends React.Component {
                   <div style={{ flexGrow: 1, width: "100%"}}>
                       {(user.loginStatus === "loading")&& <LinearProgress color="secondary" />}
                     </div>
-                  <Button 
-                  onClick={this.handleLoginBtnClick} 
+                  <Button
+                  onClick={this.handleLoginBtnClick}
                   disabled={(user.loginStatus === "loading" || user.loginStatus === "success")? true : false}
-                  variant="raised" color="secondary" 
+                  variant="raised" color="secondary"
                   style={{color: (user.loginStatus === "loading" || user.loginStatus === "success")? "black" : "white"}}
-                  className={classes.button} 
+                  className={classes.button}
                   fullWidth={true}>
                   {this.state.buttonText}
                   </Button>
                   <div><br/>手机验证码登录?<Button  onClick={()=>history.push("/login")} color="secondary">前往</Button></div>
                   <div><br/>忘记密码?<Button  onClick={()=>history.push("/login")} color="secondary">前往</Button></div>
-                  
-                    
+
+
                   </form>
                   <Snackbar
                       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -274,8 +273,8 @@ class AppLoginPassword extends React.Component {
                       SnackbarContentProps={{
                         'aria-describedby': 'message-id',
                       }}
-                      message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>} 
-                    
+                      message={<span style={{width: "40%"}} id="message-id">{snackContent}</span>}
+
                   />
               </div>
               </CardContent>
@@ -283,7 +282,7 @@ class AppLoginPassword extends React.Component {
           </div>
     );
   }
-  
+
 }
 
 AppLoginPassword.propTypes = {
