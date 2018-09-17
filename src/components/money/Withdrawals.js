@@ -11,6 +11,7 @@ import { getStore } from '../../tools/localStorage';
 import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import App from '../../config/app.json';
+import styled from 'styled-components';
 
 
 const styles = theme => ({
@@ -87,7 +88,10 @@ class Withdrawals extends React.Component{
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {withdraw.map(n => {
+                    {
+                      withdraw.length> 0 
+                      ?
+                      withdraw.map(n => {
                       return (
                         <TableRow key={n.id}>
                           <TableCell className={classes.thName} component="th" scope="row">
@@ -100,7 +104,17 @@ class Withdrawals extends React.Component{
                           <TableCell className={classes.th} numeric>{this.checkStatus(n.status)}</TableCell>
                         </TableRow>
                       );
-                    })}
+                    })
+                    :
+                    <div style={{
+                      width: 339,
+                      height: 60,
+                      top: -87,
+                      position: "relative",
+                      background: "white"
+                    }}> 暂无数据 </div>
+                    }
+
                   </TableBody>
         </Table>
           <div className={classes.loadMore}>
@@ -114,5 +128,10 @@ class Withdrawals extends React.Component{
       )
     }
 }
+
+const Content = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
 export default withStyles(styles)(Withdrawals);
