@@ -39,9 +39,9 @@ class Shop extends React.Component{
   state = {
     loading:true,
     value: 0,
-    productsTotle:1000,
     page: 1,
     shop:'',
+    count:0,
     products:[
 
     ]
@@ -73,12 +73,14 @@ class Shop extends React.Component{
         loading:false,
         page:pages,
         products:products.concat(res.data.products),
+        count:res.data.productsCount
       })
     }).catch((err)=>{
       this.setState({
           loading: true,
           page: 1,
           products: [],
+          count:0
       })
     })
 
@@ -115,13 +117,15 @@ class Shop extends React.Component{
           loading:false,
           page:1,
           products:res.data.products,
-          shop:res.data.shop
+          shop:res.data.shop,
+          count:res.data.productsCount
         })
       }).catch((err)=>{
         this.setState({
             loading: true,
             page: 1,
             products: [],
+            count:0
         })
       })
 
@@ -134,7 +138,7 @@ class Shop extends React.Component{
   }
   render(){
 
-    const { value,shop,products } = this.state;
+    const { value,shop,products,productsCount } = this.state;
     console.log(shop);
     console.log(products);
 
@@ -187,9 +191,9 @@ class Shop extends React.Component{
         )}
       <LoadMore >
 
-      {this.state.products.length === this.state.productsTotle?
+      {this.state.products.length === this.state.count?
 
-        <Button color="primary"  >
+        <Button color="#a9a0a0"  >
         没有数据啦
         </Button>:
         <Button color="primary"  onClick={this.loadMoreProductData.bind(this)}>
@@ -260,7 +264,7 @@ const ProductPrice = styled.div`
       margin-top:14px;
       color:#ff5722;
       font-weight:500px;
-    
+
 `
 const ProductShear = styled.div`
       margin-left:36%;

@@ -15,9 +15,9 @@ import {  changePassword } from '../../actions/users.js';
 class EditDatas extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-                  userOpen: false, 
-                  signOpen: false, 
+    this.state = {
+                  userOpen: false,
+                  signOpen: false,
                   passwordOpen: false,
                   username: "",
                   password: "",
@@ -150,7 +150,7 @@ class EditDatas extends Component {
                 onChange={(e)=>this.handelChange(e,'agpassowrd') }
               />
                 <br />
-            
+
               <ReButton variant="contained" color="primary" onClick={()=>this.resetPassword()}>
                 确认
               </ReButton>
