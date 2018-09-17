@@ -13,7 +13,11 @@ import { connect } from 'react-redux'
 const styles = {
   root: {
     backgroundColor: "rgba(0, 0, 0, 0.78)",
-    flexShrink: 0
+    flexShrink: 0,
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
   }
 };
 
