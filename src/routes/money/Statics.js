@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core/styles';
 import serverConfig from '../../config/server';
+import App from '../../config/app.json';
 const styles = theme => ({
     card:{
       width:'92%',
@@ -66,12 +67,17 @@ class Statics extends React.Component{
 
     componentWillMount(){
         let userId = getStore("userId");
-        Axios.get(serverConfig.server_url+"/api/v0/my_statics?userId="+userId).then(rlt=>{
+        Axios.get(`${serverConfig.server_url}/api/stat`,{
+          params: {
+            userId,
+            appName: App.name
+          }
+        }).then(rlt=>{
             console.log(rlt.data)
             this.setState({
-                today: rlt.data.yestodayTotalAmount/100,
-                week: rlt.data.weekTotalAmount/100,
-                month: rlt.data.monthsTotalAmount/100,
+                today: rlt.data.yestodayTotalAmount,
+                week: rlt.data.weekTotalAmount,
+                month: rlt.data.monthsTotalAmount,
             })
             
         }).catch(err=>{
@@ -98,9 +104,9 @@ class Statics extends React.Component{
               </TableHead>
               <TableBody>
                 <TableRow className={classes.row}>
-                  <TableCell className={classes.incomeNumber} numeric>{today}</TableCell>
-                  <TableCell className={classes.incomeNumber} numeric>{week}</TableCell>
-                  <TableCell className={classes.incomeNumber} numeric>{month}</TableCell>
+                  <TableCell className={classes.incomeNumber} numeric>{ today.length> 0 ? today[0].total/100 : 0}</TableCell>
+                  <TableCell className={classes.incomeNumber} numeric>{ week.length> 0 ? week[0].total/100 : 0}</TableCell>
+                  <TableCell className={classes.incomeNumber} numeric>{ month.length> 0 ? month[0].total/100 : 0}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
