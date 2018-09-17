@@ -18,7 +18,7 @@ export const wechatShare =(product)=>{
     // setStore('ticket',res.data.ticket);
     // setStore('access_token',res.data.access_token)
     let result = res.data.parameter;
-    console.log(result);
+    console.log(JSON.parse(result));
     wx.config({
           debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: 'wx0564668ed5671740',
