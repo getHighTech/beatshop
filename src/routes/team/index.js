@@ -119,12 +119,14 @@ const List = styled.div`
 `
 
 const UserName = styled.div`
-  text-align: left;
+  width:50%;
+  text-align: center;
   font-size:14px
 `
 
 const JoinTime = styled.div`
-  text-align: right;
+  width:50%;
+  text-align: center;
   font-size:14px
 `
 

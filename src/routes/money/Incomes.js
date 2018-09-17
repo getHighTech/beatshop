@@ -55,7 +55,7 @@ const styles = theme => ({
       display:'flex',
       marginBottom:5
     }
-  
+
   })
 
   function TabContainer(props) {
@@ -72,6 +72,7 @@ class Incomes extends React.Component{
             loading: true,
             page: 1,
             incomes: [],
+            count:0
         }
     }
 
@@ -96,21 +97,23 @@ class Incomes extends React.Component{
             }
         ).then(rlt=>{
             console.log("请求收入数据", rlt.data);
-            
+
             this.setState({
                 loading: false,
                 page: this.state.page+1,
                 incomes: incomes.concat(rlt.data.balance_incomes),
+                count:rlt.data.balance_incomes.length
             })
-            
+
         }).catch(err=>{
             this.setState({
                 loading: true,
                 page: 1,
                 incomes: [],
+                count:0
             })
             console.log(err);
-            
+
         })
     }
 
@@ -123,23 +126,25 @@ class Incomes extends React.Component{
               userId,
               appName
             }
-          }  
+          }
         ).then(rlt=>{
             console.log("请求收入数据", rlt.data);
             this.setState({
                 loading: false,
                 page: 1,
                 incomes: rlt.data.balance_incomes,
+                count:rlt.data.balance_incomes.length
             })
-            
+
         }).catch(err=>{
             this.setState({
                 loading: true,
                 page: 1,
                 incomes: [],
+                count:0
             })
             console.log(err);
-            
+
         })
 
     }
@@ -147,9 +152,9 @@ class Incomes extends React.Component{
     render(){
 
         const {classes} = this.props;
-        const {incomes, loading} = this.state;
+        const {incomes, loading,count} = this.state;
         return (
-            
+
             <TabContainer >
             <div className={classes.root}>
               <Table className={classes.table}>
@@ -171,11 +176,11 @@ class Incomes extends React.Component{
                       background: "white"
                     }}> 暂无数据 </div> :
                     incomes.map((n, index) => {
-                    
+
                     return (
                       <TableRow key={index}>
                         <TableCell className={classes.thName} component="th" scope="row">
-                          { n.productId? n.productId.name_zh: n.product? n.product.name_zh : "测试数据缺失"} 
+                          { n.productId? n.productId.name_zh: n.product? n.product.name_zh : "测试数据缺失"}
                         </TableCell>
                         <TableCell className={classes.th} numeric>{n.agency? n.agency.username: n.buyer? n.buyer.username: "测试数据缺失"}</TableCell>
                         <TableCell className={classes.th} numeric>{"￥"+n.amount/100}</TableCell>
@@ -187,12 +192,21 @@ class Incomes extends React.Component{
 
               </Table>
               <div className={classes.loadMore}>
-             
-                
+              {
+                count===10
+                ?
                 <Button onClick={this.loadMore} disabled={loading}  color="primary" className={classes.button} >
                     {loading? "正在加载": "加载更多"}
                 </Button>
-              
+                :
+
+                <Button color="#a9a0a0" >没有数据啦</Button>
+
+
+              }
+
+
+
               </div>
             </div>
           </TabContainer>
