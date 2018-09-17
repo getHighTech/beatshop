@@ -21,6 +21,7 @@ export function expectRemoveAgencyProducts() {
     }
 }
 export function removeAgencyProductsSuccess(msg) {
+  console.log(msg);
     return {
         type: REMOVE_AGENCY_PRODUCTS_SUCCESS,
         msg
