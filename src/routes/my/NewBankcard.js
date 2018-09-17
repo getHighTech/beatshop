@@ -164,6 +164,7 @@ class NewBankcard extends React.Component {
         <TextField
           id="full-width"
           label="银行卡号"
+          type="number"
           fullWidth required  error={this.state.cardNumberFeildError}
           margin="normal"
           value={this.state.cardNumber}

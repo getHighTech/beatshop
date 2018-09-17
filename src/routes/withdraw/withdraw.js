@@ -58,6 +58,8 @@ class Withdraw extends React.Component{
   };
 
   handleChange = (name, event) => {
+    console.log(name);
+    console.log(event.target.value);
     this.setState({
       [name]: event.target.value,
     });
@@ -66,7 +68,7 @@ class Withdraw extends React.Component{
     e.preventDefault();
     const {dispatch, bankcards} = this.props;
     console.log(bankcards);
-    
+
     let bankcard = bankcards[parseInt(this.state.bankcard, 10)];
     if(bankcards.length === 1){
       bankcard = bankcards[0];
@@ -90,15 +92,14 @@ class Withdraw extends React.Component{
       return false
     }
 
-   
+
     if(amount===''){
       dispatch(appShowMsg("withdraw_must",1200));
       return false
     }
-
      let  withdrawParams = {
        bank: bankcard,
-       amount, 
+       amount,
        userId: getStore("userId"),
        bankId: bankcard._id
      }
@@ -106,24 +107,24 @@ class Withdraw extends React.Component{
       "revoke_withdraw",
      "revoke_withdraw_success",
     1500, withdrawParams, "/money"))
-     
+
 
   }
 
 
   componentDidMount(){
     const { dispatch, layout, bankcards, money } = this.props;
-    
+
     if(layout.title!=='提现界面'){
         dispatch(setAppLayout(
             {
-                isBack: true, 
-                backTo: "/money", 
-                title: "提现界面", 
-                hasCart: false, 
-                hasBottomNav: false, 
+                isBack: true,
+                backTo: "/money",
+                title: "提现界面",
+                hasCart: false,
+                hasBottomNav: false,
                 hasGeoLoc: false,
-                hasEditor: false, 
+                hasEditor: false,
                 hasSearch: false,
             }
         ));
@@ -146,15 +147,15 @@ class Withdraw extends React.Component{
         this.setState({
           ableToWithDrawAmount: rlt.data.amount/100,
         })
-        
+
     }).catch(err=>{
         console.log(err);
-        
+
     })
     if(bankcards === "unloaded" && !this.state.balanceLoad){
         // dispatch(loadMoneyPage(getStore('userId')));
         dispatch(loadUserBankcards());
-        
+
       }
   }
   ableToWithDrawAmount= () =>{
@@ -211,7 +212,7 @@ class Withdraw extends React.Component{
               {bankcards.map((option, index) => (
                 <option key={index} value={index}>
                {option.accountNumber}
-                  
+
                 </option>
               ))}
             </TextField>
