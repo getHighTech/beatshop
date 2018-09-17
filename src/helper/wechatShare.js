@@ -31,6 +31,7 @@ export const wechatShare =(product)=>{
               'onMenuShareWeibo',
               'onMenuShareQZone']// 必填，需要使用的JS接口列表
       });
+      alert(result)
       wx.error(function(res){
         alert('错误信息'+res.errMsg)
       });
