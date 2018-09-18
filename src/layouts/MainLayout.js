@@ -56,6 +56,7 @@ const Wrap = styled.div`
 
 `
 const Content = styled.div`
+   margin-top: 48px;
    flex-grow: 1;
    overflow-y: auto;
    -webkit-overflow-scrolling: touch;
