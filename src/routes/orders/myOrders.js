@@ -260,6 +260,7 @@ class MyOrders extends React.Component{
     const order_recevied=orders.orders_recevied;
     const order_cancel=orders.orders_cancel;
     const { value} = this.state;
+    console.log(order_paid);
     return(
       <div>
         <Card className={classes.card}>
