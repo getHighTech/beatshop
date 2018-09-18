@@ -19,7 +19,9 @@ import styled from 'styled-components';
 const styles = theme => ({
   root: {
     width: "100%",
-    zIndex: '1000'
+    zIndex: '1000',
+    position: 'fixed',
+    top: 0,
 
   },
   btn:{
