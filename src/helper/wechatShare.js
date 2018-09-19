@@ -40,10 +40,10 @@ export const wechatShare =(product)=>{
              link:`${url}#/share/${product._id}`, // 分享链接
              imgUrl: product.cover, // 分享图标
              success: function () {
-               alert('分享成功')
+              //  alert('分享成功')
              },
              cancel: function () {
-               alert('failAction')
+               alert('分享取消')
              }
          });
          wx.onMenuShareAppMessage({
@@ -51,10 +51,10 @@ export const wechatShare =(product)=>{
              link: `${url}#/share/${product._id}`, // 分享链接
              imgUrl: product.cover, // 分享图标
              success: function () {
-               alert('分享成功')
+              //  alert('分享成功')
              },
              cancel: function () {
-               alert('failAction')
+               alert('分享取消')
              }
          });
     //      wx.onMenuShareAppMessage({

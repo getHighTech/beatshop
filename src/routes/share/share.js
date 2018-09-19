@@ -109,7 +109,7 @@ class Share extends React.Component {
         </div>
         <div className={classes.description}>
           <div>分享二维码或者商品链接</div>
-          <div>有人购买该商品即可获得相应推分享佣金</div>
+          <div>鲜生活-至万家</div>
         </div>
         <Divider style={{width:'80%',marginLeft:'10%'}}/>
         <div className={`qrCode ${classes.qecode}`}>

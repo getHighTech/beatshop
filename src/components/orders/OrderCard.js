@@ -13,8 +13,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { getStore } from '../../tools/localStorage.js';
 import { getToken } from '../../actions/token';
-
-
+import axios from 'axios';
+import serverConfig  from '../../config/server';
 
 
 const styles = {
@@ -72,7 +72,26 @@ class OrderCard extends React.Component{
   cancelOrder = (orderId,userId)  => {
     console.log(orderId)
     console.log(userId)
-      this.props.dispatch(cancelOrder(orderId,userId))
+      // this.props.dispatch(cancelOrder(orderId,userId))
+      const appName='xianzhi';
+      const page = 1;
+      axios.get(`${serverConfig.server_url}/api/order/status_confirmed`,{
+         params: {
+               userId,
+               orderId,
+               appName,
+               page
+           }
+         }
+       ).then((res)=>{
+      //  dispatch(getConfirmedOrder(res.data.order))
+       let value = res.data.order;
+       this.props.aaa(value)
+
+           })
+           .catch((err)=>{
+             console.log(err)
+           })
   }
 
   _confirmOrder = (orderId,userId) => {
@@ -116,7 +135,26 @@ class OrderCard extends React.Component{
     let orderId  = this.state.localOrder;
     let userId = this.state.localUserId;
     if (orderId!=='') {
-      this.props.dispatch(collectOrder(orderId,userId))
+      // this.props.dispatch(collectOrder(orderId,userId))
+      const appName='xianzhi';
+      const page = 1;
+      axios.get(`${serverConfig.server_url}/api/order/status_paid`,{
+         params: {
+               userId,
+               orderId,
+               appName,
+               page
+           }
+         }
+       ).then((res)=>{
+      //  dispatch(getConfirmedOrder(res.data.order))
+       let value = res.data.order;
+       this.props.bbb(value)
+
+           })
+           .catch((err)=>{
+             console.log(err)
+           })
       this.setState({
         open:false,
         localUserId:'',
