@@ -86,6 +86,7 @@ class MyOrders extends React.Component{
     count:100,
     incomeSource:[],
     incomeTotle:6,
+    incomeCount:0,
     withdrawData:[],
     withdrawTotle:6,
     order_confirmed:[],
@@ -120,7 +121,8 @@ class MyOrders extends React.Component{
             }
           ).then((res)=>{
             this.setState({
-              order_confirmed:res.data.order
+              order_confirmed:res.data.order,
+              incomeCount:res.data.order.length
             })
           dispatch(getConfirmedOrder(res.data.order))
               })
@@ -141,7 +143,8 @@ class MyOrders extends React.Component{
             }
           ).then((res)=>{
             this.setState({
-              order_paid:res.data.order
+              order_paid:res.data.order,
+              incomeCount:res.data.order.length
             })
             dispatch(getPaidOrder(res.data.order))
             })
@@ -163,7 +166,8 @@ class MyOrders extends React.Component{
             }
           ).then((res)=>{
             this.setState({
-              order_recevied:res.data.order
+              order_recevied:res.data.order,
+              incomeCount:res.data.order.length
             })
               dispatch(getReceviedOrder(res.data.order))
             })
@@ -185,7 +189,8 @@ class MyOrders extends React.Component{
             }
           ).then((res)=>{
             this.setState({
-              order_cancel:res.data.order
+              order_cancel:res.data.order,
+              incomeCount:res.data.order.length
             })
             dispatch(getCancelOrder(res.data.order))
 
@@ -206,6 +211,8 @@ class MyOrders extends React.Component{
     console.log(key)
      let  page = this.state[key+'_page']+1
      console.log(page);
+     const orders= this.state['order_'+key];
+     console.log(orders);
      let userId = getStore("userId");
      let appName = App.name;
      let status = key
@@ -221,7 +228,8 @@ class MyOrders extends React.Component{
       console.log(res)
           this.setState({
             [key+'_page']:page,
-            ['order_'+key]: res.data.order
+            ['order_'+key]: orders.concat(res.data.order),
+            incomeCount:res.data.order.length
           })
         })
         .catch((err)=>{
@@ -233,9 +241,12 @@ class MyOrders extends React.Component{
     this.setState({
       order_confirmed:value
     })
+  }
 
-
-
+  bbb(value){
+    this.setState({
+      order_paid:value
+    })
   }
   loadWithdrawFirstPageData(){
     let dataSource1 = [
@@ -277,7 +288,8 @@ class MyOrders extends React.Component{
           ).then((res)=>{
             console.log(res)
                 this.setState({
-                  order_confirmed: res.data.order
+                  order_confirmed: res.data.order,
+                  incomeCount:res.data.order.length
                 })
 
               dispatch(getConfirmedOrder(res.data.order))
@@ -329,13 +341,13 @@ class MyOrders extends React.Component{
 
                       {order_confirmed.map(n => {
                         return (
-                            <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch} userId={user.userId}  aaa={this.aaa.bind(this)}/>
+                            <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch} userId={user.userId}  aaa={this.aaa.bind(this)} />
                         );
                       })}
 
                   <div className={classes.loadMore}>
-                  {this.state.incomeSource.length === this.state.incomeTotle?
-                    <Button color="primary" className={classes.button} >
+                  {this.state.incomeCount !== 10?
+                    <Button  className={classes.button} style={{color:"#968d8a"}}>
                     没有数据啦
                     </Button>:
                     <Button color="primary" className={classes.button} onClick={()=> this.loadMoreWithdrawData("confirmed")}>
@@ -348,14 +360,14 @@ class MyOrders extends React.Component{
               {value === 1 &&  <TabContainer>
                     {order_paid.map(n => {
                       return (
-                        <OrderCard status="paid" key={n._id}  {...n} dispatch={this.props.dispatch}/>
+                        <OrderCard status="paid" key={n._id}  {...n} dispatch={this.props.dispatch} bbb={this.bbb.bind(this)}/>
                       );
                     })}
 
                 <div className={classes.loadMore}>
-                  {this.state.withdrawData.length === this.state.withdrawTotle?
+                  {this.state.incomeCount !== 10?
 
-                    <Button color="primary" className={classes.button} >
+                    <Button style={{color:"#968d8a"}} className={classes.button} >
                     没有数据啦
                     </Button>:
                     <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('paid')}>
@@ -373,9 +385,9 @@ class MyOrders extends React.Component{
                       }
 
                 <div className={classes.loadMore}>
-                  {this.state.withdrawData.length === this.state.withdrawTotle?
+                  {this.state.incomeCount !== 10?
 
-                    <Button color="primary" className={classes.button} >
+                    <Button style={{color:"#968d8a"}} className={classes.button} >
                     没有数据啦
                     </Button>:
                     <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('recevied')}>
@@ -394,9 +406,9 @@ class MyOrders extends React.Component{
 
 
                 <div className={classes.loadMore}>
-                  {this.state.withdrawData.length === this.state.withdrawTotle?
+                  {this.state.incomeCount !== 10?
 
-                    <Button color="primary" className={classes.button} >
+                    <Button style={{color:"#968d8a"}} className={classes.button} >
                     没有数据啦
                     </Button>:
                     <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('cancel')}>

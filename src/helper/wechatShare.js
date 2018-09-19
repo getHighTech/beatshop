@@ -20,7 +20,7 @@ export const wechatShare =(product)=>{
     let result = res.data.parameter;
     wx.config({
           debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-          appId: 'wx412cc1c5e02a292e',
+          appId: 'wx0564668ed5671740',
           timestamp: result.timestamp, // 必填，生成签名的时间戳
           nonceStr: result.nonceStr, // 必填，生成签名的随机串
           signature: result.signature,// 必填，签名
@@ -40,10 +40,10 @@ export const wechatShare =(product)=>{
              link:`${url}#/share/${product._id}`, // 分享链接
              imgUrl: product.cover, // 分享图标
              success: function () {
-               alert('分享成功')
+              //  alert('分享成功')
              },
              cancel: function () {
-               alert('failAction')
+               alert('分享取消')
              }
          });
          wx.onMenuShareAppMessage({
@@ -51,10 +51,10 @@ export const wechatShare =(product)=>{
              link: `${url}#/share/${product._id}`, // 分享链接
              imgUrl: product.cover, // 分享图标
              success: function () {
-               alert('分享成功')
+              //  alert('分享成功')
              },
              cancel: function () {
-               alert('failAction')
+               alert('分享取消')
              }
          });
     //      wx.onMenuShareAppMessage({

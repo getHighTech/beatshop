@@ -74,11 +74,13 @@ class OrderCard extends React.Component{
     console.log(userId)
       // this.props.dispatch(cancelOrder(orderId,userId))
       const appName='xianzhi';
+      const page = 1;
       axios.get(`${serverConfig.server_url}/api/order/status_confirmed`,{
          params: {
                userId,
                orderId,
                appName,
+               page
            }
          }
        ).then((res)=>{
@@ -133,7 +135,26 @@ class OrderCard extends React.Component{
     let orderId  = this.state.localOrder;
     let userId = this.state.localUserId;
     if (orderId!=='') {
-      this.props.dispatch(collectOrder(orderId,userId))
+      // this.props.dispatch(collectOrder(orderId,userId))
+      const appName='xianzhi';
+      const page = 1;
+      axios.get(`${serverConfig.server_url}/api/order/status_paid`,{
+         params: {
+               userId,
+               orderId,
+               appName,
+               page
+           }
+         }
+       ).then((res)=>{
+      //  dispatch(getConfirmedOrder(res.data.order))
+       let value = res.data.order;
+       this.props.bbb(value)
+
+           })
+           .catch((err)=>{
+             console.log(err)
+           })
       this.setState({
         open:false,
         localUserId:'',
