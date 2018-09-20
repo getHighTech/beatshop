@@ -76,7 +76,7 @@ class AllProducts extends React.Component{
             }
         ));
         dispatch(getShopProductsLimit());
-        
+
     }
 
 
@@ -160,7 +160,7 @@ class AllProducts extends React.Component{
           {productsLoading && <LoadingItem />}
           {this.state.Products.length === this.state.productsTotle?
 
-            <Button color="primary" className={classes.button} >
+            <Button style={{color:"#968d8a"}} className={classes.button} >
             没有数据啦
             </Button>:
             <Button  disabled={productsLoading? true: false} color="primary" className={classes.button}>

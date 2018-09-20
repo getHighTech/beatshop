@@ -58,10 +58,8 @@ class CartBottom extends React.Component{
       const {  cart } = this.props;
       cart.status==="all-unselected"? true : false 
       if(cart.status==="all-unselected" || cart.products.length===0 ) {
-        console.log(111)
         return true
       }else {
-        console.log(222)
         return false
       }
     }
@@ -75,7 +73,6 @@ class CartBottom extends React.Component{
         <AppBar position="static" className={classes.appbar} color="default">
           <Toolbar style={{backgroundColor: "rgba(4, 4, 4, 0.3)", color: "white"}}>
           <FormControlLabel style={{color: "white"}}
-          
           control={ 
             <Checkbox
               checked={cart.status === "all-selected"?  true : false}

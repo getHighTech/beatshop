@@ -193,7 +193,7 @@ class Shop extends React.Component{
 
       {this.state.products.length === this.state.count?
 
-        <Button color="#a9a0a0"  >
+        <Button style={{color:"#968d8a"}} >
         没有数据啦
         </Button>:
         <Button color="primary"  onClick={this.loadMoreProductData.bind(this)}>

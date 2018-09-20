@@ -131,7 +131,7 @@ class SellingProducts extends React.Component{
             }
         ));
         dispatch(loadAgencyProducts(user.shopId))
-        
+
     }
     this.loadFirstPageData()
   }
@@ -150,7 +150,7 @@ class SellingProducts extends React.Component{
         <div className={classes.loadMore}>
           {this.state.Products.length === this.state.productsTotle?
 
-            <Button color="primary" className={classes.button} >
+            <Button style={{color:"#968d8a"}} className={classes.button} >
             没有数据啦
             </Button>:
             <Button color="primary" className={classes.button} onClick={this.loadMoreProductData.bind(this)}>
