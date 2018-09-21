@@ -13,9 +13,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { getShopProductsLimit, agencyOneProduct } from '../../actions/products';
+import { getShopProductsLimit, agencyOneProduct,getShopProductsLimitSuccess,getShopProductsLimitFail } from '../../actions/products';
 import LoadingItem from '../../components/public/LoadingItem';
 import { getStore } from '../../tools/localStorage';
+import serverConfig   from '../../config/server.js';
+import  axios  from 'axios';
+import App from '../../config/app.json';
+
 
 const styles = theme => ({
   root:{
@@ -36,7 +40,10 @@ class AllProducts extends React.Component{
   state = {
     productsTotle:8,
     Products:[],
-    open: []
+    open: [],
+    count:0,
+    page:1,
+    loading:true
   }
   handleClickOpen = (index) => {
     let open = this.state.open;
@@ -55,13 +62,48 @@ class AllProducts extends React.Component{
     dispatch(agencyOneProduct(products[index], getStore("userId"),user.appNameShopId,user.shopId))
     this.handleClose(index)
   }
+  loadMore=()=>{
+    const { dispatch, layout, products } = this.props;
+      if(this.state.loading){
+          return 0;
+      }
+      this.setState({
+          loading: true,
+      })
+      let Products = this.state.Products;
+      let appName = App.name;
+      axios.get(
+          `${serverConfig.server_url}/api/new_add_products`,{
+            params: {
+              page: this.state.page+1,
+              appName
+            }
+          }
+      ).then(res=>{
+          this.setState({
+              loading: false,
+              page: this.state.page+1,
+              Products: Products.concat(res.data.products),
+              count:res.data.products.length
+          })
+          dispatch(getShopProductsLimitSuccess(Products.concat(res.data.products)));
 
+      }).catch(err=>{
+          this.setState({
+              loading: true,
+              page: 1,
+              Products: [],
+              count:0
+          })
+          console.log(err);
 
-
+      })
+  }
 
   componentDidMount(){
     const { dispatch, layout, products } = this.props;
-
+    const appName = App.name;
+    const page = this.state.page;
     if(layout.title!=='鲜至臻品商品库'){
         dispatch(setAppLayout(
             {
@@ -75,9 +117,39 @@ class AllProducts extends React.Component{
                 hasSearch: false,
             }
         ));
-        dispatch(getShopProductsLimit());
+
 
     }
+    // dispatch(getShopProductsLimit())
+    //
+    // this.setState({
+    //   Products:products,
+    //   loading:false,
+    //   count:products.length
+    // })
+
+    axios.get(`${serverConfig.server_url}/api/new_add_products`,{
+      params:{
+        appName,page
+      }
+    }).then((res)=>{
+      this.setState({
+        Products:res.data.products,
+        loading:false,
+        count:res.data.products.length
+      })
+      dispatch(getShopProductsLimitSuccess(res.data.products));
+
+    }).catch((err)=>{
+      this.setState({
+        loading:true,
+        page:1,
+        Products:[],
+        count:0
+      })
+      dispatch(getShopProductsLimitFail())
+
+    })
 
 
 
@@ -86,6 +158,9 @@ class AllProducts extends React.Component{
   }
   render(){
     const { classes, productsLoading, products } = this.props;
+    const {Products,count,loading}=this.state;
+    console.log(Products);
+    console.log(products);
     if (products === "unloaded") {
       return (
         <div className={classes.root}>
@@ -99,9 +174,9 @@ class AllProducts extends React.Component{
       { productsLoading ? <LoadingItem /> : null }
         <GridList cellHeight={180} className={classes.gridList}>
           {
-            products.length> 0?
+            Products.length> 0?
 
-            products.map((tile, index) => {
+            Products.map((tile, index) => {
 
             return (
 
@@ -157,15 +232,15 @@ class AllProducts extends React.Component{
         }
         </GridList>
         <div className={classes.loadMore}>
-          {productsLoading && <LoadingItem />}
-          {this.state.Products.length === this.state.productsTotle?
-
-            <Button style={{color:"#968d8a"}} className={classes.button} >
-            没有数据啦
-            </Button>:
-            <Button  disabled={productsLoading? true: false} color="primary" className={classes.button}>
-            {productsLoading? "正在加载": "加载更多"}
+        {
+          count===10
+          ?
+            <Button onClick={this.loadMore} disabled={loading} color="primary" className={classes.button}>
+            {loading? "正在加载": "加载更多"}
             </Button>
+            :
+
+            <Button style={{color:"#968d8a"}} >没有数据啦</Button>
           }
         </div>
       </div>
