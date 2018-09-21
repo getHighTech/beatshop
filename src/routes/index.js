@@ -224,7 +224,7 @@ class App extends React.Component {
                         <Route path="/login/:msg" component={AppLogin} />
                         <Route exact path="/login" component={AppLogin} />
                         <Route exact path="/toast" component={Toast} />
-                        <Route exact path="/password-reset" component={ResetPassword} />
+                        <PrivateRoute exact path="/password-reset" component={ResetPassword} />
                         <Route exact path="/password-forgot" component={ForgotPassword} />
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>

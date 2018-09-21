@@ -255,7 +255,7 @@ class ForgotPassword extends React.Component {
     }
     let Goto = getStore('Goto');
     let url;
-    Goto ? url=`/products/${Goto}` : url="/"
+    Goto ? url=`/products/${Goto}` : url="/password-reset"
     return dispatch(
       appShowMsgAndInjectDataReactWithPath(
         "user_mobile_login", "mobile_login", 1200, loginParams, url)

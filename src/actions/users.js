@@ -303,10 +303,11 @@ export function getUserFail(msg){
     }
 }
 
-export function changePassword(){
+export function changePassword(password,repassword,agpassword){
     return (dispatch, getState) => {
         dispatch(expectGetUser());
+        console.log(password)
         return getRemoteMeteor(dispatch, getState, "users", 
-         'app.change.password', [getStore('userId')], GET_USER_SUCCESS,GET_USER_FAIL);
+         'app.change.password', [getStore('userId'),password,repassword,agpassword], GET_USER_SUCCESS,GET_USER_FAIL);
     }
 }
