@@ -102,7 +102,10 @@ class AppCart extends React.Component {
 
 
             </List>
-            <CartBottom />
+          
+            {
+              cart.products.length>0 ?   <CartBottom /> : null
+            }
       </div>
     );
   }

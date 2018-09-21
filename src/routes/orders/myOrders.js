@@ -86,12 +86,13 @@ class MyOrders extends React.Component{
     count:100,
     incomeSource:[],
     incomeTotle:6,
+    incomeCount:0,
     withdrawData:[],
     withdrawTotle:6,
-    order_confirmed: [],
-    order_paid: [],
-    order_recevied: [],
-    order_cancel: [],
+    order_confirmed:[],
+    order_paid:[],
+    order_recevied:[],
+    order_cancel:[],
   };
 
   handleChange = (event, value) => {
@@ -99,17 +100,30 @@ class MyOrders extends React.Component{
      let userId = getStore("userId");
      let appName = App.name;
      var status;
+     var page;
+     this.setState({
+       confirmed_page: 1,
+       paid_page: 1,
+       recevied_page: 1,
+       cancel_page: 1,
+     })
      switch (value) {
        case 0:
          status = "confirmed";
+         page=this.state.confirmed_page;
          axios.get(`${serverConfig.server_url}/api/order/status`,{
             params: {
                   userId,
                   status,
-                  appName
+                  appName,
+                  page
               }
             }
           ).then((res)=>{
+            this.setState({
+              order_confirmed:res.data.order,
+              incomeCount:res.data.order.length
+            })
           dispatch(getConfirmedOrder(res.data.order))
               })
               .catch((err)=>{
@@ -118,14 +132,20 @@ class MyOrders extends React.Component{
          break;
        case 1:
         status = "paid";
+         page=this.state.paid_page;
         axios.get(`${serverConfig.server_url}/api/order/status`,{
             params: {
                   userId,
                   status,
-                  appName
+                  appName,
+                  page
               }
             }
           ).then((res)=>{
+            this.setState({
+              order_paid:res.data.order,
+              incomeCount:res.data.order.length
+            })
             dispatch(getPaidOrder(res.data.order))
             })
             .catch((err)=>{
@@ -134,16 +154,21 @@ class MyOrders extends React.Component{
         break;
        case 2:
         status = "recevied";
-
+         page=this.state.recevied_page;
         axios.get(`${serverConfig.server_url}/api/order/status`,{
 
             params: {
                   userId,
                   status,
-                  appName
+                  appName,
+                  page
               }
             }
           ).then((res)=>{
+            this.setState({
+              order_recevied:res.data.order,
+              incomeCount:res.data.order.length
+            })
               dispatch(getReceviedOrder(res.data.order))
             })
             .catch((err)=>{
@@ -152,17 +177,23 @@ class MyOrders extends React.Component{
             break
        case 3:
         status = "cancel";
-
+         page=this.state.cancel_page;
         axios.get(`${serverConfig.server_url}/api/order/status`,{
 
             params: {
                   userId,
                   status,
-                  appName
+                  appName,
+                  page
               }
             }
           ).then((res)=>{
+            this.setState({
+              order_cancel:res.data.order,
+              incomeCount:res.data.order.length
+            })
             dispatch(getCancelOrder(res.data.order))
+
             })
             .catch((err)=>{
               console.log(err)
@@ -179,6 +210,9 @@ class MyOrders extends React.Component{
   loadMoreWithdrawData(key){
     console.log(key)
      let  page = this.state[key+'_page']+1
+     console.log(page);
+     const orders= this.state['order_'+key];
+     console.log(orders);
      let userId = getStore("userId");
      let appName = App.name;
      let status = key
@@ -192,17 +226,28 @@ class MyOrders extends React.Component{
       }
     ).then((res)=>{
       console.log(res)
-       console.log( this.state.order_confirmed.concat(res.data.order))
           this.setState({
-            ['order_'+key]:   this.state['order_'+key].concat(res.data.order),
-            page
+            [key+'_page']:page,
+            ['order_'+key]: orders.concat(res.data.order),
+            incomeCount:res.data.order.length
           })
         })
         .catch((err)=>{
           console.log(err)
         })
   }
+  aaa(value){
+    console.log(value);
+    this.setState({
+      order_confirmed:value
+    })
+  }
 
+  bbb(value){
+    this.setState({
+      order_paid:value
+    })
+  }
   loadWithdrawFirstPageData(){
     let dataSource1 = [
       {id:1,withdraw:500,  arrival:500, time:'杨志强强', status:'提现成功'}
@@ -229,7 +274,7 @@ class MyOrders extends React.Component{
     }
     let userId = getStore("userId");
     let status = "confirmed"
-    let page = this.state.page;
+    let page = this.state.confirmed_page;
     let appName = App.name;
          axios.get(`${serverConfig.server_url}/api/order/status`,{
 
@@ -241,10 +286,11 @@ class MyOrders extends React.Component{
               }
             }
           ).then((res)=>{
-            // console.log(res)
-            //     this.setState({
-            //       order_confirmed: res.data.order
-            //     })
+            console.log(res)
+                this.setState({
+                  order_confirmed: res.data.order,
+                  incomeCount:res.data.order.length
+                })
 
               dispatch(getConfirmedOrder(res.data.order))
 
@@ -255,12 +301,11 @@ class MyOrders extends React.Component{
   }
   render (){
     const { classes, orders, user} = this.props;
-    const order_confirmed = orders.orders_confirmed
-    const order_paid=orders.orders_paid;
-    const order_recevied=orders.orders_recevied;
-    const order_cancel=orders.orders_cancel;
-    const { value} = this.state;
-    console.log(order_paid);
+    // const order_confirmed = orders.orders_confirmed
+    // const order_paid=orders.orders_paid;
+    // const order_recevied=orders.orders_recevied;
+    // const order_cancel=orders.orders_cancel;
+    const { value,order_confirmed,order_paid,order_recevied,order_cancel} = this.state;
     return(
       <div>
         <Card className={classes.card}>
@@ -296,13 +341,13 @@ class MyOrders extends React.Component{
 
                       {order_confirmed.map(n => {
                         return (
-                            <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch} userId={user.userId}/>
+                            <OrderCard status="unpaid" key={n._id}  {...n} dispatch={this.props.dispatch} userId={user.userId}  aaa={this.aaa.bind(this)} />
                         );
                       })}
 
                   <div className={classes.loadMore}>
-                  {this.state.incomeSource.length === this.state.incomeTotle?
-                    <Button color="primary" className={classes.button} >
+                  {this.state.incomeCount !== 10?
+                    <Button  className={classes.button} style={{color:"#968d8a"}}>
                     没有数据啦
                     </Button>:
                     <Button color="primary" className={classes.button} onClick={()=> this.loadMoreWithdrawData("confirmed")}>
@@ -315,14 +360,14 @@ class MyOrders extends React.Component{
               {value === 1 &&  <TabContainer>
                     {order_paid.map(n => {
                       return (
-                        <OrderCard status="paid" key={n._id}  {...n} dispatch={this.props.dispatch}/>
+                        <OrderCard status="paid" key={n._id}  {...n} dispatch={this.props.dispatch} bbb={this.bbb.bind(this)}/>
                       );
                     })}
 
                 <div className={classes.loadMore}>
-                  {this.state.withdrawData.length === this.state.withdrawTotle?
+                  {this.state.incomeCount !== 10?
 
-                    <Button color="primary" className={classes.button} >
+                    <Button style={{color:"#968d8a"}} className={classes.button} >
                     没有数据啦
                     </Button>:
                     <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('paid')}>
@@ -340,9 +385,9 @@ class MyOrders extends React.Component{
                       }
 
                 <div className={classes.loadMore}>
-                  {this.state.withdrawData.length === this.state.withdrawTotle?
+                  {this.state.incomeCount !== 10?
 
-                    <Button color="primary" className={classes.button} >
+                    <Button style={{color:"#968d8a"}} className={classes.button} >
                     没有数据啦
                     </Button>:
                     <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('recevied')}>
@@ -361,9 +406,9 @@ class MyOrders extends React.Component{
 
 
                 <div className={classes.loadMore}>
-                  {this.state.withdrawData.length === this.state.withdrawTotle?
+                  {this.state.incomeCount !== 10?
 
-                    <Button color="primary" className={classes.button} >
+                    <Button style={{color:"#968d8a"}} className={classes.button} >
                     没有数据啦
                     </Button>:
                     <Button color="primary" className={classes.button} onClick={()=>this.loadMoreWithdrawData('cancel')}>

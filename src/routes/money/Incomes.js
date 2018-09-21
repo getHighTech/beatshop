@@ -200,7 +200,7 @@ class Incomes extends React.Component{
                 </Button>
                 :
 
-                <Button color="#a9a0a0" >没有数据啦</Button>
+                <Button style={{color:"#968d8a"}} >没有数据啦</Button>
 
 
               }

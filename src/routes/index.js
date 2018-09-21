@@ -6,6 +6,7 @@ import {
     Switch,Redirect
   } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import {  wechatAuth } from '../helper/wechatAuth.js';
 import withRoot from '../withRoot';
 import createHistory from 'history/createHashHistory';
 import MainLayout from '../layouts/MainLayout.js';
@@ -41,7 +42,8 @@ import EditData from './my/EditData'
 import WechatChecker from './WechatChecker.js';
 import Team from '../routes/team/index';
 import Toast from '../routes/toast/index';
-import {  wechatAuth } from '../helper/wechatAuth.js';
+import ResetPassword from '../routes/login/restPassword.js';
+import ForgotPassword from '../routes/login/forgotPassword.js';
 import styled from 'styled-components'
 
 
@@ -99,8 +101,7 @@ class App extends React.Component {
               {...rest}
               render={props => {
                 if(user.roles.includes("login_user")){
-
-                      // wechatAuth()
+                    //   wechatAuth()
                     return (
                         <Component {...props} />
                       )
@@ -223,6 +224,8 @@ class App extends React.Component {
                         <Route path="/login/:msg" component={AppLogin} />
                         <Route exact path="/login" component={AppLogin} />
                         <Route exact path="/toast" component={Toast} />
+                        <Route exact path="/password-reset" component={ResetPassword} />
+                        <Route exact path="/password-forgot" component={ForgotPassword} />
                         <Route exact path="/404" component={NoMatchPage} />
                         <Route component={NoMatchPage}/>
                     </Switch>
