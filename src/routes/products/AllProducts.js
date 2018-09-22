@@ -101,6 +101,7 @@ class AllProducts extends React.Component{
   }
 
   componentDidMount(){
+    console.log('走了这');
     const { dispatch, layout, products } = this.props;
     const appName = App.name;
     const page = this.state.page;
@@ -174,9 +175,9 @@ class AllProducts extends React.Component{
       { productsLoading ? <LoadingItem /> : null }
         <GridList cellHeight={180} className={classes.gridList}>
           {
-            Products.length> 0?
+            products.length> 0?
 
-            Products.map((tile, index) => {
+            products.map((tile, index) => {
 
             return (
 
