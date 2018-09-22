@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
 import { connect } from 'react-redux';
 import { checkAccess } from '../../actions/check_access';
+import { setStore } from '../../tools/localStorage.js'
 
 const styles = theme => ({
     root: {
@@ -59,7 +60,10 @@ class ProductBottomBar extends React.Component{
         const {dispatch} = this.props;
         dispatch(checkAccess("buy", product, "add_product_to_cart"))
       }
-
+    handleAddUrl = (product) => {
+      console.log(product._id)
+      setStore("Goto",`${product._id}`)
+    }
     render(){
       const { classes, product, dispatch } = this.props;
 
@@ -83,7 +87,7 @@ class ProductBottomBar extends React.Component{
                </Button>
             </div>
             <div style={{width:'20%',textAlign:'right'}}>
-              <Button style={{padding:0}} color="inherit" href={'#/shops/'+ product.shopId}>查看店铺</Button>
+              <Button style={{padding:0}} color="inherit" href={'#/shops/'+ product.shopId} onClick={()=>this.handleAddUrl(product)}>查看店铺</Button>
             </div>
           </Toolbar>
         </AppBar>

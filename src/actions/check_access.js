@@ -17,7 +17,6 @@ function expectCheckAccess(accessName){
 
 
 export function checkAccess(opera, product, accessName){
-    console.log(product)
     setStore("Goto",`${product._id}`)
     let acl = product.acl;
 
