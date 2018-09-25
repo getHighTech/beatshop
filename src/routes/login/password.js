@@ -154,7 +154,6 @@ class AppLoginPassword extends React.Component {
     }
 
     const { dispatch } = this.props;
-
     return dispatch(userLogin("password", loginParams));
 
   }
