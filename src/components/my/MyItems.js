@@ -102,43 +102,31 @@ class MyItems extends React.Component{
         }
     <ListItemText primary={user.user.dataAutograph}  />
       </ListItem>
-      {/* {user.roles.includes("blackcard_holder") &&
-        <ListItem button component="a" href="#/my/blackcard_holder">
-          <ReListItemIcon >
-          <Face />
-          </ReListItemIcon>
-          <ListItemText primary="鲜至店长" />
-          </ListItem>} */}
     </ReList>
-      <Divider />
-      {
-        user.user.username !== "wanchehui" &&
-          <div>
-       
-          {/* <Collapse in={this.state.open} timeout="auto" unmountOnExit> */}
-          <List component="div" >
-          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" >
-          <ReListItemIcon >
-          <Shop />
-          </ReListItemIcon>
-          <ListItemText inset primary="我的店铺" />
-          </ListItem>
-          <Divider />
-
-          <ListItem button  onClick={()=>this.handleGoToShop()} component="button">
-          <ReListItemIcon >
-          <AddToQueue />
-          </ReListItemIcon>
-          <ListItemText inset primary="商品库房"  />
-          </ListItem>
-          </List>
-          {/* </Collapse> */}
-          <Divider />
-          </div>
-      }
+     
 
 
     <List component="nav">
+    {
+        user.user.username !== "wanchehui" &&
+          <div>
+          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  >
+          <ReListItemIcon >
+          <Shop />
+          </ReListItemIcon>
+          <ListItemText primary="我的店铺" />
+          </ListItem>
+          <Divider />
+
+          <ListItem button  onClick={()=>this.handleGoToShop()} >
+          <ReListItemIcon >
+          <AddToQueue />
+          </ReListItemIcon>
+          <ListItemText  primary="商品库房"  />
+          </ListItem>
+          <Divider />
+          </div>
+      }
     {
       user.senior === true ?
         <div>
