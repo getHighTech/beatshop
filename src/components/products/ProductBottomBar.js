@@ -86,9 +86,9 @@ class ProductBottomBar extends React.Component{
                {this.props.isAppointment? '立即预约' : '立即购买'}
                </Button>
             </div>
-            <div style={{width:'20%',textAlign:'right'}}>
+            {/* <div style={{width:'20%',textAlign:'right'}}>
               <Button style={{padding:0}} color="inherit" href={'#/shops/'+ product.shopId} onClick={()=>this.handleAddUrl(product)}>查看店铺</Button>
-            </div>
+            </div> */}
           </Toolbar>
         </AppBar>
 

@@ -76,7 +76,7 @@ class MyItems extends React.Component{
     }
     return (
         <Wrap >
-        <List component="nav">
+        <ReList component="nav">
         <ListItem>
         { profile 
           ? 
@@ -109,34 +109,30 @@ class MyItems extends React.Component{
           </ReListItemIcon>
           <ListItemText primary="鲜至店长" />
           </ListItem>} */}
-    </List>
+    </ReList>
       <Divider />
       {
         user.user.username !== "wanchehui" &&
           <div>
-          <ListItem button onClick={this.handleClick}>
+       
+          {/* <Collapse in={this.state.open} timeout="auto" unmountOnExit> */}
+          <List component="div" >
+          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" >
           <ReListItemIcon >
-          <Shop  />
+          <Shop />
           </ReListItemIcon>
           <ListItemText inset primary="我的店铺" />
-          {this.state.open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
+          </ListItem>
+          <Divider />
+
           <ListItem button  onClick={()=>this.handleGoToShop()} component="button">
           <ReListItemIcon >
           <AddToQueue />
           </ReListItemIcon>
           <ListItemText inset primary="商品库房"  />
           </ListItem>
-          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" >
-          <ReListItemIcon >
-          <Stars />
-          </ReListItemIcon>
-          <ListItemText inset primary="我的橱窗" />
-          </ListItem>
           </List>
-          </Collapse>
+          {/* </Collapse> */}
           <Divider />
           </div>
       }
@@ -206,8 +202,8 @@ class MyItems extends React.Component{
 }
 
 const Wrap = styled.div`
-    width: 100%,
-    max-width: 560,
+    width: 100%;
+    max-width: 560;
 `
 
 const ReListItemIcon = styled(ListItemIcon)`
@@ -219,6 +215,9 @@ const ReListItemIcon = styled(ListItemIcon)`
 const ReAvatar = styled(Avatar)`
     width: 60;
     height: 60;
+`
+const ReList = styled(List)`
+  margin-bottom: 800;
 `
 
 
