@@ -37,6 +37,7 @@ class EditDatas extends Component {
   resetPassword = () => {
     console.log(this.props)
     const { password , repassword, agpassword } = this.state
+    console.log(this.state)
     this.props.dispatch(changePassword(password,repassword,agpassword))
   }
   changeCover = () => {
@@ -131,7 +132,7 @@ class EditDatas extends Component {
                 label="请输入旧密码"
                 placeholder="长度不要大于10个字符"
                 margin="normal"
-                onChange={(e)=>this.handelChange(e,'passowrd') }
+                onChange={(e)=>this.handelChange(e,'password') }
               />
               <br />
                <TextField
@@ -139,7 +140,7 @@ class EditDatas extends Component {
                 label="请输入密码"
                 placeholder="长度不要大于10个字符"
                 margin="normal"
-                onChange={(e)=>this.handelChange(e,'repassowrd') }
+                onChange={(e)=>this.handelChange(e,'repassword') }
               />
                 <br />
                <TextField
@@ -147,7 +148,7 @@ class EditDatas extends Component {
                 label="请确认密码"
                 placeholder="长度不要大于10个字符"
                 margin="normal"
-                onChange={(e)=>this.handelChange(e,'agpassowrd') }
+                onChange={(e)=>this.handelChange(e,'agpassword') }
               />
                 <br />
 

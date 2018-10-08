@@ -170,17 +170,19 @@ export function getShopProductsLimitSuccess(msg){
 
 
 
-export function getShopProductsLimit(shopId,page){
+export function getShopProductsLimit(){
   const appName = app.name;
   console.log(page);
+  const page = 1;
     return  (dispatch, getState) => {
         dispatch(expectGetShopProductsLimit());
         try{
            return axios.get(`${serverConfig.server_url}/api/new_add_products`,{
                 params:{
-                  appName
+                  appName,page
                 }
               }).then((res)=>{
+                console.log(res.data.products);
                 dispatch(getShopProductsLimitSuccess(res.data.products))
               })
         } catch( err) {

@@ -40,7 +40,8 @@ class Withdrawals extends React.Component{
   state = {
     page: 1,
     withdraw: [],
-    loading: true
+    loading: true,
+    count:0
   }
   componentDidMount(){
     const userId = getStore('userId');
@@ -54,11 +55,60 @@ class Withdrawals extends React.Component{
     ).then((res)=>{
       console.log(res.data)
        this.setState({
-         withdraw: res.data.balance_charges
+         withdraw: res.data.balance_charges,
+         count:res.data.balance_charges.length,
+         page:1,
+         loading:false
        })
       })
       .catch((err)=>{
         console.log(err)
+        this.setState({
+            loading: true,
+            page: 1,
+            withdraw: [],
+            count:0
+        })
+      })
+  }
+  loadMore=()=>{
+      if(this.state.loading){
+          return 0;
+      }
+      this.setState({
+          loading: true,
+      })
+      let withdraw = this.state.withdraw;
+      let userId = getStore("userId");
+      let appName = App.name;
+      axios.get(
+          `${serverConfig.server_url}/api/withdraw`,{
+            params: {
+              userId,
+              page: this.state.page+1,
+              pagesize: 10,
+              appName
+            }
+          }
+      ).then(rlt=>{
+          console.log("请求收入数据", rlt.data);
+
+          this.setState({
+              loading: false,
+              page: this.state.page+1,
+              withdraw: withdraw.concat(rlt.data.balance_charges),
+              count:rlt.data.balance_charges.length
+          })
+
+      }).catch(err=>{
+          this.setState({
+              loading: true,
+              page: 1,
+              incomes: [],
+              count:0
+          })
+          console.log(err);
+
       })
   }
   checkStatus = (status) => {
@@ -75,7 +125,7 @@ class Withdrawals extends React.Component{
   }
     render(){
       const { classes} = this.props;
-      const { withdraw, loading } = this.state;
+      const { withdraw, loading,count } = this.state;
       return (
         <div>
         <Table className={classes.table}>
@@ -89,7 +139,7 @@ class Withdrawals extends React.Component{
                   </TableHead>
                   <TableBody>
                     {
-                      withdraw.length> 0 
+                      withdraw.length> 0
                       ?
                       withdraw.map(n => {
                       return (
@@ -117,13 +167,23 @@ class Withdrawals extends React.Component{
 
                   </TableBody>
         </Table>
-          <div className={classes.loadMore}>
-
+        <div className={classes.loadMore}>
+        {
+          count===10
+          ?
           <Button onClick={this.loadMore} disabled={loading}  color="primary" className={classes.button} >
-          {loading? "正在加载": "加载更多"}
+              {loading? "正在加载": "加载更多"}
           </Button>
-          
-           </div>
+          :
+
+          <Button style={{color:"#968d8a"}} >没有数据啦</Button>
+
+
+        }
+
+
+
+        </div>
            </div>
       )
     }

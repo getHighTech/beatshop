@@ -53,7 +53,7 @@ const styles = theme => ({
 //倒计时
 let timers =[]
 
-class AppLoginPassword extends React.Component {
+class ResetPassword extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -76,7 +76,7 @@ class AppLoginPassword extends React.Component {
       {
           isBack: true,
           backTo: "/",
-          title: "密码登录",
+          title: "重置密码",
           hasCart: false,
           hasBottomNav: false,
           hasGeoLoc: false,
@@ -154,6 +154,7 @@ class AppLoginPassword extends React.Component {
     }
 
     const { dispatch } = this.props;
+
     return dispatch(userLogin("password", loginParams));
 
   }
@@ -260,8 +261,6 @@ class AppLoginPassword extends React.Component {
                   fullWidth={true}>
                   {this.state.buttonText}
                   </Button>
-                  <div><br/>手机验证码登录?<Button  onClick={()=>history.push("/login")} color="secondary">前往</Button></div>
-                  <div><br/>忘记密码?<Button  onClick={()=>history.push("/password-forgot")} color="secondary">前往</Button></div>
 
 
                   </form>
@@ -284,7 +283,7 @@ class AppLoginPassword extends React.Component {
 
 }
 
-AppLoginPassword.propTypes = {
+ResetPassword.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 function mapToState(state){
@@ -295,4 +294,4 @@ function mapToState(state){
   }
 }
 
-export default connect(mapToState)(withStyles(styles)(AppLoginPassword));
+export default connect(mapToState)(withStyles(styles)(ResetPassword));

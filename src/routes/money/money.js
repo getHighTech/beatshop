@@ -179,6 +179,7 @@ class Money extends React.Component{
                 </div>
               </div> 
             </Typography>
+            
            <Statics />
 
           </CardContent>
