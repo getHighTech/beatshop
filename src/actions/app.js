@@ -174,8 +174,14 @@ function msgSwitchByReason(reason, option={}){
             return {
                 content: "必须填写正确金额"
             }
-
-
+        case "password wrong":
+            return {
+                content: "密码错误"
+            }
+        case "password success":
+            return {
+                content: "修改成功"
+            }
         default:
             break;
     }
