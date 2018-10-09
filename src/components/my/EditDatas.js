@@ -164,10 +164,10 @@ class EditDatas extends Component {
             <TextField
                 id="with-placeholder"
                 label="请输入旧密码"
-                placeholder="长度不要大于10个字符"
                 margin="normal"
                 required 
                 error={true}
+                type="password"
                 helperText={errors.password}
                 onChange={(e)=>this.handelChange(e,'password') }
               />
@@ -175,20 +175,22 @@ class EditDatas extends Component {
                <TextField
                 id="with-placeholder"
                 label="请输入密码"
-                placeholder="长度不要大于10个字符"
+                required 
                 error={true}
                 helperText={errors.repassword}
                 margin="normal"
+                type="password"
                 onChange={(e)=>this.handelChange(e,'repassword') }
               />
                 <br />
                <TextField
                 id="with-placeholder"
                 label="请确认密码"
-                placeholder="长度不要大于10个字符"
+                required 
                 error={true}
                 helperText={errors.agpassword}
                 margin="normal"
+                type="password"
                 onChange={(e)=>this.handelChange(e,'agpassword') }
               />
                 <br />

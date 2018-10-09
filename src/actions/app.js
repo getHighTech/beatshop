@@ -176,7 +176,7 @@ function msgSwitchByReason(reason, option={}){
             }
         case "password wrong":
             return {
-                content: "密码错误"
+                content: "您输入旧密码错误"
             }
         case "password success":
             return {
