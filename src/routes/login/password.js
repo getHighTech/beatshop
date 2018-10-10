@@ -154,7 +154,6 @@ class AppLoginPassword extends React.Component {
     }
 
     const { dispatch } = this.props;
-
     return dispatch(userLogin("password", loginParams));
 
   }
@@ -176,8 +175,24 @@ class AppLoginPassword extends React.Component {
       })
       return setTimeout(()=>{
         let Goto = getStore('Goto');
+        let willgo = getStore('willgo')
         console.log(Goto)
-        Goto ?  history.push(`/products/${Goto}`) : history.push(user.urlBeforeLogined)
+        console.log(user.urlBeforeLogined);
+        // Goto ?  history.push(`/products/${Goto}`) : history.push(user.urlBeforeLogined)
+        if (Goto) {
+          history.push(`/products/${Goto}`);
+        }
+        else {
+          if (willgo) {
+            console.log('11');
+            console.log(willgo);
+            history.push(willgo)
+          }
+          else {
+            console.log('22');
+            history.push(`/`)
+          }
+        }
       },1000)
 
     }
