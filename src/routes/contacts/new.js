@@ -87,6 +87,8 @@ class NewContact extends React.Component {
        });
   }
 
+ 
+
   handleInputChange(e, feild){
     let inputObj = {};
     inputObj[feild] = e.target.value;
