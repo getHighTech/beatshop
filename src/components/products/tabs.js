@@ -6,9 +6,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import styled from 'styled-components';
 function TabContainer({ children, dir }) {
   return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+    <Typography component="div" dir={dir} style={{ padding: 2*2}}>
       {children}
     </Typography>
   );
@@ -61,7 +62,7 @@ class ProductTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>
+          <TabContainer   dir={theme.direction}>
           {/* <div style={
             {textAlign: "center",
             marginBottom: "15%",
@@ -71,8 +72,8 @@ class ProductTabs extends React.Component {
           </div> */}
 
           {typeof(des)!='undefined'? <img src={this.props.des} style={{width: "100%"}} alt=''/> :'暂无图片' }
-          </TabContainer>
-          <TabContainer dir={theme.direction}>
+          </TabContainer  >
+          <TabContainer   dir={theme.direction}>
           <div style={{width:'100%'}}>
 
 
@@ -96,7 +97,7 @@ class ProductTabs extends React.Component {
 
 
           </div>
-          </TabContainer>
+          </TabContainer  >
         </SwipeableViews>
       </div>
     );

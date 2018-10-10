@@ -76,7 +76,7 @@ class MyItems extends React.Component{
     }
     return (
         <Wrap >
-        <List component="nav">
+        <ReList component="nav">
         <ListItem>
         { profile 
           ? 
@@ -102,47 +102,31 @@ class MyItems extends React.Component{
         }
     <ListItemText primary={user.user.dataAutograph}  />
       </ListItem>
-      {/* {user.roles.includes("blackcard_holder") &&
-        <ListItem button component="a" href="#/my/blackcard_holder">
-          <ReListItemIcon >
-          <Face />
-          </ReListItemIcon>
-          <ListItemText primary="鲜至店长" />
-          </ListItem>} */}
-    </List>
-      <Divider />
-      {
-        user.user.username !== "wanchehui" &&
-          <div>
-          <ListItem button onClick={this.handleClick}>
-          <ReListItemIcon >
-          <Shop  />
-          </ReListItemIcon>
-          <ListItemText inset primary="我的店铺" />
-          {this.state.open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-          <ListItem button  onClick={()=>this.handleGoToShop()} component="button">
-          <ReListItemIcon >
-          <AddToQueue />
-          </ReListItemIcon>
-          <ListItemText inset primary="商品库房"  />
-          </ListItem>
-          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  component="button" >
-          <ReListItemIcon >
-          <Stars />
-          </ReListItemIcon>
-          <ListItemText inset primary="我的橱窗" />
-          </ListItem>
-          </List>
-          </Collapse>
-          <Divider />
-          </div>
-      }
+    </ReList>
+     
 
 
     <List component="nav">
+    {
+        user.user.username !== "wanchehui" &&
+          <div>
+          <ListItem button  onClick={()=>this.handleGoToShop("/my")}  >
+          <ReListItemIcon >
+          <Shop />
+          </ReListItemIcon>
+          <ListItemText primary="我的店铺" />
+          </ListItem>
+          <Divider />
+
+          <ListItem button  onClick={()=>this.handleGoToShop()} >
+          <ReListItemIcon >
+          <AddToQueue />
+          </ReListItemIcon>
+          <ListItemText  primary="商品库房"  />
+          </ListItem>
+          <Divider />
+          </div>
+      }
     {
       user.senior === true ?
         <div>
@@ -206,8 +190,8 @@ class MyItems extends React.Component{
 }
 
 const Wrap = styled.div`
-    width: 100%,
-    max-width: 560,
+    width: 100%;
+    max-width: 560;
 `
 
 const ReListItemIcon = styled(ListItemIcon)`
@@ -219,6 +203,9 @@ const ReListItemIcon = styled(ListItemIcon)`
 const ReAvatar = styled(Avatar)`
     width: 60;
     height: 60;
+`
+const ReList = styled(List)`
+  margin-bottom: 800;
 `
 
 

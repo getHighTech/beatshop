@@ -67,7 +67,6 @@ class Withdraw extends React.Component{
   withdraw = (e) => {
     e.preventDefault();
     const {dispatch, bankcards} = this.props;
-    console.log(bankcards);
 
     let bankcard = bankcards[parseInt(this.state.bankcard, 10)];
     if(bankcards.length === 1){
@@ -78,7 +77,8 @@ class Withdraw extends React.Component{
       dispatch(appShowMsg("withdraw_must",1200));
       return false;
     }
-    if(amount > this.state.ableToWithDrawAmount){
+    let ableToWithDrawAmount = isNaN(this.state.ableToWithDrawAmount)?  0 : this.state.ableToWithDrawAmount
+    if(amount > ableToWithDrawAmount){
       dispatch(appShowMsg("too_monay_withdraw_allow", 1200));
       return false;
     }
@@ -176,7 +176,7 @@ class Withdraw extends React.Component{
           <form className={classes.container} noValidate autoComplete="off">
             <div className={classes.totolMoney}>
               <div className={classes.moneyText}>可提现金额</div>
-              <div className={classes.moneyNumber}>￥{this.state.ableToWithDrawAmount}</div>
+              <div className={classes.moneyNumber}>￥ {isNaN(this.state.ableToWithDrawAmount)? 0 : this.state.ableToWithDrawAmount}</div>
             </div>
             <TextField
             id="number"

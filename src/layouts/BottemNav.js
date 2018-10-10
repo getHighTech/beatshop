@@ -6,6 +6,9 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import AccountBalance from '@material-ui/icons/AccountBalance';
 import Home from '@material-ui/icons/Home';
 import Person from '@material-ui/icons/Person';
+import { setStore } from '../tools/localStorage';
+
+
 
 // import Person from '@material-ui/icons/Person';
 import brown from '@material-ui/core/colors/brown';
@@ -25,7 +28,7 @@ class BottemNav extends React.Component {
   state = {
     value: 0,
     bottom: 0
-   
+
   };
 
   componentDidMount(){
@@ -33,7 +36,7 @@ class BottemNav extends React.Component {
       bottom: 0
     })
       //兼容非正常浏览器，比如微信
-    
+
     if(window.innerHeight -  document.body.clientHeight < 0){
       this.setState({
         bottom: 0
@@ -55,14 +58,26 @@ class BottemNav extends React.Component {
       })
     }
 
-        
-   
+
+
   }
 
   handleChange = (event, value) => {
-    
-    
 
+
+
+    if (value === 0) {
+      let path = `/`
+      setStore('willgo',path)
+    }
+    if (value === 1) {
+      let path = `/money/`
+      setStore('willgo',path)
+    }
+    if (value === 2) {
+      let path = `/my/`
+      setStore('willgo',path)
+    }
     switch (value) {
       case 0:
         this.props.history.push("/")
@@ -72,9 +87,9 @@ class BottemNav extends React.Component {
         this.props.history.push("/money")
         break;
       case 2:
-        this.props.history.push("/my")
+        this.props.history.push("/my");
         break;
-    
+
       default:
         break;
     }
@@ -82,7 +97,7 @@ class BottemNav extends React.Component {
   };
 
   componentWillReceiveProps(nextProps){
-   
+    console.log(nextProps);
     switch (nextProps.history.location.pathname) {
       case '/':
         this.setState({ value: 0});
@@ -96,7 +111,7 @@ class BottemNav extends React.Component {
       default:
         break;
     }
-    
+
   }
 
   render() {

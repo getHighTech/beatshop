@@ -307,6 +307,7 @@ export function changePassword(password,repassword,agpassword){
     return (dispatch, getState) => {
         dispatch(expectGetUser());
         console.log(password)
+        console.log(repassword)
         return getRemoteMeteor(dispatch, getState, "users", 
          'app.change.password', [getStore('userId'),password,repassword,agpassword], GET_USER_SUCCESS,GET_USER_FAIL);
     }
