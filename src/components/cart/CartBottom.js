@@ -56,7 +56,6 @@ class CartBottom extends React.Component{
       }
     checkSelect = () => {
       const {  cart } = this.props;
-      cart.status==="all-unselected"? true : false 
       if(cart.status==="all-unselected" || cart.products.length===0 ) {
         return true
       }else {
