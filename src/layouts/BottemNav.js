@@ -97,10 +97,7 @@ class BottemNav extends React.Component {
   };
 
   componentWillReceiveProps(nextProps){
-<<<<<<< HEAD
-    console.log(nextProps);
-=======
->>>>>>> d65a7c9b86f6c974cefd8bb694bb520d438af7d3
+
     switch (nextProps.history.location.pathname) {
       case '/':
         this.setState({ value: 0});
