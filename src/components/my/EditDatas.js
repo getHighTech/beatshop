@@ -11,7 +11,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
-import {  changePassword } from '../../actions/users.js';
+import {  changePassword,changeNickName } from '../../actions/users.js';
 import isEmpty from 'lodash.isempty'
 class EditDatas extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class EditDatas extends Component {
                   password: "",
                   repassword: "",
                   agpassword: "",
+                  nickname: "",
                   errors: {},
                  }
   }
@@ -54,13 +55,13 @@ class EditDatas extends Component {
   validate = () => {
     const { password, repassword, agpassword } = this.state;
     const errors = {}
-    if (!password || !/^\S{6}/.test(password)) {
+    if (!password || !/^\S{6,}/.test(password)) {
       errors.password = '格式错误'
     }
-    if (!repassword || !/^\S{6}$/.test(repassword)) {
+    if (!repassword || !/^\S{6,}$/.test(repassword)) {
       errors.repassword = '格式错误'
     }
-    if (!agpassword || !/^\S{6}$/.test(agpassword)) {
+    if (!agpassword || !/^\S{6,}$/.test(agpassword)) {
       errors.agpassword = '格式错误'
     }
     if(repassword!==agpassword){
@@ -75,8 +76,8 @@ class EditDatas extends Component {
     console.log('上传头像方法在此');
   };
 
-  resetUser = () => {
-
+  resetUserNickName = () => {
+    this.props.dispatch(changeNickName(this.state.nickname))
   }
   componentDidMount(){
     console.log(this.props)
@@ -111,7 +112,7 @@ class EditDatas extends Component {
         </ReListItem>
         <ReListItem  button onClick={()=> this.handleClick('userOpen')}>
           <ListItemText primary="用户名"  />
-          {user.username}
+          {user.nickname}
           {this.state.userOpen? <ExpandLess /> : <ExpandMore />}
         </ReListItem>
 
@@ -128,7 +129,7 @@ class EditDatas extends Component {
                 helperText={errors.nickname}
                 onChange={(e)=>this.handelChange(e,'nickname')}
               />
-              <ReButton variant="contained" color="primary" onClick={()=> this.resetUser}>
+              <ReButton variant="contained" color="primary" onClick={()=> this.resetUserNickName()}>
                 确认
               </ReButton>
             </ReList>
@@ -162,7 +163,6 @@ class EditDatas extends Component {
           <ReCollapse in={this.state.passwordOpen} timeout="auto" unmountOnExit >
             <ReList component="div" disablePadding >
             <TextField
-                id="with-placeholder"
                 label="请输入旧密码"
                 margin="normal"
                 required 
@@ -173,7 +173,6 @@ class EditDatas extends Component {
               />
               <br />
                <TextField
-                id="with-placeholder"
                 label="请输入密码"
                 required 
                 error={true}
@@ -184,7 +183,6 @@ class EditDatas extends Component {
               />
                 <br />
                <TextField
-                id="with-placeholder"
                 label="请确认密码"
                 required 
                 error={true}

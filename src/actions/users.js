@@ -323,3 +323,40 @@ export function changePassword(password,repassword,agpassword){
          'app.change.password', [getStore('userId'),password,repassword,agpassword], getUserScccess,getUserFail);
     }
 }
+
+
+
+export const EXPECT_GET_NICKNAME = 'EXPECT_GET_NICKNAME'
+export const GET_NICKNAME_SUCCESS = 'GET_NICKNAME_SUCCESS'
+export const GET_NICKNAME_FAIL = 'GET_NICKNAME_FAIL'
+
+
+export function expectGetNickname(){
+    return {
+        type:EXPECT_GET_NICKNAME 
+    }
+}
+export function getNicknameSuccess(msg){
+    console.log(msg);
+        return {
+            type:  GET_NICKNAME_SUCCESS,
+            msg
+        }
+}
+export function getUNicknameFail(reason){
+    console.log(reason);
+      
+        return {
+            type: GET_NICKNAME_FAIL,
+            reason
+        }
+}
+
+
+export function changeNickName(nickname) {
+    return (dispatch, getState) => {
+        console.log(nickname)
+        return getRemoteMeteor(dispatch, getState, "nickname", 
+         'app.change.nickname', [getStore('userId'),nickname], getNicknameSuccess,getUNicknameFail);
+    }
+}
