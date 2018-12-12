@@ -11,7 +11,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
-import {  changePassword } from '../../actions/users.js';
+import {  changePassword,changeNickName } from '../../actions/users.js';
+import isEmpty from 'lodash.isempty'
 class EditDatas extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +23,9 @@ class EditDatas extends Component {
                   username: "",
                   password: "",
                   repassword: "",
-                  agpassword: ""
+                  agpassword: "",
+                  nickname: "",
+                  errors: {},
                  }
   }
   handelChange =  (event, key ) => {
@@ -37,15 +40,44 @@ class EditDatas extends Component {
   resetPassword = () => {
     console.log(this.props)
     const { password , repassword, agpassword } = this.state
-    console.log(this.state)
+    const errors = this.validate()
+    if (!isEmpty(errors)) {
+      this.setState({
+        errors: {...errors}
+      })
+      return
+    }
+
+    delete this.state.errors
     this.props.dispatch(changePassword(password,repassword,agpassword))
   }
+
+  validate = () => {
+    const { password, repassword, agpassword } = this.state;
+    const errors = {}
+    if (!password || !/^\S{6,}/.test(password)) {
+      errors.password = '格式错误'
+    }
+    if (!repassword || !/^\S{6,}$/.test(repassword)) {
+      errors.repassword = '格式错误'
+    }
+    if (!agpassword || !/^\S{6,}$/.test(agpassword)) {
+      errors.agpassword = '格式错误'
+    }
+    if(repassword!==agpassword){
+      errors.repassword = '两次密码不一致'
+      errors.agpassword= '两次密码不一致'
+    }
+    return errors
+  }
+
+
   changeCover = () => {
     console.log('上传头像方法在此');
   };
 
-  resetUser = () => {
-
+  resetUserNickName = () => {
+    this.props.dispatch(changeNickName(this.state.nickname))
   }
   componentDidMount(){
     console.log(this.props)
@@ -67,6 +99,7 @@ class EditDatas extends Component {
   }
   render(){
     const { user } = this.props;
+    const { errors } = this.state;
     return(
       <Wrap>
       <List>
@@ -79,7 +112,7 @@ class EditDatas extends Component {
         </ReListItem>
         <ReListItem  button onClick={()=> this.handleClick('userOpen')}>
           <ListItemText primary="用户名"  />
-          {user.username}
+          {user.nickname}
           {this.state.userOpen? <ExpandLess /> : <ExpandMore />}
         </ReListItem>
 
@@ -92,9 +125,11 @@ class EditDatas extends Component {
                 label="设置新名字"
                 placeholder="长度不要大于10个字符"
                 margin="normal"
+                required 
+                helperText={errors.nickname}
                 onChange={(e)=>this.handelChange(e,'nickname')}
               />
-              <ReButton variant="contained" color="primary" onClick={()=> this.resetUser}>
+              <ReButton variant="contained" color="primary" onClick={()=> this.resetUserNickName()}>
                 确认
               </ReButton>
             </ReList>
@@ -128,26 +163,32 @@ class EditDatas extends Component {
           <ReCollapse in={this.state.passwordOpen} timeout="auto" unmountOnExit >
             <ReList component="div" disablePadding >
             <TextField
-                id="with-placeholder"
                 label="请输入旧密码"
-                placeholder="长度不要大于10个字符"
                 margin="normal"
+                required 
+                error={true}
+                type="password"
+                helperText={errors.password}
                 onChange={(e)=>this.handelChange(e,'password') }
               />
               <br />
                <TextField
-                id="with-placeholder"
                 label="请输入密码"
-                placeholder="长度不要大于10个字符"
+                required 
+                error={true}
+                helperText={errors.repassword}
                 margin="normal"
+                type="password"
                 onChange={(e)=>this.handelChange(e,'repassword') }
               />
                 <br />
                <TextField
-                id="with-placeholder"
                 label="请确认密码"
-                placeholder="长度不要大于10个字符"
+                required 
+                error={true}
+                helperText={errors.agpassword}
                 margin="normal"
+                type="password"
                 onChange={(e)=>this.handelChange(e,'agpassword') }
               />
                 <br />

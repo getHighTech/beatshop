@@ -101,7 +101,7 @@ class App extends React.Component {
               {...rest}
               render={props => {
                 if(user.roles.includes("login_user")){
-                      wechatAuth()
+                    //   wechatAuth()
                     return (
                         <Component {...props} />
                       )
@@ -250,7 +250,7 @@ class App extends React.Component {
 
 const ReSnackbar = styled(Snackbar)`
     margin-top: 100px;
-    z-index: 999
+    z-index: 999;
 `
 App.propTypes = {
     classes: PropTypes.object.isRequired,

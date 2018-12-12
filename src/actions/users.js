@@ -1,5 +1,6 @@
 import {  getStore, removeStore } from '../tools/localStorage';
-import app from '../config/app.json'
+import app from '../config/app.json';
+import { appShowMsg } from './app.js'
 import getRemoteMeteor from '../services/meteor/methods';
 import { dealWithError } from "./error_fail";
 
@@ -291,24 +292,71 @@ export function expectGetUser(){
     }
 }
 export function getUserScccess(reason){
-    return {
-        type:  GET_USER_FAIL,
-        reason
+    console.log(reason);
+    return dispatch => {
+        if(reason==='password wrong'){
+            dispatch(appShowMsg('password wrong',1200))
+        }else{
+            dispatch(appShowMsg('password success',1200))
+        }
+        return {
+            type:  GET_USER_FAIL,
+            reason
+        }
     }
 }
 export function getUserFail(msg){
-    return {
-        type: GET_USER_SUCCESS,
-        msg
+    console.log(msg);
+    return dispatch => {
+      
+        return {
+            type: GET_USER_SUCCESS,
+            msg
+        }
     }
 }
 
 export function changePassword(password,repassword,agpassword){
     return (dispatch, getState) => {
         dispatch(expectGetUser());
-        console.log(password)
-        console.log(repassword)
-        return getRemoteMeteor(dispatch, getState, "users", 
-         'app.change.password', [getStore('userId'),password,repassword,agpassword], GET_USER_SUCCESS,GET_USER_FAIL);
+        return getRemoteMeteor(dispatch, getState, "password", 
+         'app.change.password', [getStore('userId'),password,repassword,agpassword], getUserScccess,getUserFail);
+    }
+}
+
+
+
+export const EXPECT_GET_NICKNAME = 'EXPECT_GET_NICKNAME'
+export const GET_NICKNAME_SUCCESS = 'GET_NICKNAME_SUCCESS'
+export const GET_NICKNAME_FAIL = 'GET_NICKNAME_FAIL'
+
+
+export function expectGetNickname(){
+    return {
+        type:EXPECT_GET_NICKNAME 
+    }
+}
+export function getNicknameSuccess(msg){
+    console.log(msg);
+        return {
+            type:  GET_NICKNAME_SUCCESS,
+            msg
+        }
+}
+export function getUNicknameFail(reason){
+    console.log(reason);
+      
+        return {
+            type: GET_NICKNAME_FAIL,
+            reason
+        }
+}
+
+
+export function changeNickName(nickname) {
+    return (dispatch, getState) => {
+        console.log(nickname)
+        return getRemoteMeteor(dispatch, getState, "nickname", 
+         'app.change.nickname', [getStore('userId'),nickname], getNicknameSuccess,getUNicknameFail);
     }
 }
